@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- JNLP File for Notepad -->
+
+<jnlp spec="1.0+"
+      codebase="http://10.8.37.151:8080/loganalyzer" 
+      href="loganalyzer.jnlp">
+   <information>
+      <title>Jahia Log Analyzer</title>
+      <vendor>Jahia</vendor>
+      <description>Jahia log analyzing tool</description>
+      <homepage href="http://www.jahia.org/loganalyzer"/>
+      <description kind="short">ClickMeApp uses 3 custom classes plus several
+       standard ones</description>
+      <icon href="loganalyzer.gif"/>
+      <offline-allowed/>
+      <shortcut online="false"> 
+        <desktop/> 
+        <menu submenu="Jahia Log Analyzer"/> 
+      </shortcut> 
+   </information>
+   <resources>     
+     	<jar href="jahia_loganalyzer-1.0-SNAPSHOT.jar"/>   
+     	<jar href="looks-2.0.4.jar"/>
+     	<jar href="forms-1.0.7.jar"/>
+     	<jar href="opencsv-1.7.jar"/>
+    	<j2se version="1.6+"
+    	      href="http://java.sun.com/products/autodl/j2se"/>
+   </resources>
+   <security>
+    <all-permissions />
+   </security>
+     <application-desc main-class="org.jahia.loganalyzer.gui.swing.LogAnalyzerMainDialog"/>
+</jnlp>
