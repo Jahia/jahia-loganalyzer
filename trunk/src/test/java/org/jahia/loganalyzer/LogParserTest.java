@@ -16,6 +16,8 @@ import java.util.ArrayList;
  * To change this template use File | Settings | File Templates.
  */
 public class LogParserTest extends TestCase {
+
+    private static final String DEFAULT_DATE_FORMAT_STRING = "yyyy-MM-dd HH:mm:ss,SSS";
     /**
      * Create the test case
      *
@@ -38,7 +40,7 @@ public class LogParserTest extends TestCase {
         InputStream jahiaLogStream = this.getClass().getResourceAsStream("/jahia-tomcat/catalina.out");
         Reader reader = new InputStreamReader(jahiaLogStream);
         Writer writer = new FileWriter("jahia-log-report.csv");
-        logParser.parse(reader, writer, new ArrayList());
+        logParser.parse(reader, writer, new ArrayList(), DEFAULT_DATE_FORMAT_STRING);
     }
 }
 

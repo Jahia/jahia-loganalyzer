@@ -1,13 +1,12 @@
 package org.jahia.loganalyzer.gui.swing;
 
-import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
 import com.jgoodies.looks.plastic.PlasticXPLookAndFeel;
-import com.jgoodies.looks.windows.WindowsLookAndFeel;
 
 import javax.swing.*;
 import java.awt.event.*;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.jahia.loganalyzer.LogParser;
 
@@ -15,12 +14,18 @@ public class LogAnalyzerMainDialog extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
-    private JButton browseButton;
+    private JButton browseInputLogFile;
     private JTextField inputLogFile;
     private JTextField csvOutputFile;
     private JTextField csvSeparatorCharField;
-    private JComboBox analysisTypeSelection;
+    private JButton browseCSVOutputFile;
+    private JTabbedPane typeTabbedPane;
+    private JCheckBox activatedCheckBox;
+    private JTextField regexpPatternField;
+    private JTextField dateFormatField;
     private JFileChooser fileChooser;
+    private static final String DEFAULT_REGEXP_PATTERN = ".*?\\[(.*?)\\].*org\\.jahia\\.bin\\.Jahia.*Processed \\[(.*?)\\](?: esi=\\[(.*?)\\])? user=\\[(.*)\\] ip=\\[(.*)\\] in \\[(.*)ms\\].*";
+    private static final String DEFAULT_DATE_FORMAT_STRING = "yyyy-MM-dd HH:mm:ss,SSS";
 
     public LogAnalyzerMainDialog() {
         setTitle("Jahia Log Analysis Tool");
@@ -59,6 +64,8 @@ public class LogAnalyzerMainDialog extends JDialog {
         inputLogFile.setText(defaultInputLogFile.getAbsoluteFile().toString());
         File defaultOutputFile = new File("jahia-log-analyzer.csv");
         csvOutputFile.setText(defaultOutputFile.getAbsoluteFile().toString());
+        regexpPatternField.setText(DEFAULT_REGEXP_PATTERN);
+        dateFormatField.setText(DEFAULT_DATE_FORMAT_STRING);
 
         //Create a file chooser
         fileChooser = new JFileChooser();
@@ -73,8 +80,9 @@ public class LogAnalyzerMainDialog extends JDialog {
         //fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         //fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 
-        browseButton.addActionListener(new ActionListener() {
+        browseInputLogFile.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                fileChooser.setSelectedFile(new File(inputLogFile.getText()));
                 int returnVal = fileChooser.showOpenDialog(LogAnalyzerMainDialog.this);
 
                 if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -85,27 +93,43 @@ public class LogAnalyzerMainDialog extends JDialog {
                 }
             }
         });
+        browseCSVOutputFile.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                fileChooser.setSelectedFile(new File(csvOutputFile.getText()));
+                int returnVal = fileChooser.showOpenDialog(LogAnalyzerMainDialog.this);
+
+                if (returnVal == JFileChooser.APPROVE_OPTION) {
+                    File file = fileChooser.getSelectedFile();
+                    //This is where a real application would open the file.
+                    csvOutputFile.setText(file.getAbsoluteFile().toString());
+                } else {
+                }
+            }
+        });
     }
 
     private void disableUI() {
         buttonOK.setEnabled(false);
         buttonCancel.setEnabled(false);
-        browseButton.setEnabled(false);
+        browseInputLogFile.setEnabled(false);
         setEnabled(false);
     }
 
     private void enableUI() {
         buttonOK.setEnabled(true);
         buttonCancel.setEnabled(true);
-        browseButton.setEnabled(true);
+        browseInputLogFile.setEnabled(true);
         setEnabled(true);
     }
 
     private void onOK() {
         disableUI();
+        List patternList = new ArrayList();
+        patternList.add(regexpPatternField.getText());
         AnalysisWorker worker = new AnalysisWorker(inputLogFile.getText(),
         csvOutputFile.getText(),
-        csvSeparatorCharField.getText().charAt(0));
+        csvSeparatorCharField.getText().charAt(0),
+        patternList, dateFormatField.getText());
         worker.start();
     }
 
@@ -129,11 +153,15 @@ public class LogAnalyzerMainDialog extends JDialog {
         private String inputFileName;
         private String outputFileName;
         private char csvSeparatorChar;
+        private List patternList;
+        private String dateFormatString;
 
-        public AnalysisWorker(String inputFileName, String outputFileName, char csvSeparatorChar) {
+        public AnalysisWorker(String inputFileName, String outputFileName, char csvSeparatorChar, List patternList, String dateFormatString) {
             this.inputFileName = inputFileName;
             this.outputFileName = outputFileName;
             this.csvSeparatorChar = csvSeparatorChar;
+            this.patternList = patternList;
+            this.dateFormatString = dateFormatString;
         }
 
         public void run() {
@@ -147,7 +175,7 @@ public class LogAnalyzerMainDialog extends JDialog {
                 FileWriter writer = new FileWriter(outputFileName);
                 LogParser logParser = new LogParser();
                 logParser.setCsvOutputSeparatorChar(csvSeparatorChar);
-                logParser.parse(reader, writer, new ArrayList());
+                logParser.parse(reader, writer, patternList, dateFormatString);
             } catch (InterruptedIOException iioe) {
                 JOptionPane.showMessageDialog(LogAnalyzerMainDialog.this, "Analysis cancelled by user", "Warning", JOptionPane.WARNING_MESSAGE);
                 enableUI();

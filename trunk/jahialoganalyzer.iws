@@ -160,7 +160,7 @@
       <file leaf-file-name="LogParser.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/LogParser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="27" column="41" selection-start="555" selection-end="580" vertical-scroll-proportion="0.3580247">
+            <state line="36" column="81" selection-start="1263" selection-end="1263" vertical-scroll-proportion="0.90605426">
               <folding />
             </state>
           </provider>
@@ -169,16 +169,16 @@
       <file leaf-file-name="LogParserTest.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/org/jahia/loganalyzer/LogParserTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="36" column="49" selection-start="883" selection-end="883" vertical-scroll-proportion="0.6181818">
+            <state line="42" column="83" selection-start="1287" selection-end="1287" vertical-scroll-proportion="1.2776618">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="JahiaPerfLineAnalyzer.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="JahiaPerfLineAnalyzer.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/JahiaPerfLineAnalyzer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="71" column="46" selection-start="2739" selection-end="2739" vertical-scroll-proportion="0.7407407">
+            <state line="22" column="0" selection-start="695" selection-end="783" vertical-scroll-proportion="0.42588726">
               <folding />
             </state>
           </provider>
@@ -187,13 +187,13 @@
       <file leaf-file-name="LogEntry.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/LogEntry.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="24" selection-start="402" selection-end="402" vertical-scroll-proportion="0.32969698">
+            <state line="17" column="24" selection-start="402" selection-end="402" vertical-scroll-proportion="0.034412954">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LogAnalyzerMainDialog.form" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="LogAnalyzerMainDialog.form" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/gui/swing/LogAnalyzerMainDialog.form">
           <provider selected="true" editor-type-id="ui-designer">
             <state />
@@ -203,7 +203,7 @@
       <file leaf-file-name="pom.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="37" column="57" selection-start="1273" selection-end="1273" vertical-scroll-proportion="0.22545454">
+            <state line="37" column="57" selection-start="1273" selection-end="1273" vertical-scroll-proportion="0.42379957">
               <folding />
             </state>
           </provider>
@@ -212,7 +212,7 @@
       <file leaf-file-name="LogAnalyzerMainDialog.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/gui/swing/LogAnalyzerMainDialog.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="54" column="14" selection-start="1713" selection-end="1713" vertical-scroll-proportion="0.56666666">
+            <state line="26" column="49" selection-start="859" selection-end="859" vertical-scroll-proportion="0.6388309">
               <folding />
             </state>
           </provider>
@@ -221,7 +221,7 @@
       <file leaf-file-name="ProgressMonitorInputStream.java" pinned="false" current="false" current-in-tab="false">
         <entry file="jar://C:/Program Files/Java/jdk1.5.0_12/src.zip!/javax/swing/ProgressMonitorInputStream.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="131" column="0" selection-start="4063" selection-end="4063" vertical-scroll-proportion="0.06419753">
+            <state line="131" column="0" selection-start="4063" selection-end="4063" vertical-scroll-proportion="0.13987474">
               <folding />
             </state>
           </provider>
@@ -239,7 +239,7 @@
       <file leaf-file-name="CSVLogEntryWriter.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/CSVLogEntryWriter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="54" selection-start="905" selection-end="905" vertical-scroll-proportion="0.44074073">
+            <state line="26" column="54" selection-start="905" selection-end="905" vertical-scroll-proportion="0.74530274">
               <folding />
             </state>
           </provider>
@@ -495,6 +495,28 @@
           <option name="myItemId" value="PsiDirectory:C:\java\products_svn\jahia_loganalyzer\src\main" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
         </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="jahialoganalyzer.ipr" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="jahialoganalyzer" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\java\products_svn\jahia_loganalyzer" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\java\products_svn\jahia_loganalyzer\src" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\java\products_svn\jahia_loganalyzer\src\main" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
         <PATH_ELEMENT>
           <option name="myItemId" value="PsiDirectory:C:\java\products_svn\jahia_loganalyzer\src\main\java" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
@@ -555,7 +577,7 @@
       <showLibraryContents />
       <hideEmptyPackages />
       <abbreviatePackageNames />
-      <showStructure Scope="false" ProjectPane="false" PackagesPane="false" Favorites="false" />
+      <showStructure PackagesPane="false" ProjectPane="false" Scope="false" Favorites="false" />
       <autoscrollToSource />
       <autoscrollFromSource />
       <sortByType />
@@ -575,6 +597,9 @@
     <option name="SHOW_DIALOG" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="IntroduceConstantDialog.RECENTS_KEY">
+      <recent name="org.jahia.loganalyzer.gui.swing.LogAnalyzerMainDialog" />
+    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="org.jahia.loganalyzer" />
     </key>
@@ -583,11 +608,11 @@
   <component name="RunManager" selected="Application.LogAnalyzerMainDialog">
     <tempConfiguration default="false" name="LogAnalyzerMainDialog" type="Application" factoryName="Application" enabled="false" merge="false">
       <option name="MAIN_CLASS_NAME" value="org.jahia.loganalyzer.gui.swing.LogAnalyzerMainDialog" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
       <option name="ENABLE_SWING_INSPECTOR" value="false" />
       <module name="jahialoganalyzer" />
       <RunnerSettings RunnerId="JProfiler">
@@ -596,7 +621,7 @@
         <option name="INTERPRETED" value="false" />
       </RunnerSettings>
       <RunnerSettings RunnerId="Profile ">
-        <option name="myExternalizedOptions" />
+        <option name="myExternalizedOptions" value="&#13;&#10;snapshots-dir=&#13;&#10;" />
       </RunnerSettings>
       <RunnerSettings RunnerId="Run" />
       <ConfigurationWrapper RunnerId="Run" />
@@ -604,6 +629,33 @@
         <option name="Make" value="true" />
       </method>
     </tempConfiguration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <RunnerSettings RunnerId="JProfiler">
+        <option name="WINDOW" value="false" />
+        <option name="JVMPI" value="false" />
+        <option name="INTERPRETED" value="false" />
+      </RunnerSettings>
+      <RunnerSettings RunnerId="Profile ">
+        <option name="myExternalizedOptions" />
+      </RunnerSettings>
+    </configuration>
+    <configuration default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
+    </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit" enabled="false" merge="false">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -643,33 +695,6 @@
       <method>
         <option name="Make" value="true" />
       </method>
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <RunnerSettings RunnerId="JProfiler">
-        <option name="WINDOW" value="false" />
-        <option name="JVMPI" value="false" />
-        <option name="INTERPRETED" value="false" />
-      </RunnerSettings>
-      <RunnerSettings RunnerId="Profile ">
-        <option name="myExternalizedOptions" />
-      </RunnerSettings>
-    </configuration>
-    <configuration default="true" type="Remote" factoryName="Remote">
-      <option name="USE_SOCKET_TRANSPORT" value="true" />
-      <option name="SERVER_MODE" value="false" />
-      <option name="SHMEM_ADDRESS" value="javadebug" />
-      <option name="HOST" value="localhost" />
-      <option name="PORT" value="5005" />
     </configuration>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
       <Host>localhost</Host>
@@ -753,11 +778,11 @@
     <frame x="-4" y="-4" width="1288" height="1002" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32927817" order="3" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32927817" order="3" />
       <window_info id="CVS" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="7" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32927817" order="0" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32927817" order="0" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32951945" order="1" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24979724" order="1" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32951945" order="8" />
@@ -765,10 +790,10 @@
       <window_info id="Profile" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
       <window_info id="Module Dependencies" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20032442" order="3" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20032442" order="3" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" order="1" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32951945" order="2" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32951945" order="2" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" order="2" />
       <window_info id="File View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" order="0" />
@@ -891,35 +916,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/LogParser.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/LogEntry.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="41" selection-start="555" selection-end="580" vertical-scroll-proportion="0.3580247">
+        <state line="17" column="24" selection-start="402" selection-end="402" vertical-scroll-proportion="0.034412954">
           <folding />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/org/jahia/loganalyzer/LogParserTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="49" selection-start="883" selection-end="883" vertical-scroll-proportion="0.6181818">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/gui/swing/LogAnalyzerMainDialog.form">
-      <provider selected="true" editor-type-id="ui-designer">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="57" selection-start="1273" selection-end="1273" vertical-scroll-proportion="0.22545454">
+        <state line="37" column="57" selection-start="1273" selection-end="1273" vertical-scroll-proportion="0.42379957">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.5.0_12/src.zip!/javax/swing/ProgressMonitorInputStream.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="131" column="0" selection-start="4063" selection-end="4063" vertical-scroll-proportion="0.06419753">
+        <state line="131" column="0" selection-start="4063" selection-end="4063" vertical-scroll-proportion="0.13987474">
           <folding />
         </state>
       </provider>
@@ -933,30 +946,42 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/CSVLogEntryWriter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="54" selection-start="905" selection-end="905" vertical-scroll-proportion="0.44074073">
+        <state line="26" column="54" selection-start="905" selection-end="905" vertical-scroll-proportion="0.74530274">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/gui/swing/LogAnalyzerMainDialog.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="14" selection-start="1713" selection-end="1713" vertical-scroll-proportion="0.56666666">
+        <state line="26" column="49" selection-start="859" selection-end="859" vertical-scroll-proportion="0.6388309">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/LogEntry.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/LogParser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="24" selection-start="402" selection-end="402" vertical-scroll-proportion="0.32969698">
+        <state line="36" column="81" selection-start="1263" selection-end="1263" vertical-scroll-proportion="0.90605426">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/JahiaPerfLineAnalyzer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="71" column="46" selection-start="2739" selection-end="2739" vertical-scroll-proportion="0.7407407">
+        <state line="22" column="0" selection-start="695" selection-end="783" vertical-scroll-proportion="0.42588726">
           <folding />
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/org/jahia/loganalyzer/LogParserTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="42" column="83" selection-start="1287" selection-end="1287" vertical-scroll-proportion="1.2776618">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/gui/swing/LogAnalyzerMainDialog.form">
+      <provider selected="true" editor-type-id="ui-designer">
+        <state />
       </provider>
     </entry>
   </component>

@@ -29,12 +29,12 @@ public class LogParser {
         this.csvOutputSeparatorChar = csvOutputSeparatorChar;
     }
 
-    public JahiaTimeReports parse(Reader reader, Writer writer, List patterns) throws IOException {
+    public JahiaTimeReports parse(Reader reader, Writer writer, List patterns, String dateFormatString) throws IOException {
         JahiaTimeReports timeReports = new JahiaTimeReports();
         // @todo make the following instantiation configurable so that we can choose the implementations to modify application input and output
         LineNumberReader lineNumberReader = new LineNumberReader(reader);
         LogEntryWriter logEntryWriter = new CSVLogEntryWriter(writer, csvOutputSeparatorChar);
-        LineAnalyzer lineAnalyzer = new JahiaPerfLineAnalyzer();
+        LineAnalyzer lineAnalyzer = new JahiaPerfLineAnalyzer(patterns, dateFormatString);
         String currentLine = null;
         try {
         while ( ( currentLine = lineNumberReader.readLine()) != null) {
