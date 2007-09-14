@@ -43,6 +43,7 @@
           </archive>
         </configuration>
       </plugin>
+      <!--
      <plugin>
           <artifactId>minijar-maven-plugin</artifactId>
           <groupId>org.codehaus.mojo</groupId>
@@ -64,6 +65,7 @@
               </execution>
           </executions>
       </plugin>
+      -->
     </plugins>
   </build>
 </project>
