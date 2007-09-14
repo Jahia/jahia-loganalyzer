@@ -19,7 +19,7 @@
       </shortcut> 
    </information>
    <resources>     
-     	<jar href="jahia_loganalyzer-1.0-SNAPSHOT.jar"/>   
+     	<jar href="jahia_loganalyzer-0.2-SNAPSHOT.jar"/>   
      	<jar href="looks-2.0.4.jar"/>
      	<jar href="forms-1.0.7.jar"/>
      	<jar href="opencsv-1.7.jar"/>
