@@ -4,7 +4,7 @@
   <groupId>org.jahia.loganalyzer</groupId>
   <artifactId>jahia_loganalyzer</artifactId>
   <packaging>jar</packaging>
-  <version>1.0-SNAPSHOT</version>
+  <version>0.2-SNAPSHOT</version>
   <name>jahia_loganalyzer</name>
   <url>http://www.jahia.org</url>
   <dependencies>

@@ -2,6 +2,7 @@ package org.jahia.loganalyzer;
 
 import java.util.StringTokenizer;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import java.text.DateFormat;
@@ -17,14 +18,32 @@ import java.text.SimpleDateFormat;
  */
 public class JahiaPerfLineAnalyzer implements LineAnalyzer {
 
-    private static final String MATCHING_PATTERN = ".*?\\[(.*?)\\].*org\\.jahia\\.bin\\.Jahia.*Processed \\[(.*?)\\](?: esi=\\[(.*?)\\])? user=\\[(.*)\\] ip=\\[(.*)\\] in \\[(.*)ms\\].*";
-    private static final Pattern LINEPATTERN = Pattern.compile(MATCHING_PATTERN);
-    private static final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss,SSS");
+    private static final String DEFAULT_MATCHING_PATTERN = ".*?\\[(.*?)\\].*org\\.jahia\\.bin\\.Jahia.*Processed \\[(.*?)\\](?: esi=\\[(.*?)\\])? user=\\[(.*)\\] ip=\\[(.*)\\] in \\[(.*)ms\\].*";
+    private static final String DEFAULT_DATE_FORMAT_STRING = "yyyy-MM-dd HH:mm:ss,SSS";
+    private Pattern linePattern;
+    private DateFormat dateFormat;
+
+    /**
+     *
+     * @param patterns only one pattern is supported in the current version.
+     */
+    public JahiaPerfLineAnalyzer(List patterns, String dateFormatString) {
+        if (patterns.size() > 0) {
+            linePattern = Pattern.compile((String)patterns.get(0));
+        } else {
+            linePattern = Pattern.compile(DEFAULT_MATCHING_PATTERN);
+        }
+        if (dateFormatString != null) {
+           dateFormat = new SimpleDateFormat(dateFormatString);
+        } else {
+            dateFormat = new SimpleDateFormat(DEFAULT_DATE_FORMAT_STRING);
+        }
+    }
 
     public LogEntry parseLine(String line) {
         LogEntry logEntry = new LogEntry();
 
-        Matcher matcher = LINEPATTERN.matcher(line);
+        Matcher matcher = linePattern.matcher(line);
         boolean matches = matcher.matches();
         if (!matches) {
             return null;
