@@ -39,8 +39,10 @@ public class LogParserTest extends TestCase {
         logParser.setCsvOutputSeparatorChar(';');
         InputStream jahiaLogStream = this.getClass().getResourceAsStream("/jahia-tomcat/catalina.out");
         Reader reader = new InputStreamReader(jahiaLogStream);
-        Writer writer = new FileWriter("jahia-log-report.csv");
-        logParser.parse(reader, writer, new ArrayList(), DEFAULT_DATE_FORMAT_STRING);
+        File defaultPerfOutputFile = new File("jahia-perf-analysis.csv");
+        File defaultThreadDumpsOutputFile = new File("jahia-threads-analysis.csv");
+        File defaultExceptionsOutputFile = new File("jahia-exceptions-analysis.csv");
+        logParser.parse(reader, defaultPerfOutputFile.getAbsoluteFile().toString(), defaultThreadDumpsOutputFile.getAbsoluteFile().toString(), defaultExceptionsOutputFile.getAbsoluteFile().toString(), new ArrayList(), DEFAULT_DATE_FORMAT_STRING);
     }
 }
 
