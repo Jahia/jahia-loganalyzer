@@ -2,10 +2,10 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jahia.loganalyzer</groupId>
-  <artifactId>jahia_loganalyzer</artifactId>
+  <artifactId>loganalyzer</artifactId>
   <packaging>jar</packaging>
-  <version>0.2-SNAPSHOT</version>
-  <name>jahia_loganalyzer</name>
+  <version>0.3-SNAPSHOT</version>
+  <name>loganalyzer</name>
   <url>http://www.jahia.org</url>
   <dependencies>
     <dependency>
@@ -26,6 +26,11 @@
         <version>2.0.4</version>
         <scope>compile</scope>
       </dependency>
+    <dependency>
+        <groupId>commons-logging</groupId>
+        <artifactId>commons-logging</artifactId>
+        <version>1.1.1</version>
+    </dependency> 
   </dependencies>
   <build>
     <plugins>

@@ -19,10 +19,10 @@ public class CSVLogEntryWriter implements LogEntryWriter {
     CSVWriter csvWriter;
     DateFormat dateFormat = DateFormat.getDateTimeInstance();
 
-    public CSVLogEntryWriter(Writer writer, char separatorChar) {
+    public CSVLogEntryWriter(Writer writer, char separatorChar, LogEntry logEntry) {
         csvWriter = new CSVWriter(writer, separatorChar);
         ResourceBundle resourceBundle = ResourceBundle.getBundle("org/jahia/loganalyzer/loganalyzer_messages");
-        String[] columnKeys = LogEntry.getColumnKeys();
+        String[] columnKeys = logEntry.getColumnKeys();
         String[] columnNames = new String[columnKeys.length];
         for (int i=0; i < columnKeys.length; i++) {
             columnNames[i] = resourceBundle.getString("org.jahia.loganalyzer.logentry.column.header." + columnKeys[i]);
