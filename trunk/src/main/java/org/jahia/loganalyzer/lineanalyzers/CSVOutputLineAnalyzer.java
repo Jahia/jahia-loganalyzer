@@ -17,21 +17,30 @@ import java.io.IOException;
 public abstract class CSVOutputLineAnalyzer implements LineAnalyzer {
 
     private FileWriter writer;
-
-    public LogEntryWriter getLogEntryWriter() {
-        return logEntryWriter;
-    }
+    private FileWriter summaryWriter;
 
     private LogEntryWriter logEntryWriter;
+    private LogEntryWriter summaryLogEntryWriter;
 
-    public CSVOutputLineAnalyzer(String outputFileName, char csvOutputSeparatorChar, LogEntry logEntry) throws IOException {
+    public CSVOutputLineAnalyzer(String outputFileName, String summaryOutputFileName, char csvOutputSeparatorChar, LogEntry logEntry, LogEntry summaryLogEntry) throws IOException {
         writer = new FileWriter(outputFileName);
         logEntryWriter = new CSVLogEntryWriter(writer, csvOutputSeparatorChar, logEntry);
+        summaryWriter = new FileWriter(summaryOutputFileName);
+        summaryLogEntryWriter = new CSVLogEntryWriter(summaryWriter, csvOutputSeparatorChar, summaryLogEntry);
     }
 
     public void stop() throws IOException {
         logEntryWriter.close();
         writer.close();
+        summaryLogEntryWriter.close();
+        summaryWriter.close();        
     }
-    
+
+    public LogEntryWriter getLogEntryWriter() {
+        return logEntryWriter;
+    }
+
+    public LogEntryWriter getSummaryLogEntryWriter() {
+        return summaryLogEntryWriter;
+    }
 }

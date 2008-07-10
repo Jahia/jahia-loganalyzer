@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jahia.loganalyzer.LogParser;
+import org.jahia.loganalyzer.LogParserConfiguration;
 
 public class LogAnalyzerMainDialog extends JDialog {
     private JPanel contentPane;
@@ -16,20 +17,27 @@ public class LogAnalyzerMainDialog extends JDialog {
     private JButton buttonCancel;
     private JButton browseInputLogFile;
     private JTextField inputLogFile;
-    private JTextField performanceCSVOutputFile;
+    private JTextField performanceDetailsCSVOutputFile;
     private JTextField csvSeparatorCharField;
     private JButton browseCSVOutputFile;
     private JTabbedPane typeTabbedPane;
     private JCheckBox performanceActivated;
-    private JTextField regexpPatternField;
+    private JComboBox regexpPatternField;
     private JTextField dateFormatField;
     private JCheckBox threadDumpsActivated;
-    private JTextField threadDumpsCSVOutputFile;
+    private JTextField threadDetailsCSVOutputFile;
     private JCheckBox exceptionsActivated;
     private JTextField exceptionCSVOutputFile;
+    private JTextField threadSummaryCSVOutputFile;
+    private JTextField servletMapping;
+    private JLabel servletMappingLabel;
+    private JTextField contextMapping;
+    private JTextField performanceSummaryCSVOutputFile;
     private JFileChooser fileChooser;
-    private static final String DEFAULT_REGEXP_PATTERN = ".*?\\[(.*?)\\].*org\\.jahia\\.bin\\.Jahia.*Processed \\[(.*?)\\](?: esi=\\[(.*?)\\])? user=\\[(.*)\\] ip=\\[(.*)\\] in \\[(.*)ms\\].*";
     private static final String DEFAULT_DATE_FORMAT_STRING = "yyyy-MM-dd HH:mm:ss,SSS";
+    private static final String DEFAULT_CONTEXTMAPPING_STRING = "/jahia";
+    private static final String DEFAULT_SERVLETMAPPING_STRING = "/Jahia";
+    private LogParserConfiguration logParserConfiguration = new LogParserConfiguration();
 
     public LogAnalyzerMainDialog() {
         setTitle("Jahia Log Analysis Tool");
@@ -67,13 +75,16 @@ public class LogAnalyzerMainDialog extends JDialog {
         File defaultInputLogFile = new File("catalina.out");
         inputLogFile.setText(defaultInputLogFile.getAbsoluteFile().toString());
         File defaultPerfOutputFile = new File("jahia-perf-analysis.csv");
-        performanceCSVOutputFile.setText(defaultPerfOutputFile.getAbsoluteFile().toString());
-        File defaultThreadDumpsOutputFile = new File("jahia-threads-analysis.csv");
-        threadDumpsCSVOutputFile.setText(defaultThreadDumpsOutputFile.getAbsoluteFile().toString());
+        performanceDetailsCSVOutputFile.setText(defaultPerfOutputFile.getAbsoluteFile().toString());
+        File defaultThreadDetailsOutputFile = new File("jahia-threads-details.csv");
+        threadDetailsCSVOutputFile.setText(defaultThreadDetailsOutputFile.getAbsoluteFile().toString());
+        File defaultThreadSummaryOutputFile = new File("jahia-threads-summary.csv");
+        threadSummaryCSVOutputFile.setText(defaultThreadSummaryOutputFile.getAbsoluteFile().toString());
         File defaultExceptionsOutputFile = new File("jahia-exceptions-analysis.csv");
         exceptionCSVOutputFile.setText(defaultExceptionsOutputFile.getAbsoluteFile().toString());
-        regexpPatternField.setText(DEFAULT_REGEXP_PATTERN);
         dateFormatField.setText(DEFAULT_DATE_FORMAT_STRING);
+        contextMapping.setText(DEFAULT_CONTEXTMAPPING_STRING);
+        servletMapping.setText(DEFAULT_SERVLETMAPPING_STRING);
 
         //Create a file chooser
         fileChooser = new JFileChooser();
@@ -103,13 +114,13 @@ public class LogAnalyzerMainDialog extends JDialog {
         });
         browseCSVOutputFile.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                fileChooser.setSelectedFile(new File(performanceCSVOutputFile.getText()));
+                fileChooser.setSelectedFile(new File(performanceDetailsCSVOutputFile.getText()));
                 int returnVal = fileChooser.showOpenDialog(LogAnalyzerMainDialog.this);
 
                 if (returnVal == JFileChooser.APPROVE_OPTION) {
                     File file = fileChooser.getSelectedFile();
                     //This is where a real application would open the file.
-                    performanceCSVOutputFile.setText(file.getAbsoluteFile().toString());
+                    performanceDetailsCSVOutputFile.setText(file.getAbsoluteFile().toString());
                 } else {
                 }
             }
@@ -133,13 +144,20 @@ public class LogAnalyzerMainDialog extends JDialog {
     private void onOK() {
         disableUI();
         List patternList = new ArrayList();
-        patternList.add(regexpPatternField.getText());
-        AnalysisWorker worker = new AnalysisWorker(inputLogFile.getText(),
-        performanceCSVOutputFile.getText(),
-        threadDumpsCSVOutputFile.getText(),
-        exceptionCSVOutputFile.getText(),
-        csvSeparatorCharField.getText().charAt(0),
-        patternList, dateFormatField.getText());
+        patternList.add(regexpPatternField.getSelectedItem().toString());
+        logParserConfiguration.setInputFileName(inputLogFile.getText());
+        logParserConfiguration.setPerformanceAnalyzerActivated(performanceActivated.isSelected());
+        logParserConfiguration.setPerfOutputFileName(performanceDetailsCSVOutputFile.getText());
+        logParserConfiguration.setThreadDumpAnalyzerActivated(threadDumpsActivated.isSelected());
+        logParserConfiguration.setThreadDetailsOutputFileName(threadDetailsCSVOutputFile.getText());
+        logParserConfiguration.setThreadSummaryOutputFileName(threadSummaryCSVOutputFile.getText());
+        logParserConfiguration.setExceptionAnalyzerActivated(exceptionsActivated.isSelected());
+        logParserConfiguration.setExceptionsOutputFileName(exceptionCSVOutputFile.getText());
+        logParserConfiguration.setCsvSeparatorChar(csvSeparatorCharField.getText().charAt(0));
+        logParserConfiguration.setPatternList(patternList);
+        logParserConfiguration.setDateFormatString(dateFormatField.getText());
+        logParserConfiguration.setServletMapping(servletMapping.getText());
+        AnalysisWorker worker = new AnalysisWorker(logParserConfiguration);
         worker.start();
     }
 
@@ -160,28 +178,10 @@ public class LogAnalyzerMainDialog extends JDialog {
 
     class AnalysisWorker extends Thread {
 
-        private String inputFileName;
-        private String perfOutputFileName;
-        private String threadDumpsOutputFileName;
-        private String exceptionsOutputFileName;
-        private char csvSeparatorChar;
-        private List patternList;
-        private String dateFormatString;
+        LogParserConfiguration logParserConfiguration;
 
-        public AnalysisWorker(String inputFileName,
-                              String perfOutputFileName,
-                              String threadDumpsOutputFileName,
-                              String exceptionsOutputFileName,
-                              char csvSeparatorChar,
-                              List patternList,
-                              String dateFormatString) {
-            this.inputFileName = inputFileName;
-            this.perfOutputFileName = perfOutputFileName;
-            this.threadDumpsOutputFileName = threadDumpsOutputFileName;
-            this.exceptionsOutputFileName = exceptionsOutputFileName;
-            this.csvSeparatorChar = csvSeparatorChar;
-            this.patternList = patternList;
-            this.dateFormatString = dateFormatString;
+        public AnalysisWorker(LogParserConfiguration logParserConfiguration) {
+            this.logParserConfiguration = logParserConfiguration;
         }
 
         public void run() {
@@ -189,12 +189,12 @@ public class LogAnalyzerMainDialog extends JDialog {
                 InputStream in = new BufferedInputStream(
                         new ProgressMonitorInputStream(
                                 LogAnalyzerMainDialog.this,
-                                "Reading " + inputFileName,
-                                new FileInputStream(inputFileName)));
+                                "Reading " + logParserConfiguration.getInputFileName(),
+                                new FileInputStream(logParserConfiguration.getInputFileName())));
                 InputStreamReader reader = new InputStreamReader(in);
                 LogParser logParser = new LogParser();
-                logParser.setCsvOutputSeparatorChar(csvSeparatorChar);
-                logParser.parse(reader, perfOutputFileName, threadDumpsOutputFileName, exceptionsOutputFileName, patternList, dateFormatString);
+                logParser.setLogParserConfiguration(logParserConfiguration);
+                logParser.parse(reader);
             } catch (InterruptedIOException iioe) {
                 JOptionPane.showMessageDialog(LogAnalyzerMainDialog.this, "Analysis cancelled by user", "Warning", JOptionPane.WARNING_MESSAGE);
                 enableUI();

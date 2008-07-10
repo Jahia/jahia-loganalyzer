@@ -4,6 +4,7 @@ import org.jahia.loganalyzer.lineanalyzers.LineAnalyzer;
 import org.jahia.loganalyzer.LogEntry;
 
 import java.util.List;
+import java.util.Date;
 import java.io.LineNumberReader;
 import java.io.IOException;
 
@@ -36,12 +37,13 @@ public class CompositeLineAnalyzer implements LineAnalyzer {
         return false;
     }
 
-    public void parseLine(String line, LineNumberReader lineNumberReader) throws IOException {
+    public Date parseLine(String line, LineNumberReader lineNumberReader, Date lastValidDateParsed) throws IOException {
         for (LineAnalyzer lineAnalyzer : lineAnalyzers) {
             if (lineAnalyzer.isForThisAnalyzer(line)) {
-                lineAnalyzer.parseLine(line, lineNumberReader);
+                return lineAnalyzer.parseLine(line, lineNumberReader, lastValidDateParsed);                
             }
         }
+        return null;
     }
 
     public void finishPreviousState() {

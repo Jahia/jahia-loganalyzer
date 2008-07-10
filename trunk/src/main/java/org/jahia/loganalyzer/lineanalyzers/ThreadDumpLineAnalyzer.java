@@ -1,13 +1,16 @@
 package org.jahia.loganalyzer.lineanalyzers;
 
-import org.jahia.loganalyzer.ThreadDumpLogEntry;
+import org.jahia.loganalyzer.*;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import java.io.LineNumberReader;
 import java.io.IOException;
+import java.io.FileWriter;
+import java.io.Writer;
 
 /**
  * Created by IntelliJ IDEA.
@@ -23,15 +26,20 @@ public class ThreadDumpLineAnalyzer extends CSVOutputLineAnalyzer {
 
     boolean inThreadDump = false;
     long currentThreadCount = 0;
+    Date currentThreadDumpDate = null;
+    ThreadSummaryLogEntry currentSummaryLogEntry = null;
+    ThreadSummaryLogEntry lastSummaryLogEntry = null;
+    List<ThreadSummaryLogEntry> allThreadDumps = new ArrayList<ThreadSummaryLogEntry>();
+    long threadDumpCount = 0;
     List<String> currentStackTrace = new ArrayList<String>();
     private static final String DEFAULT_THREADINFO_PATTERN = "\"(.*?)\" (daemon )?prio=(\\d*) tid=(.*?) nid=(.*?) ([\\w\\.\\(\\) ]*)(\\[(.*)\\])?";
     Pattern threadInfoPattern;
 
-
     ThreadDumpLogEntry threadDumpLogEntry = null;
+    Date lastValidDateParsed = null;
     
-    public ThreadDumpLineAnalyzer(String threadDumpsOutputFileName, char csvOutputSeparatorChar) throws IOException {
-        super(threadDumpsOutputFileName, csvOutputSeparatorChar, new ThreadDumpLogEntry());
+    public ThreadDumpLineAnalyzer(LogParserConfiguration logParserConfiguration) throws IOException {
+        super(logParserConfiguration.getThreadDetailsOutputFileName(), logParserConfiguration.getThreadSummaryOutputFileName(), logParserConfiguration.getCsvSeparatorChar(), new ThreadDumpLogEntry(), new ThreadSummaryLogEntry());
         threadInfoPattern = Pattern.compile(DEFAULT_THREADINFO_PATTERN);        
     }
 
@@ -54,8 +62,9 @@ public class ThreadDumpLineAnalyzer extends CSVOutputLineAnalyzer {
         return false;
     }
 
-    public void parseLine(String line, LineNumberReader lineNumberReader) throws IOException {
+    public Date parseLine(String line, LineNumberReader lineNumberReader, Date lastValidDateParsed) throws IOException {
 
+        this.lastValidDateParsed = lastValidDateParsed;
         if (line.startsWith("Full thread dump")) {
             if (inThreadDump) {
                 // we found another thread dump just after the one we are currently analysing, let's
@@ -64,6 +73,9 @@ public class ThreadDumpLineAnalyzer extends CSVOutputLineAnalyzer {
             }
             log.debug("Found thread dump, starting analysis...");
             inThreadDump = true;
+            currentSummaryLogEntry = new ThreadSummaryLogEntry();
+            currentSummaryLogEntry.setThreadDumpDate(lastValidDateParsed);
+            threadDumpCount++;
         } else if (line.startsWith("\"")) {
             // we are in the case of a new thread
             if (threadDumpLogEntry != null) {
@@ -72,16 +84,20 @@ public class ThreadDumpLineAnalyzer extends CSVOutputLineAnalyzer {
                     log.trace("Thread " + currentThreadCount + " : " + threadDumpLogEntry);
                 }
                 getLogEntryWriter().write(threadDumpLogEntry);
+                currentSummaryLogEntry.getThreadDumpLogEntries().add(threadDumpLogEntry);
+                currentSummaryLogEntry.getThreadNames().put(threadDumpLogEntry.getTid(), threadDumpLogEntry.getName());
             }
             threadDumpLogEntry = new ThreadDumpLogEntry();
-            threadDumpLogEntry.setNumber(currentThreadCount++);
+            threadDumpLogEntry.setDumpNumber(threadDumpCount);
+            threadDumpLogEntry.setDumpDate(lastValidDateParsed);
+            threadDumpLogEntry.setThreadNumber(++currentThreadCount);
 
             // replace all this parsing with patterns
             Matcher matcher = threadInfoPattern.matcher(line);
             boolean matches = matcher.matches();
             if (!matches) {
                 log.warn("Line doesn't match : " + line);
-                return;
+                return null;
             }
             threadDumpLogEntry.setName(matcher.group(1));
             threadDumpLogEntry.setType(matcher.group(2));
@@ -109,22 +125,25 @@ public class ThreadDumpLineAnalyzer extends CSVOutputLineAnalyzer {
 
         }
 
+        return null;
     }
 
     public void finishPreviousState() {
         log.debug("Found end of thread dump, cleaning up...");
-        threadDumpLogEntry = new ThreadDumpLogEntry();
-        threadDumpLogEntry.setNumber(-1);
-        threadDumpLogEntry.setName("---------");
-        getLogEntryWriter().write(threadDumpLogEntry);
-        log.info("Found " + currentThreadCount + " threads in thread dump.");
+        log.info("Found " + currentSummaryLogEntry.getThreadDumpLogEntries().size() + " threads in thread dump.");
+        currentSummaryLogEntry.setDumpNumber(threadDumpCount);
+        currentSummaryLogEntry.computeDifferences(lastSummaryLogEntry);
+        getSummaryLogEntryWriter().write(currentSummaryLogEntry);
+        allThreadDumps.add(currentSummaryLogEntry);
         inThreadDump = false;
         threadDumpLogEntry = null;
         currentThreadCount = 0;
+        lastSummaryLogEntry = currentSummaryLogEntry;
     }
 
     public void stop() throws IOException {
         super.stop();
+        log.info("Found " + allThreadDumps.size() + " thread dumps.");
     }
 
 }

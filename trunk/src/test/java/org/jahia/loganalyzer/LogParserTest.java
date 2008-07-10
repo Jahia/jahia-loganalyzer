@@ -36,13 +36,17 @@ public class LogParserTest extends TestCase {
 
     public void testLogParser() throws IOException {
         LogParser logParser = new LogParser();
-        logParser.setCsvOutputSeparatorChar(';');
+        LogParserConfiguration logParserConfiguration = new LogParserConfiguration();
+        logParserConfiguration.setCsvSeparatorChar(';');
         InputStream jahiaLogStream = this.getClass().getResourceAsStream("/jahia-tomcat/catalina.out");
         Reader reader = new InputStreamReader(jahiaLogStream);
-        File defaultPerfOutputFile = new File("jahia-perf-analysis.csv");
-        File defaultThreadDumpsOutputFile = new File("jahia-threads-analysis.csv");
-        File defaultExceptionsOutputFile = new File("jahia-exceptions-analysis.csv");
-        logParser.parse(reader, defaultPerfOutputFile.getAbsoluteFile().toString(), defaultThreadDumpsOutputFile.getAbsoluteFile().toString(), defaultExceptionsOutputFile.getAbsoluteFile().toString(), new ArrayList(), DEFAULT_DATE_FORMAT_STRING);
+        logParserConfiguration.setInputFileName(this.getClass().getResource("/jahia-tomcat/catalina.out").toString());
+        logParserConfiguration.setPatternList(new ArrayList());
+        logParserConfiguration.setDateFormatString(DEFAULT_DATE_FORMAT_STRING);
+        logParserConfiguration.setContextMapping("");
+        logParserConfiguration.setServletMapping("/PFUE");
+        logParser.setLogParserConfiguration(logParserConfiguration);
+        logParser.parse(reader);
     }
 }
 

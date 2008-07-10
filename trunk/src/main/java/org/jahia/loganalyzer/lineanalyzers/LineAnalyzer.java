@@ -4,6 +4,7 @@ import org.jahia.loganalyzer.LogEntry;
 
 import java.io.LineNumberReader;
 import java.io.IOException;
+import java.util.Date;
 
 /**
  * Created by IntelliJ IDEA.
@@ -26,7 +27,7 @@ public interface LineAnalyzer {
      * @param reader
      * @throws IOException
      */
-    void parseLine(String line, LineNumberReader reader) throws IOException;
+    Date parseLine(String line, LineNumberReader reader, Date lastValidDateParsed) throws IOException;
 
     /**
      * This method is called when this analyzer is being switched to another one by the composite analyzer,
