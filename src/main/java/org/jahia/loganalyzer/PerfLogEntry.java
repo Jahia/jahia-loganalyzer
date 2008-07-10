@@ -13,6 +13,7 @@ import java.text.DateFormat;
 public class PerfLogEntry implements LogEntry {
     private Date logDate;
     private int pid = -1;
+    private String urlKey = "";
     private String language;
     private String user;
     private String cacheMode;
@@ -36,6 +37,14 @@ public class PerfLogEntry implements LogEntry {
 
     public void setPid(int pid) {
         this.pid = pid;
+    }
+
+    public String getUrlKey() {
+        return urlKey;
+    }
+
+    public void setUrlKey(String urlKey) {
+        this.urlKey = urlKey;
     }
 
     public String getLanguage() {
@@ -103,32 +112,34 @@ public class PerfLogEntry implements LogEntry {
     }
 
     public String[] toStringArray(DateFormat dateFormat) {
-        String[] result = new String[10];
+        String[] result = new String[11];
         result[0] = dateFormat.format(logDate);
         result[1] = Integer.toString(pid);
-        result[2] = language;
-        result[3] = user;
-        result[4] = cacheMode;
-        result[5] = engineName;
-        result[6] = esi;
-        result[7] = ipAddress;
-        result[8] = Long.toString(processingTime);
-        result[9] = url;
+        result[2] = urlKey;
+        result[3] = language;
+        result[4] = user;
+        result[5] = cacheMode;
+        result[6] = engineName;
+        result[7] = esi;
+        result[8] = ipAddress;
+        result[9] = Long.toString(processingTime);
+        result[10] = url;
         return result;
     }
 
     public String[] getColumnKeys() {
-        String[] result = new String[10];
+        String[] result = new String[11];
         result[0] = "date";
         result[1] = "pid";
-        result[2] = "language";
-        result[3] = "user";
-        result[4] = "cacheMode";
-        result[5] = "engineName";
-        result[6] = "esi";
-        result[7] = "ipAddress";
-        result[8] = "processingTime";
-        result[9] = "url";
+        result[2] = "urlKey";
+        result[3] = "language";
+        result[4] = "user";
+        result[5] = "cacheMode";
+        result[6] = "engineName";
+        result[7] = "esi";
+        result[8] = "ipAddress";
+        result[9] = "processingTime";
+        result[10] = "url";
         return result;
     }
     

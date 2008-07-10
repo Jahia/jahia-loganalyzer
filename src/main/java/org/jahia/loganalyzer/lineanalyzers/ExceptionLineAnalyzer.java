@@ -1,12 +1,11 @@
 package org.jahia.loganalyzer.lineanalyzers;
 
-import org.jahia.loganalyzer.LogEntry;
-import org.jahia.loganalyzer.LogEntryWriter;
-import org.jahia.loganalyzer.ExceptionLogEntry;
+import org.jahia.loganalyzer.*;
 
 import java.io.LineNumberReader;
 import java.io.IOException;
 import java.io.FileWriter;
+import java.util.Date;
 
 /**
  * Created by IntelliJ IDEA.
@@ -17,15 +16,16 @@ import java.io.FileWriter;
  */
 public class ExceptionLineAnalyzer extends CSVOutputLineAnalyzer {
 
-    public ExceptionLineAnalyzer(String exceptionsOutputFileName, char csvOutputSeparatorChar) throws IOException {
-        super(exceptionsOutputFileName, csvOutputSeparatorChar, new ExceptionLogEntry());
+    public ExceptionLineAnalyzer(LogParserConfiguration logParserConfiguration) throws IOException {
+        super(logParserConfiguration.getExceptionsOutputFileName(), logParserConfiguration.getExceptionsSummaryOutputFileName(),logParserConfiguration.getCsvSeparatorChar(), new ExceptionLogEntry(), new ExceptionSummaryLogEntry());
     }
 
     public boolean isForThisAnalyzer(String line) {
         return false;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    public void parseLine(String line, LineNumberReader lineNumberReader) {
+    public Date parseLine(String line, LineNumberReader lineNumberReader, Date lastValidDateParsed) {
+        return null;
     }
 
     public void finishPreviousState() {

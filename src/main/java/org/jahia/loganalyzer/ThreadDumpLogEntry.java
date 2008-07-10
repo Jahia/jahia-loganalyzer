@@ -2,6 +2,7 @@ package org.jahia.loganalyzer;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Date;
 import java.text.DateFormat;
 
 /**
@@ -13,7 +14,9 @@ import java.text.DateFormat;
  */
 public class ThreadDumpLogEntry implements LogEntry {
 
-    private long number;
+    private long dumpNumber;
+    private Date dumpDate;
+    private long threadNumber;
     private String name;
     private String type = "normal";
     private String tid;
@@ -30,8 +33,12 @@ public class ThreadDumpLogEntry implements LogEntry {
 
     public String toString() {
         StringBuffer buffer = new StringBuffer();
-        buffer.append("number=");
-        buffer.append(number);
+        buffer.append("dump=");
+        buffer.append(dumpNumber);
+        buffer.append(",date=");
+        buffer.append(dumpDate);
+        buffer.append(",threadNumber=");
+        buffer.append(threadNumber);
         buffer.append(",name=");
         buffer.append(name);
         buffer.append(",type=");
@@ -49,12 +56,28 @@ public class ThreadDumpLogEntry implements LogEntry {
         return buffer.toString();
     }
 
-    public long getNumber() {
-        return number;
+    public long getDumpNumber() {
+        return dumpNumber;
     }
 
-    public void setNumber(long number) {
-        this.number = number;
+    public void setDumpNumber(long dumpNumber) {
+        this.dumpNumber = dumpNumber;
+    }
+
+    public Date getDumpDate() {
+        return dumpDate;
+    }
+
+    public void setDumpDate(Date dumpDate) {
+        this.dumpDate = dumpDate;
+    }
+
+    public long getThreadNumber() {
+        return threadNumber;
+    }
+
+    public void setThreadNumber(long threadNumber) {
+        this.threadNumber = threadNumber;
     }
 
     public String getName() {
@@ -165,34 +188,46 @@ public class ThreadDumpLogEntry implements LogEntry {
     }
 
     public String[] toStringArray(DateFormat dateFormat) {
-        String[] result = new String[11];
-        result[0] = Long.toString(number);
-        result[1] = name;
-        result[2] = type;
-        result[3] = tid;
-        result[4] = nid;
-        result[5] = Integer.toString(priority);
-        result[6] = state;
-        result[7] = stateInfo;
-        result[8] = stackTraceToString();
-        result[9] = waitingOnLocksToString();
-        result[10] = holdingLocksToString();
+        String[] result = new String[15];
+        result[0] = Long.toString(dumpNumber);
+        if (dumpDate != null) {
+            result[1] = dateFormat.format(dumpDate);
+        } else {
+            result[1] = "";
+        }
+        result[2] = Long.toString(threadNumber);
+        result[3] = name;
+        result[4] = type;
+        result[5] = tid;
+        result[6] = nid;
+        result[7] = Integer.toString(priority);
+        result[8] = state;
+        result[9] = stateInfo;
+        result[10] = stackTraceToString();
+        result[11] = Integer.toString(waitingOnLocks.size());
+        result[12] = waitingOnLocksToString();
+        result[13] = Integer.toString(holdingLocks.size());
+        result[14] = holdingLocksToString();
         return result;
     }
 
     public String[] getColumnKeys() {
-        String[] result = new String[11];
-        result[0] = "number";
-        result[1] = "name";
-        result[2] = "type";
-        result[3] = "tid";
-        result[4] = "nid";
-        result[5] = "priority";
-        result[6] = "state";
-        result[7] = "stateInfo";
-        result[8] = "stackTrace";
-        result[9] = "waitingOnLocks";
-        result[10] = "holdingLocks";
+        String[] result = new String[15];
+        result[0] = "dumpNumber";
+        result[1] = "dumpDate";
+        result[2] = "threadNumber";
+        result[3] = "name";
+        result[4] = "type";
+        result[5] = "tid";
+        result[6] = "nid";
+        result[7] = "priority";
+        result[8] = "state";
+        result[9] = "stateInfo";
+        result[10] = "stackTrace";
+        result[11] = "totalWaiting";
+        result[12] = "waitingOnLocks";
+        result[13] = "totalHeld";
+        result[14] = "holdingLocks";
         return result;
     }
 }

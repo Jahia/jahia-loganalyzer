@@ -21,7 +21,7 @@ public class CSVLogEntryWriter implements LogEntryWriter {
 
     public CSVLogEntryWriter(Writer writer, char separatorChar, LogEntry logEntry) {
         csvWriter = new CSVWriter(writer, separatorChar);
-        ResourceBundle resourceBundle = ResourceBundle.getBundle("org/jahia/loganalyzer/loganalyzer_messages");
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("loganalyzer_messages");
         String[] columnKeys = logEntry.getColumnKeys();
         String[] columnNames = new String[columnKeys.length];
         for (int i=0; i < columnKeys.length; i++) {

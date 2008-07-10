@@ -4,6 +4,7 @@ import org.jahia.loganalyzer.LogEntry;
 
 import java.io.LineNumberReader;
 import java.io.IOException;
+import java.util.Date;
 
 /**
  * This is the default line analyzer, that will always be called as a last resort, just to ignore lines that
@@ -18,7 +19,8 @@ public class DefaultDummyLineAnalyzer implements LineAnalyzer {
         return true;
     }
 
-    public void parseLine(String line, LineNumberReader lineNumberReader) {
+    public Date parseLine(String line, LineNumberReader lineNumberReader, Date lastValidDateParsed) {
+        return null;
     }
 
     public void finishPreviousState() {

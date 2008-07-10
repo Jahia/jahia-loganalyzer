@@ -4,6 +4,7 @@ import org.jahia.loganalyzer.lineanalyzers.*;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Date;
 import java.io.Reader;
 import java.io.LineNumberReader;
 import java.io.IOException;
@@ -21,38 +22,45 @@ public class LogParser {
             org.apache.commons.logging.LogFactory.getLog(LogParser.class);
 
     List patterns;
-    private char csvOutputSeparatorChar = ';';
+    LogParserConfiguration logParserConfiguration;
+    Date lastValidDateParsed = null;
 
     public LogParser() {}
 
-    public char getCsvOutputSeparatorChar() {
-        return csvOutputSeparatorChar;
+    public LogParserConfiguration getLogParserConfiguration() {
+        return logParserConfiguration;
     }
 
-    public void setCsvOutputSeparatorChar(char csvOutputSeparatorChar) {
-        this.csvOutputSeparatorChar = csvOutputSeparatorChar;
+    public void setLogParserConfiguration(LogParserConfiguration logParserConfiguration) {
+        this.logParserConfiguration = logParserConfiguration;
     }
 
-    public JahiaTimeReports parse(Reader reader,
-                                  String perfOutputFileName,
-                                  String threadDumpsOutputFileName,
-                                  String exceptionsOutputFileName,
-                                  List patterns, String dateFormatString) throws IOException {
+    public JahiaTimeReports parse(Reader reader) throws IOException {
         JahiaTimeReports timeReports = new JahiaTimeReports();
         // @todo make the following instantiation configurable so that we can choose the implementations to modify application input and output
         LineNumberReader lineNumberReader = new LineNumberReader(reader);
 
-        List<LineAnalyzer> lineAnalyzers = new ArrayList<LineAnalyzer>();      
-        lineAnalyzers.add(new ThreadDumpLineAnalyzer(threadDumpsOutputFileName, csvOutputSeparatorChar));
-        lineAnalyzers.add(new ExceptionLineAnalyzer(exceptionsOutputFileName, csvOutputSeparatorChar));
-        lineAnalyzers.add(new JahiaPerfLineAnalyzer(perfOutputFileName, csvOutputSeparatorChar, patterns, dateFormatString));
+        List<LineAnalyzer> lineAnalyzers = new ArrayList<LineAnalyzer>();
+        if (logParserConfiguration.isThreadDumpAnalyzerActivated()) {
+            lineAnalyzers.add(new ThreadDumpLineAnalyzer(logParserConfiguration));
+        }
+        if (logParserConfiguration.isExceptionAnalyzerActivated()) {
+            lineAnalyzers.add(new ExceptionLineAnalyzer(logParserConfiguration));
+        }
+        if (logParserConfiguration.isPerformanceAnalyzerActivated()) {
+            lineAnalyzers.add(new JahiaPerfLineAnalyzer(logParserConfiguration));
+        }
+        lineAnalyzers.add(new StandardLogLineAnalyzer(logParserConfiguration));
         lineAnalyzers.add(new DefaultDummyLineAnalyzer());
         LineAnalyzer compositeLineAnalyzer = new CompositeLineAnalyzer(lineAnalyzers);
         
         String currentLine = null;
         try {
             while ( ( currentLine = lineNumberReader.readLine()) != null) {
-                compositeLineAnalyzer.parseLine(currentLine, lineNumberReader);
+                Date lastDateFound = compositeLineAnalyzer.parseLine(currentLine, lineNumberReader, lastValidDateParsed);
+                if (lastDateFound != null) {
+                    lastValidDateParsed = lastDateFound;
+                }
             }
             compositeLineAnalyzer.finishPreviousState();
             compositeLineAnalyzer.stop();
