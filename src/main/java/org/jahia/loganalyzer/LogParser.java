@@ -54,13 +54,16 @@ public class LogParser {
         lineAnalyzers.add(new DefaultDummyLineAnalyzer());
         LineAnalyzer compositeLineAnalyzer = new CompositeLineAnalyzer(lineAnalyzers);
         
-        String currentLine = null;
+        String currentLine = lineNumberReader.readLine();
+        String nextLine = null;
         try {
-            while ( ( currentLine = lineNumberReader.readLine()) != null) {
-                Date lastDateFound = compositeLineAnalyzer.parseLine(currentLine, lineNumberReader, lastValidDateParsed);
+            while ( currentLine != null ) {
+                nextLine = lineNumberReader.readLine();
+                Date lastDateFound = compositeLineAnalyzer.parseLine(currentLine, nextLine, lineNumberReader, lastValidDateParsed);
                 if (lastDateFound != null) {
                     lastValidDateParsed = lastDateFound;
                 }
+                currentLine = nextLine;
             }
             compositeLineAnalyzer.finishPreviousState();
             compositeLineAnalyzer.stop();

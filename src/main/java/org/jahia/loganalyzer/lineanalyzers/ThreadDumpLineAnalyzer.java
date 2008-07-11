@@ -43,7 +43,7 @@ public class ThreadDumpLineAnalyzer extends CSVOutputLineAnalyzer {
         threadInfoPattern = Pattern.compile(DEFAULT_THREADINFO_PATTERN);        
     }
 
-    public boolean isForThisAnalyzer(String line) {
+    public boolean isForThisAnalyzer(String line, String nextLine) {
         if (inThreadDump) {
             // we must now check that it is indeed a valid thread dump line
             if (line.startsWith("Full thread dump") ||
@@ -62,7 +62,7 @@ public class ThreadDumpLineAnalyzer extends CSVOutputLineAnalyzer {
         return false;
     }
 
-    public Date parseLine(String line, LineNumberReader lineNumberReader, Date lastValidDateParsed) throws IOException {
+    public Date parseLine(String line, String nextLine, LineNumberReader lineNumberReader, Date lastValidDateParsed) throws IOException {
 
         this.lastValidDateParsed = lastValidDateParsed;
         if (line.startsWith("Full thread dump")) {
@@ -130,11 +130,13 @@ public class ThreadDumpLineAnalyzer extends CSVOutputLineAnalyzer {
 
     public void finishPreviousState() {
         log.debug("Found end of thread dump, cleaning up...");
-        log.info("Found " + currentSummaryLogEntry.getThreadDumpLogEntries().size() + " threads in thread dump.");
-        currentSummaryLogEntry.setDumpNumber(threadDumpCount);
-        currentSummaryLogEntry.computeDifferences(lastSummaryLogEntry);
-        getSummaryLogEntryWriter().write(currentSummaryLogEntry);
-        allThreadDumps.add(currentSummaryLogEntry);
+        if (currentSummaryLogEntry != null) {
+            log.info("Found " + currentSummaryLogEntry.getThreadDumpLogEntries().size() + " threads in thread dump.");
+            currentSummaryLogEntry.setDumpNumber(threadDumpCount);
+            currentSummaryLogEntry.computeDifferences(lastSummaryLogEntry);
+            getSummaryLogEntryWriter().write(currentSummaryLogEntry);
+            allThreadDumps.add(currentSummaryLogEntry);
+        }
         inThreadDump = false;
         threadDumpLogEntry = null;
         currentThreadCount = 0;
