@@ -72,8 +72,8 @@ public class ExceptionLineAnalyzer extends CSVOutputLineAnalyzer {
                 log.warn("Couldn't parse first line of exception, ignoring. Line "+Integer.toString(lineNumberReader.getLineNumber()-1)+"=" + line);
                 return null;
             }
-            currentExceptionLogEntry.setClassName(firstLineMatcher.group(1));
-            currentExceptionLogEntry.setMessage(firstLineMatcher.group(2));
+            currentExceptionLogEntry.setClassName(firstLineMatcher.group(3));
+            currentExceptionLogEntry.setMessage(firstLineMatcher.group(4));
         } else {
             Matcher secondLineMatcher = secondLinePattern.matcher(line);
             if (secondLineMatcher.matches()) {
