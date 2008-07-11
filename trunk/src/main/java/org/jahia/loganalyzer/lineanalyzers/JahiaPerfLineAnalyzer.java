@@ -53,7 +53,7 @@ public class JahiaPerfLineAnalyzer extends CSVOutputLineAnalyzer {
         servletMapping = logParserConfiguration.getServletMapping();
     }
 
-    public boolean isForThisAnalyzer(String line) {
+    public boolean isForThisAnalyzer(String line, String nextLine) {
         Matcher matcher = linePattern.matcher(line);
         boolean matches = matcher.matches();
         if (!matches) {
@@ -62,7 +62,7 @@ public class JahiaPerfLineAnalyzer extends CSVOutputLineAnalyzer {
         return true;
     }
 
-    public Date parseLine(String line, LineNumberReader lineNumberReader, Date lastValidDateParsed) {
+    public Date parseLine(String line, String nextLine, LineNumberReader lineNumberReader, Date lastValidDateParsed) {
         PerfLogEntry logEntry = new PerfLogEntry();
 
         Matcher matcher = linePattern.matcher(line);

@@ -32,7 +32,7 @@ public class StandardLogLineAnalyzer implements LineAnalyzer {
         dateFormat = new SimpleDateFormat(logParserConfiguration.getDateFormatString());
     }
 
-    public boolean isForThisAnalyzer(String line) {
+    public boolean isForThisAnalyzer(String line, String nextLine) {
         Matcher matcher = standardLogPattern.matcher(line);
         boolean matches = matcher.matches();
         if (!matches) {
@@ -41,7 +41,7 @@ public class StandardLogLineAnalyzer implements LineAnalyzer {
         return true;
     }
 
-    public Date parseLine(String line, LineNumberReader reader, Date lastValidDateParsed) throws IOException {
+    public Date parseLine(String line, String nextLine, LineNumberReader reader, Date lastValidDateParsed) throws IOException {
         Matcher matcher = standardLogPattern.matcher(line);
         boolean matches = matcher.matches();
         if (!matches) {

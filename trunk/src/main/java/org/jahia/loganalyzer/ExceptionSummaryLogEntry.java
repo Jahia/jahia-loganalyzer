@@ -10,11 +10,41 @@ import java.text.DateFormat;
  * To change this template use File | Settings | File Templates.
  */
 public class ExceptionSummaryLogEntry implements LogEntry {
+
+    private long count = 0;
+    private ExceptionLogEntry exceptionLogEntry;
+
+    public long getCount() {
+        return count;
+    }
+
+    public void setCount(long count) {
+        this.count = count;
+    }
+
+    public ExceptionLogEntry getExceptionLogEntry() {
+        return exceptionLogEntry;
+    }
+
+    public void setExceptionLogEntry(ExceptionLogEntry exceptionLogEntry) {
+        this.exceptionLogEntry = exceptionLogEntry;
+    }
+
     public String[] toStringArray(DateFormat dateFormat) {
-        return new String[0];  //To change body of implemented methods use File | Settings | File Templates.
+        String[] result = new String[4];
+        result[0] = Long.toString(count);
+        result[1] = exceptionLogEntry.getClassName();
+        result[2] = exceptionLogEntry.getMessage();
+        result[3] = exceptionLogEntry.stackTraceToString();
+        return result;
     }
 
     public String[] getColumnKeys() {
-        return new String[0];  //To change body of implemented methods use File | Settings | File Templates.
+        String[] result = new String[4];
+        result[0] = "exceptions.summary.count";
+        result[1] = "exceptions.summary.className";
+        result[2] = "exceptions.summary.message";
+        result[3] = "exceptions.summary.stackTrace";
+        return result;
     }
 }

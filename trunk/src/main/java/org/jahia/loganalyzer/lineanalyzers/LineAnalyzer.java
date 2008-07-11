@@ -19,7 +19,7 @@ public interface LineAnalyzer {
      * @param line
      * @return
      */
-    boolean isForThisAnalyzer(String line);
+    boolean isForThisAnalyzer(String line, String nextLine);
 
     /**
      * Process the line with the analyzer
@@ -27,7 +27,7 @@ public interface LineAnalyzer {
      * @param reader
      * @throws IOException
      */
-    Date parseLine(String line, LineNumberReader reader, Date lastValidDateParsed) throws IOException;
+    Date parseLine(String line, String nextLine, LineNumberReader reader, Date lastValidDateParsed) throws IOException;
 
     /**
      * This method is called when this analyzer is being switched to another one by the composite analyzer,
