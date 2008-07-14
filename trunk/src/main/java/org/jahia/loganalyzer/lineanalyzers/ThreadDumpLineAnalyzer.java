@@ -9,8 +9,6 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import java.io.LineNumberReader;
 import java.io.IOException;
-import java.io.FileWriter;
-import java.io.Writer;
 
 /**
  * Created by IntelliJ IDEA.
@@ -32,15 +30,14 @@ public class ThreadDumpLineAnalyzer extends CSVOutputLineAnalyzer {
     List<ThreadSummaryLogEntry> allThreadDumps = new ArrayList<ThreadSummaryLogEntry>();
     long threadDumpCount = 0;
     List<String> currentStackTrace = new ArrayList<String>();
-    private static final String DEFAULT_THREADINFO_PATTERN = "\"(.*?)\" (daemon )?prio=(\\d*) tid=(.*?) nid=(.*?) ([\\w\\.\\(\\) ]*)(\\[(.*)\\])?";
     Pattern threadInfoPattern;
 
-    ThreadDumpLogEntry threadDumpLogEntry = null;
+    ThreadDumpDetailsLogEntry threadDumpDetailsLogEntry = null;
     Date lastValidDateParsed = null;
     
     public ThreadDumpLineAnalyzer(LogParserConfiguration logParserConfiguration) throws IOException {
-        super(logParserConfiguration.getThreadDetailsOutputFileName(), logParserConfiguration.getThreadSummaryOutputFileName(), logParserConfiguration.getCsvSeparatorChar(), new ThreadDumpLogEntry(), new ThreadSummaryLogEntry());
-        threadInfoPattern = Pattern.compile(DEFAULT_THREADINFO_PATTERN);        
+        super(logParserConfiguration.getThreadDetailsOutputFileName(), logParserConfiguration.getThreadSummaryOutputFileName(), logParserConfiguration.getCsvSeparatorChar(), new ThreadDumpDetailsLogEntry(), new ThreadSummaryLogEntry());
+        threadInfoPattern = Pattern.compile(logParserConfiguration.getThreadThreadInfoPattern());        
     }
 
     public boolean isForThisAnalyzer(String line, String nextLine) {
@@ -78,19 +75,20 @@ public class ThreadDumpLineAnalyzer extends CSVOutputLineAnalyzer {
             threadDumpCount++;
         } else if (line.startsWith("\"")) {
             // we are in the case of a new thread
-            if (threadDumpLogEntry != null) {
+            if (threadDumpDetailsLogEntry != null) {
                 // we were in another thread, let's cleanup before processing the new one.
                 if (log.isTraceEnabled()) {
-                    log.trace("Thread " + currentThreadCount + " : " + threadDumpLogEntry);
+                    log.trace("Thread " + currentThreadCount + " : " + threadDumpDetailsLogEntry);
                 }
-                getLogEntryWriter().write(threadDumpLogEntry);
-                currentSummaryLogEntry.getThreadDumpLogEntries().add(threadDumpLogEntry);
-                currentSummaryLogEntry.getThreadNames().put(threadDumpLogEntry.getTid(), threadDumpLogEntry.getName());
+                getDetailsLogEntryWriter().write(threadDumpDetailsLogEntry);
+                currentSummaryLogEntry.getThreadDumpLogEntries().add(threadDumpDetailsLogEntry);
+                currentSummaryLogEntry.getThreadNames().put(threadDumpDetailsLogEntry.getTid(), threadDumpDetailsLogEntry.getName());
             }
-            threadDumpLogEntry = new ThreadDumpLogEntry();
-            threadDumpLogEntry.setDumpNumber(threadDumpCount);
-            threadDumpLogEntry.setDumpDate(lastValidDateParsed);
-            threadDumpLogEntry.setThreadNumber(++currentThreadCount);
+            threadDumpDetailsLogEntry = new ThreadDumpDetailsLogEntry();
+            threadDumpDetailsLogEntry.setLineNumber(lineNumberReader.getLineNumber()-1);
+            threadDumpDetailsLogEntry.setDumpNumber(threadDumpCount);
+            threadDumpDetailsLogEntry.setDumpDate(lastValidDateParsed);
+            threadDumpDetailsLogEntry.setThreadNumber(++currentThreadCount);
 
             // replace all this parsing with patterns
             Matcher matcher = threadInfoPattern.matcher(line);
@@ -99,28 +97,28 @@ public class ThreadDumpLineAnalyzer extends CSVOutputLineAnalyzer {
                 log.warn("Line doesn't match : " + line);
                 return null;
             }
-            threadDumpLogEntry.setName(matcher.group(1));
-            threadDumpLogEntry.setType(matcher.group(2));
-            if (threadDumpLogEntry.getType() != null) {
-                threadDumpLogEntry.setType(threadDumpLogEntry.getType().trim());
+            threadDumpDetailsLogEntry.setName(matcher.group(1));
+            threadDumpDetailsLogEntry.setType(matcher.group(2));
+            if (threadDumpDetailsLogEntry.getType() != null) {
+                threadDumpDetailsLogEntry.setType(threadDumpDetailsLogEntry.getType().trim());
             }
             try {
-                threadDumpLogEntry.setPriority(Integer.parseInt(matcher.group(3)));
+                threadDumpDetailsLogEntry.setPriority(Integer.parseInt(matcher.group(3)));
             } catch (NumberFormatException nfe) {
-                log.error("Couldn't parse priority for thread " + threadDumpLogEntry + " in line : " + line, nfe);
+                log.error("Couldn't parse priority for thread " + threadDumpDetailsLogEntry + " in line : " + line, nfe);
             }
-            threadDumpLogEntry.setTid(matcher.group(4));
-            threadDumpLogEntry.setNid(matcher.group(5));
-            threadDumpLogEntry.setState(matcher.group(6).trim());
-            threadDumpLogEntry.setStateInfo(matcher.group(8));
+            threadDumpDetailsLogEntry.setTid(matcher.group(4));
+            threadDumpDetailsLogEntry.setNid(matcher.group(5));
+            threadDumpDetailsLogEntry.setState(matcher.group(6).trim());
+            threadDumpDetailsLogEntry.setStateInfo(matcher.group(8));
         } else if (line.startsWith("\tat")) {
-            threadDumpLogEntry.getStackTrace().add(line.substring(1));
+            threadDumpDetailsLogEntry.getStackTrace().add(line.substring(1));
         } else if (line.startsWith("\t- locked")) {
-            threadDumpLogEntry.getStackTrace().add(line.substring(1));
-            threadDumpLogEntry.getHoldingLocks().add(line.substring(1));
+            threadDumpDetailsLogEntry.getStackTrace().add(line.substring(1));
+            threadDumpDetailsLogEntry.getHoldingLocks().add(line.substring(1));
         } else if (line.startsWith("\t- waiting")) {
-            threadDumpLogEntry.getStackTrace().add(line.substring(1));
-            threadDumpLogEntry.getWaitingOnLocks().add(line.substring(1));
+            threadDumpDetailsLogEntry.getStackTrace().add(line.substring(1));
+            threadDumpDetailsLogEntry.getWaitingOnLocks().add(line.substring(1));
         } else if ("".equals(line)) {
 
         }
@@ -138,7 +136,7 @@ public class ThreadDumpLineAnalyzer extends CSVOutputLineAnalyzer {
             allThreadDumps.add(currentSummaryLogEntry);
         }
         inThreadDump = false;
-        threadDumpLogEntry = null;
+        threadDumpDetailsLogEntry = null;
         currentThreadCount = 0;
         lastSummaryLogEntry = currentSummaryLogEntry;
     }

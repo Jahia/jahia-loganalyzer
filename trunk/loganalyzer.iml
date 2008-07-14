@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module relativePaths="true" type="JAVA_MODULE" version="4">
-  <component name="NewModuleRootManager" inherit-compiler-output="false">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_5" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/target/classes" />
     <exclude-output />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
@@ -43,15 +43,28 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
-      <library name="com.jgoodies:looks:2.0.4">
+      <library name="com.jgoodies:looks:2.1.2">
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../m2repository/com/jgoodies/looks/2.0.4/looks-2.0.4.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../m2repository/com/jgoodies/looks/2.1.2/looks-2.1.2.jar!/" />
         </CLASSES>
         <JAVADOC>
-          <root url="jar://$MODULE_DIR$/../../m2repository/com/jgoodies/looks/2.0.4/looks-2.0.4-javadoc.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../m2repository/com/jgoodies/looks/2.1.2/looks-2.1.2-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
-          <root url="jar://$MODULE_DIR$/../../m2repository/com/jgoodies/looks/2.0.4/looks-2.0.4-sources.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../m2repository/com/jgoodies/looks/2.1.2/looks-2.1.2-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="jgoodies:forms:1.0.5">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../m2repository/jgoodies/forms/1.0.5/forms-1.0.5.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$MODULE_DIR$/../../m2repository/jgoodies/forms/1.0.5/forms-1.0.5-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../m2repository/jgoodies/forms/1.0.5/forms-1.0.5-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
@@ -65,6 +78,84 @@
         </JAVADOC>
         <SOURCES>
           <root url="jar://$MODULE_DIR$/../../m2repository/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="commons-configuration:commons-configuration:1.5">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../m2repository/commons-configuration/commons-configuration/1.5/commons-configuration-1.5.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$MODULE_DIR$/../../m2repository/commons-configuration/commons-configuration/1.5/commons-configuration-1.5-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../m2repository/commons-configuration/commons-configuration/1.5/commons-configuration-1.5-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="commons-collections:commons-collections:3.2">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../m2repository/commons-collections/commons-collections/3.2/commons-collections-3.2.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$MODULE_DIR$/../../m2repository/commons-collections/commons-collections/3.2/commons-collections-3.2-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../m2repository/commons-collections/commons-collections/3.2/commons-collections-3.2-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="commons-lang:commons-lang:2.3">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../m2repository/commons-lang/commons-lang/2.3/commons-lang-2.3.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$MODULE_DIR$/../../m2repository/commons-lang/commons-lang/2.3/commons-lang-2.3-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../m2repository/commons-lang/commons-lang/2.3/commons-lang-2.3-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="commons-digester:commons-digester:1.8">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../m2repository/commons-digester/commons-digester/1.8/commons-digester-1.8.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$MODULE_DIR$/../../m2repository/commons-digester/commons-digester/1.8/commons-digester-1.8-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../m2repository/commons-digester/commons-digester/1.8/commons-digester-1.8-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="commons-beanutils:commons-beanutils:1.7.0">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../m2repository/commons-beanutils/commons-beanutils/1.7.0/commons-beanutils-1.7.0.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$MODULE_DIR$/../../m2repository/commons-beanutils/commons-beanutils/1.7.0/commons-beanutils-1.7.0-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../m2repository/commons-beanutils/commons-beanutils/1.7.0/commons-beanutils-1.7.0-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library name="commons-beanutils:commons-beanutils-core:1.7.0">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../m2repository/commons-beanutils/commons-beanutils-core/1.7.0/commons-beanutils-core-1.7.0.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$MODULE_DIR$/../../m2repository/commons-beanutils/commons-beanutils-core/1.7.0/commons-beanutils-core-1.7.0-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../m2repository/commons-beanutils/commons-beanutils-core/1.7.0/commons-beanutils-core-1.7.0-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>

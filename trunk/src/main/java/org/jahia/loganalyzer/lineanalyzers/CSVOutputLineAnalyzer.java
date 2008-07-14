@@ -16,28 +16,28 @@ import java.io.IOException;
  */
 public abstract class CSVOutputLineAnalyzer implements LineAnalyzer {
 
-    private FileWriter writer;
+    private FileWriter detailsWriter;
     private FileWriter summaryWriter;
 
-    private LogEntryWriter logEntryWriter;
+    private LogEntryWriter detailsLogEntryWriter;
     private LogEntryWriter summaryLogEntryWriter;
 
     public CSVOutputLineAnalyzer(String outputFileName, String summaryOutputFileName, char csvOutputSeparatorChar, LogEntry logEntry, LogEntry summaryLogEntry) throws IOException {
-        writer = new FileWriter(outputFileName);
-        logEntryWriter = new CSVLogEntryWriter(writer, csvOutputSeparatorChar, logEntry);
+        detailsWriter = new FileWriter(outputFileName);
+        detailsLogEntryWriter = new CSVLogEntryWriter(detailsWriter, csvOutputSeparatorChar, logEntry);
         summaryWriter = new FileWriter(summaryOutputFileName);
         summaryLogEntryWriter = new CSVLogEntryWriter(summaryWriter, csvOutputSeparatorChar, summaryLogEntry);
     }
 
     public void stop() throws IOException {
-        logEntryWriter.close();
-        writer.close();
+        detailsLogEntryWriter.close();
+        detailsWriter.close();
         summaryLogEntryWriter.close();
         summaryWriter.close();        
     }
 
-    public LogEntryWriter getLogEntryWriter() {
-        return logEntryWriter;
+    public LogEntryWriter getDetailsLogEntryWriter() {
+        return detailsLogEntryWriter;
     }
 
     public LogEntryWriter getSummaryLogEntryWriter() {

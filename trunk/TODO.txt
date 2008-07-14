@@ -1,7 +1,11 @@
-- Add URL key support to perf analysis
-- Add possibility to provide perf summary that includes average, max, cumulated times for pages
+
+TODO 
+
+This is a quick and dirty laundry list of ideas and improvements for future 
+version of the Jahia Log Analysis tool :
+
 - In Jahia, add sessionID output and support in the log analyzer for this output.
 - Documentation with screenshots and maybe even a small movie to illustrate how to use
-- Add code that, if we change the directory of one of the output files, ask if we want to do the same for all output files.
-- Look into possibility to detect in which subsystem a thread is (Lucene, etc...), could we do this through stack analysis ? What about global Jahia actions ?
+- Look into possibility to detect in which subsystem a thread is (Lucene, 
+  etc...), could we do this through stack analysis ? What about global Jahia actions ?
 - Add support for parsing /site/ in URL

@@ -1,6 +1,6 @@
 package org.jahia.loganalyzer.lineanalyzers;
 
-import org.jahia.loganalyzer.PerfLogEntry;
+import org.jahia.loganalyzer.PerfDetailsLogEntry;
 import org.jahia.loganalyzer.LogParserConfiguration;
 import org.jahia.loganalyzer.PerfSummaryLogEntry;
 
@@ -25,9 +25,6 @@ public class JahiaPerfLineAnalyzer extends CSVOutputLineAnalyzer {
     private static final org.apache.commons.logging.Log log =
             org.apache.commons.logging.LogFactory.getLog(JahiaPerfLineAnalyzer.class);
 
-    private static final String OLD_DEFAULT_MATCHING_PATTERN = ".*?\\[(.*?)\\].*org\\.jahia\\.bin\\.Jahia.*Processed \\[(.*?)\\](?: esi=\\[(.*?)\\])? user=\\[(.*)\\] ip=\\[(.*)\\] in \\[(.*)ms\\].*";
-    private static final String DEFAULT_MATCHING_PATTERN = "(.*?): .*\\[org\\.jahia\\.bin\\.Jahia\\].*Processed \\[(.*?)\\](?: esi=\\[(.*?)\\])? user=\\[(.*)\\] ip=\\[(.*)\\] in \\[(.*)ms\\].*";
-    private static final String DEFAULT_DATE_FORMAT_STRING = "yyyy-MM-dd HH:mm:ss,SSS";
     private Pattern linePattern;
     private DateFormat dateFormat;
     private String contextMapping;
@@ -38,17 +35,13 @@ public class JahiaPerfLineAnalyzer extends CSVOutputLineAnalyzer {
      *
      */
     public JahiaPerfLineAnalyzer(LogParserConfiguration logParserConfiguration) throws IOException {
-        super(logParserConfiguration.getPerfOutputFileName(), logParserConfiguration.getPerfSummaryOutputFileName(),logParserConfiguration.getCsvSeparatorChar(), new PerfLogEntry(), new PerfSummaryLogEntry());
+        super(logParserConfiguration.getPerfDetailsOutputFileName(), logParserConfiguration.getPerfSummaryOutputFileName(),logParserConfiguration.getCsvSeparatorChar(), new PerfDetailsLogEntry(), new PerfSummaryLogEntry());
         if (logParserConfiguration.getPatternList().size() > 0) {
             linePattern = Pattern.compile((String)logParserConfiguration.getPatternList().get(0));
         } else {
-            linePattern = Pattern.compile(DEFAULT_MATCHING_PATTERN);
+            linePattern = Pattern.compile(logParserConfiguration.getPerfMatchingPattern());
         }
-        if (logParserConfiguration.getDateFormatString() != null) {
-           dateFormat = new SimpleDateFormat(logParserConfiguration.getDateFormatString());
-        } else {
-            dateFormat = new SimpleDateFormat(DEFAULT_DATE_FORMAT_STRING);
-        }
+        dateFormat = new SimpleDateFormat(logParserConfiguration.getDateFormatString());
         contextMapping = logParserConfiguration.getContextMapping();
         servletMapping = logParserConfiguration.getServletMapping();
     }
@@ -63,7 +56,7 @@ public class JahiaPerfLineAnalyzer extends CSVOutputLineAnalyzer {
     }
 
     public Date parseLine(String line, String nextLine, LineNumberReader lineNumberReader, Date lastValidDateParsed) {
-        PerfLogEntry logEntry = new PerfLogEntry();
+        PerfDetailsLogEntry detailsLogEntry = new PerfDetailsLogEntry();
 
         Matcher matcher = linePattern.matcher(line);
         boolean matches = matcher.matches();
@@ -76,45 +69,45 @@ public class JahiaPerfLineAnalyzer extends CSVOutputLineAnalyzer {
         String userGroup = matcher.group(4);
         String ipAddressGroup = matcher.group(5);
         String processingTimeGroup = matcher.group(6);
-
+        detailsLogEntry.setLineNumber(lineNumberReader.getLineNumber()-1);
         try {
             Date parsedDate = dateFormat.parse(dateGroup);
-            logEntry.setLogDate(parsedDate);
+            detailsLogEntry.setLogDate(parsedDate);
         } catch (ParseException e) {
             log.error("Error parsing date format in line " + line, e); 
         }
-        processURL(urlGroup, logEntry, line);
-        logEntry.setUrl(urlGroup);
-        logEntry.setEsi(esiGroup);
-        logEntry.setUser(userGroup);
-        logEntry.setIpAddress(ipAddressGroup);
+        processURL(urlGroup, detailsLogEntry, line);
+        detailsLogEntry.setUrl(urlGroup);
+        detailsLogEntry.setEsi(esiGroup);
+        detailsLogEntry.setUser(userGroup);
+        detailsLogEntry.setIpAddress(ipAddressGroup);
         long processingTime = 0L;
         try {
             processingTime = Long.parseLong(processingTimeGroup);
         } catch (NumberFormatException nfe) {
             processingTime = 0L;
         }
-        logEntry.setProcessingTime(processingTime);
+        detailsLogEntry.setProcessingTime(processingTime);
 
-        getLogEntryWriter().write(logEntry);
+        getDetailsLogEntryWriter().write(detailsLogEntry);
 
         // now let's accumulate results
-        String pageKey = Integer.toString(logEntry.getPid()) + "-" + logEntry.getUrlKey();
+        String pageKey = Integer.toString(detailsLogEntry.getPid()) + "-" + detailsLogEntry.getUrlKey();
         PerfSummaryLogEntry perfSummaryLogEntry = perfSummary.get(pageKey);
         if (perfSummaryLogEntry == null) {
             perfSummaryLogEntry = new PerfSummaryLogEntry();
-            perfSummaryLogEntry.setPageID(logEntry.getPid());
-            perfSummaryLogEntry.setUrlKey(logEntry.getUrlKey());
-            perfSummaryLogEntry.setUrl(logEntry.getUrl());
+            perfSummaryLogEntry.setPageID(detailsLogEntry.getPid());
+            perfSummaryLogEntry.setUrlKey(detailsLogEntry.getUrlKey());
+            perfSummaryLogEntry.setUrl(detailsLogEntry.getUrl());
         }
-        perfSummaryLogEntry.setCumulatedPageTime(perfSummaryLogEntry.getCumulatedPageTime() + logEntry.getProcessingTime());
+        perfSummaryLogEntry.setCumulatedPageTime(perfSummaryLogEntry.getCumulatedPageTime() + detailsLogEntry.getProcessingTime());
         perfSummaryLogEntry.setPageHits(perfSummaryLogEntry.getPageHits()+1);
-        if (perfSummaryLogEntry.getMaxPageTime() < logEntry.getProcessingTime()) {
-            perfSummaryLogEntry.setMaxPageTime(logEntry.getProcessingTime());
+        if (perfSummaryLogEntry.getMaxPageTime() < detailsLogEntry.getProcessingTime()) {
+            perfSummaryLogEntry.setMaxPageTime(detailsLogEntry.getProcessingTime());
         }
         perfSummary.put(pageKey, perfSummaryLogEntry);
 
-        return logEntry.getLogDate();
+        return detailsLogEntry.getLogDate();
     }
 
     public void finishPreviousState() {
@@ -122,7 +115,7 @@ public class JahiaPerfLineAnalyzer extends CSVOutputLineAnalyzer {
     }
 
 
-    private void processURL(String url, PerfLogEntry logEntry, String line) {
+    private void processURL(String url, PerfDetailsLogEntry detailsLogEntry, String line) {
         boolean hasPid = false;
         StringTokenizer tokenizer = new StringTokenizer(url, "/?&");
         String leftOverURL = new String(url);
@@ -135,8 +128,8 @@ public class JahiaPerfLineAnalyzer extends CSVOutputLineAnalyzer {
                 if (!tokenizer.hasMoreTokens()) {
                     log.warn("Missing engineName parameter value on line : " + line);
                 } else {
-                    logEntry.setEngineName(tokenizer.nextToken());
-                    leftOverURL = leftOverURL.replaceFirst(logEntry.getEngineName(), "");
+                    detailsLogEntry.setEngineName(tokenizer.nextToken());
+                    leftOverURL = leftOverURL.replaceFirst(detailsLogEntry.getEngineName(), "");
                 }
             }
             if ("cache".equals(curToken)) {
@@ -144,8 +137,8 @@ public class JahiaPerfLineAnalyzer extends CSVOutputLineAnalyzer {
                 if (!tokenizer.hasMoreTokens()) {
                     log.warn("Missing cache parameter value on line : " + line);
                 } else {
-                    logEntry.setCacheMode(tokenizer.nextToken());
-                    leftOverURL = leftOverURL.replaceFirst(logEntry.getCacheMode(), "");
+                    detailsLogEntry.setCacheMode(tokenizer.nextToken());
+                    leftOverURL = leftOverURL.replaceFirst(detailsLogEntry.getCacheMode(), "");
                 }
             }
             if ("lang".equals(curToken)) {
@@ -153,8 +146,8 @@ public class JahiaPerfLineAnalyzer extends CSVOutputLineAnalyzer {
                 if (!tokenizer.hasMoreTokens()) {
                     log.warn("Missing lang parameter value on line : " + line);
                 } else {
-                    logEntry.setLanguage(tokenizer.nextToken());
-                    leftOverURL = leftOverURL.replaceFirst(logEntry.getLanguage(), "");
+                    detailsLogEntry.setLanguage(tokenizer.nextToken());
+                    leftOverURL = leftOverURL.replaceFirst(detailsLogEntry.getLanguage(), "");
                 }
             }
             if ("pid".equals(curToken)) {
@@ -172,13 +165,13 @@ public class JahiaPerfLineAnalyzer extends CSVOutputLineAnalyzer {
                         log.warn("Invalid syntax for PID (pageID) on line " + line);
                         pid = -2;
                     }
-                    logEntry.setPid(pid);
+                    detailsLogEntry.setPid(pid);
                 }
             }
         }
         if (!hasPid) {
             int urlKeyPos = leftOverURL.lastIndexOf("/");
-            logEntry.setUrlKey(leftOverURL.substring(urlKeyPos+1));
+            detailsLogEntry.setUrlKey(leftOverURL.substring(urlKeyPos+1));
         }
     }
 

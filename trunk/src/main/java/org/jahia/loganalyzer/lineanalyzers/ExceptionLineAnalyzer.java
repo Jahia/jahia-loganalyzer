@@ -4,7 +4,6 @@ import org.jahia.loganalyzer.*;
 
 import java.io.LineNumberReader;
 import java.io.IOException;
-import java.io.FileWriter;
 import java.util.Date;
 import java.util.Map;
 import java.util.HashMap;
@@ -23,21 +22,18 @@ public class ExceptionLineAnalyzer extends CSVOutputLineAnalyzer {
     private static final org.apache.commons.logging.Log log =
             org.apache.commons.logging.LogFactory.getLog(ExceptionLineAnalyzer.class);
 
-    private static final String EXCEPTION_SECONDLINE_PATTERN_STRING = "\\s*at (.*)\\(.*\\)";
-    private static final String EXCEPTION_CAUSEDBY_PATTERN_STRING = "^Caused by: ([\\w\\d\\._-]*)(:.*)?$";
-    private static final String EXCEPTION_FIRSTLINE_PATTERN_STRING = "^(Exception in thread \\\"(.*)\\\" )?([\\w\\d\\.\\s\\\"_-]*)(:.*)?$";
     private Pattern secondLinePattern;
     private Pattern firstLinePattern;
     private Pattern causedByPattern;
     private boolean inException = false;
-    private ExceptionLogEntry currentExceptionLogEntry = null;
+    private ExceptionDetailsLogEntry currentExceptionDetailsLogEntry = null;
     private Map<String, ExceptionSummaryLogEntry> exceptionSummaryMap = new HashMap<String, ExceptionSummaryLogEntry>();
 
     public ExceptionLineAnalyzer(LogParserConfiguration logParserConfiguration) throws IOException {
-        super(logParserConfiguration.getExceptionsOutputFileName(), logParserConfiguration.getExceptionsSummaryOutputFileName(),logParserConfiguration.getCsvSeparatorChar(), new ExceptionLogEntry(), new ExceptionSummaryLogEntry());
-        secondLinePattern = Pattern.compile(EXCEPTION_SECONDLINE_PATTERN_STRING);
-        firstLinePattern = Pattern.compile(EXCEPTION_FIRSTLINE_PATTERN_STRING);
-        causedByPattern = Pattern.compile(EXCEPTION_CAUSEDBY_PATTERN_STRING);
+        super(logParserConfiguration.getExceptionDetailsOutputFileName(), logParserConfiguration.getExceptionSummaryOutputFileName(),logParserConfiguration.getCsvSeparatorChar(), new ExceptionDetailsLogEntry(), new ExceptionSummaryLogEntry());
+        secondLinePattern = Pattern.compile(logParserConfiguration.getExceptionSecondLinePattern());
+        firstLinePattern = Pattern.compile(logParserConfiguration.getExceptionFirstLinePattern());
+        causedByPattern = Pattern.compile(logParserConfiguration.getExceptionCausedByPattern());
     }
 
     public boolean isForThisAnalyzer(String line, String nextLine) {
@@ -66,22 +62,23 @@ public class ExceptionLineAnalyzer extends CSVOutputLineAnalyzer {
         if (!inException) {
             log.trace("Found exception " + line);
             inException = true;
-            currentExceptionLogEntry = new ExceptionLogEntry();
+            currentExceptionDetailsLogEntry = new ExceptionDetailsLogEntry();
             Matcher firstLineMatcher = firstLinePattern.matcher(line);
             if (!firstLineMatcher.matches()) {
                 log.warn("Couldn't parse first line of exception, ignoring. Line "+Integer.toString(lineNumberReader.getLineNumber()-1)+"=" + line);
                 return null;
             }
-            currentExceptionLogEntry.setClassName(firstLineMatcher.group(3));
-            currentExceptionLogEntry.setMessage(firstLineMatcher.group(4));
+            currentExceptionDetailsLogEntry.setLineNumber(lineNumberReader.getLineNumber()-1);
+            currentExceptionDetailsLogEntry.setClassName(firstLineMatcher.group(3));
+            currentExceptionDetailsLogEntry.setMessage(firstLineMatcher.group(4));
         } else {
             Matcher secondLineMatcher = secondLinePattern.matcher(line);
             if (secondLineMatcher.matches()) {
-                currentExceptionLogEntry.getStackTrace().add(line);
+                currentExceptionDetailsLogEntry.getStackTrace().add(line);
             } else {
                 Matcher causedByMatcher = causedByPattern.matcher(line);
                 if (causedByMatcher.matches()) {
-                    currentExceptionLogEntry.getStackTrace().add(line);                    
+                    currentExceptionDetailsLogEntry.getStackTrace().add(line);
                 } else {
                     log.warn("Unexcepted line in exception,ignoring :" + line);
                 }
@@ -91,14 +88,14 @@ public class ExceptionLineAnalyzer extends CSVOutputLineAnalyzer {
     }
 
     public void finishPreviousState() {
-        getLogEntryWriter().write(currentExceptionLogEntry);
-        ExceptionSummaryLogEntry exceptionSummaryLogEntry = exceptionSummaryMap.get(currentExceptionLogEntry.toString());
+        getDetailsLogEntryWriter().write(currentExceptionDetailsLogEntry);
+        ExceptionSummaryLogEntry exceptionSummaryLogEntry = exceptionSummaryMap.get(currentExceptionDetailsLogEntry.toString());
         if (exceptionSummaryLogEntry == null) {
             exceptionSummaryLogEntry = new ExceptionSummaryLogEntry();
-            exceptionSummaryLogEntry.setExceptionLogEntry(currentExceptionLogEntry);
+            exceptionSummaryLogEntry.setExceptionLogEntry(currentExceptionDetailsLogEntry);
         }
         exceptionSummaryLogEntry.setCount(exceptionSummaryLogEntry.getCount()+1);
-        exceptionSummaryMap.put(currentExceptionLogEntry.toString(), exceptionSummaryLogEntry);
+        exceptionSummaryMap.put(currentExceptionDetailsLogEntry.toString(), exceptionSummaryLogEntry);
         inException = false;
     }
 

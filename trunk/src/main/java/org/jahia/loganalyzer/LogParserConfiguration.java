@@ -3,6 +3,9 @@ package org.jahia.loganalyzer;
 import java.util.List;
 import java.io.File;
 
+import org.apache.commons.configuration.XMLConfiguration;
+import org.apache.commons.configuration.ConfigurationException;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Serge Huber
@@ -11,24 +14,69 @@ import java.io.File;
  * To change this template use File | Settings | File Templates.
  */
 public class LogParserConfiguration {
+
+    private static final org.apache.commons.logging.Log log =
+            org.apache.commons.logging.LogFactory.getLog(LogParserConfiguration.class);
+
     boolean cacheIgnored = false;
 
-    private String inputFileName = new File("catalina.out").getAbsoluteFile().toString();
+    public static final String DEFAULT_INPUTFILENAME_STRING = "catalina.out";
+    public static final String DEFAULT_PERF_DETAILS_OUTPUTFILENAME_STRING = "jahia-perf-details.csv";
+    public static final String DEFAULT_PERF_SUMMARY_OUTPUTFILENAME_STRING = "jahia-perf-summary.csv";
+    public static final String DEFAULT_THREAD_DETAILS_OUTPUTFILENAME_STRING = "jahia-threads-details.csv";
+    public static final String DEFAULT_THREAD_SUMMARY_OUTPUTFILENAME_STRING = "jahia-threads-summary.csv";
+    public static final String DEFAULT_EXCEPTION_DETAILS_OUTPUTFILENAME_STRING = "jahia-exceptions-details.csv";
+    public static final String DEFAULT_EXCEPTION_SUMMARY_OUTPUTFILENAME_STRING = "jahia-exceptions-summary.csv";
+    public static final String DEFAULT_STANDARD_DETAILS_OUTPUTFILENAME_STRING = "jahia-standard-details.csv";
+    public static final String DEFAULT_STANDARD_SUMMARY_OUTPUTFILENAME_STRING = "jahia-standard-summary.csv";
+    private static final String DEFAULT_DATE_FORMAT_STRING = "yyyy-MM-dd HH:mm:ss,SSS";
+
+    private static final String EXCEPTION_SECONDLINE_PATTERN_STRING = "\\s*at (.*)\\(.*\\)";
+    private static final String EXCEPTION_CAUSEDBY_PATTERN_STRING = "^Caused by: ([\\w\\d\\._-]*)(:.*)?$";
+    private static final String EXCEPTION_FIRSTLINE_PATTERN_STRING = "^(Exception in thread \\\"(.*)\\\" )?([\\w\\d\\.\\s\\\"_-]*)(:.*)?$";
+
+    private static final String OLD_PERF_MATCHING_PATTERN_STRING = ".*?\\[(.*?)\\].*org\\.jahia\\.bin\\.Jahia.*Processed \\[(.*?)\\](?: esi=\\[(.*?)\\])? user=\\[(.*)\\] ip=\\[(.*)\\] in \\[(.*)ms\\].*";
+    private static final String PERF_MATCHING_PATTERN_STRING = "(.*?): .*\\[org\\.jahia\\.bin\\.Jahia\\].*Processed \\[(.*?)\\](?: esi=\\[(.*?)\\])? user=\\[(.*)\\] ip=\\[(.*)\\] in \\[(.*)ms\\].*";
+
+    private static final String THREAD_THREADINFO_PATTERN_STRING = "\"(.*?)\" (daemon )?prio=(\\d*) tid=(.*?) nid=(.*?) ([\\w\\.\\(\\) ]*)(\\[(.*)\\])?";
+    
+    private String inputFileName = new File(DEFAULT_INPUTFILENAME_STRING).getAbsoluteFile().toString();
+
     private boolean performanceAnalyzerActivated = true;
-    private String perfOutputFileName = new File("jahia-perf-details.csv").getAbsoluteFile().toString();
-    private String perfSummaryOutputFileName = new File("jahia-perf-summary.csv").getAbsoluteFile().toString();
+    private String perfDetailsOutputFileName = new File(DEFAULT_PERF_DETAILS_OUTPUTFILENAME_STRING).getAbsoluteFile().toString();
+    private String perfSummaryOutputFileName = new File(DEFAULT_PERF_SUMMARY_OUTPUTFILENAME_STRING).getAbsoluteFile().toString();
+    private String perfMatchingPattern = PERF_MATCHING_PATTERN_STRING;
+
     private boolean threadDumpAnalyzerActivated = true;
-    private String threadDetailsOutputFileName = new File("jahia-threads-details.csv").getAbsoluteFile().toString();
-    private String threadSummaryOutputFileName = new File("jahia-threads-summary.csv").getAbsoluteFile().toString();
+    private String threadDetailsOutputFileName = new File(DEFAULT_THREAD_DETAILS_OUTPUTFILENAME_STRING).getAbsoluteFile().toString();
+    private String threadSummaryOutputFileName = new File(DEFAULT_THREAD_SUMMARY_OUTPUTFILENAME_STRING).getAbsoluteFile().toString();
+    private String threadThreadInfoPattern = THREAD_THREADINFO_PATTERN_STRING;
+
     private boolean exceptionAnalyzerActivated = true;
-    private String exceptionsOutputFileName = new File("jahia-exceptions-details.csv").getAbsoluteFile().toString();
-    private String exceptionsSummaryOutputFileName = new File("jahia-exceptions-summary.csv").getAbsoluteFile().toString();
+    private String exceptionDetailsOutputFileName = new File(DEFAULT_EXCEPTION_DETAILS_OUTPUTFILENAME_STRING).getAbsoluteFile().toString();
+    private String exceptionSummaryOutputFileName = new File(DEFAULT_EXCEPTION_SUMMARY_OUTPUTFILENAME_STRING).getAbsoluteFile().toString();
+    private String exceptionSecondLinePattern = EXCEPTION_SECONDLINE_PATTERN_STRING;
+    private String exceptionFirstLinePattern = EXCEPTION_FIRSTLINE_PATTERN_STRING;
+    private String exceptionCausedByPattern = EXCEPTION_CAUSEDBY_PATTERN_STRING;
+
+    private boolean standardAnalyzerActivated = true;
+    private String standardDetailsOutputFileName = new File(DEFAULT_STANDARD_DETAILS_OUTPUTFILENAME_STRING).getAbsoluteFile().toString();
+    private String standardSummaryOutputFileName = new File(DEFAULT_STANDARD_SUMMARY_OUTPUTFILENAME_STRING).getAbsoluteFile().toString();
+    private String standardLogAnalyzerPattern = "(\\d\\d\\d\\d-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d,\\d\\d\\d):? (.*) \\[([\\w\\.]*)] ([\\w\\.]*\\:\\d* )?- (.*)";
     private char csvSeparatorChar;
     private List patternList;
-    private String dateFormatString;
-    private String standardLogAnalyzerPattern = "(\\d\\d\\d\\d-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d,\\d\\d\\d):? (.*) \\[([\\w\\.]*)] ([\\w\\.]*\\:\\d* )?- (.*)";
+    private String dateFormatString = DEFAULT_DATE_FORMAT_STRING;
     private String contextMapping = "/jahia";
     private String servletMapping = "/Jahia";
+    private int standardMinimumLogLevel = 4; // FATAL is default extraction level
+
+    public LogParserConfiguration() {
+        try {
+            XMLConfiguration config = new XMLConfiguration("parser-config.xml");
+        } catch (ConfigurationException ce) {
+            log.error("Configuration could not be loaded, ignoring and using defaults", ce);
+        }
+    }
 
     public String getStandardLogAnalyzerPattern() {
         return standardLogAnalyzerPattern;
@@ -54,12 +102,12 @@ public class LogParserConfiguration {
         this.inputFileName = inputFileName;
     }
 
-    public String getPerfOutputFileName() {
-        return perfOutputFileName;
+    public String getPerfDetailsOutputFileName() {
+        return perfDetailsOutputFileName;
     }
 
-    public void setPerfOutputFileName(String perfOutputFileName) {
-        this.perfOutputFileName = perfOutputFileName;
+    public void setPerfDetailsOutputFileName(String perfDetailsOutputFileName) {
+        this.perfDetailsOutputFileName = perfDetailsOutputFileName;
     }
 
     public String getPerfSummaryOutputFileName() {
@@ -68,6 +116,14 @@ public class LogParserConfiguration {
 
     public void setPerfSummaryOutputFileName(String perfSummaryOutputFileName) {
         this.perfSummaryOutputFileName = perfSummaryOutputFileName;
+    }
+
+    public String getPerfMatchingPattern() {
+        return perfMatchingPattern;
+    }
+
+    public void setPerfMatchingPattern(String perfMatchingPattern) {
+        this.perfMatchingPattern = perfMatchingPattern;
     }
 
     public String getThreadDetailsOutputFileName() {
@@ -86,20 +142,52 @@ public class LogParserConfiguration {
         this.threadSummaryOutputFileName = threadSummaryOutputFileName;
     }
 
-    public String getExceptionsOutputFileName() {
-        return exceptionsOutputFileName;
+    public String getThreadThreadInfoPattern() {
+        return threadThreadInfoPattern;
     }
 
-    public void setExceptionsOutputFileName(String exceptionsOutputFileName) {
-        this.exceptionsOutputFileName = exceptionsOutputFileName;
+    public void setThreadThreadInfoPattern(String threadThreadInfoPattern) {
+        this.threadThreadInfoPattern = threadThreadInfoPattern;
     }
 
-    public String getExceptionsSummaryOutputFileName() {
-        return exceptionsSummaryOutputFileName;
+    public String getExceptionDetailsOutputFileName() {
+        return exceptionDetailsOutputFileName;
     }
 
-    public void setExceptionsSummaryOutputFileName(String exceptionsSummaryOutputFileName) {
-        this.exceptionsSummaryOutputFileName = exceptionsSummaryOutputFileName;
+    public void setExceptionDetailsOutputFileName(String exceptionDetailsOutputFileName) {
+        this.exceptionDetailsOutputFileName = exceptionDetailsOutputFileName;
+    }
+
+    public String getExceptionSummaryOutputFileName() {
+        return exceptionSummaryOutputFileName;
+    }
+
+    public void setExceptionSummaryOutputFileName(String exceptionSummaryOutputFileName) {
+        this.exceptionSummaryOutputFileName = exceptionSummaryOutputFileName;
+    }
+
+    public String getExceptionSecondLinePattern() {
+        return exceptionSecondLinePattern;
+    }
+
+    public void setExceptionSecondLinePattern(String exceptionSecondLinePattern) {
+        this.exceptionSecondLinePattern = exceptionSecondLinePattern;
+    }
+
+    public String getExceptionFirstLinePattern() {
+        return exceptionFirstLinePattern;
+    }
+
+    public void setExceptionFirstLinePattern(String exceptionFirstLinePattern) {
+        this.exceptionFirstLinePattern = exceptionFirstLinePattern;
+    }
+
+    public String getExceptionCausedByPattern() {
+        return exceptionCausedByPattern;
+    }
+
+    public void setExceptionCausedByPattern(String exceptionCausedByPattern) {
+        this.exceptionCausedByPattern = exceptionCausedByPattern;
     }
 
     public char getCsvSeparatorChar() {
@@ -164,5 +252,37 @@ public class LogParserConfiguration {
 
     public void setServletMapping(String servletMapping) {
         this.servletMapping = servletMapping;
+    }
+
+    public int getStandardMinimumLogLevel() {
+        return standardMinimumLogLevel;
+    }
+
+    public void setStandardMinimumLogLevel(int standardMinimumLogLevel) {
+        this.standardMinimumLogLevel = standardMinimumLogLevel;
+    }
+
+    public boolean isStandardAnalyzerActivated() {
+        return standardAnalyzerActivated;
+    }
+
+    public void setStandardAnalyzerActivated(boolean standardAnalyzerActivated) {
+        this.standardAnalyzerActivated = standardAnalyzerActivated;
+    }
+
+    public String getStandardSummaryOutputFileName() {
+        return standardSummaryOutputFileName;
+    }
+
+    public void setStandardSummaryOutputFileName(String standardSummaryOutputFileName) {
+        this.standardSummaryOutputFileName = standardSummaryOutputFileName;
+    }
+
+    public String getStandardDetailsOutputFileName() {
+        return standardDetailsOutputFileName;
+    }
+
+    public void setStandardDetailsOutputFileName(String standardDetailsOutputFileName) {
+        this.standardDetailsOutputFileName = standardDetailsOutputFileName;
     }
 }

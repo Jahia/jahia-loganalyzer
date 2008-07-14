@@ -12,7 +12,7 @@ import java.text.DateFormat;
  * Time: 16:14:37
  * To change this template use File | Settings | File Templates.
  */
-public class ThreadDumpLogEntry implements LogEntry {
+public class ThreadDumpDetailsLogEntry extends AbstractDetailsLogEntry {
 
     private long dumpNumber;
     private Date dumpDate;
@@ -28,12 +28,14 @@ public class ThreadDumpLogEntry implements LogEntry {
     private List<String> waitingOnLocks = new ArrayList<String>();
     private List<String> holdingLocks = new ArrayList<String>();
 
-    public ThreadDumpLogEntry() {
+    public ThreadDumpDetailsLogEntry() {
     }
 
     public String toString() {
         StringBuffer buffer = new StringBuffer();
-        buffer.append("dump=");
+        buffer.append("logLine=");
+        buffer.append(getLineNumber());
+        buffer.append(",dump=");
         buffer.append(dumpNumber);
         buffer.append(",date=");
         buffer.append(dumpDate);
@@ -188,46 +190,48 @@ public class ThreadDumpLogEntry implements LogEntry {
     }
 
     public String[] toStringArray(DateFormat dateFormat) {
-        String[] result = new String[15];
-        result[0] = Long.toString(dumpNumber);
+        String[] result = new String[16];
+        result[0] = Long.toString(getLineNumber());
+        result[1] = Long.toString(dumpNumber);
         if (dumpDate != null) {
-            result[1] = dateFormat.format(dumpDate);
+            result[2] = dateFormat.format(dumpDate);
         } else {
-            result[1] = "";
+            result[2] = "";
         }
-        result[2] = Long.toString(threadNumber);
-        result[3] = name;
-        result[4] = type;
-        result[5] = tid;
-        result[6] = nid;
-        result[7] = Integer.toString(priority);
-        result[8] = state;
-        result[9] = stateInfo;
-        result[10] = stackTraceToString();
-        result[11] = Integer.toString(waitingOnLocks.size());
-        result[12] = waitingOnLocksToString();
-        result[13] = Integer.toString(holdingLocks.size());
-        result[14] = holdingLocksToString();
+        result[3] = Long.toString(threadNumber);
+        result[4] = name;
+        result[5] = type;
+        result[6] = tid;
+        result[7] = nid;
+        result[8] = Integer.toString(priority);
+        result[9] = state;
+        result[10] = stateInfo;
+        result[11] = stackTraceToString();
+        result[12] = Integer.toString(waitingOnLocks.size());
+        result[13] = waitingOnLocksToString();
+        result[14] = Integer.toString(holdingLocks.size());
+        result[15] = holdingLocksToString();
         return result;
     }
 
     public String[] getColumnKeys() {
-        String[] result = new String[15];
-        result[0] = "dumpNumber";
-        result[1] = "dumpDate";
-        result[2] = "threadNumber";
-        result[3] = "name";
-        result[4] = "type";
-        result[5] = "tid";
-        result[6] = "nid";
-        result[7] = "priority";
-        result[8] = "state";
-        result[9] = "stateInfo";
-        result[10] = "stackTrace";
-        result[11] = "totalWaiting";
-        result[12] = "waitingOnLocks";
-        result[13] = "totalHeld";
-        result[14] = "holdingLocks";
+        String[] result = new String[16];
+        result[0] = "threaddump.details.logLine";
+        result[1] = "threaddump.details.dumpNumber";
+        result[2] = "threaddump.details.dumpDate";
+        result[3] = "threaddump.details.threadNumber";
+        result[4] = "threaddump.details.name";
+        result[5] = "threaddump.details.type";
+        result[6] = "threaddump.details.tid";
+        result[7] = "threaddump.details.nid";
+        result[8] = "threaddump.details.priority";
+        result[9] = "threaddump.details.state";
+        result[10] = "threaddump.details.stateInfo";
+        result[11] = "threaddump.details.stackTrace";
+        result[12] = "threaddump.details.totalWaiting";
+        result[13] = "threaddump.details.waitingOnLocks";
+        result[14] = "threaddump.details.totalHeld";
+        result[15] = "threaddump.details.holdingLocks";
         return result;
     }
 }

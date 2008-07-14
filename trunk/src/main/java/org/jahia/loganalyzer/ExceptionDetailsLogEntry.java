@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * Time: 16:26:28
  * To change this template use File | Settings | File Templates.
  */
-public class ExceptionLogEntry implements LogEntry {
+public class ExceptionDetailsLogEntry extends AbstractDetailsLogEntry {
 
     private String className;
     private String message;
@@ -42,10 +42,11 @@ public class ExceptionLogEntry implements LogEntry {
     }
 
     public String[] toStringArray(DateFormat dateFormat) {
-        String[] result = new String[3];
-        result[0] = className;
-        result[1] = message;
-        result[2] = stackTraceToString();
+        String[] result = new String[4];
+        result[0] = Long.toString(getLineNumber());
+        result[1] = className;
+        result[2] = message;
+        result[3] = stackTraceToString();
         return result;
     }
 
@@ -59,10 +60,11 @@ public class ExceptionLogEntry implements LogEntry {
     }
 
     public String[] getColumnKeys() {
-        String[] result = new String[3];
-        result[0] = "exceptions.details.className";
-        result[1] = "exceptions.details.message";
-        result[2] = "exceptions.details.stackTrace";
+        String[] result = new String[4];
+        result[0] = "exceptions.details.logLine";
+        result[1] = "exceptions.details.className";
+        result[2] = "exceptions.details.message";
+        result[3] = "exceptions.details.stackTrace";
         return result;
     }
 
