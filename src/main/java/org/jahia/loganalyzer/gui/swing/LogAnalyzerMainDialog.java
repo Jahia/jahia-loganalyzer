@@ -11,6 +11,12 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.jar.JarFile;
+import java.util.jar.Manifest;
+import java.util.jar.Attributes;
+import java.net.URL;
+import java.net.JarURLConnection;
+import java.net.URLConnection;
 
 import org.jahia.loganalyzer.LogParser;
 import org.jahia.loganalyzer.LogParserConfiguration;
@@ -56,9 +62,33 @@ public class LogAnalyzerMainDialog extends JDialog {
     private JButton browseStandardSummaryCSVOutputFile;
     private JFileChooser fileChooser;
     private LogParserConfiguration logParserConfiguration = new LogParserConfiguration();
+    private Integer buildNumber = 0;
+    private String version = "DEVELOPMENT";
+
+    public void retrieveBuildInformation() {
+        try {
+            URL urlToMavenPom = LogAnalyzerMainDialog.class.getResource("/META-INF/jahia-loganalyzer-marker.txt");
+            if (urlToMavenPom != null) {
+                URLConnection urlConnection = urlToMavenPom.openConnection();
+                if (urlConnection instanceof JarURLConnection) {
+                    JarURLConnection conn = (JarURLConnection) urlConnection;
+                    JarFile jarFile = conn.getJarFile();
+                    Manifest manifest = jarFile.getManifest();
+                    Attributes attributes = manifest.getMainAttributes();
+                    buildNumber = Integer.valueOf(attributes.getValue("Implementation-Build"));
+                    version = attributes.getValue("Implementation-Version");
+                }
+            }
+        } catch (IOException ioe) {
+            log.error("Error while trying to retrieve build information", ioe);
+        } catch (NumberFormatException nfe) {
+            log.error("Error while trying to retrieve build information", nfe);
+        }
+    }
 
     public LogAnalyzerMainDialog() {
-        setTitle("Jahia Log Analysis Tool");
+        retrieveBuildInformation();
+        setTitle("Jahia Log Analysis Tool v" + version + " build " + buildNumber);
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -511,6 +541,7 @@ public class LogAnalyzerMainDialog extends JDialog {
                 LogParser logParser = new LogParser();
                 logParser.setLogParserConfiguration(logParserConfiguration);
                 logParser.parse(reader);
+                in.close();
             } catch (InterruptedIOException iioe) {
                 JOptionPane.showMessageDialog(LogAnalyzerMainDialog.this, "Analysis cancelled by user", "Warning", JOptionPane.WARNING_MESSAGE);
                 enableUI();

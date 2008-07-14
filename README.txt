@@ -75,3 +75,16 @@ Here is a brief descriptions of the output files and their generated content
 - jahia-standard-summary.csv
   Contains a summary view of the number of times a specific message was logged,
   regardless of the logging level specified in the user interface.
+  
+Advanced configuration file
+--------------------------------------------------------------------------------
+
+By default the configuration is loaded directly from a configuration file 
+included in the JAR. But you may override this configuration with a file that
+you store at the same location as the location from which you execute the 
+JAR. We provide a sample parser-config.xml.sample file that is actually a
+copy of the default configuration file.
+
+You might want to use this file if you have trouble with the default regular
+expressions, maybe because the log files you are using include a different
+logging format.
