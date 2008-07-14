@@ -72,7 +72,28 @@ public class LogParserConfiguration {
 
     public LogParserConfiguration() {
         try {
-            XMLConfiguration config = new XMLConfiguration("parser-config.xml");
+            File overrideFile = new File("parser-config.xml");
+            XMLConfiguration config;
+            if (overrideFile.exists()) {
+                log.info("Using overriden local parser-config.xml file for configuration...");
+                config = new XMLConfiguration(overrideFile);
+            } else {
+                log.info("Using default parser-config.xml file for configuration...");
+                config = new XMLConfiguration("parser-config.xml");
+            }
+            contextMapping = config.getString("context-mapping");
+            servletMapping = config.getString("servlet-mapping");
+            dateFormatString = config.getString("date-format");
+
+            perfMatchingPattern = config.getString("analyzers.perf-analyzer.matching-pattern");
+
+            exceptionFirstLinePattern = config.getString("analyzers.exception-analyzer.firstline-pattern");
+            exceptionSecondLinePattern = config.getString("analyzers.exception-analyzer.secondline-pattern");
+            exceptionCausedByPattern = config.getString("analyzers.exception-analyzer.causedby-pattern");
+
+            threadThreadInfoPattern = config.getString("analyzers.threaddump-analyzer.threadinfo-pattern");
+
+            standardLogAnalyzerPattern = config.getString("analyzers.standardlog-analyzer.matching-pattern");
         } catch (ConfigurationException ce) {
             log.error("Configuration could not be loaded, ignoring and using defaults", ce);
         }

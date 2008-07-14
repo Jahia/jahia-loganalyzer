@@ -7,6 +7,13 @@
   <version>0.3-SNAPSHOT</version>
   <name>loganalyzer</name>
   <url>http://www.jahia.org</url>
+  
+  <scm>
+    <connection>scm:svn:https://jahia.mine.nu/svn/jahia_loganalyzer</connection>
+    <developerConnection>scm:svn:http://svn.jahia.org/svn/jahia_loganalyzer</developerConnection>
+    <url>http://svn.jahia.org/svn/jahia_loganalyzer</url>
+  </scm>  
+  
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -54,6 +61,9 @@
               <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
               <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
             </manifest>
+            <manifestEntries>
+              <Implementation-Build>${buildNumber}</Implementation-Build>
+            </manifestEntries>
           </archive>
         </configuration>
       </plugin>
@@ -99,6 +109,7 @@
               <goal>shade</goal>
             </goals>
             <configuration>
+              <shadedArtifactId>${project.artifactId}-build${buildNumber}</shadedArtifactId>
               <filters>
                 <filter>
                   <artifact>commons-beanutils:commons-beanutils</artifact>
@@ -123,6 +134,24 @@
           </execution>
         </executions>
       </plugin>
+
+    <plugin>
+      <groupId>org.codehaus.mojo</groupId>
+      <artifactId>maven-buildnumber-plugin</artifactId>
+      <version>0.9.6</version>
+      <executions>
+        <execution>
+          <phase>validate</phase>        
+          <goals>
+            <goal>create</goal>
+          </goals>
+        </execution>
+      </executions>
+      <configuration>
+        <doCheck>false</doCheck>
+        <doUpdate>true</doUpdate>
+      </configuration>
+    </plugin>
       
     </plugins>
   </build>

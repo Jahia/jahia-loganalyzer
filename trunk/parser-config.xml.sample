@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <parser>
-    <context-mapping>/jahia</context-mapping>
+    <context-mapping>/test</context-mapping>
     <servlet-mapping>/Jahia</servlet-mapping>
     <date-format>yyyy-MM-dd HH:mm:ss\,SSS</date-format>
     <analyzers>
