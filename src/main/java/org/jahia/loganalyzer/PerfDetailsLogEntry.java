@@ -10,7 +10,7 @@ import java.text.DateFormat;
  * Time: 09:19:24
  * To change this template use File | Settings | File Templates.
  */
-public class PerfLogEntry implements LogEntry {
+public class PerfDetailsLogEntry extends AbstractDetailsLogEntry {
     private Date logDate;
     private int pid = -1;
     private String urlKey = "";
@@ -112,34 +112,36 @@ public class PerfLogEntry implements LogEntry {
     }
 
     public String[] toStringArray(DateFormat dateFormat) {
-        String[] result = new String[11];
-        result[0] = dateFormat.format(logDate);
-        result[1] = Integer.toString(pid);
-        result[2] = urlKey;
-        result[3] = language;
-        result[4] = user;
-        result[5] = cacheMode;
-        result[6] = engineName;
-        result[7] = esi;
-        result[8] = ipAddress;
-        result[9] = Long.toString(processingTime);
-        result[10] = url;
+        String[] result = new String[12];
+        result[0] = Long.toString(getLineNumber());
+        result[1] = dateFormat.format(logDate);
+        result[2] = Integer.toString(pid);
+        result[3] = urlKey;
+        result[4] = language;
+        result[5] = user;
+        result[6] = cacheMode;
+        result[7] = engineName;
+        result[8] = esi;
+        result[9] = ipAddress;
+        result[10] = Long.toString(processingTime);
+        result[11] = url;
         return result;
     }
 
     public String[] getColumnKeys() {
-        String[] result = new String[11];
-        result[0] = "date";
-        result[1] = "pid";
-        result[2] = "urlKey";
-        result[3] = "language";
-        result[4] = "user";
-        result[5] = "cacheMode";
-        result[6] = "engineName";
-        result[7] = "esi";
-        result[8] = "ipAddress";
-        result[9] = "processingTime";
-        result[10] = "url";
+        String[] result = new String[12];
+        result[0] = "perf.details.logLine";
+        result[1] = "perf.details.date";
+        result[2] = "perf.details.pid";
+        result[3] = "perf.details.urlKey";
+        result[4] = "perf.details.language";
+        result[5] = "perf.details.user";
+        result[6] = "perf.details.cacheMode";
+        result[7] = "perf.details.engineName";
+        result[8] = "perf.details.esi";
+        result[9] = "perf.details.ipAddress";
+        result[10] = "perf.details.processingTime";
+        result[11] = "perf.details.url";
         return result;
     }
     

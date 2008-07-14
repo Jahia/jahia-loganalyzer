@@ -12,7 +12,7 @@ import java.text.DateFormat;
 public class ExceptionSummaryLogEntry implements LogEntry {
 
     private long count = 0;
-    private ExceptionLogEntry exceptionLogEntry;
+    private ExceptionDetailsLogEntry exceptionDetailsLogEntry;
 
     public long getCount() {
         return count;
@@ -22,20 +22,20 @@ public class ExceptionSummaryLogEntry implements LogEntry {
         this.count = count;
     }
 
-    public ExceptionLogEntry getExceptionLogEntry() {
-        return exceptionLogEntry;
+    public ExceptionDetailsLogEntry getExceptionLogEntry() {
+        return exceptionDetailsLogEntry;
     }
 
-    public void setExceptionLogEntry(ExceptionLogEntry exceptionLogEntry) {
-        this.exceptionLogEntry = exceptionLogEntry;
+    public void setExceptionLogEntry(ExceptionDetailsLogEntry exceptionDetailsLogEntry) {
+        this.exceptionDetailsLogEntry = exceptionDetailsLogEntry;
     }
 
     public String[] toStringArray(DateFormat dateFormat) {
         String[] result = new String[4];
         result[0] = Long.toString(count);
-        result[1] = exceptionLogEntry.getClassName();
-        result[2] = exceptionLogEntry.getMessage();
-        result[3] = exceptionLogEntry.stackTraceToString();
+        result[1] = exceptionDetailsLogEntry.getClassName();
+        result[2] = exceptionDetailsLogEntry.getMessage();
+        result[3] = exceptionDetailsLogEntry.stackTraceToString();
         return result;
     }
 

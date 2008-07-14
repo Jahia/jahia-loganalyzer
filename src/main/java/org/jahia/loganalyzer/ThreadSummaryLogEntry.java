@@ -15,7 +15,7 @@ public class ThreadSummaryLogEntry implements LogEntry {
     private long dumpNumber;
     private long threadTotal;
     private Date threadDumpDate;
-    private List<ThreadDumpLogEntry> threadDumpLogEntries = new ArrayList<ThreadDumpLogEntry>();
+    private List<ThreadDumpDetailsLogEntry> threadDumpDetailsLogEntries = new ArrayList<ThreadDumpDetailsLogEntry>();
     private Map<String,String> threadNames = new TreeMap<String,String>();
     private String newThreadsList;
     private String deadThreadsList;
@@ -48,12 +48,12 @@ public class ThreadSummaryLogEntry implements LogEntry {
         this.threadDumpDate = threadDumpDate;
     }
 
-    public List<ThreadDumpLogEntry> getThreadDumpLogEntries() {
-        return threadDumpLogEntries;
+    public List<ThreadDumpDetailsLogEntry> getThreadDumpLogEntries() {
+        return threadDumpDetailsLogEntries;
     }
 
-    public void setThreadDumpLogEntries(List<ThreadDumpLogEntry> threadDumpLogEntries) {
-        this.threadDumpLogEntries = threadDumpLogEntries;
+    public void setThreadDumpLogEntries(List<ThreadDumpDetailsLogEntry> threadDumpDetailsLogEntries) {
+        this.threadDumpDetailsLogEntries = threadDumpDetailsLogEntries;
     }
 
     public Map<String, String> getThreadNames() {
@@ -68,7 +68,7 @@ public class ThreadSummaryLogEntry implements LogEntry {
         Map<String,String> newThreads;
         Map<String,String> deadThreads;
 
-        newThreads = new TreeMap(this.threadNames);
+        newThreads = new TreeMap<String,String>(this.threadNames);
         if (lastSummaryLogEntry != null) {
             deadThreads = new TreeMap<String,String>(lastSummaryLogEntry.getThreadNames());
         } else {
@@ -107,7 +107,7 @@ public class ThreadSummaryLogEntry implements LogEntry {
     public String[] toStringArray(DateFormat dateFormat) {
         String[] result = new String[5];
         result[0] = Long.toString(dumpNumber);
-        result[1] = Long.toString(threadDumpLogEntries.size());
+        result[1] = Long.toString(threadDumpDetailsLogEntries.size());
         if (threadDumpDate != null) {
             result[2] = dateFormat.format(threadDumpDate);
         } else {
@@ -120,11 +120,11 @@ public class ThreadSummaryLogEntry implements LogEntry {
 
     public String[] getColumnKeys() {
         String[] result = new String[5];
-        result[0] = "summaryDumpNumber";
-        result[1] = "summaryThreadTotal";
-        result[2] = "summaryThreadDumpDate";
-        result[3] = "summaryNewThreads";
-        result[4] = "summaryDeadThreads";
+        result[0] = "threaddump.summary.dumpNumber";
+        result[1] = "threaddump.summary.threadTotal";
+        result[2] = "threaddump.summary.date";
+        result[3] = "threaddump.summary.newThreads";
+        result[4] = "threaddump.summary.deadThreads";
         return result;
     }
 }
