@@ -25,6 +25,13 @@ To compile :
 
 mvn package
 
+Web Start Installation (optional)
+--------------------------------------------------------------------------------
+This project now builds a JNLP project that can be deployed to a web server 
+for Java Web Start execution. The ZIP file that must be deployed is contained
+in the target/ directory. Simply unzip on the webserver and point your users
+to the directory, the rest should be automatic.
+
 Execution
 --------------------------------------------------------------------------------
 
