@@ -15,11 +15,11 @@ import java.util.Date;
  * To change this template use File | Settings | File Templates.
  */
 public class DefaultDummyLineAnalyzer implements LineAnalyzer {
-    public boolean isForThisAnalyzer(String line, String nextLine) {
+    public boolean isForThisAnalyzer(String line, String nextLine, String nextNextLine) {
         return true;
     }
 
-    public Date parseLine(String line, String nextLine, LineNumberReader lineNumberReader, Date lastValidDateParsed) {
+    public Date parseLine(String line, String nextLine, String nextNextLine, LineNumberReader lineNumberReader, Date lastValidDateParsed) {
         return null;
     }
 

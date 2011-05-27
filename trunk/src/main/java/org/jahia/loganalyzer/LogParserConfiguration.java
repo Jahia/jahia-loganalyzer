@@ -9,7 +9,7 @@ import org.apache.commons.configuration.ConfigurationException;
 /**
  * Created by IntelliJ IDEA.
  * User: Serge Huber
- * Date: 22 août 2007
+ * Date: 22 aoï¿½t 2007
  * Time: 11:55:39
  * To change this template use File | Settings | File Templates.
  */
@@ -38,8 +38,9 @@ public class LogParserConfiguration {
     private static final String OLD_PERF_MATCHING_PATTERN_STRING = ".*?\\[(.*?)\\].*org\\.jahia\\.bin\\.Jahia.*Processed \\[(.*?)\\](?: esi=\\[(.*?)\\])? user=\\[(.*)\\] ip=\\[(.*)\\] in \\[(.*)ms\\].*";
     private static final String PERF_MATCHING_PATTERN_STRING = "(.*?): .*\\[org\\.jahia\\.bin\\.Jahia\\].*Processed \\[(.*?)\\](?: esi=\\[(.*?)\\])? user=\\[(.*)\\] ip=\\[(.*)\\] in \\[(.*)ms\\].*";
 
-    private static final String THREAD_THREADINFO_PATTERN_STRING = "\"(.*?)\" (daemon )?prio=(\\d*) tid=(.*?) nid=(.*?) ([\\w\\.\\(\\) ]*)(\\[(.*)\\])?";
-    
+    private static final String SUN_JDK5_THREAD_THREADINFO_PATTERN_STRING = "\"(.*?)\" (daemon )?prio=(\\d*) tid=(.*?) nid=(.*?) ([\\w\\.\\(\\) ]*)(\\[(.*)\\])?";
+    private static final String SUN_JDK6_THREAD_THREADINFO_PATTERN_STRING = "\"(.*?)\" Id=(.*?) in (.*?) (on lock=(.*?))?";
+
     private String inputFileName = new File(DEFAULT_INPUTFILENAME_STRING).getAbsoluteFile().toString();
 
     private boolean performanceAnalyzerActivated = true;
@@ -50,7 +51,8 @@ public class LogParserConfiguration {
     private boolean threadDumpAnalyzerActivated = true;
     private String threadDetailsOutputFileName = new File(DEFAULT_THREAD_DETAILS_OUTPUTFILENAME_STRING).getAbsoluteFile().toString();
     private String threadSummaryOutputFileName = new File(DEFAULT_THREAD_SUMMARY_OUTPUTFILENAME_STRING).getAbsoluteFile().toString();
-    private String threadThreadInfoPattern = THREAD_THREADINFO_PATTERN_STRING;
+    private String sunJDK5ThreadThreadInfoPattern = SUN_JDK5_THREAD_THREADINFO_PATTERN_STRING;
+    private String sunJDK6ThreadThreadInfoPattern = SUN_JDK6_THREAD_THREADINFO_PATTERN_STRING;
 
     private boolean exceptionAnalyzerActivated = true;
     private String exceptionDetailsOutputFileName = new File(DEFAULT_EXCEPTION_DETAILS_OUTPUTFILENAME_STRING).getAbsoluteFile().toString();
@@ -91,7 +93,8 @@ public class LogParserConfiguration {
             exceptionSecondLinePattern = config.getString("analyzers.exception-analyzer.secondline-pattern");
             exceptionCausedByPattern = config.getString("analyzers.exception-analyzer.causedby-pattern");
 
-            threadThreadInfoPattern = config.getString("analyzers.threaddump-analyzer.threadinfo-pattern");
+            sunJDK5ThreadThreadInfoPattern = config.getString("analyzers.threaddump-analyzer.sun-jdk5-threadinfo-pattern");
+            sunJDK6ThreadThreadInfoPattern = config.getString("analyzers.threaddump-analyzer.sun-jdk6-threadinfo-pattern");
 
             standardLogAnalyzerPattern = config.getString("analyzers.standardlog-analyzer.matching-pattern");
         } catch (ConfigurationException ce) {
@@ -163,12 +166,20 @@ public class LogParserConfiguration {
         this.threadSummaryOutputFileName = threadSummaryOutputFileName;
     }
 
-    public String getThreadThreadInfoPattern() {
-        return threadThreadInfoPattern;
+    public String getSunJDK5ThreadThreadInfoPattern() {
+        return sunJDK5ThreadThreadInfoPattern;
     }
 
-    public void setThreadThreadInfoPattern(String threadThreadInfoPattern) {
-        this.threadThreadInfoPattern = threadThreadInfoPattern;
+    public void setSunJDK5ThreadThreadInfoPattern(String sunJDK5ThreadThreadInfoPattern) {
+        this.sunJDK5ThreadThreadInfoPattern = sunJDK5ThreadThreadInfoPattern;
+    }
+
+    public String getSunJDK6ThreadThreadInfoPattern() {
+        return sunJDK6ThreadThreadInfoPattern;
+    }
+
+    public void setSunJDK6ThreadThreadInfoPattern(String sunJDK6ThreadThreadInfoPattern) {
+        this.sunJDK6ThreadThreadInfoPattern = sunJDK6ThreadThreadInfoPattern;
     }
 
     public String getExceptionDetailsOutputFileName() {

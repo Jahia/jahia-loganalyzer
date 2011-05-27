@@ -16,7 +16,7 @@ import java.io.IOException;
 /**
  * Created by IntelliJ IDEA.
  * User: Serge Huber
- * Date: 22 août 2007
+ * Date: 22 aoï¿½t 2007
  * Time: 12:49:15
  * To change this template use File | Settings | File Templates.
  */
@@ -46,7 +46,7 @@ public class JahiaPerfLineAnalyzer extends CSVOutputLineAnalyzer {
         servletMapping = logParserConfiguration.getServletMapping();
     }
 
-    public boolean isForThisAnalyzer(String line, String nextLine) {
+    public boolean isForThisAnalyzer(String line, String nextLine, String nextNextLine) {
         Matcher matcher = linePattern.matcher(line);
         boolean matches = matcher.matches();
         if (!matches) {
@@ -55,7 +55,7 @@ public class JahiaPerfLineAnalyzer extends CSVOutputLineAnalyzer {
         return true;
     }
 
-    public Date parseLine(String line, String nextLine, LineNumberReader lineNumberReader, Date lastValidDateParsed) {
+    public Date parseLine(String line, String nextLine, String nextNextLine, LineNumberReader lineNumberReader, Date lastValidDateParsed) {
         PerfDetailsLogEntry detailsLogEntry = new PerfDetailsLogEntry();
 
         Matcher matcher = linePattern.matcher(line);
