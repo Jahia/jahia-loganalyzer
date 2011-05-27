@@ -36,7 +36,7 @@ public class ExceptionLineAnalyzer extends CSVOutputLineAnalyzer {
         causedByPattern = Pattern.compile(logParserConfiguration.getExceptionCausedByPattern());
     }
 
-    public boolean isForThisAnalyzer(String line, String nextLine) {
+    public boolean isForThisAnalyzer(String line, String nextLine, String nextNextLine) {
         if (inException) {
             Matcher matcher = secondLinePattern.matcher(line);
             if (matcher.matches()) {
@@ -58,7 +58,7 @@ public class ExceptionLineAnalyzer extends CSVOutputLineAnalyzer {
         return false;  
     }
 
-    public Date parseLine(String line, String nextLine, LineNumberReader lineNumberReader, Date lastValidDateParsed) {
+    public Date parseLine(String line, String nextLine, String nextNextLine, LineNumberReader lineNumberReader, Date lastValidDateParsed) {
         if (!inException) {
             log.trace("Found exception " + line);
             inException = true;

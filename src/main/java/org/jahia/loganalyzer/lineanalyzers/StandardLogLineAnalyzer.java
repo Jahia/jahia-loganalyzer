@@ -39,7 +39,7 @@ public class StandardLogLineAnalyzer extends CSVOutputLineAnalyzer {
         standardMinimumLogLevel = logParserConfiguration.getStandardMinimumLogLevel();
     }
 
-    public boolean isForThisAnalyzer(String line, String nextLine) {
+    public boolean isForThisAnalyzer(String line, String nextLine, String nextNextLine) {
         Matcher matcher = standardLogPattern.matcher(line);
         boolean matches = matcher.matches();
         if (!matches) {
@@ -48,7 +48,7 @@ public class StandardLogLineAnalyzer extends CSVOutputLineAnalyzer {
         return true;
     }
 
-    public Date parseLine(String line, String nextLine, LineNumberReader reader, Date lastValidDateParsed) throws IOException {
+    public Date parseLine(String line, String nextLine, String nextNextLine, LineNumberReader reader, Date lastValidDateParsed) throws IOException {
         Matcher matcher = standardLogPattern.matcher(line);
         boolean matches = matcher.matches();
         if (!matches) {

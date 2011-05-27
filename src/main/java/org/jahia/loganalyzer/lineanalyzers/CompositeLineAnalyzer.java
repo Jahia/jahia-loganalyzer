@@ -24,9 +24,9 @@ public class CompositeLineAnalyzer implements LineAnalyzer {
         this.lineAnalyzers = lineAnalyzers;        
     }
 
-    public boolean isForThisAnalyzer(String line, String nextLine) {
+    public boolean isForThisAnalyzer(String line, String nextLine, String nextNextLine) {
         for (LineAnalyzer lineAnalyzer : lineAnalyzers) {
-            if (lineAnalyzer.isForThisAnalyzer(line, nextLine)) {
+            if (lineAnalyzer.isForThisAnalyzer(line, nextLine, nextNextLine)) {
                 if (lineAnalyzer != currentlyActiveAnalyzer) {
                     if (currentlyActiveAnalyzer != null) {
                         currentlyActiveAnalyzer.finishPreviousState();
@@ -39,9 +39,9 @@ public class CompositeLineAnalyzer implements LineAnalyzer {
         return false;
     }
 
-    public Date parseLine(String line, String nextLine, LineNumberReader lineNumberReader, Date lastValidDateParsed) throws IOException {
-        if (isForThisAnalyzer(line, nextLine)) {
-            return currentlyActiveAnalyzer.parseLine(line, nextLine, lineNumberReader, lastValidDateParsed);
+    public Date parseLine(String line, String nextLine, String nextNextLine, LineNumberReader lineNumberReader, Date lastValidDateParsed) throws IOException {
+        if (isForThisAnalyzer(line, nextLine, nextNextLine)) {
+            return currentlyActiveAnalyzer.parseLine(line, nextLine, nextNextLine, lineNumberReader, lastValidDateParsed);
         }
         return null;
     }

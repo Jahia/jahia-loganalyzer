@@ -12,7 +12,7 @@ import java.io.IOException;
 /**
  * Created by IntelliJ IDEA.
  * User: Serge Huber
- * Date: 22 août 2007
+ * Date: 22 aoï¿½t 2007
  * Time: 11:04:18
  * To change this template use File | Settings | File Templates.
  */
@@ -55,15 +55,17 @@ public class LogParser {
         LineAnalyzer compositeLineAnalyzer = new CompositeLineAnalyzer(lineAnalyzers);
         
         String currentLine = lineNumberReader.readLine();
-        String nextLine = null;
+        String nextLine = lineNumberReader.readLine();
+        String nextNextLine = null;
         try {
-            while ( currentLine != null ) {
-                nextLine = lineNumberReader.readLine();
-                Date lastDateFound = compositeLineAnalyzer.parseLine(currentLine, nextLine, lineNumberReader, lastValidDateParsed);
+            while (( currentLine != null ) && (nextLine != null)) {
+                nextNextLine = lineNumberReader.readLine();
+                Date lastDateFound = compositeLineAnalyzer.parseLine(currentLine, nextLine, nextNextLine, lineNumberReader, lastValidDateParsed);
                 if (lastDateFound != null) {
                     lastValidDateParsed = lastDateFound;
                 }
                 currentLine = nextLine;
+                nextLine = nextNextLine;
             }
             compositeLineAnalyzer.finishPreviousState();
             compositeLineAnalyzer.stop();

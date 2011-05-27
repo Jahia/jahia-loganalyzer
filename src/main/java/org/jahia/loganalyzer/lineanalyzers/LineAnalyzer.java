@@ -9,7 +9,7 @@ import java.util.Date;
 /**
  * Created by IntelliJ IDEA.
  * User: Serge Huber
- * Date: 22 août 2007
+ * Date: 22 aoï¿½t 2007
  * Time: 12:51:57
  * To change this template use File | Settings | File Templates.
  */
@@ -19,7 +19,7 @@ public interface LineAnalyzer {
      * @param line
      * @return
      */
-    boolean isForThisAnalyzer(String line, String nextLine);
+    boolean isForThisAnalyzer(String line, String nextLine, String nextNextLine);
 
     /**
      * Process the line with the analyzer
@@ -27,7 +27,7 @@ public interface LineAnalyzer {
      * @param reader
      * @throws IOException
      */
-    Date parseLine(String line, String nextLine, LineNumberReader reader, Date lastValidDateParsed) throws IOException;
+    Date parseLine(String line, String nextLine, String nextNextLine, LineNumberReader reader, Date lastValidDateParsed) throws IOException;
 
     /**
      * This method is called when this analyzer is being switched to another one by the composite analyzer,
