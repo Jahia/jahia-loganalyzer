@@ -88,6 +88,10 @@ public class ExceptionLineAnalyzer extends CSVOutputLineAnalyzer {
     }
 
     public void finishPreviousState() {
+        if (currentExceptionDetailsLogEntry == null) {
+            inException = false;
+            return;
+        }
         getDetailsLogEntryWriter().write(currentExceptionDetailsLogEntry);
         ExceptionSummaryLogEntry exceptionSummaryLogEntry = exceptionSummaryMap.get(currentExceptionDetailsLogEntry.toString());
         if (exceptionSummaryLogEntry == null) {

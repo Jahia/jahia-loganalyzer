@@ -10,7 +10,7 @@ import java.text.DateFormat;
 /**
  * Created by IntelliJ IDEA.
  * User: Serge Huber
- * Date: 22 août 2007
+ * Date: 22 aoï¿½t 2007
  * Time: 12:09:25
  * To change this template use File | Settings | File Templates.
  */
@@ -31,6 +31,9 @@ public class CSVLogEntryWriter implements LogEntryWriter {
     }
 
     public void write(LogEntry logEntry) {
+        if (logEntry == null) {
+            return;
+        }
         csvWriter.writeNext(logEntry.toStringArray(dateFormat));
     }
 

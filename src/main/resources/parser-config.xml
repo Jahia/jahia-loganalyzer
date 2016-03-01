@@ -15,6 +15,7 @@
         <threaddump-analyzer>
             <sun-jdk5-threadinfo-pattern>"(.*?)" (daemon )?prio=(\d*) tid=(.*?) nid=(.*?) ([\w\.\(\) ]*)(\[(.*)\])?</sun-jdk5-threadinfo-pattern>
             <sun-jdk6-threadinfo-pattern>"(.*?)" Id=(\d*?) in (.*)( .*)?</sun-jdk6-threadinfo-pattern>
+            <sun-jdk7-threadinfo-pattern>"(.*?)" nid=(\d*?) state=(.*?)(?: \((.*?)\))? \[(.*)\]</sun-jdk7-threadinfo-pattern>
         </threaddump-analyzer>
         <standardlog-analyzer>
             <matching-pattern><![CDATA[(\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d\,\d\d\d):? (.*) \[([\w\.]*)] ([\w\.]*\:\d* )?- (.*)]]></matching-pattern>

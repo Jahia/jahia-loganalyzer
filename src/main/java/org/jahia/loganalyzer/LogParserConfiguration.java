@@ -40,6 +40,7 @@ public class LogParserConfiguration {
 
     private static final String SUN_JDK5_THREAD_THREADINFO_PATTERN_STRING = "\"(.*?)\" (daemon )?prio=(\\d*) tid=(.*?) nid=(.*?) ([\\w\\.\\(\\) ]*)(\\[(.*)\\])?";
     private static final String SUN_JDK6_THREAD_THREADINFO_PATTERN_STRING = "\"(.*?)\" Id=(.*?) in (.*?) (on lock=(.*?))?";
+    private static final String SUN_JDK7_THREAD_THREADINFO_PATTERN_STRING = "\"(.*?)\" nid=(\\d*?) state=(.*?)(?: \\((.*?)\\))? \\[(.*)\\]";
 
     private String inputFileName = new File(DEFAULT_INPUTFILENAME_STRING).getAbsoluteFile().toString();
 
@@ -53,6 +54,7 @@ public class LogParserConfiguration {
     private String threadSummaryOutputFileName = new File(DEFAULT_THREAD_SUMMARY_OUTPUTFILENAME_STRING).getAbsoluteFile().toString();
     private String sunJDK5ThreadThreadInfoPattern = SUN_JDK5_THREAD_THREADINFO_PATTERN_STRING;
     private String sunJDK6ThreadThreadInfoPattern = SUN_JDK6_THREAD_THREADINFO_PATTERN_STRING;
+    private String sunJDK7ThreadThreadInfoPattern = SUN_JDK7_THREAD_THREADINFO_PATTERN_STRING;
 
     private boolean exceptionAnalyzerActivated = true;
     private String exceptionDetailsOutputFileName = new File(DEFAULT_EXCEPTION_DETAILS_OUTPUTFILENAME_STRING).getAbsoluteFile().toString();
@@ -95,6 +97,7 @@ public class LogParserConfiguration {
 
             sunJDK5ThreadThreadInfoPattern = config.getString("analyzers.threaddump-analyzer.sun-jdk5-threadinfo-pattern");
             sunJDK6ThreadThreadInfoPattern = config.getString("analyzers.threaddump-analyzer.sun-jdk6-threadinfo-pattern");
+            sunJDK7ThreadThreadInfoPattern = config.getString("analyzers.threaddump-analyzer.sun-jdk7-threadinfo-pattern");
 
             standardLogAnalyzerPattern = config.getString("analyzers.standardlog-analyzer.matching-pattern");
         } catch (ConfigurationException ce) {
@@ -180,6 +183,14 @@ public class LogParserConfiguration {
 
     public void setSunJDK6ThreadThreadInfoPattern(String sunJDK6ThreadThreadInfoPattern) {
         this.sunJDK6ThreadThreadInfoPattern = sunJDK6ThreadThreadInfoPattern;
+    }
+
+    public String getSunJDK7ThreadThreadInfoPattern() {
+        return sunJDK7ThreadThreadInfoPattern;
+    }
+
+    public void setSunJDK7ThreadThreadInfoPattern(String sunJDK7ThreadThreadInfoPattern) {
+        this.sunJDK7ThreadThreadInfoPattern = sunJDK7ThreadThreadInfoPattern;
     }
 
     public String getExceptionDetailsOutputFileName() {
