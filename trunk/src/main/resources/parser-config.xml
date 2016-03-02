@@ -5,7 +5,8 @@
     <date-format>yyyy-MM-dd HH:mm:ss\,SSS</date-format>
     <analyzers>
         <perf-analyzer>
-            <matching-pattern>(.*?): .*\[org\.jahia\.bin\.Jahia\].*Processed \[(.*?)\](?: esi=\[(.*?)\])? user=\[(.*)\] ip=\[(.*)\] in \[(.*)ms\].*</matching-pattern>
+            <!--matching-pattern>(.*?): .*\[org\.jahia\.bin\.Jahia\].*Processed \[(.*?)\](?: esi=\[(.*?)\])? user=\[(.*)\] ip=\[(.*)\] in \[(.*)ms\].*</matching-pattern-->
+            <matching-pattern>(.*?): .*\[Render].*Rendered \[(.*?)\](?: esi=\[(.*?)\])? user=\[(.*)\] ip=\[(.*)\] sessionID=\[(.*)\] in \[(.*)ms\].*</matching-pattern>
         </perf-analyzer>
         <exception-analyzer>
             <firstline-pattern>^(Exception in thread \"(.*)\" )?([\w\d\.\s\"_-]*)(:.*)?$</firstline-pattern>

@@ -18,6 +18,7 @@ import java.net.URL;
 import java.net.JarURLConnection;
 import java.net.URLConnection;
 
+import org.apache.commons.io.FilenameUtils;
 import org.jahia.loganalyzer.LogParser;
 import org.jahia.loganalyzer.LogParserConfiguration;
 import org.apache.commons.logging.Log;
@@ -147,6 +148,16 @@ public class LogAnalyzerMainDialog extends JDialog {
         //fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         //fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 
+        inputLogFile.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String filePath = inputLogFile.getText();
+                File file = new File(filePath);
+                if (file.exists()) {
+                    String baseName = FilenameUtils.getBaseName(file.getName());
+                }
+            }
+        });
+
         browseInputLogFile.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 fileChooser.setSelectedFile(new File(inputLogFile.getText()));
@@ -156,22 +167,24 @@ public class LogAnalyzerMainDialog extends JDialog {
                     File file = fileChooser.getSelectedFile();
                     inputLogFile.setText(file.getAbsoluteFile().toString());
 
+                    String baseName = FilenameUtils.getBaseName(file.getName());
+
                     // now we use the same parent directory for all output files
-                    File newPerfDetails = new File(file.getParent(), LogParserConfiguration.DEFAULT_PERF_DETAILS_OUTPUTFILENAME_STRING);
+                    File newPerfDetails = new File(file.getParent(), baseName + LogParserConfiguration.DEFAULT_PERF_DETAILS_OUTPUTFILENAME_STRING);
                     perfDetailsCSVOutputFile.setText(newPerfDetails.getAbsoluteFile().toString());
-                    File newPerfSummary = new File(file.getParent(), LogParserConfiguration.DEFAULT_PERF_SUMMARY_OUTPUTFILENAME_STRING);
+                    File newPerfSummary = new File(file.getParent(), baseName + LogParserConfiguration.DEFAULT_PERF_SUMMARY_OUTPUTFILENAME_STRING);
                     perfSummaryCSVOutputFile.setText(newPerfSummary.getAbsoluteFile().toString());
-                    File newThreadDetails = new File(file.getParent(), LogParserConfiguration.DEFAULT_THREAD_DETAILS_OUTPUTFILENAME_STRING);
+                    File newThreadDetails = new File(file.getParent(), baseName + LogParserConfiguration.DEFAULT_THREAD_DETAILS_OUTPUTFILENAME_STRING);
                     threadDetailsCSVOutputFile.setText(newThreadDetails.getAbsoluteFile().toString());
-                    File newThreadSummary = new File(file.getParent(), LogParserConfiguration.DEFAULT_THREAD_SUMMARY_OUTPUTFILENAME_STRING);
+                    File newThreadSummary = new File(file.getParent(), baseName + LogParserConfiguration.DEFAULT_THREAD_SUMMARY_OUTPUTFILENAME_STRING);
                     threadSummaryCSVOutputFile.setText(newThreadSummary.getAbsoluteFile().toString());
-                    File newExceptionDetails = new File(file.getParent(), LogParserConfiguration.DEFAULT_EXCEPTION_DETAILS_OUTPUTFILENAME_STRING);
+                    File newExceptionDetails = new File(file.getParent(), baseName + LogParserConfiguration.DEFAULT_EXCEPTION_DETAILS_OUTPUTFILENAME_STRING);
                     exceptionDetailsCSVOutputFile.setText(newExceptionDetails.getAbsoluteFile().toString());
-                    File newExceptionSummary = new File(file.getParent(), LogParserConfiguration.DEFAULT_EXCEPTION_SUMMARY_OUTPUTFILENAME_STRING);
+                    File newExceptionSummary = new File(file.getParent(), baseName + LogParserConfiguration.DEFAULT_EXCEPTION_SUMMARY_OUTPUTFILENAME_STRING);
                     exceptionSummaryCSVOutputFile.setText(newExceptionSummary.getAbsoluteFile().toString());
-                    File newStandardDetails = new File(file.getParent(), LogParserConfiguration.DEFAULT_STANDARD_DETAILS_OUTPUTFILENAME_STRING);
+                    File newStandardDetails = new File(file.getParent(), baseName + LogParserConfiguration.DEFAULT_STANDARD_DETAILS_OUTPUTFILENAME_STRING);
                     standardDetailsCSVOutputFile.setText(newStandardDetails.getAbsoluteFile().toString());
-                    File newStandardSummary = new File(file.getParent(), LogParserConfiguration.DEFAULT_STANDARD_SUMMARY_OUTPUTFILENAME_STRING);
+                    File newStandardSummary = new File(file.getParent(), baseName + LogParserConfiguration.DEFAULT_STANDARD_SUMMARY_OUTPUTFILENAME_STRING);
                     standardSummaryCSVOutputFile.setText(newStandardSummary.getAbsoluteFile().toString());
                 } else {
                 }
@@ -340,6 +353,7 @@ public class LogAnalyzerMainDialog extends JDialog {
         regexpPatternField = new JComboBox();
         regexpPatternField.setEditable(true);
         final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
+        defaultComboBoxModel1.addElement("(.*?): .*\\[Render].*Rendered \\[(.*?)\\](?: esi=\\[(.*?)\\])? user=\\[(.*)\\] ip=\\[(.*)\\] sessionID=\\[(.*)\\] in \\[(.*)ms\\].*");
         defaultComboBoxModel1.addElement("(.*?): .*\\[org\\.jahia\\.bin\\.Jahia\\].*Processed \\[(.*?)\\](?: esi=\\[(.*?)\\])? user=\\[(.*)\\] ip=\\[(.*)\\] in \\[(.*)ms\\].*");
         defaultComboBoxModel1.addElement(".*?\\[(.*?)\\].*org\\.jahia\\.bin\\.Jahia.*Processed \\[(.*?)\\](?: esi=\\[(.*?)\\])? user=\\[(.*)\\] ip=\\[(.*)\\] in \\[(.*)ms\\].*");
         regexpPatternField.setModel(defaultComboBoxModel1);

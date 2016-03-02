@@ -22,7 +22,7 @@ import java.text.SimpleDateFormat;
  * Time: 10:32:06
  * To change this template use File | Settings | File Templates.
  */
-public class StandardLogLineAnalyzer extends CSVOutputLineAnalyzer {
+public class StandardLogLineAnalyzer extends WritingLineAnalyzer {
 
     private static final org.apache.commons.logging.Log log =
             org.apache.commons.logging.LogFactory.getLog(StandardLogLineAnalyzer.class);
@@ -70,7 +70,7 @@ public class StandardLogLineAnalyzer extends CSVOutputLineAnalyzer {
         detailsLogEntry.setMessage(matcher.group(5));
 
         if (detailsLogEntry.getLevelNumber() >= standardMinimumLogLevel) {
-            getDetailsLogEntryWriter().write(detailsLogEntry);
+            writeDetails(detailsLogEntry);
         }
 
         StandardSummaryLogEntry standardSummaryLogEntry = standardSummary.get(Integer.toString(detailsLogEntry.getLevelNumber()) + ":" + detailsLogEntry.getMessage());
@@ -91,7 +91,7 @@ public class StandardLogLineAnalyzer extends CSVOutputLineAnalyzer {
 
     public void stop() throws IOException {
         for (StandardSummaryLogEntry standardSummaryLogEntry : standardSummary.values()) {
-            getSummaryLogEntryWriter().write(standardSummaryLogEntry);
+            writeSummary(standardSummaryLogEntry);
         }
         super.stop();
     }

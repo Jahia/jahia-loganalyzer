@@ -6,7 +6,7 @@ import java.text.DateFormat;
 /**
  * Created by IntelliJ IDEA.
  * User: Serge Huber
- * Date: 22 août 2007
+ * Date: 22 aoï¿½t 2007
  * Time: 09:19:24
  * To change this template use File | Settings | File Templates.
  */
@@ -21,6 +21,7 @@ public class PerfDetailsLogEntry extends AbstractDetailsLogEntry {
     private String url;
     private String esi;
     private String ipAddress;
+    private String sessionID;
     private long processingTime = 0;
 
     public Date getLogDate() {
@@ -107,12 +108,20 @@ public class PerfDetailsLogEntry extends AbstractDetailsLogEntry {
         return ipAddress;
     }
 
+    public String getSessionID() {
+        return sessionID;
+    }
+
+    public void setSessionID(String sessionID) {
+        this.sessionID = sessionID;
+    }
+
     public void setIpAddress(String ipAddress) {
         this.ipAddress = ipAddress;
     }
 
     public String[] toStringArray(DateFormat dateFormat) {
-        String[] result = new String[12];
+        String[] result = new String[13];
         result[0] = Long.toString(getLineNumber());
         result[1] = dateFormat.format(logDate);
         result[2] = Integer.toString(pid);
@@ -123,13 +132,14 @@ public class PerfDetailsLogEntry extends AbstractDetailsLogEntry {
         result[7] = engineName;
         result[8] = esi;
         result[9] = ipAddress;
-        result[10] = Long.toString(processingTime);
-        result[11] = url;
+        result[10] = sessionID;
+        result[11] = Long.toString(processingTime);
+        result[12] = url;
         return result;
     }
 
     public String[] getColumnKeys() {
-        String[] result = new String[12];
+        String[] result = new String[13];
         result[0] = "perf.details.logLine";
         result[1] = "perf.details.date";
         result[2] = "perf.details.pid";
@@ -140,8 +150,9 @@ public class PerfDetailsLogEntry extends AbstractDetailsLogEntry {
         result[7] = "perf.details.engineName";
         result[8] = "perf.details.esi";
         result[9] = "perf.details.ipAddress";
-        result[10] = "perf.details.processingTime";
-        result[11] = "perf.details.url";
+        result[10] = "perf.details.sessionID";
+        result[11] = "perf.details.processingTime";
+        result[12] = "perf.details.url";
         return result;
     }
     

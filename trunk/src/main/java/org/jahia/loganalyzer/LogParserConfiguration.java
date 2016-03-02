@@ -21,22 +21,23 @@ public class LogParserConfiguration {
     boolean cacheIgnored = false;
 
     public static final String DEFAULT_INPUTFILENAME_STRING = "catalina.out";
-    public static final String DEFAULT_PERF_DETAILS_OUTPUTFILENAME_STRING = "jahia-perf-details.csv";
-    public static final String DEFAULT_PERF_SUMMARY_OUTPUTFILENAME_STRING = "jahia-perf-summary.csv";
-    public static final String DEFAULT_THREAD_DETAILS_OUTPUTFILENAME_STRING = "jahia-threads-details.csv";
-    public static final String DEFAULT_THREAD_SUMMARY_OUTPUTFILENAME_STRING = "jahia-threads-summary.csv";
-    public static final String DEFAULT_EXCEPTION_DETAILS_OUTPUTFILENAME_STRING = "jahia-exceptions-details.csv";
-    public static final String DEFAULT_EXCEPTION_SUMMARY_OUTPUTFILENAME_STRING = "jahia-exceptions-summary.csv";
-    public static final String DEFAULT_STANDARD_DETAILS_OUTPUTFILENAME_STRING = "jahia-standard-details.csv";
-    public static final String DEFAULT_STANDARD_SUMMARY_OUTPUTFILENAME_STRING = "jahia-standard-summary.csv";
+    public static final String DEFAULT_PERF_DETAILS_OUTPUTFILENAME_STRING = "-perf-details";
+    public static final String DEFAULT_PERF_SUMMARY_OUTPUTFILENAME_STRING = "-perf-summary";
+    public static final String DEFAULT_THREAD_DETAILS_OUTPUTFILENAME_STRING = "-threads-details";
+    public static final String DEFAULT_THREAD_SUMMARY_OUTPUTFILENAME_STRING = "-threads-summary";
+    public static final String DEFAULT_EXCEPTION_DETAILS_OUTPUTFILENAME_STRING = "-exceptions-details";
+    public static final String DEFAULT_EXCEPTION_SUMMARY_OUTPUTFILENAME_STRING = "-exceptions-summary";
+    public static final String DEFAULT_STANDARD_DETAILS_OUTPUTFILENAME_STRING = "-standard-details";
+    public static final String DEFAULT_STANDARD_SUMMARY_OUTPUTFILENAME_STRING = "-standard-summary";
     private static final String DEFAULT_DATE_FORMAT_STRING = "yyyy-MM-dd HH:mm:ss,SSS";
 
     private static final String EXCEPTION_SECONDLINE_PATTERN_STRING = "\\s*at (.*)\\(.*\\)";
     private static final String EXCEPTION_CAUSEDBY_PATTERN_STRING = "^Caused by: ([\\w\\d\\._-]*)(:.*)?$";
     private static final String EXCEPTION_FIRSTLINE_PATTERN_STRING = "^(Exception in thread \\\"(.*)\\\" )?([\\w\\d\\.\\s\\\"_-]*)(:.*)?$";
 
-    private static final String OLD_PERF_MATCHING_PATTERN_STRING = ".*?\\[(.*?)\\].*org\\.jahia\\.bin\\.Jahia.*Processed \\[(.*?)\\](?: esi=\\[(.*?)\\])? user=\\[(.*)\\] ip=\\[(.*)\\] in \\[(.*)ms\\].*";
-    private static final String PERF_MATCHING_PATTERN_STRING = "(.*?): .*\\[org\\.jahia\\.bin\\.Jahia\\].*Processed \\[(.*?)\\](?: esi=\\[(.*?)\\])? user=\\[(.*)\\] ip=\\[(.*)\\] in \\[(.*)ms\\].*";
+    private static final String OLDER_PERF_MATCHING_PATTERN_STRING = ".*?\\[(.*?)\\].*org\\.jahia\\.bin\\.Jahia.*Processed \\[(.*?)\\](?: esi=\\[(.*?)\\])? user=\\[(.*)\\] ip=\\[(.*)\\] in \\[(.*)ms\\].*";
+    private static final String OLD_PERF_MATCHING_PATTERN_STRING = "(.*?): .*\\[org\\.jahia\\.bin\\.Jahia\\].*Processed \\[(.*?)\\](?: esi=\\[(.*?)\\])? user=\\[(.*)\\] ip=\\[(.*)\\] in \\[(.*)ms\\].*";
+    private static final String PERF_MATCHING_PATTERN_STRING = "(.*?): .*\\[Render].*Rendered \\[(.*?)\\](?: esi=\\[(.*?)\\])? user=\\[(.*)\\] ip=\\[(.*)\\] sessionID=\\[(.*)\\] in \\[(.*)ms\\].*";
 
     private static final String SUN_JDK5_THREAD_THREADINFO_PATTERN_STRING = "\"(.*?)\" (daemon )?prio=(\\d*) tid=(.*?) nid=(.*?) ([\\w\\.\\(\\) ]*)(\\[(.*)\\])?";
     private static final String SUN_JDK6_THREAD_THREADINFO_PATTERN_STRING = "\"(.*?)\" Id=(.*?) in (.*?) (on lock=(.*?))?";

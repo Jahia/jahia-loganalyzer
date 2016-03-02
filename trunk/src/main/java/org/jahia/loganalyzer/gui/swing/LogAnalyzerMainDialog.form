@@ -6,7 +6,7 @@
     <rowspec value="center:max(d;4px):noGrow"/>
     <colspec value="fill:d:grow"/>
     <constraints>
-      <xy x="48" y="54" width="1117" height="344"/>
+      <xy x="48" y="54" width="1117" height="365"/>
     </constraints>
     <properties>
       <toolTipText value=""/>
@@ -195,6 +195,7 @@
                     <properties>
                       <editable value="true"/>
                       <model>
+                        <item value="(.*?): .*\[Render].*Rendered \[(.*?)\](?: esi=\[(.*?)\])? user=\[(.*)\] ip=\[(.*)\] sessionID=\[(.*)\] in \[(.*)ms\].*"/>
                         <item value="(.*?): .*\[org\.jahia\.bin\.Jahia\].*Processed \[(.*?)\](?: esi=\[(.*?)\])? user=\[(.*)\] ip=\[(.*)\] in \[(.*)ms\].*"/>
                         <item value=".*?\[(.*?)\].*org\.jahia\.bin\.Jahia.*Processed \[(.*?)\](?: esi=\[(.*?)\])? user=\[(.*)\] ip=\[(.*)\] in \[(.*)ms\].*"/>
                       </model>

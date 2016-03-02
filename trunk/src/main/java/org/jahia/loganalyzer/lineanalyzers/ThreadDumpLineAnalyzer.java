@@ -17,7 +17,7 @@ import java.io.IOException;
  * Time: 11:07:20
  * To change this template use File | Settings | File Templates.
  */
-public class ThreadDumpLineAnalyzer extends CSVOutputLineAnalyzer {
+public class ThreadDumpLineAnalyzer extends WritingLineAnalyzer {
 
     private static final org.apache.commons.logging.Log log =
             org.apache.commons.logging.LogFactory.getLog(ThreadDumpLineAnalyzer.class);
@@ -109,7 +109,7 @@ public class ThreadDumpLineAnalyzer extends CSVOutputLineAnalyzer {
                 if (log.isTraceEnabled()) {
                     log.trace("Thread " + currentThreadCount + " : " + threadDumpDetailsLogEntry);
                 }
-                getDetailsLogEntryWriter().write(threadDumpDetailsLogEntry);
+                writeDetails(threadDumpDetailsLogEntry);
                 currentSummaryLogEntry.getThreadDumpLogEntries().add(threadDumpDetailsLogEntry);
                 currentSummaryLogEntry.getThreadNames().put(threadDumpDetailsLogEntry.getTid(), threadDumpDetailsLogEntry.getName());
             }
@@ -162,6 +162,8 @@ public class ThreadDumpLineAnalyzer extends CSVOutputLineAnalyzer {
                 threadDumpDetailsLogEntry.setState(matcher.group(6).trim());
                 threadDumpDetailsLogEntry.setStateInfo(matcher.group(8));
             }
+        } else if (line.trim().startsWith("java.lang.Thread.State: ")) {
+            threadDumpDetailsLogEntry.setState(line.substring("java.lang.Thread.State: ".length()));
         } else if (line.trim().startsWith("at ")) {
             threadDumpDetailsLogEntry.getStackTrace().add(line.substring(1));
         } else if (line.trim().startsWith("- locked ")) {
@@ -171,6 +173,8 @@ public class ThreadDumpLineAnalyzer extends CSVOutputLineAnalyzer {
             threadDumpDetailsLogEntry.getStackTrace().add(line.substring(1));
             threadDumpDetailsLogEntry.getWaitingOnLocks().add(line.substring(1));
         } else if (line.trim().startsWith("owned by")) {
+            threadDumpDetailsLogEntry.getStackTrace().add(line.substring(1));
+            threadDumpDetailsLogEntry.getLockOwners().add(line.substring(1));
         } else if ("".equals(line.trim())) {
 
         }
@@ -184,7 +188,7 @@ public class ThreadDumpLineAnalyzer extends CSVOutputLineAnalyzer {
             log.info("Found " + currentSummaryLogEntry.getThreadDumpLogEntries().size() + " threads in thread dump.");
             currentSummaryLogEntry.setDumpNumber(threadDumpCount);
             currentSummaryLogEntry.computeDifferences(lastSummaryLogEntry);
-            getSummaryLogEntryWriter().write(currentSummaryLogEntry);
+            writeSummary(currentSummaryLogEntry);
             allThreadDumps.add(currentSummaryLogEntry);
         }
         inThreadDump = false;
