@@ -37,10 +37,6 @@ public class CSVLogEntryWriter implements LogEntryWriter {
         csvWriter.writeNext(logEntry.toStringArray(dateFormat));
     }
 
-    public void flush() {
-
-    }
-
     public void close() throws IOException {
         csvWriter.close();
     }

@@ -20,7 +20,7 @@ import java.io.IOException;
  * Time: 12:49:15
  * To change this template use File | Settings | File Templates.
  */
-public class JahiaPerfLineAnalyzer extends CSVOutputLineAnalyzer {
+public class JahiaPerfLineAnalyzer extends WritingLineAnalyzer {
 
     private static final org.apache.commons.logging.Log log =
             org.apache.commons.logging.LogFactory.getLog(JahiaPerfLineAnalyzer.class);
@@ -68,7 +68,8 @@ public class JahiaPerfLineAnalyzer extends CSVOutputLineAnalyzer {
         String esiGroup = matcher.group(3);
         String userGroup = matcher.group(4);
         String ipAddressGroup = matcher.group(5);
-        String processingTimeGroup = matcher.group(6);
+        String sessionIDGroup = matcher.group(6);
+        String processingTimeGroup = matcher.group(7);
         detailsLogEntry.setLineNumber(lineNumberReader.getLineNumber()-1);
         try {
             Date parsedDate = dateFormat.parse(dateGroup);
@@ -81,6 +82,7 @@ public class JahiaPerfLineAnalyzer extends CSVOutputLineAnalyzer {
         detailsLogEntry.setEsi(esiGroup);
         detailsLogEntry.setUser(userGroup);
         detailsLogEntry.setIpAddress(ipAddressGroup);
+        detailsLogEntry.setSessionID(sessionIDGroup);
         long processingTime = 0L;
         try {
             processingTime = Long.parseLong(processingTimeGroup);
@@ -89,7 +91,7 @@ public class JahiaPerfLineAnalyzer extends CSVOutputLineAnalyzer {
         }
         detailsLogEntry.setProcessingTime(processingTime);
 
-        getDetailsLogEntryWriter().write(detailsLogEntry);
+        writeDetails(detailsLogEntry);
 
         // now let's accumulate results
         String pageKey = Integer.toString(detailsLogEntry.getPid()) + "-" + detailsLogEntry.getUrlKey();
@@ -177,7 +179,7 @@ public class JahiaPerfLineAnalyzer extends CSVOutputLineAnalyzer {
 
     public void stop() throws IOException {
         for (PerfSummaryLogEntry perfSummaryLogEntry : perfSummary.values()) {
-            getSummaryLogEntryWriter().write(perfSummaryLogEntry);
+            writeSummary(perfSummaryLogEntry);
         }
         super.stop();
     }

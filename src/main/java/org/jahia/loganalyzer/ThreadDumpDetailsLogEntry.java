@@ -27,6 +27,7 @@ public class ThreadDumpDetailsLogEntry extends AbstractDetailsLogEntry {
     private List<String> stackTrace = new ArrayList<String>();
     private List<String> waitingOnLocks = new ArrayList<String>();
     private List<String> holdingLocks = new ArrayList<String>();
+    private List<String> lockOwners = new ArrayList<String>();
 
     public ThreadDumpDetailsLogEntry() {
     }
@@ -173,6 +174,15 @@ public class ThreadDumpDetailsLogEntry extends AbstractDetailsLogEntry {
         return result.toString();
     }
 
+    public String lockOwnersToString() {
+        StringBuffer result = new StringBuffer();
+        for (String stackLine : lockOwners) {
+            result.append(stackLine);
+            result.append("\n");
+        }
+        return result.toString();
+    }
+
     public List<String> getWaitingOnLocks() {
         return waitingOnLocks;
     }
@@ -189,8 +199,16 @@ public class ThreadDumpDetailsLogEntry extends AbstractDetailsLogEntry {
         this.holdingLocks = holdingLocks;
     }
 
+    public List<String> getLockOwners() {
+        return lockOwners;
+    }
+
+    public void setLockOwners(List<String> lockOwners) {
+        this.lockOwners = lockOwners;
+    }
+
     public String[] toStringArray(DateFormat dateFormat) {
-        String[] result = new String[16];
+        String[] result = new String[17];
         result[0] = Long.toString(getLineNumber());
         result[1] = Long.toString(dumpNumber);
         if (dumpDate != null) {
@@ -211,11 +229,12 @@ public class ThreadDumpDetailsLogEntry extends AbstractDetailsLogEntry {
         result[13] = waitingOnLocksToString();
         result[14] = Integer.toString(holdingLocks.size());
         result[15] = holdingLocksToString();
+        result[16] = lockOwnersToString();
         return result;
     }
 
     public String[] getColumnKeys() {
-        String[] result = new String[16];
+        String[] result = new String[17];
         result[0] = "threaddump.details.logLine";
         result[1] = "threaddump.details.dumpNumber";
         result[2] = "threaddump.details.dumpDate";
@@ -232,6 +251,7 @@ public class ThreadDumpDetailsLogEntry extends AbstractDetailsLogEntry {
         result[13] = "threaddump.details.waitingOnLocks";
         result[14] = "threaddump.details.totalHeld";
         result[15] = "threaddump.details.holdingLocks";
+        result[16] = "threaddump.details.lockOwners";
         return result;
     }
 }

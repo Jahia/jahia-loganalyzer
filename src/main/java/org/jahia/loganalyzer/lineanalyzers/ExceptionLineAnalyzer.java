@@ -17,7 +17,7 @@ import java.util.regex.Matcher;
  * Time: 11:08:16
  * To change this template use File | Settings | File Templates.
  */
-public class ExceptionLineAnalyzer extends CSVOutputLineAnalyzer {
+public class ExceptionLineAnalyzer extends WritingLineAnalyzer {
 
     private static final org.apache.commons.logging.Log log =
             org.apache.commons.logging.LogFactory.getLog(ExceptionLineAnalyzer.class);
@@ -92,7 +92,7 @@ public class ExceptionLineAnalyzer extends CSVOutputLineAnalyzer {
             inException = false;
             return;
         }
-        getDetailsLogEntryWriter().write(currentExceptionDetailsLogEntry);
+        writeDetails(currentExceptionDetailsLogEntry);
         ExceptionSummaryLogEntry exceptionSummaryLogEntry = exceptionSummaryMap.get(currentExceptionDetailsLogEntry.toString());
         if (exceptionSummaryLogEntry == null) {
             exceptionSummaryLogEntry = new ExceptionSummaryLogEntry();
@@ -105,7 +105,7 @@ public class ExceptionLineAnalyzer extends CSVOutputLineAnalyzer {
 
     public void stop() throws IOException {
         for (ExceptionSummaryLogEntry exceptionSummaryLogEntry : exceptionSummaryMap.values()) {
-            getSummaryLogEntryWriter().write(exceptionSummaryLogEntry);
+            writeSummary(exceptionSummaryLogEntry);
         }
         super.stop();
     }
