@@ -5,6 +5,7 @@ import java.io.File;
 
 import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.io.FilenameUtils;
 
 /**
  * Created by IntelliJ IDEA.
@@ -128,6 +129,15 @@ public class LogParserConfiguration {
 
     public void setInputFileName(String inputFileName) {
         this.inputFileName = inputFileName;
+        String baseName = FilenameUtils.getBaseName(inputFileName);
+        this.perfDetailsOutputFileName = baseName + DEFAULT_PERF_DETAILS_OUTPUTFILENAME_STRING;
+        this.perfSummaryOutputFileName = baseName + DEFAULT_PERF_SUMMARY_OUTPUTFILENAME_STRING;
+        this.threadDetailsOutputFileName = baseName + DEFAULT_THREAD_DETAILS_OUTPUTFILENAME_STRING;
+        this.threadSummaryOutputFileName = baseName + DEFAULT_THREAD_SUMMARY_OUTPUTFILENAME_STRING;
+        this.exceptionDetailsOutputFileName = baseName + DEFAULT_EXCEPTION_DETAILS_OUTPUTFILENAME_STRING;
+        this.exceptionSummaryOutputFileName = baseName + DEFAULT_EXCEPTION_SUMMARY_OUTPUTFILENAME_STRING;
+        this.standardDetailsOutputFileName = baseName + DEFAULT_STANDARD_DETAILS_OUTPUTFILENAME_STRING;
+        this.standardSummaryOutputFileName = baseName + DEFAULT_STANDARD_SUMMARY_OUTPUTFILENAME_STRING;
     }
 
     public String getPerfDetailsOutputFileName() {
