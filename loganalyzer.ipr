@@ -337,6 +337,23 @@
     <option name="myReportErrorsAsWarnings" value="true" />
   </component>
   <component name="SvnBranchConfigurationManager">
+    <option name="myConfigurationMap">
+      <map>
+        <entry key="$PROJECT_DIR$">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="branchUrls">
+                <list>
+                  <option value="https://devtools.jahia.com/svn/jahia_loganalyzer/branches" />
+                  <option value="https://devtools.jahia.com/svn/jahia_loganalyzer/tags" />
+                </list>
+              </option>
+              <option name="trunkUrl" value="https://devtools.jahia.com/svn/jahia_loganalyzer/trunk" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+      </map>
+    </option>
     <option name="mySupportsUserInfoFilter" value="true" />
   </component>
   <component name="SvnChangesBrowserSettings">
