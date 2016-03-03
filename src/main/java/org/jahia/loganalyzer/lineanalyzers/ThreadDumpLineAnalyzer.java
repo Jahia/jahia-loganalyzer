@@ -33,6 +33,7 @@ public class ThreadDumpLineAnalyzer extends WritingLineAnalyzer {
     Pattern sunJDK5ThreadInfoPattern;
     Pattern sunJDK6ThreadInfoPattern;
     Pattern sunJDK7ThreadInfoPattern;
+    Pattern sunJDK8ThreadInfoPattern;
 
     ThreadDumpDetailsLogEntry threadDumpDetailsLogEntry = null;
     Date lastValidDateParsed = null;
@@ -42,6 +43,7 @@ public class ThreadDumpLineAnalyzer extends WritingLineAnalyzer {
         sunJDK5ThreadInfoPattern = Pattern.compile(logParserConfiguration.getSunJDK5ThreadThreadInfoPattern());
         sunJDK6ThreadInfoPattern = Pattern.compile(logParserConfiguration.getSunJDK6ThreadThreadInfoPattern());
         sunJDK7ThreadInfoPattern = Pattern.compile(logParserConfiguration.getSunJDK7ThreadThreadInfoPattern());
+        sunJDK8ThreadInfoPattern = Pattern.compile(logParserConfiguration.getSunJDK8ThreadThreadInfoPattern());
     }
 
     public boolean isForThisAnalyzer(String line, String nextLine, String nextNextLine) {
@@ -134,10 +136,19 @@ public class ThreadDumpLineAnalyzer extends WritingLineAnalyzer {
                         threadDumpDetailsLogEntry.setState(matcher.group(3).trim());
                         threadDumpDetailsLogEntry.setStateInfo(matcher.group(4));
                     } else {
-                        log.warn("Line " + lineNumberReader.getLineNumber() + " doesn't match any Sun JDK Regexp : " + line);
-                        threadDumpDetailsLogEntry.setName(line);
-                        threadDumpDetailsLogEntry.setTid("invalid");
-                        return null;
+                        matcher = sunJDK8ThreadInfoPattern.matcher(line);
+                        if (matcher.matches()) {
+                            threadDumpDetailsLogEntry.setName(matcher.group(1));
+                            threadDumpDetailsLogEntry.setNid(matcher.group(7));
+                            threadDumpDetailsLogEntry.setTid(matcher.group(6));
+                            threadDumpDetailsLogEntry.setState(matcher.group(8).trim());
+                            threadDumpDetailsLogEntry.setStateInfo(matcher.group(9));
+                        } else {
+                            log.warn("Line " + lineNumberReader.getLineNumber() + " doesn't match any Sun JDK Regexp : " + line);
+                            threadDumpDetailsLogEntry.setName(line);
+                            threadDumpDetailsLogEntry.setTid("invalid");
+                            return null;
+                        }
                     }
                 } else {
                     // using JDK 6 format

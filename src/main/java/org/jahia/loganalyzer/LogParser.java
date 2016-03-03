@@ -24,6 +24,7 @@ public class LogParser {
     List patterns;
     LogParserConfiguration logParserConfiguration;
     Date lastValidDateParsed = null;
+    LineAnalyzer lineAnalyzer;
 
     public LogParser() {}
 
@@ -31,14 +32,13 @@ public class LogParser {
         return logParserConfiguration;
     }
 
-    public void setLogParserConfiguration(LogParserConfiguration logParserConfiguration) {
+    public void setLogParserConfiguration(LogParserConfiguration logParserConfiguration) throws IOException {
         this.logParserConfiguration = logParserConfiguration;
+        init();
     }
 
-    public JahiaTimeReports parse(Reader reader) throws IOException {
-        JahiaTimeReports timeReports = new JahiaTimeReports();
+    public void init() throws IOException {
         // @todo make the following instantiation configurable so that we can choose the implementations to modify application input and output
-        LineNumberReader lineNumberReader = new LineNumberReader(reader);
 
         List<LineAnalyzer> lineAnalyzers = new ArrayList<LineAnalyzer>();
         if (logParserConfiguration.isThreadDumpAnalyzerActivated()) {
@@ -52,27 +52,36 @@ public class LogParser {
         }
         lineAnalyzers.add(new StandardLogLineAnalyzer(logParserConfiguration));
         lineAnalyzers.add(new DefaultDummyLineAnalyzer());
-        LineAnalyzer compositeLineAnalyzer = new CompositeLineAnalyzer(lineAnalyzers);
-        
+        lineAnalyzer = new CompositeLineAnalyzer(lineAnalyzers);
+    }
+
+    public JahiaTimeReports parse(Reader reader) throws IOException {
+        JahiaTimeReports timeReports = new JahiaTimeReports();
+
+        LineNumberReader lineNumberReader = new LineNumberReader(reader);
+
         String currentLine = lineNumberReader.readLine();
         String nextLine = lineNumberReader.readLine();
         String nextNextLine = null;
         try {
             while (( currentLine != null ) && (nextLine != null)) {
                 nextNextLine = lineNumberReader.readLine();
-                Date lastDateFound = compositeLineAnalyzer.parseLine(currentLine, nextLine, nextNextLine, lineNumberReader, lastValidDateParsed);
+                Date lastDateFound = lineAnalyzer.parseLine(currentLine, nextLine, nextNextLine, lineNumberReader, lastValidDateParsed);
                 if (lastDateFound != null) {
                     lastValidDateParsed = lastDateFound;
                 }
                 currentLine = nextLine;
                 nextLine = nextNextLine;
             }
-            compositeLineAnalyzer.finishPreviousState();
-            compositeLineAnalyzer.stop();
+            lineAnalyzer.finishPreviousState();
         } catch (IOException ioe) {
             log.error("Error on line " + Integer.toString(lineNumberReader.getLineNumber()) + ": " + currentLine );
             throw ioe;
         }
         return timeReports;
+    }
+
+    public void stop() throws IOException {
+        lineAnalyzer.stop();
     }
 }
