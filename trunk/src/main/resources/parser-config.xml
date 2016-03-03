@@ -9,14 +9,15 @@
             <matching-pattern>(.*?): .*\[Render].*Rendered \[(.*?)\](?: esi=\[(.*?)\])? user=\[(.*)\] ip=\[(.*)\] sessionID=\[(.*)\] in \[(.*)ms\].*</matching-pattern>
         </perf-analyzer>
         <exception-analyzer>
-            <firstline-pattern>^(Exception in thread \"(.*)\" )?([\w\d\.\s\"_-]*)(:.*)?$</firstline-pattern>
+            <firstline-pattern>^(.*?Exception.*?)(:.*)?$</firstline-pattern>
             <secondline-pattern>\s*at (.*)\(.*\)</secondline-pattern>
-            <causedby-pattern>^Caused by: ([\w\d\._-]*)(:.*)?$</causedby-pattern>
+            <causedby-pattern>^Caused by: (.*)?$</causedby-pattern>
         </exception-analyzer>
         <threaddump-analyzer>
             <sun-jdk5-threadinfo-pattern>"(.*?)" (daemon )?prio=(\d*) tid=(.*?) nid=(.*?) ([\w\.\(\) ]*)(\[(.*)\])?</sun-jdk5-threadinfo-pattern>
             <sun-jdk6-threadinfo-pattern>"(.*?)" Id=(\d*?) in (.*)( .*)?</sun-jdk6-threadinfo-pattern>
             <sun-jdk7-threadinfo-pattern>"(.*?)" nid=(\d*?) state=(.*?)(?: \((.*?)\))? \[(.*)\]</sun-jdk7-threadinfo-pattern>
+            <sun-jdk8-threadinfo-pattern>"(.*?)"( #\d*)? (daemon )?(prio=(\d*) )?(os_prio=(\d*) )?tid=(.*?) nid=(.*?) ([\w\.\(\) ]*)(\[(.*)\])?</sun-jdk8-threadinfo-pattern>
         </threaddump-analyzer>
         <standardlog-analyzer>
             <matching-pattern><![CDATA[(\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d\,\d\d\d):? (.*) \[([\w\.]*)] ([\w\.]*\:\d* )?- (.*)]]></matching-pattern>

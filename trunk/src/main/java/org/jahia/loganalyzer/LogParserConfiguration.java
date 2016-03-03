@@ -33,8 +33,8 @@ public class LogParserConfiguration {
     private static final String DEFAULT_DATE_FORMAT_STRING = "yyyy-MM-dd HH:mm:ss,SSS";
 
     private static final String EXCEPTION_SECONDLINE_PATTERN_STRING = "\\s*at (.*)\\(.*\\)";
-    private static final String EXCEPTION_CAUSEDBY_PATTERN_STRING = "^Caused by: ([\\w\\d\\._-]*)(:.*)?$";
-    private static final String EXCEPTION_FIRSTLINE_PATTERN_STRING = "^(Exception in thread \\\"(.*)\\\" )?([\\w\\d\\.\\s\\\"_-]*)(:.*)?$";
+    private static final String EXCEPTION_CAUSEDBY_PATTERN_STRING = "^Caused by: (.*)?$";
+    private static final String EXCEPTION_FIRSTLINE_PATTERN_STRING = "^(.*?Exception.*?)(:.*)?$";
 
     private static final String OLDER_PERF_MATCHING_PATTERN_STRING = ".*?\\[(.*?)\\].*org\\.jahia\\.bin\\.Jahia.*Processed \\[(.*?)\\](?: esi=\\[(.*?)\\])? user=\\[(.*)\\] ip=\\[(.*)\\] in \\[(.*)ms\\].*";
     private static final String OLD_PERF_MATCHING_PATTERN_STRING = "(.*?): .*\\[org\\.jahia\\.bin\\.Jahia\\].*Processed \\[(.*?)\\](?: esi=\\[(.*?)\\])? user=\\[(.*)\\] ip=\\[(.*)\\] in \\[(.*)ms\\].*";
@@ -43,6 +43,7 @@ public class LogParserConfiguration {
     private static final String SUN_JDK5_THREAD_THREADINFO_PATTERN_STRING = "\"(.*?)\" (daemon )?prio=(\\d*) tid=(.*?) nid=(.*?) ([\\w\\.\\(\\) ]*)(\\[(.*)\\])?";
     private static final String SUN_JDK6_THREAD_THREADINFO_PATTERN_STRING = "\"(.*?)\" Id=(.*?) in (.*?) (on lock=(.*?))?";
     private static final String SUN_JDK7_THREAD_THREADINFO_PATTERN_STRING = "\"(.*?)\" nid=(\\d*?) state=(.*?)(?: \\((.*?)\\))? \\[(.*)\\]";
+    private static final String SUN_JDK8_THREAD_THREADINFO_PATTERN_STRING = "\"(.*?)\"( #\\d*)? (daemon )?(prio=(\\d*) )?(os_prio=(\\d*) )?tid=(.*?) nid=(.*?) ([\\w\\.\\(\\) ]*)(\\[(.*)\\])?";
 
     private String inputFileName = new File(DEFAULT_INPUTFILENAME_STRING).getAbsoluteFile().toString();
 
@@ -57,6 +58,7 @@ public class LogParserConfiguration {
     private String sunJDK5ThreadThreadInfoPattern = SUN_JDK5_THREAD_THREADINFO_PATTERN_STRING;
     private String sunJDK6ThreadThreadInfoPattern = SUN_JDK6_THREAD_THREADINFO_PATTERN_STRING;
     private String sunJDK7ThreadThreadInfoPattern = SUN_JDK7_THREAD_THREADINFO_PATTERN_STRING;
+    private String sunJDK8ThreadThreadInfoPattern = SUN_JDK8_THREAD_THREADINFO_PATTERN_STRING;
 
     private boolean exceptionAnalyzerActivated = true;
     private String exceptionDetailsOutputFileName = new File(DEFAULT_EXCEPTION_DETAILS_OUTPUTFILENAME_STRING).getAbsoluteFile().toString();
@@ -100,6 +102,7 @@ public class LogParserConfiguration {
             sunJDK5ThreadThreadInfoPattern = config.getString("analyzers.threaddump-analyzer.sun-jdk5-threadinfo-pattern");
             sunJDK6ThreadThreadInfoPattern = config.getString("analyzers.threaddump-analyzer.sun-jdk6-threadinfo-pattern");
             sunJDK7ThreadThreadInfoPattern = config.getString("analyzers.threaddump-analyzer.sun-jdk7-threadinfo-pattern");
+            sunJDK8ThreadThreadInfoPattern = config.getString("analyzers.threaddump-analyzer.sun-jdk8-threadinfo-pattern");
 
             standardLogAnalyzerPattern = config.getString("analyzers.standardlog-analyzer.matching-pattern");
         } catch (ConfigurationException ce) {
@@ -202,6 +205,14 @@ public class LogParserConfiguration {
 
     public void setSunJDK7ThreadThreadInfoPattern(String sunJDK7ThreadThreadInfoPattern) {
         this.sunJDK7ThreadThreadInfoPattern = sunJDK7ThreadThreadInfoPattern;
+    }
+
+    public String getSunJDK8ThreadThreadInfoPattern() {
+        return sunJDK8ThreadThreadInfoPattern;
+    }
+
+    public void setSunJDK8ThreadThreadInfoPattern(String sunJDK8ThreadThreadInfoPattern) {
+        this.sunJDK8ThreadThreadInfoPattern = sunJDK8ThreadThreadInfoPattern;
     }
 
     public String getExceptionDetailsOutputFileName() {

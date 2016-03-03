@@ -69,8 +69,8 @@ public class ExceptionLineAnalyzer extends WritingLineAnalyzer {
                 return null;
             }
             currentExceptionDetailsLogEntry.setLineNumber(lineNumberReader.getLineNumber()-1);
-            currentExceptionDetailsLogEntry.setClassName(firstLineMatcher.group(3));
-            currentExceptionDetailsLogEntry.setMessage(firstLineMatcher.group(4));
+            currentExceptionDetailsLogEntry.setClassName(firstLineMatcher.group(1));
+            currentExceptionDetailsLogEntry.setMessage(firstLineMatcher.group(2));
         } else {
             Matcher secondLineMatcher = secondLinePattern.matcher(line);
             if (secondLineMatcher.matches()) {

@@ -146,7 +146,7 @@ public class LogAnalyzerMainDialog extends JDialog {
         //then the default mode (FILES_ONLY) will be used.
         //
         //fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        //fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 
         inputLogFile.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -169,22 +169,26 @@ public class LogAnalyzerMainDialog extends JDialog {
 
                     String baseName = FilenameUtils.getBaseName(file.getName());
 
+                    File targetDirectory = file.getParentFile();
+                    if (file.isDirectory()) {
+                        targetDirectory = file;
+                    }
                     // now we use the same parent directory for all output files
-                    File newPerfDetails = new File(file.getParent(), baseName + LogParserConfiguration.DEFAULT_PERF_DETAILS_OUTPUTFILENAME_STRING);
+                    File newPerfDetails = new File(targetDirectory, baseName + LogParserConfiguration.DEFAULT_PERF_DETAILS_OUTPUTFILENAME_STRING);
                     perfDetailsCSVOutputFile.setText(newPerfDetails.getAbsoluteFile().toString());
-                    File newPerfSummary = new File(file.getParent(), baseName + LogParserConfiguration.DEFAULT_PERF_SUMMARY_OUTPUTFILENAME_STRING);
+                    File newPerfSummary = new File(targetDirectory, baseName + LogParserConfiguration.DEFAULT_PERF_SUMMARY_OUTPUTFILENAME_STRING);
                     perfSummaryCSVOutputFile.setText(newPerfSummary.getAbsoluteFile().toString());
-                    File newThreadDetails = new File(file.getParent(), baseName + LogParserConfiguration.DEFAULT_THREAD_DETAILS_OUTPUTFILENAME_STRING);
+                    File newThreadDetails = new File(targetDirectory, baseName + LogParserConfiguration.DEFAULT_THREAD_DETAILS_OUTPUTFILENAME_STRING);
                     threadDetailsCSVOutputFile.setText(newThreadDetails.getAbsoluteFile().toString());
-                    File newThreadSummary = new File(file.getParent(), baseName + LogParserConfiguration.DEFAULT_THREAD_SUMMARY_OUTPUTFILENAME_STRING);
+                    File newThreadSummary = new File(targetDirectory, baseName + LogParserConfiguration.DEFAULT_THREAD_SUMMARY_OUTPUTFILENAME_STRING);
                     threadSummaryCSVOutputFile.setText(newThreadSummary.getAbsoluteFile().toString());
-                    File newExceptionDetails = new File(file.getParent(), baseName + LogParserConfiguration.DEFAULT_EXCEPTION_DETAILS_OUTPUTFILENAME_STRING);
+                    File newExceptionDetails = new File(targetDirectory, baseName + LogParserConfiguration.DEFAULT_EXCEPTION_DETAILS_OUTPUTFILENAME_STRING);
                     exceptionDetailsCSVOutputFile.setText(newExceptionDetails.getAbsoluteFile().toString());
-                    File newExceptionSummary = new File(file.getParent(), baseName + LogParserConfiguration.DEFAULT_EXCEPTION_SUMMARY_OUTPUTFILENAME_STRING);
+                    File newExceptionSummary = new File(targetDirectory, baseName + LogParserConfiguration.DEFAULT_EXCEPTION_SUMMARY_OUTPUTFILENAME_STRING);
                     exceptionSummaryCSVOutputFile.setText(newExceptionSummary.getAbsoluteFile().toString());
-                    File newStandardDetails = new File(file.getParent(), baseName + LogParserConfiguration.DEFAULT_STANDARD_DETAILS_OUTPUTFILENAME_STRING);
+                    File newStandardDetails = new File(targetDirectory, baseName + LogParserConfiguration.DEFAULT_STANDARD_DETAILS_OUTPUTFILENAME_STRING);
                     standardDetailsCSVOutputFile.setText(newStandardDetails.getAbsoluteFile().toString());
-                    File newStandardSummary = new File(file.getParent(), baseName + LogParserConfiguration.DEFAULT_STANDARD_SUMMARY_OUTPUTFILENAME_STRING);
+                    File newStandardSummary = new File(targetDirectory, baseName + LogParserConfiguration.DEFAULT_STANDARD_SUMMARY_OUTPUTFILENAME_STRING);
                     standardSummaryCSVOutputFile.setText(newStandardSummary.getAbsoluteFile().toString());
                 } else {
                 }
@@ -546,16 +550,38 @@ public class LogAnalyzerMainDialog extends JDialog {
 
         public void run() {
             try {
-                InputStream in = new BufferedInputStream(
-                        new ProgressMonitorInputStream(
-                                LogAnalyzerMainDialog.this,
-                                "Reading " + logParserConfiguration.getInputFileName(),
-                                new FileInputStream(logParserConfiguration.getInputFileName())));
-                InputStreamReader reader = new InputStreamReader(in);
-                LogParser logParser = new LogParser();
-                logParser.setLogParserConfiguration(logParserConfiguration);
-                logParser.parse(reader);
-                in.close();
+                File inputFile = new File(logParserConfiguration.getInputFileName());
+                if (!inputFile.exists()) {
+                    return;
+                }
+                if (inputFile.isDirectory()) {
+                    File[] files = inputFile.listFiles();
+                    LogParser logParser = new LogParser();
+                    logParser.setLogParserConfiguration(logParserConfiguration);
+                    for (File file : files) {
+                        InputStream in = new BufferedInputStream(
+                                new ProgressMonitorInputStream(
+                                        LogAnalyzerMainDialog.this,
+                                        "Reading " + file,
+                                        new FileInputStream(file)));
+                        InputStreamReader reader = new InputStreamReader(in);
+                        logParser.parse(reader);
+                        in.close();
+                    }
+                    logParser.stop();
+                } else {
+                    InputStream in = new BufferedInputStream(
+                            new ProgressMonitorInputStream(
+                                    LogAnalyzerMainDialog.this,
+                                    "Reading " + logParserConfiguration.getInputFileName(),
+                                    new FileInputStream(logParserConfiguration.getInputFileName())));
+                    InputStreamReader reader = new InputStreamReader(in);
+                    LogParser logParser = new LogParser();
+                    logParser.setLogParserConfiguration(logParserConfiguration);
+                    logParser.parse(reader);
+                    in.close();
+                    logParser.stop();
+                }
             } catch (InterruptedIOException iioe) {
                 JOptionPane.showMessageDialog(LogAnalyzerMainDialog.this, "Analysis cancelled by user", "Warning", JOptionPane.WARNING_MESSAGE);
                 enableUI();
