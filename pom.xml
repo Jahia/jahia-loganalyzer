@@ -1,4 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.jahia.loganalyzer</groupId>
@@ -8,16 +8,24 @@
     <name>Jahia Log Analyzer</name>
     <description>Jahia log analyzing tool</description>
     <inceptionYear>2007</inceptionYear>
-    <url>http://server5.jahia.com/~loom/loganalyzer</url>
+    <url>https://github.com/Jahia/jahia-loganalyzer</url>
     <organization>
         <name>Jahia</name>
         <url>http://www.jahia.com</url>
     </organization>
 
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
     <scm>
-        <connection>scm:svn:https://jahia.mine.nu/svn/jahia_loganalyzer</connection>
-        <developerConnection>scm:svn:http://svn.jahia.org/svn/jahia_loganalyzer</developerConnection>
-        <url>http://svn.jahia.org/svn/jahia_loganalyzer</url>
+        <connection>scm:git:https://github.com/Jahia/jahia-loganalyzer.git</connection>
+        <developerConnection>scm:git:https://github.com/Jahia/jahia-loganalyzer.git</developerConnection>
+        <url>https://github.com/Jahia/jahia-loganalyzer.git</url>
     </scm>
 
     <dependencies>
@@ -64,6 +72,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
+                <version>2.6</version>
                 <configuration>
                     <archive>
                         <manifest>
@@ -81,6 +90,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.5.1</version>
                 <configuration>
                     <source>1.5</source>
                     <target>1.5</target>
@@ -90,6 +100,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
+                <version>2.4.3</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -127,7 +138,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>buildnumber-maven-plugin</artifactId>
-                <version>1.0-beta-3</version>
+                <version>1.4</version>
                 <executions>
                     <execution>
                         <phase>validate</phase>
