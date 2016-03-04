@@ -4,7 +4,7 @@
     <groupId>org.jahia.loganalyzer</groupId>
     <artifactId>loganalyzer</artifactId>
     <packaging>jar</packaging>
-    <version>0.5</version>
+    <version>0.5-SNAPSHOT</version>
     <name>Jahia Log Analyzer</name>
     <description>Jahia log analyzing tool</description>
     <inceptionYear>2007</inceptionYear>
@@ -16,9 +16,11 @@
 
     <licenses>
         <license>
-            <name>Apache License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <name>GNU General Public License</name>
+            <url>http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt</url>
             <distribution>repo</distribution>
+            <comments>Jahia Community Edition is licensed under the terms of the GNU General Public License v2
+            </comments>
         </license>
     </licenses>
 
@@ -27,6 +29,52 @@
         <developerConnection>scm:git:https://github.com/Jahia/jahia-loganalyzer.git</developerConnection>
         <url>https://github.com/Jahia/jahia-loganalyzer.git</url>
     </scm>
+
+    <repositories>
+        <repository>
+            <id>jahia-public</id>
+            <name>Jahia Public Repository</name>
+            <url>https://devtools.jahia.com/nexus/content/groups/public</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>jahia-public</id>
+            <name>Jahia Public Repository</name>
+            <url>https://devtools.jahia.com/nexus/content/groups/public</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <distributionManagement>
+        <repository>
+            <id>jahia-releases</id>
+            <url>https://devtools.jahia.com/nexus/content/repositories/jahia-releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>jahia-snapshots</id>
+            <url>https://devtools.jahia.com/nexus/content/repositories/jahia-snapshots</url>
+        </snapshotRepository>
+        <site>
+            <id>jahia.website</id>
+            <url>file://${jahia.site.path}</url>
+        </site>
+    </distributionManagement>
 
     <dependencies>
         <dependency>
@@ -83,6 +131,7 @@
                         </manifest>
                         <manifestEntries>
                             <Implementation-Build>${buildNumber}</Implementation-Build>
+                            <Implementation-Timestamp>${timestamp}</Implementation-Timestamp>
                         </manifestEntries>
                     </archive>
                 </configuration>

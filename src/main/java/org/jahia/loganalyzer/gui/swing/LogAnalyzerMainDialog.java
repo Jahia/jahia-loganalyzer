@@ -2,6 +2,7 @@ package org.jahia.loganalyzer.gui.swing;
 
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.looks.plastic.PlasticXPLookAndFeel;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -15,6 +16,7 @@ import java.net.JarURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.jar.Attributes;
@@ -61,6 +63,7 @@ public class LogAnalyzerMainDialog extends JDialog {
     private JFileChooser fileChooser;
     private LogParserConfiguration logParserConfiguration = new LogParserConfiguration();
     private String buildNumber = "Unknown";
+    private Date buildTimestamp = null;
     private String version = "DEVELOPMENT";
 
     {
@@ -72,7 +75,11 @@ public class LogAnalyzerMainDialog extends JDialog {
 
     public LogAnalyzerMainDialog() {
         retrieveBuildInformation();
-        setTitle("Jahia Log Analysis Tool v" + version + " build " + buildNumber);
+        if (buildTimestamp != null) {
+            setTitle("Jahia Log Analysis Tool v" + version + " build " + buildTimestamp);
+        } else {
+            setTitle("Jahia Log Analysis Tool v" + version + " build " + buildNumber);
+        }
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -220,13 +227,22 @@ public class LogAnalyzerMainDialog extends JDialog {
     }
 
     public static void main(String[] args) {
-        /*
         try {
-            UIManager.setLookAndFeel(new PlasticXPLookAndFeel());
-        } catch (Throwable t) {
-            log.error("Error setting look and feel", t);
+            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            // If Nimbus is not available, you can set the GUI to another look and feel.
+            try {
+                UIManager.setLookAndFeel(new PlasticXPLookAndFeel());
+            } catch (Throwable t) {
+                log.error("Error setting look and feel", t);
+            }
         }
-        */
+
         LogAnalyzerMainDialog dialog = new LogAnalyzerMainDialog();
         dialog.pack();
         dialog.setVisible(true);
@@ -245,6 +261,15 @@ public class LogAnalyzerMainDialog extends JDialog {
                     Attributes attributes = manifest.getMainAttributes();
                     buildNumber = attributes.getValue("Implementation-Build");
                     version = attributes.getValue("Implementation-Version");
+                    String buildTimestampValue = attributes.getValue("Implementation-Timestamp");
+                    if (buildTimestampValue != null) {
+                        try {
+                            long buildTimestampTime = Long.parseLong(buildTimestampValue);
+                            buildTimestamp = new Date(buildTimestampTime);
+                        } catch (NumberFormatException nfe) {
+                            nfe.printStackTrace();
+                        }
+                    }
                 }
             }
         } catch (IOException ioe) {
@@ -307,6 +332,10 @@ public class LogAnalyzerMainDialog extends JDialog {
     private void onCancel() {
         // add your code here if necessary
         dispose();
+    }
+
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
     }
 
     /**
@@ -549,10 +578,6 @@ public class LogAnalyzerMainDialog extends JDialog {
      */
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
-    }
-
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
     }
 
     class AnalysisWorker extends Thread {
