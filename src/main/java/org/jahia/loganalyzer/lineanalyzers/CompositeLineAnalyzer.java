@@ -1,12 +1,10 @@
 package org.jahia.loganalyzer.lineanalyzers;
 
-import org.jahia.loganalyzer.lineanalyzers.LineAnalyzer;
-import org.jahia.loganalyzer.LogEntry;
-
-import java.util.List;
-import java.util.Date;
-import java.io.LineNumberReader;
 import java.io.IOException;
+import java.io.LineNumberReader;
+import java.util.Date;
+import java.util.Deque;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -39,9 +37,9 @@ public class CompositeLineAnalyzer implements LineAnalyzer {
         return false;
     }
 
-    public Date parseLine(String line, String nextLine, String nextNextLine, LineNumberReader lineNumberReader, Date lastValidDateParsed) throws IOException {
+    public Date parseLine(String line, String nextLine, String nextNextLine, Deque<String> contextLines, LineNumberReader lineNumberReader, Date lastValidDateParsed) throws IOException {
         if (isForThisAnalyzer(line, nextLine, nextNextLine)) {
-            return currentlyActiveAnalyzer.parseLine(line, nextLine, nextNextLine, lineNumberReader, lastValidDateParsed);
+            return currentlyActiveAnalyzer.parseLine(line, nextLine, nextNextLine, contextLines, lineNumberReader, lastValidDateParsed);
         }
         return null;
     }

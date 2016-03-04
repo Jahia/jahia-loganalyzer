@@ -2,12 +2,10 @@ package org.jahia.loganalyzer;
 
 import org.jahia.loganalyzer.lineanalyzers.*;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Date;
-import java.io.Reader;
-import java.io.LineNumberReader;
 import java.io.IOException;
+import java.io.LineNumberReader;
+import java.io.Reader;
+import java.util.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -25,6 +23,8 @@ public class LogParser {
     LogParserConfiguration logParserConfiguration;
     Date lastValidDateParsed = null;
     LineAnalyzer lineAnalyzer;
+    Deque<String> contextLines = new LinkedList<String>();
+    private int maxContextSize = 5;
 
     public LogParser() {}
 
@@ -66,10 +66,14 @@ public class LogParser {
         try {
             while (( currentLine != null ) && (nextLine != null)) {
                 nextNextLine = lineNumberReader.readLine();
-                Date lastDateFound = lineAnalyzer.parseLine(currentLine, nextLine, nextNextLine, lineNumberReader, lastValidDateParsed);
+                Date lastDateFound = lineAnalyzer.parseLine(currentLine, nextLine, nextNextLine, contextLines, lineNumberReader, lastValidDateParsed);
                 if (lastDateFound != null) {
                     lastValidDateParsed = lastDateFound;
                 }
+                if (contextLines.size() > maxContextSize) {
+                    contextLines.remove();
+                }
+                contextLines.add(currentLine);
                 currentLine = nextLine;
                 nextLine = nextNextLine;
             }

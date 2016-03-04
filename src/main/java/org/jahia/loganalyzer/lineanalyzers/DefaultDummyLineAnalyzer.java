@@ -1,10 +1,9 @@
 package org.jahia.loganalyzer.lineanalyzers;
 
-import org.jahia.loganalyzer.LogEntry;
-
-import java.io.LineNumberReader;
 import java.io.IOException;
+import java.io.LineNumberReader;
 import java.util.Date;
+import java.util.Deque;
 
 /**
  * This is the default line analyzer, that will always be called as a last resort, just to ignore lines that
@@ -19,7 +18,7 @@ public class DefaultDummyLineAnalyzer implements LineAnalyzer {
         return true;
     }
 
-    public Date parseLine(String line, String nextLine, String nextNextLine, LineNumberReader lineNumberReader, Date lastValidDateParsed) {
+    public Date parseLine(String line, String nextLine, String nextNextLine, Deque<String> contextLines, LineNumberReader lineNumberReader, Date lastValidDateParsed) {
         return null;
     }
 

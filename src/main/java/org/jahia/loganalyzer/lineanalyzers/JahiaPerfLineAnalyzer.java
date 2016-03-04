@@ -1,17 +1,17 @@
 package org.jahia.loganalyzer.lineanalyzers;
 
-import org.jahia.loganalyzer.PerfDetailsLogEntry;
 import org.jahia.loganalyzer.LogParserConfiguration;
+import org.jahia.loganalyzer.PerfDetailsLogEntry;
 import org.jahia.loganalyzer.PerfSummaryLogEntry;
 
-import java.util.*;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
+import java.io.IOException;
+import java.io.LineNumberReader;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.io.LineNumberReader;
-import java.io.IOException;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by IntelliJ IDEA.
@@ -49,13 +49,10 @@ public class JahiaPerfLineAnalyzer extends WritingLineAnalyzer {
     public boolean isForThisAnalyzer(String line, String nextLine, String nextNextLine) {
         Matcher matcher = linePattern.matcher(line);
         boolean matches = matcher.matches();
-        if (!matches) {
-            return false;
-        }
-        return true;
+        return matches;
     }
 
-    public Date parseLine(String line, String nextLine, String nextNextLine, LineNumberReader lineNumberReader, Date lastValidDateParsed) {
+    public Date parseLine(String line, String nextLine, String nextNextLine, Deque<String> contextLines, LineNumberReader lineNumberReader, Date lastValidDateParsed) {
         PerfDetailsLogEntry detailsLogEntry = new PerfDetailsLogEntry();
 
         Matcher matcher = linePattern.matcher(line);

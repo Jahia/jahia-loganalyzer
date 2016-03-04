@@ -1,14 +1,17 @@
 package org.jahia.loganalyzer.lineanalyzers;
 
-import org.jahia.loganalyzer.*;
+import org.jahia.loganalyzer.ExceptionDetailsLogEntry;
+import org.jahia.loganalyzer.ExceptionSummaryLogEntry;
+import org.jahia.loganalyzer.LogParserConfiguration;
 
-import java.io.LineNumberReader;
 import java.io.IOException;
+import java.io.LineNumberReader;
 import java.util.Date;
-import java.util.Map;
+import java.util.Deque;
 import java.util.HashMap;
-import java.util.regex.Pattern;
+import java.util.Map;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by IntelliJ IDEA.
@@ -58,7 +61,7 @@ public class ExceptionLineAnalyzer extends WritingLineAnalyzer {
         return false;  
     }
 
-    public Date parseLine(String line, String nextLine, String nextNextLine, LineNumberReader lineNumberReader, Date lastValidDateParsed) {
+    public Date parseLine(String line, String nextLine, String nextNextLine, Deque<String> contextLines, LineNumberReader lineNumberReader, Date lastValidDateParsed) {
         if (!inException) {
             log.trace("Found exception " + line);
             inException = true;
@@ -71,6 +74,7 @@ public class ExceptionLineAnalyzer extends WritingLineAnalyzer {
             currentExceptionDetailsLogEntry.setLineNumber(lineNumberReader.getLineNumber()-1);
             currentExceptionDetailsLogEntry.setClassName(firstLineMatcher.group(1));
             currentExceptionDetailsLogEntry.setMessage(firstLineMatcher.group(2));
+            currentExceptionDetailsLogEntry.getContextLines().addAll(contextLines);
         } else {
             Matcher secondLineMatcher = secondLinePattern.matcher(line);
             if (secondLineMatcher.matches()) {

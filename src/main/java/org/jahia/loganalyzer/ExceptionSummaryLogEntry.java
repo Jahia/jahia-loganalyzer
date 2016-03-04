@@ -31,20 +31,22 @@ public class ExceptionSummaryLogEntry implements LogEntry {
     }
 
     public String[] toStringArray(DateFormat dateFormat) {
-        String[] result = new String[4];
+        String[] result = new String[5];
         result[0] = Long.toString(count);
         result[1] = exceptionDetailsLogEntry.getClassName();
         result[2] = exceptionDetailsLogEntry.getMessage();
         result[3] = exceptionDetailsLogEntry.stackTraceToString();
+        result[4] = exceptionDetailsLogEntry.contextLinesToString();
         return result;
     }
 
     public String[] getColumnKeys() {
-        String[] result = new String[4];
+        String[] result = new String[5];
         result[0] = "exceptions.summary.count";
         result[1] = "exceptions.summary.className";
         result[2] = "exceptions.summary.message";
         result[3] = "exceptions.summary.stackTrace";
+        result[4] = "exceptions.summary.contextLines";
         return result;
     }
 }

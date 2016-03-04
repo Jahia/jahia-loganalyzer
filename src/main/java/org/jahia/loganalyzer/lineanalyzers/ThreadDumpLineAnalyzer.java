@@ -1,14 +1,20 @@
 package org.jahia.loganalyzer.lineanalyzers;
 
-import org.jahia.loganalyzer.*;
+import org.jahia.loganalyzer.LogParserConfiguration;
+import org.jahia.loganalyzer.ThreadDumpDetailsLogEntry;
+import org.jahia.loganalyzer.ThreadSummaryLogEntry;
 
-import java.util.List;
+import java.io.IOException;
+import java.io.LineNumberReader;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.regex.Pattern;
+import java.util.Deque;
+import java.util.List;
 import java.util.regex.Matcher;
-import java.io.LineNumberReader;
-import java.io.IOException;
+import java.util.regex.Pattern;
 
 /**
  * Created by IntelliJ IDEA.
@@ -21,7 +27,7 @@ public class ThreadDumpLineAnalyzer extends WritingLineAnalyzer {
 
     private static final org.apache.commons.logging.Log log =
             org.apache.commons.logging.LogFactory.getLog(ThreadDumpLineAnalyzer.class);
-
+    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     boolean inThreadDump = false;
     long currentThreadCount = 0;
     Date currentThreadDumpDate = null;
@@ -34,7 +40,7 @@ public class ThreadDumpLineAnalyzer extends WritingLineAnalyzer {
     Pattern sunJDK6ThreadInfoPattern;
     Pattern sunJDK7ThreadInfoPattern;
     Pattern sunJDK8ThreadInfoPattern;
-
+    Pattern threadDumpDatePattern = Pattern.compile("(\\d\\d\\d\\d-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d)");
     ThreadDumpDetailsLogEntry threadDumpDetailsLogEntry = null;
     Date lastValidDateParsed = null;
     
@@ -59,15 +65,12 @@ public class ThreadDumpLineAnalyzer extends WritingLineAnalyzer {
             }
             return false;
         }
-        if ((line.startsWith("Full thread dump")) ||
-            (line.contains("Full Java thread dump"))) {
-            return true;
-        }
-        return false;
+        return (line.startsWith("Full thread dump")) ||
+                (line.contains("Full Java thread dump"));
     }
 
     private boolean lineMatches(String line) {
-        if (line.startsWith("Full thread dump") ||
+        return line.startsWith("Full thread dump") ||
                 line.contains("Full Java thread dump") ||
                 line.startsWith("\"") ||
                 line.startsWith("\tat") ||
@@ -75,17 +78,13 @@ public class ThreadDumpLineAnalyzer extends WritingLineAnalyzer {
                 line.startsWith("\t- locked") ||
                 line.trim().startsWith("- locked") ||
                 line.startsWith("\t- waiting") ||
-                 line.trim().startsWith("- waiting") ||
+                line.trim().startsWith("- waiting") ||
                 line.trim().startsWith("owned by") ||
                 line.contains("STDOUT") ||
-                "".equals(line.trim())) {
-                return true;
-        } else {
-            return false;
-        }
+                "".equals(line.trim());
     }
 
-    public Date parseLine(String line, String nextLine, String nextNextLine, LineNumberReader lineNumberReader, Date lastValidDateParsed) throws IOException {
+    public Date parseLine(String line, String nextLine, String nextNextLine, Deque<String> contextLines, LineNumberReader lineNumberReader, Date lastValidDateParsed) throws IOException {
 
         this.lastValidDateParsed = lastValidDateParsed;
         if (!lineMatches(line) && lineMatches(nextLine)) {
@@ -102,7 +101,19 @@ public class ThreadDumpLineAnalyzer extends WritingLineAnalyzer {
             log.debug("Found thread dump, starting analysis...");
             inThreadDump = true;
             currentSummaryLogEntry = new ThreadSummaryLogEntry();
-            currentSummaryLogEntry.setThreadDumpDate(lastValidDateParsed);
+
+            Date dateToUse = lastValidDateParsed;
+            Matcher matcher = threadDumpDatePattern.matcher(contextLines.peekLast());
+            if (matcher.matches()) {
+                String dateToUseString = matcher.group(1);
+                try {
+                    dateToUse = DATE_FORMAT.parse(dateToUseString);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            currentSummaryLogEntry.setThreadDumpDate(dateToUse);
             threadDumpCount++;
         } else if (line.startsWith("\"")) {
             // we are in the case of a new thread

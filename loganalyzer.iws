@@ -16,10 +16,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="392381f2-1a3f-4d4a-971d-91bfb49657e3" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/README.txt" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/loganalyzer.ipr" afterPath="$PROJECT_DIR$/loganalyzer.ipr" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/JDKConfiguration.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/loganalyzer.iws" afterPath="$PROJECT_DIR$/loganalyzer.iws" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/ExceptionDetailsLogEntry.java" afterPath="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/ExceptionDetailsLogEntry.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/ExceptionSummaryLogEntry.java" afterPath="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/ExceptionSummaryLogEntry.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/HTMLLogEntryWriter.java" afterPath="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/HTMLLogEntryWriter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/LogParser.java" afterPath="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/LogParser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/CompositeLineAnalyzer.java" afterPath="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/CompositeLineAnalyzer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/DefaultDummyLineAnalyzer.java" afterPath="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/DefaultDummyLineAnalyzer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/ExceptionLineAnalyzer.java" afterPath="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/ExceptionLineAnalyzer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/JahiaPerfLineAnalyzer.java" afterPath="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/JahiaPerfLineAnalyzer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/LineAnalyzer.java" afterPath="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/LineAnalyzer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/StandardLogLineAnalyzer.java" afterPath="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/StandardLogLineAnalyzer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/ThreadDumpLineAnalyzer.java" afterPath="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/ThreadDumpLineAnalyzer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/loganalyzer_messages.properties" afterPath="$PROJECT_DIR$/src/main/resources/loganalyzer_messages.properties" />
     </list>
     <ignored path=".idea/workspace.xml" />
     <ignored path="loganalyzer.iws" />
@@ -131,47 +141,9 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/ThreadDumpLineAnalyzer.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="144" column="82" selection-start-line="144" selection-start-column="82" selection-end-line="144" selection-end-column="82" />
+              <caret line="76" column="47" selection-start-line="76" selection-start-column="47" selection-end-line="76" selection-end-column="47" />
               <folding>
-                <element signature="imports" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="LogAnalyzerMainDialog.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/gui/swing/LogAnalyzerMainDialog.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="588" column="39" selection-start-line="588" selection-start-column="39" selection-end-line="588" selection-end-column="39" />
-              <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#4090#4091#0" expanded="false" />
-                <element signature="e#4128#4129#0" expanded="false" />
-                <element signature="e#4260#4261#0" expanded="false" />
-                <element signature="e#4302#4303#0" expanded="false" />
-                <element signature="e#4514#4515#0" expanded="false" />
-                <element signature="e#4556#4557#0" expanded="false" />
-                <element signature="e#4721#4722#0" expanded="false" />
-                <element signature="e#4763#4764#0" expanded="false" />
-                <element signature="e#10219#10220#0" expanded="false" />
-                <element signature="e#10295#10296#0" expanded="false" />
-                <element signature="e#10444#10445#0" expanded="false" />
-                <element signature="e#10520#10521#0" expanded="false" />
-                <element signature="e#10674#10675#0" expanded="false" />
-                <element signature="e#10755#10756#0" expanded="false" />
-                <element signature="e#10909#10910#0" expanded="false" />
-                <element signature="e#10990#10991#0" expanded="false" />
-                <element signature="e#11141#11142#0" expanded="false" />
-                <element signature="e#11219#11220#0" expanded="false" />
-                <element signature="e#11370#11371#0" expanded="false" />
-                <element signature="e#11448#11449#0" expanded="false" />
-                <element signature="e#11601#11602#0" expanded="false" />
-                <element signature="e#11681#11682#0" expanded="false" />
-                <element signature="e#11834#11835#0" expanded="false" />
-                <element signature="e#11914#11915#0" expanded="false" />
-                <element signature="e#31419#31420#0" expanded="false" />
-                <element signature="e#31453#31454#0" expanded="false" />
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -181,12 +153,40 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/LogParser.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="84" column="17" selection-start-line="84" selection-start-column="17" selection-end-line="84" selection-end-column="17" />
+              <caret line="43" column="73" selection-start-line="43" selection-start-column="73" selection-end-line="43" selection-end-column="73" />
               <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#793#794#0" expanded="false" />
-                <element signature="e#838#839#0" expanded="false" />
+                <element signature="e#745#753#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="JDKConfiguration.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/JDKConfiguration.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LineAnalyzer.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/LineAnalyzer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="31" column="73" selection-start-line="31" selection-start-column="73" selection-end-line="31" selection-end-column="73" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="StandardLogLineAnalyzer.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/StandardLogLineAnalyzer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="48" column="79" selection-start-line="48" selection-start-column="79" selection-end-line="48" selection-end-column="79" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -194,151 +194,55 @@
       <file leaf-file-name="ExceptionLineAnalyzer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/ExceptionLineAnalyzer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.888889">
-              <caret line="74" column="32" selection-start-line="74" selection-start-column="32" selection-end-line="74" selection-end-column="32" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="71" column="83" selection-start-line="71" selection-start-column="83" selection-end-line="71" selection-end-column="83" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.159091">
-              <caret line="19" column="18" selection-start-line="19" selection-start-column="18" selection-end-line="19" selection-end-column="18" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/README.md">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.47818792">
-              <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="LogParserTest.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/org/jahia/loganalyzer/LogParserTest.java">
+      <file leaf-file-name="ExceptionDetailsLogEntry.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/ExceptionDetailsLogEntry.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="49" column="25" selection-start-line="49" selection-start-column="25" selection-end-line="49" selection-end-column="25" />
+              <caret line="58" column="20" selection-start-line="58" selection-start-column="20" selection-end-line="58" selection-end-column="20" />
               <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#635#636#0" expanded="false" />
-                <element signature="e#666#667#0" expanded="false" />
-                <element signature="e#763#764#0" expanded="false" />
-                <element signature="e#820#821#0" expanded="false" />
+                <element signature="e#523#531#0" expanded="true" />
+                <element signature="e#1064#1065#0" expanded="true" />
+                <element signature="e#1099#1100#0" expanded="true" />
+                <element signature="e#1161#1162#0" expanded="true" />
+                <element signature="e#1209#1210#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="parser-config.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/parser-config.xml">
+      <file leaf-file-name="HTMLLogEntryWriter.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/HTMLLogEntryWriter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="11" column="56" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="56" />
+            <state vertical-scroll-proportion="0.83150184">
+              <caret line="68" column="5" selection-start-line="68" selection-start-column="5" selection-end-line="68" selection-end-column="5" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CompositeLineAnalyzer.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/CompositeLineAnalyzer.java">
+      <file leaf-file-name="loganalyzer_messages.properties" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/loganalyzer_messages.properties">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="42" column="0" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#631#632#0" expanded="false" />
-                <element signature="e#689#690#0" expanded="false" />
-              </folding>
+              <caret line="61" column="84" selection-start-line="61" selection-start-column="84" selection-end-line="61" selection-end-column="84" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LogParserConfiguration.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/LogParserConfiguration.java">
+      <file leaf-file-name="ExceptionSummaryLogEntry.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/ExceptionSummaryLogEntry.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="36" column="95" selection-start-line="36" selection-start-column="95" selection-end-line="36" selection-end-column="95" />
-              <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#7655#7656#0" expanded="false" />
-                <element signature="e#7704#7705#0" expanded="false" />
-                <element signature="e#7903#7904#0" expanded="false" />
-                <element signature="e#7938#7939#0" expanded="false" />
-                <element signature="e#7995#7996#0" expanded="false" />
-                <element signature="e#8043#8044#0" expanded="false" />
-                <element signature="e#8083#8084#0" expanded="false" />
-                <element signature="e#8119#8120#0" expanded="false" />
-                <element signature="e#9159#9160#0" expanded="false" />
-                <element signature="e#9207#9208#0" expanded="false" />
-                <element signature="e#9415#9416#0" expanded="false" />
-                <element signature="e#9463#9464#0" expanded="false" />
-                <element signature="e#9665#9666#0" expanded="false" />
-                <element signature="e#9707#9708#0" expanded="false" />
-                <element signature="e#9777#9778#0" expanded="false" />
-                <element signature="e#9839#9840#0" expanded="false" />
-                <element signature="e#9893#9894#0" expanded="false" />
-                <element signature="e#9943#9944#0" expanded="false" />
-                <element signature="e#10161#10162#0" expanded="false" />
-                <element signature="e#10211#10212#0" expanded="false" />
-                <element signature="e#10432#10433#0" expanded="false" />
-                <element signature="e#10485#10486#0" expanded="false" />
-                <element signature="e#10718#10719#0" expanded="false" />
-                <element signature="e#10771#10772#0" expanded="false" />
-                <element signature="e#11004#11005#0" expanded="false" />
-                <element signature="e#11057#11058#0" expanded="false" />
-                <element signature="e#11576#11577#0" expanded="false" />
-                <element signature="e#11629#11630#0" expanded="false" />
-                <element signature="e#11862#11863#0" expanded="false" />
-                <element signature="e#11915#11916#0" expanded="false" />
-                <element signature="e#12144#12145#0" expanded="false" />
-                <element signature="e#12193#12194#0" expanded="false" />
-                <element signature="e#12405#12406#0" expanded="false" />
-                <element signature="e#12453#12454#0" expanded="false" />
-                <element signature="e#12660#12661#0" expanded="false" />
-                <element signature="e#12707#12708#0" expanded="false" />
-                <element signature="e#12900#12901#0" expanded="false" />
-                <element signature="e#12939#12940#0" expanded="false" />
-                <element signature="e#13001#13002#0" expanded="false" />
-                <element signature="e#13057#13058#0" expanded="false" />
-                <element signature="e#13093#13094#0" expanded="false" />
-                <element signature="e#13127#13128#0" expanded="false" />
-                <element signature="e#13179#13180#0" expanded="false" />
-                <element signature="e#13225#13226#0" expanded="false" />
-                <element signature="e#13268#13269#0" expanded="false" />
-                <element signature="e#13307#13308#0" expanded="false" />
-                <element signature="e#13371#13372#0" expanded="false" />
-                <element signature="e#13427#13428#0" expanded="false" />
-                <element signature="e#13482#13483#0" expanded="false" />
-                <element signature="e#13533#13534#0" expanded="false" />
-                <element signature="e#13756#13757#0" expanded="false" />
-                <element signature="e#13806#13807#0" expanded="false" />
-                <element signature="e#14024#14025#0" expanded="false" />
-                <element signature="e#14073#14074#0" expanded="false" />
-                <element signature="e#14275#14276#0" expanded="false" />
-                <element signature="e#14312#14313#0" expanded="false" />
-                <element signature="e#14372#14373#0" expanded="false" />
-                <element signature="e#14424#14425#0" expanded="false" />
-                <element signature="e#14465#14466#0" expanded="false" />
-                <element signature="e#14502#14503#0" expanded="false" />
-                <element signature="e#14562#14563#0" expanded="false" />
-                <element signature="e#14614#14615#0" expanded="false" />
-                <element signature="e#14661#14662#0" expanded="false" />
-                <element signature="e#14707#14708#0" expanded="false" />
-                <element signature="e#14904#14905#0" expanded="false" />
-                <element signature="e#14952#14953#0" expanded="false" />
-                <element signature="e#15165#15166#0" expanded="false" />
-                <element signature="e#15217#15218#0" expanded="false" />
-                <element signature="e#15445#15446#0" expanded="false" />
-                <element signature="e#15497#15498#0" expanded="false" />
-              </folding>
+              <caret line="48" column="52" selection-start-line="48" selection-start-column="52" selection-end-line="48" selection-end-column="52" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -376,28 +280,38 @@
         <option value="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/CSVOutputLineAnalyzer.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/LogEntryWriter.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/CSVLogEntryWriter.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/StandardLogLineAnalyzer.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/WritingLineAnalyzer.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/ThreadDumpDetailsLogEntry.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/HTMLLogEntryWriter.java" />
         <option value="/Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/src.zip!/javax/swing/JTextField.java" />
         <option value="/Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/src.zip!/java/awt/event/ActionListener.java" />
         <option value="/Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/src.zip!/java/awt/event/ActionEvent.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/loganalyzer_messages.properties" />
         <option value="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/PerfDetailsLogEntry.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/JahiaPerfLineAnalyzer.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/gui/swing/LogAnalyzerMainDialog.form" />
         <option value="/Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/src.zip!/java/io/LineNumberReader.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/LogParser.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/gui/swing/LogAnalyzerMainDialog.java" />
         <option value="$PROJECT_DIR$/src/test/java/org/jahia/loganalyzer/LogParserTest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/ThreadDumpLineAnalyzer.java" />
         <option value="$PROJECT_DIR$/src/main/resources/parser-config.xml" />
         <option value="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/LogParserConfiguration.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/ExceptionLineAnalyzer.java" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/README.txt" />
+        <option value="/Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/src.zip!/java/util/Queue.java" />
+        <option value="/Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/src.zip!/java/util/ArrayDeque.java" />
+        <option value="/Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/src.zip!/java/util/LinkedList.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/JahiaPerfLineAnalyzer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/CompositeLineAnalyzer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/DefaultDummyLineAnalyzer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/LineAnalyzer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/StandardLogLineAnalyzer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/LogParser.java" />
+        <option value="/Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/src.zip!/java/text/Format.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/ThreadDumpLineAnalyzer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/JDKConfiguration.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/ExceptionSummaryLogEntry.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/ExceptionDetailsLogEntry.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/ExceptionLineAnalyzer.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/loganalyzer_messages.properties" />
+        <option value="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/HTMLLogEntryWriter.java" />
       </list>
     </option>
   </component>
@@ -442,10 +356,9 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="196" />
-    <option name="y" value="129" />
-    <option name="width" value="1280" />
-    <option name="height" value="716" />
+    <option name="y" value="23" />
+    <option name="width" value="2560" />
+    <option name="height" value="1356" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -833,6 +746,84 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="loganalyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jahia-loganalyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="loganalyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jahia-loganalyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="loganalyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="loganalyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jahia-loganalyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="loganalyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lineanalyzers" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1591,7 +1582,7 @@
       <option name="number" value="Default" />
       <updated>1306499915890</updated>
       <workItem from="1456840607074" duration="29943000" />
-      <workItem from="1457088257849" duration="244000" />
+      <workItem from="1457088257849" duration="6109000" />
     </task>
     <task id="LOCAL-00001" summary="- Added support for JDK 7 thread dumps&#10;- Various minor bug fixes&#10;- Removed WebStart configuration">
       <created>1456843666034</created>
@@ -1611,11 +1602,17 @@
       <option name="project" value="LOCAL" />
       <updated>1456950319032</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="- Add Git ignore file&#10;- Update project for Git&#10;- Rename README file to markdown format.">
+      <created>1457088546795</created>
+      <option name="number" value="00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1457088546795</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="30187000" />
+    <option name="totallyTimeSpent" value="36052000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1627,23 +1624,26 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="196" y="129" width="1280" height="716" extended-state="0" />
+    <frame x="0" y="23" width="2560" height="1356" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1647758" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286385" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3283228" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.19347942" sideWeight="0.6013438" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32990506" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32922733" sideWeight="0.0" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29886913" sideWeight="0.6707727" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14694202" sideWeight="0.6707727" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3041599" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.40822786" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="SVN Repositories" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32922733" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Maven projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1658,12 +1658,9 @@
       <window_info id="Atlassian " active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Compare Directories" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Module Dependencies" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.40865386" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32852563" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32922733" sideWeight="0.0" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Dataflow to this" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -1685,7 +1682,8 @@
     <MESSAGE value="- Added support for JDK 7 thread dumps&#10;- Various minor bug fixes&#10;- Removed WebStart configuration" />
     <MESSAGE value="- Fix perf analyzer to work with DX 7&#10;- Added HTMLLogEntryWriter to generate HTML reports along with the CSV ones" />
     <MESSAGE value="Fix default names for tests." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix default names for tests." />
+    <MESSAGE value="- Add Git ignore file&#10;- Update project for Git&#10;- Rename README file to markdown format." />
+    <option name="LAST_COMMIT_MESSAGE" value="- Add Git ignore file&#10;- Update project for Git&#10;- Rename README file to markdown format." />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
   </component>
   <component name="VssConfiguration">
@@ -1727,7 +1725,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/ExceptionLineAnalyzer.java</url>
-          <line>82</line>
+          <line>81</line>
           <properties />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -1743,7 +1741,7 @@
           <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="6" />
+      <option name="time" value="12" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1792,176 +1790,12 @@
     </option>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/LineAnalyzer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="40" column="9" selection-start-line="40" selection-start-column="9" selection-end-line="40" selection-end-column="9" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/LogParser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="84" column="17" selection-start-line="84" selection-start-column="17" selection-end-line="84" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#793#794#0" expanded="false" />
-            <element signature="e#838#839#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/ExceptionLineAnalyzer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/org/jahia/loganalyzer/LogParserTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="49" column="25" selection-start-line="49" selection-start-column="25" selection-end-line="49" selection-end-column="25" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#635#636#0" expanded="false" />
-            <element signature="e#666#667#0" expanded="false" />
-            <element signature="e#763#764#0" expanded="false" />
-            <element signature="e#820#821#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/parser-config.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="11" column="56" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="56" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/CompositeLineAnalyzer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="42" column="0" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#631#632#0" expanded="false" />
-            <element signature="e#689#690#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/LogParserConfiguration.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="36" column="95" selection-start-line="36" selection-start-column="95" selection-end-line="36" selection-end-column="95" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#7655#7656#0" expanded="false" />
-            <element signature="e#7704#7705#0" expanded="false" />
-            <element signature="e#7903#7904#0" expanded="false" />
-            <element signature="e#7938#7939#0" expanded="false" />
-            <element signature="e#7995#7996#0" expanded="false" />
-            <element signature="e#8043#8044#0" expanded="false" />
-            <element signature="e#8083#8084#0" expanded="false" />
-            <element signature="e#8119#8120#0" expanded="false" />
-            <element signature="e#9159#9160#0" expanded="false" />
-            <element signature="e#9207#9208#0" expanded="false" />
-            <element signature="e#9415#9416#0" expanded="false" />
-            <element signature="e#9463#9464#0" expanded="false" />
-            <element signature="e#9665#9666#0" expanded="false" />
-            <element signature="e#9707#9708#0" expanded="false" />
-            <element signature="e#9777#9778#0" expanded="false" />
-            <element signature="e#9839#9840#0" expanded="false" />
-            <element signature="e#9893#9894#0" expanded="false" />
-            <element signature="e#9943#9944#0" expanded="false" />
-            <element signature="e#10161#10162#0" expanded="false" />
-            <element signature="e#10211#10212#0" expanded="false" />
-            <element signature="e#10432#10433#0" expanded="false" />
-            <element signature="e#10485#10486#0" expanded="false" />
-            <element signature="e#10718#10719#0" expanded="false" />
-            <element signature="e#10771#10772#0" expanded="false" />
-            <element signature="e#11004#11005#0" expanded="false" />
-            <element signature="e#11057#11058#0" expanded="false" />
-            <element signature="e#11576#11577#0" expanded="false" />
-            <element signature="e#11629#11630#0" expanded="false" />
-            <element signature="e#11862#11863#0" expanded="false" />
-            <element signature="e#11915#11916#0" expanded="false" />
-            <element signature="e#12144#12145#0" expanded="false" />
-            <element signature="e#12193#12194#0" expanded="false" />
-            <element signature="e#12405#12406#0" expanded="false" />
-            <element signature="e#12453#12454#0" expanded="false" />
-            <element signature="e#12660#12661#0" expanded="false" />
-            <element signature="e#12707#12708#0" expanded="false" />
-            <element signature="e#12900#12901#0" expanded="false" />
-            <element signature="e#12939#12940#0" expanded="false" />
-            <element signature="e#13001#13002#0" expanded="false" />
-            <element signature="e#13057#13058#0" expanded="false" />
-            <element signature="e#13093#13094#0" expanded="false" />
-            <element signature="e#13127#13128#0" expanded="false" />
-            <element signature="e#13179#13180#0" expanded="false" />
-            <element signature="e#13225#13226#0" expanded="false" />
-            <element signature="e#13268#13269#0" expanded="false" />
-            <element signature="e#13307#13308#0" expanded="false" />
-            <element signature="e#13371#13372#0" expanded="false" />
-            <element signature="e#13427#13428#0" expanded="false" />
-            <element signature="e#13482#13483#0" expanded="false" />
-            <element signature="e#13533#13534#0" expanded="false" />
-            <element signature="e#13756#13757#0" expanded="false" />
-            <element signature="e#13806#13807#0" expanded="false" />
-            <element signature="e#14024#14025#0" expanded="false" />
-            <element signature="e#14073#14074#0" expanded="false" />
-            <element signature="e#14275#14276#0" expanded="false" />
-            <element signature="e#14312#14313#0" expanded="false" />
-            <element signature="e#14372#14373#0" expanded="false" />
-            <element signature="e#14424#14425#0" expanded="false" />
-            <element signature="e#14465#14466#0" expanded="false" />
-            <element signature="e#14502#14503#0" expanded="false" />
-            <element signature="e#14562#14563#0" expanded="false" />
-            <element signature="e#14614#14615#0" expanded="false" />
-            <element signature="e#14661#14662#0" expanded="false" />
-            <element signature="e#14707#14708#0" expanded="false" />
-            <element signature="e#14904#14905#0" expanded="false" />
-            <element signature="e#14952#14953#0" expanded="false" />
-            <element signature="e#15165#15166#0" expanded="false" />
-            <element signature="e#15217#15218#0" expanded="false" />
-            <element signature="e#15445#15446#0" expanded="false" />
-            <element signature="e#15497#15498#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/ThreadDumpLineAnalyzer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="128" column="21" selection-start-line="128" selection-start-column="21" selection-end-line="128" selection-end-column="21" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="6" column="16" selection-start-line="6" selection-start-column="16" selection-end-line="6" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/LogParser.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="60" column="19" selection-start-line="60" selection-start-column="19" selection-end-line="60" selection-end-column="19" />
           <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#793#794#0" expanded="false" />
-            <element signature="e#838#839#0" expanded="false" />
+            <element signature="e#745#753#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1980,6 +1814,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="50" column="75" selection-start-line="50" selection-start-column="75" selection-end-line="50" selection-end-column="75" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1995,6 +1830,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="21" column="76" selection-start-line="21" selection-start-column="76" selection-end-line="21" selection-end-column="76" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2020,8 +1856,8 @@
           <caret line="55" column="57" selection-start-line="55" selection-start-column="57" selection-end-line="55" selection-end-column="57" />
           <folding>
             <element signature="imports" expanded="false" />
-            <element signature="e#631#632#0" expanded="false" />
-            <element signature="e#689#690#0" expanded="false" />
+            <element signature="e#679#680#0" expanded="false" />
+            <element signature="e#737#738#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2054,20 +1890,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/DefaultDummyLineAnalyzer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="21" column="76" selection-start-line="21" selection-start-column="76" selection-end-line="21" selection-end-column="76" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/StandardLogLineAnalyzer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="93" column="24" selection-start-line="93" selection-start-column="24" selection-end-line="93" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-3.125">
@@ -2090,24 +1912,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/ExceptionDetailsLogEntry.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="43" column="20" selection-start-line="43" selection-start-column="20" selection-end-line="43" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/CSVLogEntryWriter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="20" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/HTMLLogEntryWriter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="54" column="55" selection-start-line="54" selection-start-column="55" selection-end-line="54" selection-end-column="55" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2143,13 +1954,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="216" column="26" selection-start-line="216" selection-start-column="26" selection-end-line="216" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/loganalyzer_messages.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="78" selection-start-line="10" selection-start-column="78" selection-end-line="10" selection-end-column="78" />
+          <folding>
+            <element signature="e#897#905#0" expanded="false" />
+            <element signature="e#4914#4915#0" expanded="false" />
+            <element signature="e#4947#4948#0" expanded="false" />
+            <element signature="e#5005#5006#0" expanded="false" />
+            <element signature="e#5049#5050#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2165,50 +1976,10 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/JahiaPerfLineAnalyzer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="141" column="27" selection-start-line="141" selection-start-column="27" selection-end-line="141" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/src.zip!/java/io/LineNumberReader.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="2.0674486">
           <caret line="70" column="11" selection-start-line="70" selection-start-column="11" selection-end-line="70" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/LineAnalyzer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="40" column="9" selection-start-line="40" selection-start-column="9" selection-end-line="40" selection-end-column="9" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/WritingLineAnalyzer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="50" column="16" selection-start-line="50" selection-start-column="16" selection-end-line="50" selection-end-column="16" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/CompositeLineAnalyzer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="42" column="0" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#631#632#0" expanded="false" />
-            <element signature="e#689#690#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2262,120 +2033,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/LogParser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="84" column="17" selection-start-line="84" selection-start-column="17" selection-end-line="84" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#793#794#0" expanded="false" />
-            <element signature="e#838#839#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/ThreadDumpLineAnalyzer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="144" column="82" selection-start-line="144" selection-start-column="82" selection-end-line="144" selection-end-column="82" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/parser-config.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="11" column="56" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="56" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/LogParserConfiguration.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="36" column="95" selection-start-line="36" selection-start-column="95" selection-end-line="36" selection-end-column="95" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#7655#7656#0" expanded="false" />
-            <element signature="e#7704#7705#0" expanded="false" />
-            <element signature="e#7903#7904#0" expanded="false" />
-            <element signature="e#7938#7939#0" expanded="false" />
-            <element signature="e#7995#7996#0" expanded="false" />
-            <element signature="e#8043#8044#0" expanded="false" />
-            <element signature="e#8083#8084#0" expanded="false" />
-            <element signature="e#8119#8120#0" expanded="false" />
-            <element signature="e#9159#9160#0" expanded="false" />
-            <element signature="e#9207#9208#0" expanded="false" />
-            <element signature="e#9415#9416#0" expanded="false" />
-            <element signature="e#9463#9464#0" expanded="false" />
-            <element signature="e#9665#9666#0" expanded="false" />
-            <element signature="e#9707#9708#0" expanded="false" />
-            <element signature="e#9777#9778#0" expanded="false" />
-            <element signature="e#9839#9840#0" expanded="false" />
-            <element signature="e#9893#9894#0" expanded="false" />
-            <element signature="e#9943#9944#0" expanded="false" />
-            <element signature="e#10161#10162#0" expanded="false" />
-            <element signature="e#10211#10212#0" expanded="false" />
-            <element signature="e#10432#10433#0" expanded="false" />
-            <element signature="e#10485#10486#0" expanded="false" />
-            <element signature="e#10718#10719#0" expanded="false" />
-            <element signature="e#10771#10772#0" expanded="false" />
-            <element signature="e#11004#11005#0" expanded="false" />
-            <element signature="e#11057#11058#0" expanded="false" />
-            <element signature="e#11576#11577#0" expanded="false" />
-            <element signature="e#11629#11630#0" expanded="false" />
-            <element signature="e#11862#11863#0" expanded="false" />
-            <element signature="e#11915#11916#0" expanded="false" />
-            <element signature="e#12144#12145#0" expanded="false" />
-            <element signature="e#12193#12194#0" expanded="false" />
-            <element signature="e#12405#12406#0" expanded="false" />
-            <element signature="e#12453#12454#0" expanded="false" />
-            <element signature="e#12660#12661#0" expanded="false" />
-            <element signature="e#12707#12708#0" expanded="false" />
-            <element signature="e#12900#12901#0" expanded="false" />
-            <element signature="e#12939#12940#0" expanded="false" />
-            <element signature="e#13001#13002#0" expanded="false" />
-            <element signature="e#13057#13058#0" expanded="false" />
-            <element signature="e#13093#13094#0" expanded="false" />
-            <element signature="e#13127#13128#0" expanded="false" />
-            <element signature="e#13179#13180#0" expanded="false" />
-            <element signature="e#13225#13226#0" expanded="false" />
-            <element signature="e#13268#13269#0" expanded="false" />
-            <element signature="e#13307#13308#0" expanded="false" />
-            <element signature="e#13371#13372#0" expanded="false" />
-            <element signature="e#13427#13428#0" expanded="false" />
-            <element signature="e#13482#13483#0" expanded="false" />
-            <element signature="e#13533#13534#0" expanded="false" />
-            <element signature="e#13756#13757#0" expanded="false" />
-            <element signature="e#13806#13807#0" expanded="false" />
-            <element signature="e#14024#14025#0" expanded="false" />
-            <element signature="e#14073#14074#0" expanded="false" />
-            <element signature="e#14275#14276#0" expanded="false" />
-            <element signature="e#14312#14313#0" expanded="false" />
-            <element signature="e#14372#14373#0" expanded="false" />
-            <element signature="e#14424#14425#0" expanded="false" />
-            <element signature="e#14465#14466#0" expanded="false" />
-            <element signature="e#14502#14503#0" expanded="false" />
-            <element signature="e#14562#14563#0" expanded="false" />
-            <element signature="e#14614#14615#0" expanded="false" />
-            <element signature="e#14661#14662#0" expanded="false" />
-            <element signature="e#14707#14708#0" expanded="false" />
-            <element signature="e#14904#14905#0" expanded="false" />
-            <element signature="e#14952#14953#0" expanded="false" />
-            <element signature="e#15165#15166#0" expanded="false" />
-            <element signature="e#15217#15218#0" expanded="false" />
-            <element signature="e#15445#15446#0" expanded="false" />
-            <element signature="e#15497#15498#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/ExceptionLineAnalyzer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.888889">
-          <caret line="74" column="32" selection-start-line="74" selection-start-column="32" selection-end-line="74" selection-end-column="32" />
           <folding />
         </state>
       </provider>
@@ -2390,8 +2051,200 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.47818792">
+        <state vertical-scroll-proportion="0.0">
           <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/src.zip!/java/util/Queue.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33333334">
+          <caret line="143" column="17" selection-start-line="143" selection-start-column="17" selection-end-line="143" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/src.zip!/java/util/ArrayDeque.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="83" column="42" selection-start-line="83" selection-start-column="42" selection-end-line="83" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/src.zip!/java/util/Deque.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="193" column="17" selection-start-line="193" selection-start-column="17" selection-end-line="193" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/src.zip!/java/util/Queue.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="128" column="30" selection-start-line="128" selection-start-column="30" selection-end-line="128" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/src.zip!/java/util/LinkedList.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="80" column="13" selection-start-line="80" selection-start-column="13" selection-end-line="80" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/WritingLineAnalyzer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="50" column="16" selection-start-line="50" selection-start-column="16" selection-end-line="50" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/CompositeLineAnalyzer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="38" column="13" selection-start-line="38" selection-start-column="13" selection-end-line="38" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/DefaultDummyLineAnalyzer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="23" column="79" selection-start-line="23" selection-start-column="79" selection-end-line="23" selection-end-column="79" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/JahiaPerfLineAnalyzer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="65" column="44" selection-start-line="65" selection-start-column="44" selection-end-line="65" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/LogParserConfiguration.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="50" column="109" selection-start-line="50" selection-start-column="109" selection-end-line="50" selection-end-column="109" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/src.zip!/java/text/Format.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="240" column="18" selection-start-line="240" selection-start-column="18" selection-end-line="240" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/src.zip!/java/util/Date.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="270" column="11" selection-start-line="270" selection-start-column="11" selection-end-line="270" selection-end-column="11" />
+          <folding>
+            <element signature="e#10666#10667#0" expanded="true" />
+            <element signature="e#10696#10697#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/ThreadDumpLineAnalyzer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="76" column="47" selection-start-line="76" selection-start-column="47" selection-end-line="76" selection-end-column="47" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/StandardLogLineAnalyzer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="48" column="79" selection-start-line="48" selection-start-column="79" selection-end-line="48" selection-end-column="79" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/LineAnalyzer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="31" column="73" selection-start-line="31" selection-start-column="73" selection-end-line="31" selection-end-column="73" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/LogParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="43" column="73" selection-start-line="43" selection-start-column="73" selection-end-line="43" selection-end-column="73" />
+          <folding>
+            <element signature="e#745#753#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/JDKConfiguration.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/ExceptionLineAnalyzer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="71" column="83" selection-start-line="71" selection-start-column="83" selection-end-line="71" selection-end-column="83" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/ExceptionSummaryLogEntry.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="48" column="52" selection-start-line="48" selection-start-column="52" selection-end-line="48" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/loganalyzer_messages.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="61" column="84" selection-start-line="61" selection-start-column="84" selection-end-line="61" selection-end-column="84" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/ExceptionDetailsLogEntry.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="58" column="20" selection-start-line="58" selection-start-column="20" selection-end-line="58" selection-end-column="20" />
+          <folding>
+            <element signature="e#523#531#0" expanded="true" />
+            <element signature="e#1064#1065#0" expanded="true" />
+            <element signature="e#1099#1100#0" expanded="true" />
+            <element signature="e#1161#1162#0" expanded="true" />
+            <element signature="e#1209#1210#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/HTMLLogEntryWriter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.83150184">
+          <caret line="68" column="5" selection-start-line="68" selection-start-column="5" selection-end-line="68" selection-end-column="5" />
           <folding />
         </state>
       </provider>

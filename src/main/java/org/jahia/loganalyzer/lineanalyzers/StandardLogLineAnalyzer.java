@@ -4,16 +4,17 @@ import org.jahia.loganalyzer.LogParserConfiguration;
 import org.jahia.loganalyzer.StandardDetailsLogEntry;
 import org.jahia.loganalyzer.StandardSummaryLogEntry;
 
-import java.io.LineNumberReader;
 import java.io.IOException;
+import java.io.LineNumberReader;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Deque;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.regex.Pattern;
 import java.util.regex.Matcher;
-import java.text.ParseException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.util.regex.Pattern;
 
 /**
  * Created by IntelliJ IDEA.
@@ -42,13 +43,10 @@ public class StandardLogLineAnalyzer extends WritingLineAnalyzer {
     public boolean isForThisAnalyzer(String line, String nextLine, String nextNextLine) {
         Matcher matcher = standardLogPattern.matcher(line);
         boolean matches = matcher.matches();
-        if (!matches) {
-            return false;
-        }
-        return true;
+        return matches;
     }
 
-    public Date parseLine(String line, String nextLine, String nextNextLine, LineNumberReader reader, Date lastValidDateParsed) throws IOException {
+    public Date parseLine(String line, String nextLine, String nextNextLine, Deque<String> contextLines, LineNumberReader reader, Date lastValidDateParsed) throws IOException {
         Matcher matcher = standardLogPattern.matcher(line);
         boolean matches = matcher.matches();
         if (!matches) {

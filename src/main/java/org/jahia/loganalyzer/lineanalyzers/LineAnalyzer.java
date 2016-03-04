@@ -1,10 +1,9 @@
 package org.jahia.loganalyzer.lineanalyzers;
 
-import org.jahia.loganalyzer.LogEntry;
-
-import java.io.LineNumberReader;
 import java.io.IOException;
+import java.io.LineNumberReader;
 import java.util.Date;
+import java.util.Deque;
 
 /**
  * Created by IntelliJ IDEA.
@@ -27,7 +26,7 @@ public interface LineAnalyzer {
      * @param reader
      * @throws IOException
      */
-    Date parseLine(String line, String nextLine, String nextNextLine, LineNumberReader reader, Date lastValidDateParsed) throws IOException;
+    Date parseLine(String line, String nextLine, String nextNextLine, Deque<String> contextLines, LineNumberReader reader, Date lastValidDateParsed) throws IOException;
 
     /**
      * This method is called when this analyzer is being switched to another one by the composite analyzer,

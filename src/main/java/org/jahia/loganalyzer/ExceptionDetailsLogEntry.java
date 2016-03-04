@@ -1,8 +1,8 @@
 package org.jahia.loganalyzer;
 
 import java.text.DateFormat;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -16,6 +16,7 @@ public class ExceptionDetailsLogEntry extends AbstractDetailsLogEntry {
     private String className;
     private String message;
     private List<String> stackTrace = new ArrayList<String>();
+    private List<String> contextLines = new ArrayList<String>();
 
     public String getClassName() {
         return className;
@@ -41,13 +42,31 @@ public class ExceptionDetailsLogEntry extends AbstractDetailsLogEntry {
         this.stackTrace = stackTrace;
     }
 
+    public List<String> getContextLines() {
+        return contextLines;
+    }
+
+    public void setContextLines(List<String> contextLines) {
+        this.contextLines = contextLines;
+    }
+
     public String[] toStringArray(DateFormat dateFormat) {
-        String[] result = new String[4];
+        String[] result = new String[5];
         result[0] = Long.toString(getLineNumber());
         result[1] = className;
         result[2] = message;
         result[3] = stackTraceToString();
+        result[4] = contextLinesToString();
         return result;
+    }
+
+    public String contextLinesToString() {
+        StringBuilder result = new StringBuilder();
+        for (String contextLine : contextLines) {
+            result.append(contextLine);
+            result.append("\n");
+        }
+        return result.toString();
     }
 
     public String stackTraceToString() {
@@ -60,11 +79,12 @@ public class ExceptionDetailsLogEntry extends AbstractDetailsLogEntry {
     }
 
     public String[] getColumnKeys() {
-        String[] result = new String[4];
+        String[] result = new String[5];
         result[0] = "exceptions.details.logLine";
         result[1] = "exceptions.details.className";
         result[2] = "exceptions.details.message";
         result[3] = "exceptions.details.stackTrace";
+        result[4] = "exceptions.details.contextLines";
         return result;
     }
 

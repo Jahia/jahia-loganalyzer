@@ -1,5 +1,7 @@
 package org.jahia.loganalyzer;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 import java.io.IOException;
 import java.io.Writer;
 import java.text.DateFormat;
@@ -55,7 +57,7 @@ public class HTMLLogEntryWriter implements LogEntryWriter {
             for (int i=0; i < columnKeys.length; i++) {
                 columnNames[i] = resourceBundle.getString("org.jahia.loganalyzer.logentry.column.header." + columnKeys[i]);
                 htmlWriter.append("<th data-sortable=\"true\">");
-                htmlWriter.append(columnNames[i]);
+                htmlWriter.append(StringEscapeUtils.escapeHtml(columnNames[i]));
                 htmlWriter.append("</th>");
             }
             htmlWriter.append("</tr>\n");
@@ -73,10 +75,10 @@ public class HTMLLogEntryWriter implements LogEntryWriter {
                 htmlWriter.append("<td>");
                 if (columnValue != null && columnValue.contains("\n")) {
                     htmlWriter.append("<pre>");
-                    htmlWriter.append(columnValue);
+                    htmlWriter.append(StringEscapeUtils.escapeHtml(columnValue));
                     htmlWriter.append("</pre>");
                 } else {
-                    htmlWriter.append(columnValue);
+                    htmlWriter.append(StringEscapeUtils.escapeHtml(columnValue));
                 }
                 htmlWriter.append("</td>");
             }
