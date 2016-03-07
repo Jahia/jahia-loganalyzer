@@ -1,12 +1,11 @@
 package org.jahia.loganalyzer.lineanalyzers;
 
-import org.apache.commons.io.IOUtils;
-import org.jahia.loganalyzer.HTMLLogEntryWriter;
-import org.jahia.loganalyzer.LogEntryWriter;
 import org.jahia.loganalyzer.CSVLogEntryWriter;
+import org.jahia.loganalyzer.HTMLLogEntryWriter;
 import org.jahia.loganalyzer.LogEntry;
+import org.jahia.loganalyzer.LogEntryWriter;
 
-import java.io.FileWriter;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,46 +19,33 @@ import java.util.List;
  */
 public abstract class WritingLineAnalyzer implements LineAnalyzer {
 
-    private List<FileWriter> detailsWriters = new ArrayList<FileWriter>();
-    private List<FileWriter> summaryWriters = new ArrayList<FileWriter>();
-
     private List<LogEntryWriter> detailsLogEntryWriters = new ArrayList<LogEntryWriter>();
     private List<LogEntryWriter> summaryLogEntryWriters = new ArrayList<LogEntryWriter>();
 
     public WritingLineAnalyzer(String outputFileName, String summaryOutputFileName, char csvOutputSeparatorChar, LogEntry logEntry, LogEntry summaryLogEntry) throws IOException {
         // CSV Output setup
-        FileWriter csvDetailsWriter = new FileWriter(outputFileName + ".csv");
-        detailsWriters.add(csvDetailsWriter);
-        LogEntryWriter csvDetailsLogEntryWriter = new CSVLogEntryWriter(csvDetailsWriter, csvOutputSeparatorChar, logEntry);
+        File csvDetailsFile = new File(outputFileName + ".csv");
+        LogEntryWriter csvDetailsLogEntryWriter = new CSVLogEntryWriter(csvDetailsFile, csvOutputSeparatorChar, logEntry);
         detailsLogEntryWriters.add(csvDetailsLogEntryWriter);
-        FileWriter csvSummaryWriter = new FileWriter(summaryOutputFileName + ".csv");
-        summaryWriters.add(csvSummaryWriter);
-        LogEntryWriter csvSummaryLogEntryWriter = new CSVLogEntryWriter(csvSummaryWriter, csvOutputSeparatorChar, summaryLogEntry);
+        File csvSummaryFile = new File(summaryOutputFileName + ".csv");
+        LogEntryWriter csvSummaryLogEntryWriter = new CSVLogEntryWriter(csvSummaryFile, csvOutputSeparatorChar, summaryLogEntry);
         summaryLogEntryWriters.add(csvSummaryLogEntryWriter);
 
         // HTML Output setup
-        FileWriter htmlDetailWriter = new FileWriter(outputFileName + ".html");
-        detailsWriters.add(htmlDetailWriter);
-        LogEntryWriter htmlDetailsLogEntryWriter = new HTMLLogEntryWriter(htmlDetailWriter, logEntry);
-        detailsLogEntryWriters.add(htmlDetailsLogEntryWriter);
-        FileWriter htmlSummaryWriter = new FileWriter(summaryOutputFileName + ".html");
-        summaryWriters.add(htmlSummaryWriter);
-        LogEntryWriter htmlSummaryLogEntryWriter = new HTMLLogEntryWriter(htmlSummaryWriter, summaryLogEntry);
-        summaryLogEntryWriters.add(htmlSummaryLogEntryWriter);
+        File htmlDetailWriter = new File(outputFileName + ".html");
+        LogEntryWriter htmlDetailsLogEntryFile = new HTMLLogEntryWriter(htmlDetailWriter, logEntry);
+        detailsLogEntryWriters.add(htmlDetailsLogEntryFile);
+        File htmlSummaryWriter = new File(summaryOutputFileName + ".html");
+        LogEntryWriter htmlSummaryLogEntryFile = new HTMLLogEntryWriter(htmlSummaryWriter, summaryLogEntry);
+        summaryLogEntryWriters.add(htmlSummaryLogEntryFile);
     }
 
     public void stop() throws IOException {
         for (LogEntryWriter detailLogEntryWriter : detailsLogEntryWriters) {
             detailLogEntryWriter.close();
         }
-        for (FileWriter detailWriter : detailsWriters) {
-            IOUtils.closeQuietly(detailWriter);
-        }
         for (LogEntryWriter summaryLogEntryWriter : summaryLogEntryWriters) {
             summaryLogEntryWriter.close();
-        }
-        for (FileWriter summaryWriter : summaryWriters) {
-            IOUtils.closeQuietly(summaryWriter);
         }
     }
 

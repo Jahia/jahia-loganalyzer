@@ -1,11 +1,13 @@
 package org.jahia.loganalyzer;
 
 import au.com.bytecode.opencsv.CSVWriter;
+import org.apache.commons.io.IOUtils;
 
-import java.io.Writer;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ResourceBundle;
 import java.text.DateFormat;
+import java.util.ResourceBundle;
 
 /**
  * Created by IntelliJ IDEA.
@@ -17,9 +19,11 @@ import java.text.DateFormat;
 public class CSVLogEntryWriter implements LogEntryWriter {
 
     CSVWriter csvWriter;
+    FileWriter writer;
     DateFormat dateFormat = DateFormat.getDateTimeInstance();
 
-    public CSVLogEntryWriter(Writer writer, char separatorChar, LogEntry logEntry) {
+    public CSVLogEntryWriter(File csvFile, char separatorChar, LogEntry logEntry) throws IOException {
+        FileWriter writer = new FileWriter(csvFile);
         csvWriter = new CSVWriter(writer, separatorChar);
         ResourceBundle resourceBundle = ResourceBundle.getBundle("loganalyzer_messages");
         String[] columnKeys = logEntry.getColumnKeys();
@@ -39,5 +43,6 @@ public class CSVLogEntryWriter implements LogEntryWriter {
 
     public void close() throws IOException {
         csvWriter.close();
+        IOUtils.closeQuietly(writer);
     }
 }

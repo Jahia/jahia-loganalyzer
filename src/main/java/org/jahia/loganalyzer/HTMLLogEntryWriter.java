@@ -1,9 +1,10 @@
 package org.jahia.loganalyzer;
 
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringEscapeUtils;
 
-import java.io.IOException;
-import java.io.Writer;
+import java.io.*;
 import java.text.DateFormat;
 import java.util.ResourceBundle;
 
@@ -15,8 +16,10 @@ public class HTMLLogEntryWriter implements LogEntryWriter {
     Writer htmlWriter = null;
     DateFormat dateFormat = DateFormat.getDateTimeInstance();
 
-    public HTMLLogEntryWriter(Writer writer, LogEntry logEntry) {
-        htmlWriter = writer;
+    public HTMLLogEntryWriter(File htmlFile, LogEntry logEntry) throws IOException {
+        htmlWriter = new FileWriter(htmlFile);
+        File targetDirectory = htmlFile.getParentFile();
+        copyResourceToFile("html/css/log-analyzer.css", targetDirectory);
         ResourceBundle resourceBundle = ResourceBundle.getBundle("loganalyzer_messages");
         String[] columnKeys = logEntry.getColumnKeys();
         String[] columnNames = new String[columnKeys.length];
@@ -31,6 +34,7 @@ public class HTMLLogEntryWriter implements LogEntryWriter {
             htmlWriter.append("    <link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css\" integrity=\"sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7\" crossorigin=\"anonymous\">\n");
             htmlWriter.append("    <link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css\" integrity=\"sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r\" crossorigin=\"anonymous\">\n");
             htmlWriter.append("    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.css\">\n");
+            htmlWriter.append("    <link rel=\"stylesheet\" href=\"log-analyzer.css\">\n");
             htmlWriter.append("    <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js\"></script>");
             htmlWriter.append("    <script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js\" integrity=\"sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS\" crossorigin=\"anonymous\"></script>\n");
             htmlWriter.append("    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.js\"></script>\n");
@@ -95,5 +99,26 @@ public class HTMLLogEntryWriter implements LogEntryWriter {
         htmlWriter.append("  </body>\n");
         htmlWriter.append("</html>\n");
         htmlWriter.close();
+        IOUtils.closeQuietly(htmlWriter);
+    }
+
+    private boolean copyResourceToFile(String resourceLocation, File targetDirectory) {
+        InputStream resourceStream = this.getClass().getClassLoader().getResourceAsStream(resourceLocation);
+        String fileName = FilenameUtils.getName(resourceLocation);
+        File targetFile = new File(targetDirectory, fileName);
+        FileOutputStream fileOutputStream = null;
+        try {
+            fileOutputStream = new FileOutputStream(targetFile);
+            IOUtils.copy(resourceStream, fileOutputStream);
+            return true;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            IOUtils.closeQuietly(fileOutputStream);
+            IOUtils.closeQuietly(resourceStream);
+        }
+        return false;
     }
 }
