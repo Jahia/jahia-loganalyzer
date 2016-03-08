@@ -1,9 +1,6 @@
 package org.jahia.loganalyzer.lineanalyzers;
 
-import org.jahia.loganalyzer.CSVLogEntryWriter;
-import org.jahia.loganalyzer.HTMLLogEntryWriter;
-import org.jahia.loganalyzer.LogEntry;
-import org.jahia.loganalyzer.LogEntryWriter;
+import org.jahia.loganalyzer.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,6 +35,15 @@ public abstract class WritingLineAnalyzer implements LineAnalyzer {
         File htmlSummaryWriter = new File(summaryOutputFileName + ".html");
         LogEntryWriter htmlSummaryLogEntryFile = new HTMLLogEntryWriter(htmlSummaryWriter, summaryLogEntry);
         summaryLogEntryWriters.add(htmlSummaryLogEntryFile);
+
+        // JSON Output setup
+        File jsonDetailWriter = new File(outputFileName + ".json");
+        LogEntryWriter jsonDetailsLogEntryFile = new JSONLogEntryWriter(jsonDetailWriter, logEntry);
+        detailsLogEntryWriters.add(jsonDetailsLogEntryFile);
+        File jsonSummaryWriter = new File(summaryOutputFileName + ".json");
+        LogEntryWriter jsonSummaryLogEntryFile = new JSONLogEntryWriter(jsonSummaryWriter, summaryLogEntry);
+        summaryLogEntryWriters.add(jsonSummaryLogEntryFile);
+
     }
 
     public void stop() throws IOException {

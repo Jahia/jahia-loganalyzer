@@ -37,15 +37,17 @@ public class HTMLLogEntryWriter implements LogEntryWriter {
             htmlWriter.append("    <link rel=\"stylesheet\" href=\"log-analyzer.css\">\n");
             htmlWriter.append("    <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js\"></script>");
             htmlWriter.append("    <script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js\" integrity=\"sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS\" crossorigin=\"anonymous\"></script>\n");
+            /*
             htmlWriter.append("    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.js\"></script>\n");
             htmlWriter.append("    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/locale/bootstrap-table-en-US.min.js\"></script>\n");
             htmlWriter.append("    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/extensions/export/bootstrap-table-export.js\"></script>\n");
             htmlWriter.append("    <script src=\"https://rawgit.com/hhurz/tableExport.jquery.plugin/master/tableExport.js\"></script>\n");
-
+            */
             htmlWriter.append("  </head>\n");
             htmlWriter.append("  <body>\n");
             htmlWriter.append("  <div class=\"container-fluid\">");
-            htmlWriter.append("    <table data-toggle=\"table\" data-toolbar=\"#toolbar\"\n" +
+            /*
+            htmlWriter.append("    <table class=\"laTable\" data-toggle=\"table\" data-toolbar=\"#toolbar\"\n" +
                     "           data-search=\"true\"\n" +
                     "           data-show-toggle=\"true\"\n" +
                     "           data-show-columns=\"true\"\n" +
@@ -56,6 +58,8 @@ public class HTMLLogEntryWriter implements LogEntryWriter {
                     "           data-id-field=\"id\"\n" +
                     "           data-page-list=\"[5, 10, 25, 50, 100, ALL]\"\n" +
                     "           data-show-footer=\"false\">\n");
+                    */
+            htmlWriter.append("    <table class=\"table table-striped laTable\">\n");
             htmlWriter.append("      <thead>\n");
             htmlWriter.append("        <tr>");
             for (int i=0; i < columnKeys.length; i++) {

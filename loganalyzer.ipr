@@ -392,6 +392,17 @@
     <option name="myLastEditedConfigurable" />
   </component>
   <component name="libraryTable">
+    <library name="Maven: com.fasterxml.jackson.core:jackson-core:2.7.0">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-core/2.7.0/jackson-core-2.7.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-core/2.7.0/jackson-core-2.7.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-core/2.7.0/jackson-core-2.7.0-sources.jar!/" />
+      </SOURCES>
+    </library>
     <library name="Maven: com.jgoodies:forms:1.2.1">
       <CLASSES>
         <root url="jar://$MAVEN_REPOSITORY$/com/jgoodies/forms/1.2.1/forms-1.2.1.jar!/" />
