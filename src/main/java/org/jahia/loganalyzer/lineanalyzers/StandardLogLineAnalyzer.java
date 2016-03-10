@@ -34,7 +34,7 @@ public class StandardLogLineAnalyzer extends WritingLineAnalyzer {
     private int standardMinimumLogLevel;
 
     public StandardLogLineAnalyzer(LogParserConfiguration logParserConfiguration) throws IOException {
-        super(logParserConfiguration.getStandardDetailsOutputFileName(), logParserConfiguration.getStandardSummaryOutputFileName(), logParserConfiguration.getCsvSeparatorChar(), new StandardDetailsLogEntry(), new StandardSummaryLogEntry());
+        super(logParserConfiguration.getStandardDetailsOutputFile(), logParserConfiguration.getStandardSummaryOutputFile(), logParserConfiguration.getCsvSeparatorChar(), new StandardDetailsLogEntry(), new StandardSummaryLogEntry(), logParserConfiguration);
         standardLogPattern = Pattern.compile(logParserConfiguration.getStandardLogAnalyzerPattern());
         dateFormat = new SimpleDateFormat(logParserConfiguration.getDateFormatString());
         standardMinimumLogLevel = logParserConfiguration.getStandardMinimumLogLevel();

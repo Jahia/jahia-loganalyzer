@@ -1,11 +1,12 @@
 package org.jahia.loganalyzer;
 
-import junit.framework.TestCase;
 import junit.framework.Test;
+import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import java.io.*;
-import java.util.List;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -40,7 +41,14 @@ public class LogParserTest extends TestCase {
         logParserConfiguration.setCsvSeparatorChar(';');
         InputStream jahiaLogStream = this.getClass().getResourceAsStream("/jahia-tomcat/catalina.out");
         Reader reader = new InputStreamReader(jahiaLogStream);
-        logParserConfiguration.setInputFileName(this.getClass().getResource("/jahia-tomcat/catalina.out").toString());
+        File inputFile = null;
+        URL url = this.getClass().getResource("/jahia-tomcat/catalina.out");
+        try {
+            inputFile = new File(url.toURI());
+        } catch (URISyntaxException e) {
+            inputFile = new File(url.getPath());
+        }
+        logParserConfiguration.setInputFile(inputFile);
         logParserConfiguration.setPatternList(new ArrayList());
         logParserConfiguration.setDateFormatString(DEFAULT_DATE_FORMAT_STRING);
         logParserConfiguration.setContextMapping("");

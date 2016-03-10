@@ -45,7 +45,7 @@ public class ThreadDumpLineAnalyzer extends WritingLineAnalyzer {
     Date lastValidDateParsed = null;
     
     public ThreadDumpLineAnalyzer(LogParserConfiguration logParserConfiguration) throws IOException {
-        super(logParserConfiguration.getThreadDetailsOutputFileName(), logParserConfiguration.getThreadSummaryOutputFileName(), logParserConfiguration.getCsvSeparatorChar(), new ThreadDumpDetailsLogEntry(), new ThreadSummaryLogEntry());
+        super(logParserConfiguration.getThreadDetailsOutputFile(), logParserConfiguration.getThreadSummaryOutputFile(), logParserConfiguration.getCsvSeparatorChar(), new ThreadDumpDetailsLogEntry(), new ThreadSummaryLogEntry(), logParserConfiguration);
         sunJDK5ThreadInfoPattern = Pattern.compile(logParserConfiguration.getSunJDK5ThreadThreadInfoPattern());
         sunJDK6ThreadInfoPattern = Pattern.compile(logParserConfiguration.getSunJDK6ThreadThreadInfoPattern());
         sunJDK7ThreadInfoPattern = Pattern.compile(logParserConfiguration.getSunJDK7ThreadThreadInfoPattern());

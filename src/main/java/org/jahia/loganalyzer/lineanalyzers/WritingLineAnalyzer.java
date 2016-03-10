@@ -19,28 +19,28 @@ public abstract class WritingLineAnalyzer implements LineAnalyzer {
     private List<LogEntryWriter> detailsLogEntryWriters = new ArrayList<LogEntryWriter>();
     private List<LogEntryWriter> summaryLogEntryWriters = new ArrayList<LogEntryWriter>();
 
-    public WritingLineAnalyzer(String outputFileName, String summaryOutputFileName, char csvOutputSeparatorChar, LogEntry logEntry, LogEntry summaryLogEntry) throws IOException {
+    public WritingLineAnalyzer(File detailsOutputFile, File summaryOutputFile, char csvOutputSeparatorChar, LogEntry logEntry, LogEntry summaryLogEntry, LogParserConfiguration logParserConfiguration) throws IOException {
         // CSV Output setup
-        File csvDetailsFile = new File(outputFileName + ".csv");
+        File csvDetailsFile = new File(detailsOutputFile.getPath() + ".csv");
         LogEntryWriter csvDetailsLogEntryWriter = new CSVLogEntryWriter(csvDetailsFile, csvOutputSeparatorChar, logEntry);
         detailsLogEntryWriters.add(csvDetailsLogEntryWriter);
-        File csvSummaryFile = new File(summaryOutputFileName + ".csv");
+        File csvSummaryFile = new File(summaryOutputFile.getPath() + ".csv");
         LogEntryWriter csvSummaryLogEntryWriter = new CSVLogEntryWriter(csvSummaryFile, csvOutputSeparatorChar, summaryLogEntry);
         summaryLogEntryWriters.add(csvSummaryLogEntryWriter);
 
         // HTML Output setup
-        File htmlDetailWriter = new File(outputFileName + ".html");
-        LogEntryWriter htmlDetailsLogEntryFile = new HTMLLogEntryWriter(htmlDetailWriter, logEntry);
+        File htmlDetailWriter = new File(detailsOutputFile.getPath() + ".html");
+        LogEntryWriter htmlDetailsLogEntryFile = new HTMLLogEntryWriter(htmlDetailWriter, logEntry, logParserConfiguration);
         detailsLogEntryWriters.add(htmlDetailsLogEntryFile);
-        File htmlSummaryWriter = new File(summaryOutputFileName + ".html");
-        LogEntryWriter htmlSummaryLogEntryFile = new HTMLLogEntryWriter(htmlSummaryWriter, summaryLogEntry);
+        File htmlSummaryWriter = new File(summaryOutputFile.getPath() + ".html");
+        LogEntryWriter htmlSummaryLogEntryFile = new HTMLLogEntryWriter(htmlSummaryWriter, summaryLogEntry, logParserConfiguration);
         summaryLogEntryWriters.add(htmlSummaryLogEntryFile);
 
         // JSON Output setup
-        File jsonDetailWriter = new File(outputFileName + ".json");
+        File jsonDetailWriter = new File(detailsOutputFile.getPath() + ".json");
         LogEntryWriter jsonDetailsLogEntryFile = new JSONLogEntryWriter(jsonDetailWriter, logEntry);
         detailsLogEntryWriters.add(jsonDetailsLogEntryFile);
-        File jsonSummaryWriter = new File(summaryOutputFileName + ".json");
+        File jsonSummaryWriter = new File(summaryOutputFile.getPath() + ".json");
         LogEntryWriter jsonSummaryLogEntryFile = new JSONLogEntryWriter(jsonSummaryWriter, summaryLogEntry);
         summaryLogEntryWriters.add(jsonSummaryLogEntryFile);
 

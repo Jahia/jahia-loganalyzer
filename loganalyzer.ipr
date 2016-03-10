@@ -51,7 +51,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="loganalyzer" target="1.5" />
+      <module name="loganalyzer" target="1.7" />
     </bytecodeTargetLevel>
   </component>
   <component name="CopyrightManager" default="" />

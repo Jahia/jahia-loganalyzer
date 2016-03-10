@@ -33,7 +33,7 @@ public class ExceptionLineAnalyzer extends WritingLineAnalyzer {
     private Map<String, ExceptionSummaryLogEntry> exceptionSummaryMap = new HashMap<String, ExceptionSummaryLogEntry>();
 
     public ExceptionLineAnalyzer(LogParserConfiguration logParserConfiguration) throws IOException {
-        super(logParserConfiguration.getExceptionDetailsOutputFileName(), logParserConfiguration.getExceptionSummaryOutputFileName(),logParserConfiguration.getCsvSeparatorChar(), new ExceptionDetailsLogEntry(), new ExceptionSummaryLogEntry());
+        super(logParserConfiguration.getExceptionDetailsOutputFile(), logParserConfiguration.getExceptionSummaryOutputFile(), logParserConfiguration.getCsvSeparatorChar(), new ExceptionDetailsLogEntry(), new ExceptionSummaryLogEntry(), logParserConfiguration);
         secondLinePattern = Pattern.compile(logParserConfiguration.getExceptionSecondLinePattern());
         firstLinePattern = Pattern.compile(logParserConfiguration.getExceptionFirstLinePattern());
         causedByPattern = Pattern.compile(logParserConfiguration.getExceptionCausedByPattern());

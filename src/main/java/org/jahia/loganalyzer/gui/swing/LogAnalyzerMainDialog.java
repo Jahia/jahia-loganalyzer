@@ -111,15 +111,19 @@ public class LogAnalyzerMainDialog extends JDialog {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
-        inputLogFile.setText(logParserConfiguration.getInputFileName());
-        perfDetailsCSVOutputFile.setText(logParserConfiguration.getPerfDetailsOutputFileName());
-        perfSummaryCSVOutputFile.setText(logParserConfiguration.getPerfSummaryOutputFileName());
-        threadDetailsCSVOutputFile.setText(logParserConfiguration.getThreadDetailsOutputFileName());
-        threadSummaryCSVOutputFile.setText(logParserConfiguration.getThreadSummaryOutputFileName());
-        exceptionDetailsCSVOutputFile.setText(logParserConfiguration.getExceptionDetailsOutputFileName());
-        exceptionSummaryCSVOutputFile.setText(logParserConfiguration.getExceptionSummaryOutputFileName());
-        standardDetailsCSVOutputFile.setText(logParserConfiguration.getStandardDetailsOutputFileName());
-        standardSummaryCSVOutputFile.setText(logParserConfiguration.getStandardSummaryOutputFileName());
+        try {
+            inputLogFile.setText(logParserConfiguration.getInputFile().getCanonicalPath());
+            perfDetailsCSVOutputFile.setText(logParserConfiguration.getPerfDetailsOutputFile().getCanonicalPath());
+            perfSummaryCSVOutputFile.setText(logParserConfiguration.getPerfSummaryOutputFile().getCanonicalPath());
+            threadDetailsCSVOutputFile.setText(logParserConfiguration.getThreadDetailsOutputFile().getCanonicalPath());
+            threadSummaryCSVOutputFile.setText(logParserConfiguration.getThreadSummaryOutputFile().getCanonicalPath());
+            exceptionDetailsCSVOutputFile.setText(logParserConfiguration.getExceptionDetailsOutputFile().getCanonicalPath());
+            exceptionSummaryCSVOutputFile.setText(logParserConfiguration.getExceptionSummaryOutputFile().getCanonicalPath());
+            standardDetailsCSVOutputFile.setText(logParserConfiguration.getStandardDetailsOutputFile().getCanonicalPath());
+            standardSummaryCSVOutputFile.setText(logParserConfiguration.getStandardSummaryOutputFile().getCanonicalPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         dateFormatField.setText(logParserConfiguration.getDateFormatString());
         contextMapping.setText(logParserConfiguration.getContextMapping());
         servletMapping.setText(logParserConfiguration.getServletMapping());
@@ -159,26 +163,30 @@ public class LogAnalyzerMainDialog extends JDialog {
 
                     String baseName = FilenameUtils.getBaseName(file.getName());
 
-                    File targetDirectory = file.getParentFile();
+                    File targetDirectory = null;
                     if (file.isDirectory()) {
                         targetDirectory = file;
+                    } else {
+                        targetDirectory = new File(file.getParentFile(), baseName + "-loganalyzer-results");
+                        targetDirectory.mkdirs();
                     }
+
                     // now we use the same parent directory for all output files
-                    File newPerfDetails = new File(targetDirectory, baseName + LogParserConfiguration.DEFAULT_PERF_DETAILS_OUTPUTFILENAME_STRING);
+                    File newPerfDetails = new File(targetDirectory, baseName + LogParserConfiguration.DEFAULT_PERF_DETAILS_OUTPUTFILENAME_SUFFIX);
                     perfDetailsCSVOutputFile.setText(newPerfDetails.getAbsoluteFile().toString());
-                    File newPerfSummary = new File(targetDirectory, baseName + LogParserConfiguration.DEFAULT_PERF_SUMMARY_OUTPUTFILENAME_STRING);
+                    File newPerfSummary = new File(targetDirectory, baseName + LogParserConfiguration.DEFAULT_PERF_SUMMARY_OUTPUTFILENAME_SUFFIX);
                     perfSummaryCSVOutputFile.setText(newPerfSummary.getAbsoluteFile().toString());
-                    File newThreadDetails = new File(targetDirectory, baseName + LogParserConfiguration.DEFAULT_THREAD_DETAILS_OUTPUTFILENAME_STRING);
+                    File newThreadDetails = new File(targetDirectory, baseName + LogParserConfiguration.DEFAULT_THREAD_DETAILS_OUTPUTFILENAME_SUFFIX);
                     threadDetailsCSVOutputFile.setText(newThreadDetails.getAbsoluteFile().toString());
-                    File newThreadSummary = new File(targetDirectory, baseName + LogParserConfiguration.DEFAULT_THREAD_SUMMARY_OUTPUTFILENAME_STRING);
+                    File newThreadSummary = new File(targetDirectory, baseName + LogParserConfiguration.DEFAULT_THREAD_SUMMARY_OUTPUTFILENAME_SUFFIX);
                     threadSummaryCSVOutputFile.setText(newThreadSummary.getAbsoluteFile().toString());
-                    File newExceptionDetails = new File(targetDirectory, baseName + LogParserConfiguration.DEFAULT_EXCEPTION_DETAILS_OUTPUTFILENAME_STRING);
+                    File newExceptionDetails = new File(targetDirectory, baseName + LogParserConfiguration.DEFAULT_EXCEPTION_DETAILS_OUTPUTFILENAME_SUFFIX);
                     exceptionDetailsCSVOutputFile.setText(newExceptionDetails.getAbsoluteFile().toString());
-                    File newExceptionSummary = new File(targetDirectory, baseName + LogParserConfiguration.DEFAULT_EXCEPTION_SUMMARY_OUTPUTFILENAME_STRING);
+                    File newExceptionSummary = new File(targetDirectory, baseName + LogParserConfiguration.DEFAULT_EXCEPTION_SUMMARY_OUTPUTFILENAME_SUFFIX);
                     exceptionSummaryCSVOutputFile.setText(newExceptionSummary.getAbsoluteFile().toString());
-                    File newStandardDetails = new File(targetDirectory, baseName + LogParserConfiguration.DEFAULT_STANDARD_DETAILS_OUTPUTFILENAME_STRING);
+                    File newStandardDetails = new File(targetDirectory, baseName + LogParserConfiguration.DEFAULT_STANDARD_DETAILS_OUTPUTFILENAME_SUFFIX);
                     standardDetailsCSVOutputFile.setText(newStandardDetails.getAbsoluteFile().toString());
-                    File newStandardSummary = new File(targetDirectory, baseName + LogParserConfiguration.DEFAULT_STANDARD_SUMMARY_OUTPUTFILENAME_STRING);
+                    File newStandardSummary = new File(targetDirectory, baseName + LogParserConfiguration.DEFAULT_STANDARD_SUMMARY_OUTPUTFILENAME_SUFFIX);
                     standardSummaryCSVOutputFile.setText(newStandardSummary.getAbsoluteFile().toString());
                 } else {
                 }
@@ -308,18 +316,18 @@ public class LogAnalyzerMainDialog extends JDialog {
         disableUI();
         List<String> patternList = new ArrayList<String>();
         patternList.add(regexpPatternField.getSelectedItem().toString());
-        logParserConfiguration.setInputFileName(inputLogFile.getText());
+        logParserConfiguration.setInputFile(new File(inputLogFile.getText()));
         logParserConfiguration.setPerformanceAnalyzerActivated(performanceActivated.isSelected());
-        logParserConfiguration.setPerfDetailsOutputFileName(perfDetailsCSVOutputFile.getText());
-        logParserConfiguration.setPerfSummaryOutputFileName(perfSummaryCSVOutputFile.getText());
+        logParserConfiguration.setPerfDetailsOutputFile(new File(perfDetailsCSVOutputFile.getText()));
+        logParserConfiguration.setPerfSummaryOutputFile(new File(perfSummaryCSVOutputFile.getText()));
         logParserConfiguration.setThreadDumpAnalyzerActivated(threadDumpsActivated.isSelected());
-        logParserConfiguration.setThreadDetailsOutputFileName(threadDetailsCSVOutputFile.getText());
-        logParserConfiguration.setThreadSummaryOutputFileName(threadSummaryCSVOutputFile.getText());
+        logParserConfiguration.setThreadDetailsOutputFile(new File(threadDetailsCSVOutputFile.getText()));
+        logParserConfiguration.setThreadSummaryOutputFile(new File(threadSummaryCSVOutputFile.getText()));
         logParserConfiguration.setExceptionAnalyzerActivated(exceptionsActivated.isSelected());
-        logParserConfiguration.setExceptionDetailsOutputFileName(exceptionDetailsCSVOutputFile.getText());
-        logParserConfiguration.setExceptionSummaryOutputFileName(exceptionSummaryCSVOutputFile.getText());
-        logParserConfiguration.setStandardDetailsOutputFileName(standardDetailsCSVOutputFile.getText());
-        logParserConfiguration.setStandardSummaryOutputFileName(standardSummaryCSVOutputFile.getText());
+        logParserConfiguration.setExceptionDetailsOutputFile(new File(exceptionDetailsCSVOutputFile.getText()));
+        logParserConfiguration.setExceptionSummaryOutputFile(new File(exceptionSummaryCSVOutputFile.getText()));
+        logParserConfiguration.setStandardDetailsOutputFile(new File(standardDetailsCSVOutputFile.getText()));
+        logParserConfiguration.setStandardSummaryOutputFile(new File(standardSummaryCSVOutputFile.getText()));
         logParserConfiguration.setCsvSeparatorChar(csvSeparatorCharField.getText().charAt(0));
         logParserConfiguration.setPatternList(patternList);
         logParserConfiguration.setDateFormatString(dateFormatField.getText());
@@ -590,7 +598,7 @@ public class LogAnalyzerMainDialog extends JDialog {
 
         public void run() {
             try {
-                File inputFile = new File(logParserConfiguration.getInputFileName());
+                File inputFile = logParserConfiguration.getInputFile();
                 if (!inputFile.exists()) {
                     return;
                 }
@@ -613,8 +621,8 @@ public class LogAnalyzerMainDialog extends JDialog {
                     InputStream in = new BufferedInputStream(
                             new ProgressMonitorInputStream(
                                     LogAnalyzerMainDialog.this,
-                                    "Reading " + logParserConfiguration.getInputFileName(),
-                                    new FileInputStream(logParserConfiguration.getInputFileName())));
+                                    "Reading " + logParserConfiguration.getInputFile(),
+                                    new FileInputStream(logParserConfiguration.getInputFile())));
                     InputStreamReader reader = new InputStreamReader(in);
                     LogParser logParser = new LogParser();
                     logParser.setLogParserConfiguration(logParserConfiguration);

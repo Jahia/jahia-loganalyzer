@@ -35,7 +35,7 @@ public class JahiaPerfLineAnalyzer extends WritingLineAnalyzer {
      *
      */
     public JahiaPerfLineAnalyzer(LogParserConfiguration logParserConfiguration) throws IOException {
-        super(logParserConfiguration.getPerfDetailsOutputFileName(), logParserConfiguration.getPerfSummaryOutputFileName(),logParserConfiguration.getCsvSeparatorChar(), new PerfDetailsLogEntry(), new PerfSummaryLogEntry());
+        super(logParserConfiguration.getPerfDetailsOutputFile(), logParserConfiguration.getPerfSummaryOutputFile(), logParserConfiguration.getCsvSeparatorChar(), new PerfDetailsLogEntry(), new PerfSummaryLogEntry(), logParserConfiguration);
         if (logParserConfiguration.getPatternList().size() > 0) {
             linePattern = Pattern.compile((String)logParserConfiguration.getPatternList().get(0));
         } else {

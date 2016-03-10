@@ -16,13 +16,16 @@ public class HTMLLogEntryWriter implements LogEntryWriter {
     Writer htmlWriter = null;
     DateFormat dateFormat = DateFormat.getDateTimeInstance();
 
-    public HTMLLogEntryWriter(File htmlFile, LogEntry logEntry) throws IOException {
+    public HTMLLogEntryWriter(File htmlFile, LogEntry logEntry, LogParserConfiguration logParserConfiguration) throws IOException {
         htmlWriter = new FileWriter(htmlFile);
         File targetDirectory = htmlFile.getParentFile();
-        copyResourceToFile("html/css/log-analyzer.css", targetDirectory);
+        for (String htmlResourceToCopy : logParserConfiguration.getHtmlResourcesToCopy()) {
+            copyResourceToFile(htmlResourceToCopy, targetDirectory);
+        }
         ResourceBundle resourceBundle = ResourceBundle.getBundle("loganalyzer_messages");
         String[] columnKeys = logEntry.getColumnKeys();
         String[] columnNames = new String[columnKeys.length];
+        String htmlTemplate = IOUtils.toString(this.getClass().getClassLoader().getResourceAsStream("html/template.html"));
         try {
             htmlWriter.append("<!DOCTYPE html>");
             htmlWriter.append("<html lang=\"en\">\n");

@@ -1,11 +1,12 @@
 package org.jahia.loganalyzer;
 
-import java.util.List;
-import java.io.File;
-
-import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.commons.io.FilenameUtils;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -16,67 +17,65 @@ import org.apache.commons.io.FilenameUtils;
  */
 public class LogParserConfiguration {
 
+    public static final String DEFAULT_INPUTFILENAME_STRING = "catalina.out";
+    public static final String DEFAULT_PERF_DETAILS_OUTPUTFILENAME_SUFFIX = "-perf-details";
+    public static final String DEFAULT_PERF_SUMMARY_OUTPUTFILENAME_SUFFIX = "-perf-summary";
+    public static final String DEFAULT_THREAD_DETAILS_OUTPUTFILENAME_SUFFIX = "-threads-details";
+    public static final String DEFAULT_THREAD_SUMMARY_OUTPUTFILENAME_SUFFIX = "-threads-summary";
+    public static final String DEFAULT_EXCEPTION_DETAILS_OUTPUTFILENAME_SUFFIX = "-exceptions-details";
+    public static final String DEFAULT_EXCEPTION_SUMMARY_OUTPUTFILENAME_SUFFIX = "-exceptions-summary";
+    public static final String DEFAULT_STANDARD_DETAILS_OUTPUTFILENAME_SUFFIX = "-standard-details";
+    public static final String DEFAULT_STANDARD_SUMMARY_OUTPUTFILENAME_SUFFIX = "-standard-summary";
     private static final org.apache.commons.logging.Log log =
             org.apache.commons.logging.LogFactory.getLog(LogParserConfiguration.class);
-
-    boolean cacheIgnored = false;
-
-    public static final String DEFAULT_INPUTFILENAME_STRING = "catalina.out";
-    public static final String DEFAULT_PERF_DETAILS_OUTPUTFILENAME_STRING = "-perf-details";
-    public static final String DEFAULT_PERF_SUMMARY_OUTPUTFILENAME_STRING = "-perf-summary";
-    public static final String DEFAULT_THREAD_DETAILS_OUTPUTFILENAME_STRING = "-threads-details";
-    public static final String DEFAULT_THREAD_SUMMARY_OUTPUTFILENAME_STRING = "-threads-summary";
-    public static final String DEFAULT_EXCEPTION_DETAILS_OUTPUTFILENAME_STRING = "-exceptions-details";
-    public static final String DEFAULT_EXCEPTION_SUMMARY_OUTPUTFILENAME_STRING = "-exceptions-summary";
-    public static final String DEFAULT_STANDARD_DETAILS_OUTPUTFILENAME_STRING = "-standard-details";
-    public static final String DEFAULT_STANDARD_SUMMARY_OUTPUTFILENAME_STRING = "-standard-summary";
     private static final String DEFAULT_DATE_FORMAT_STRING = "yyyy-MM-dd HH:mm:ss,SSS";
-
     private static final String EXCEPTION_SECONDLINE_PATTERN_STRING = "\\s*at (.*)\\(.*\\)";
     private static final String EXCEPTION_CAUSEDBY_PATTERN_STRING = "^Caused by: (.*)?$";
     private static final String EXCEPTION_FIRSTLINE_PATTERN_STRING = "^(.*?Exception.*?)(:.*)?$";
-
     private static final String OLDER_PERF_MATCHING_PATTERN_STRING = ".*?\\[(.*?)\\].*org\\.jahia\\.bin\\.Jahia.*Processed \\[(.*?)\\](?: esi=\\[(.*?)\\])? user=\\[(.*)\\] ip=\\[(.*)\\] in \\[(.*)ms\\].*";
     private static final String OLD_PERF_MATCHING_PATTERN_STRING = "(.*?): .*\\[org\\.jahia\\.bin\\.Jahia\\].*Processed \\[(.*?)\\](?: esi=\\[(.*?)\\])? user=\\[(.*)\\] ip=\\[(.*)\\] in \\[(.*)ms\\].*";
     private static final String PERF_MATCHING_PATTERN_STRING = "(.*?): .*\\[Render].*Rendered \\[(.*?)\\](?: esi=\\[(.*?)\\])? user=\\[(.*)\\] ip=\\[(.*)\\] sessionID=\\[(.*)\\] in \\[(.*)ms\\].*";
-
     private static final String SUN_JDK5_THREAD_THREADINFO_PATTERN_STRING = "\"(.*?)\" (daemon )?prio=(\\d*) tid=(.*?) nid=(.*?) ([\\w\\.\\(\\) ]*)(\\[(.*)\\])?";
     private static final String SUN_JDK6_THREAD_THREADINFO_PATTERN_STRING = "\"(.*?)\" Id=(.*?) in (.*?) (on lock=(.*?))?";
     private static final String SUN_JDK7_THREAD_THREADINFO_PATTERN_STRING = "\"(.*?)\" nid=(\\d*?) state=(.*?)(?: \\((.*?)\\))? \\[(.*)\\]";
     private static final String SUN_JDK8_THREAD_THREADINFO_PATTERN_STRING = "\"(.*?)\"( #\\d*)? (daemon )?(prio=(\\d*) )?(os_prio=(\\d*) )?tid=(.*?) nid=(.*?) ([\\w\\.\\(\\) ]*)(\\[(.*)\\])?";
-
-    private String inputFileName = new File(DEFAULT_INPUTFILENAME_STRING).getAbsoluteFile().toString();
+    boolean cacheIgnored = false;
+    private File inputFile = new File(DEFAULT_INPUTFILENAME_STRING);
+    private File outputDirectory = (inputFile.isDirectory() ? inputFile : new File(inputFile.getParentFile(), inputFile.getName() + "-loganalyzer-results"));
 
     private boolean performanceAnalyzerActivated = true;
-    private String perfDetailsOutputFileName = new File(DEFAULT_PERF_DETAILS_OUTPUTFILENAME_STRING).getAbsoluteFile().toString();
-    private String perfSummaryOutputFileName = new File(DEFAULT_PERF_SUMMARY_OUTPUTFILENAME_STRING).getAbsoluteFile().toString();
+    private File perfDetailsOutputFile = new File(outputDirectory, FilenameUtils.getBaseName(inputFile.getName()) + DEFAULT_PERF_DETAILS_OUTPUTFILENAME_SUFFIX);
+    private File perfSummaryOutputFile = new File(outputDirectory, FilenameUtils.getBaseName(inputFile.getName()) + DEFAULT_PERF_SUMMARY_OUTPUTFILENAME_SUFFIX);
     private String perfMatchingPattern = PERF_MATCHING_PATTERN_STRING;
 
     private boolean threadDumpAnalyzerActivated = true;
-    private String threadDetailsOutputFileName = new File(DEFAULT_THREAD_DETAILS_OUTPUTFILENAME_STRING).getAbsoluteFile().toString();
-    private String threadSummaryOutputFileName = new File(DEFAULT_THREAD_SUMMARY_OUTPUTFILENAME_STRING).getAbsoluteFile().toString();
+    private File threadDetailsOutputFile = new File(outputDirectory, FilenameUtils.getBaseName(inputFile.getName()) + DEFAULT_THREAD_DETAILS_OUTPUTFILENAME_SUFFIX);
+    private File threadSummaryOutputFile = new File(outputDirectory, FilenameUtils.getBaseName(inputFile.getName()) + DEFAULT_THREAD_SUMMARY_OUTPUTFILENAME_SUFFIX);
     private String sunJDK5ThreadThreadInfoPattern = SUN_JDK5_THREAD_THREADINFO_PATTERN_STRING;
     private String sunJDK6ThreadThreadInfoPattern = SUN_JDK6_THREAD_THREADINFO_PATTERN_STRING;
     private String sunJDK7ThreadThreadInfoPattern = SUN_JDK7_THREAD_THREADINFO_PATTERN_STRING;
     private String sunJDK8ThreadThreadInfoPattern = SUN_JDK8_THREAD_THREADINFO_PATTERN_STRING;
 
     private boolean exceptionAnalyzerActivated = true;
-    private String exceptionDetailsOutputFileName = new File(DEFAULT_EXCEPTION_DETAILS_OUTPUTFILENAME_STRING).getAbsoluteFile().toString();
-    private String exceptionSummaryOutputFileName = new File(DEFAULT_EXCEPTION_SUMMARY_OUTPUTFILENAME_STRING).getAbsoluteFile().toString();
+    private File exceptionDetailsOutputFile = new File(outputDirectory, FilenameUtils.getBaseName(inputFile.getName()) + DEFAULT_EXCEPTION_DETAILS_OUTPUTFILENAME_SUFFIX);
+    private File exceptionSummaryOutputFile = new File(outputDirectory, FilenameUtils.getBaseName(inputFile.getName()) + DEFAULT_EXCEPTION_SUMMARY_OUTPUTFILENAME_SUFFIX);
     private String exceptionSecondLinePattern = EXCEPTION_SECONDLINE_PATTERN_STRING;
     private String exceptionFirstLinePattern = EXCEPTION_FIRSTLINE_PATTERN_STRING;
     private String exceptionCausedByPattern = EXCEPTION_CAUSEDBY_PATTERN_STRING;
 
     private boolean standardAnalyzerActivated = true;
-    private String standardDetailsOutputFileName = new File(DEFAULT_STANDARD_DETAILS_OUTPUTFILENAME_STRING).getAbsoluteFile().toString();
-    private String standardSummaryOutputFileName = new File(DEFAULT_STANDARD_SUMMARY_OUTPUTFILENAME_STRING).getAbsoluteFile().toString();
+    private File standardDetailsOutputFile = new File(outputDirectory, FilenameUtils.getBaseName(inputFile.getName()) + DEFAULT_STANDARD_DETAILS_OUTPUTFILENAME_SUFFIX);
+    private File standardSummaryOutputFile = new File(outputDirectory, FilenameUtils.getBaseName(inputFile.getName()) + DEFAULT_STANDARD_SUMMARY_OUTPUTFILENAME_SUFFIX);
     private String standardLogAnalyzerPattern = "(\\d\\d\\d\\d-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d,\\d\\d\\d):? (.*) \\[([\\w\\.]*)] ([\\w\\.]*\\:\\d* )?- (.*)";
     private char csvSeparatorChar;
     private List patternList;
     private String dateFormatString = DEFAULT_DATE_FORMAT_STRING;
-    private String contextMapping = "/jahia";
-    private String servletMapping = "/Jahia";
+    private String contextMapping = "";
+    private String servletMapping = "/cms";
     private int standardMinimumLogLevel = 4; // FATAL is default extraction level
+    private String[] htmlResourcesToCopy = new String[]{
+            "html/css/log-analyzer.css"
+    };
 
     public LogParserConfiguration() {
         try {
@@ -126,37 +125,32 @@ public class LogParserConfiguration {
         this.cacheIgnored = cacheIgnored;
     }
 
-    public String getInputFileName() {
-        return inputFileName;
+    public File getInputFile() {
+        return inputFile;
     }
 
-    public void setInputFileName(String inputFileName) {
-        this.inputFileName = inputFileName;
-        String baseName = FilenameUtils.getBaseName(inputFileName);
-        this.perfDetailsOutputFileName = baseName + DEFAULT_PERF_DETAILS_OUTPUTFILENAME_STRING;
-        this.perfSummaryOutputFileName = baseName + DEFAULT_PERF_SUMMARY_OUTPUTFILENAME_STRING;
-        this.threadDetailsOutputFileName = baseName + DEFAULT_THREAD_DETAILS_OUTPUTFILENAME_STRING;
-        this.threadSummaryOutputFileName = baseName + DEFAULT_THREAD_SUMMARY_OUTPUTFILENAME_STRING;
-        this.exceptionDetailsOutputFileName = baseName + DEFAULT_EXCEPTION_DETAILS_OUTPUTFILENAME_STRING;
-        this.exceptionSummaryOutputFileName = baseName + DEFAULT_EXCEPTION_SUMMARY_OUTPUTFILENAME_STRING;
-        this.standardDetailsOutputFileName = baseName + DEFAULT_STANDARD_DETAILS_OUTPUTFILENAME_STRING;
-        this.standardSummaryOutputFileName = baseName + DEFAULT_STANDARD_SUMMARY_OUTPUTFILENAME_STRING;
-    }
-
-    public String getPerfDetailsOutputFileName() {
-        return perfDetailsOutputFileName;
-    }
-
-    public void setPerfDetailsOutputFileName(String perfDetailsOutputFileName) {
-        this.perfDetailsOutputFileName = perfDetailsOutputFileName;
-    }
-
-    public String getPerfSummaryOutputFileName() {
-        return perfSummaryOutputFileName;
-    }
-
-    public void setPerfSummaryOutputFileName(String perfSummaryOutputFileName) {
-        this.perfSummaryOutputFileName = perfSummaryOutputFileName;
+    public void setInputFile(File inputFile) {
+        this.inputFile = inputFile;
+        String baseName = null;
+        try {
+            baseName = FilenameUtils.getBaseName(inputFile.getCanonicalPath());
+            if (inputFile.isDirectory()) {
+                outputDirectory = inputFile;
+            } else {
+                outputDirectory = new File(inputFile.getParentFile(), baseName + "-loganalyzer-results");
+                outputDirectory.mkdirs();
+            }
+            this.perfDetailsOutputFile = new File(outputDirectory, baseName + DEFAULT_PERF_DETAILS_OUTPUTFILENAME_SUFFIX);
+            this.perfSummaryOutputFile = new File(outputDirectory, baseName + DEFAULT_PERF_SUMMARY_OUTPUTFILENAME_SUFFIX);
+            this.threadDetailsOutputFile = new File(outputDirectory, baseName + DEFAULT_THREAD_DETAILS_OUTPUTFILENAME_SUFFIX);
+            this.threadSummaryOutputFile = new File(outputDirectory, baseName + DEFAULT_THREAD_SUMMARY_OUTPUTFILENAME_SUFFIX);
+            this.exceptionDetailsOutputFile = new File(outputDirectory, baseName + DEFAULT_EXCEPTION_DETAILS_OUTPUTFILENAME_SUFFIX);
+            this.exceptionSummaryOutputFile = new File(outputDirectory, baseName + DEFAULT_EXCEPTION_SUMMARY_OUTPUTFILENAME_SUFFIX);
+            this.standardDetailsOutputFile = new File(outputDirectory, baseName + DEFAULT_STANDARD_DETAILS_OUTPUTFILENAME_SUFFIX);
+            this.standardSummaryOutputFile = new File(outputDirectory, baseName + DEFAULT_STANDARD_SUMMARY_OUTPUTFILENAME_SUFFIX);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public String getPerfMatchingPattern() {
@@ -165,22 +159,6 @@ public class LogParserConfiguration {
 
     public void setPerfMatchingPattern(String perfMatchingPattern) {
         this.perfMatchingPattern = perfMatchingPattern;
-    }
-
-    public String getThreadDetailsOutputFileName() {
-        return threadDetailsOutputFileName;
-    }
-
-    public void setThreadDetailsOutputFileName(String threadDetailsOutputFileName) {
-        this.threadDetailsOutputFileName = threadDetailsOutputFileName;
-    }
-
-    public String getThreadSummaryOutputFileName() {
-        return threadSummaryOutputFileName;
-    }
-
-    public void setThreadSummaryOutputFileName(String threadSummaryOutputFileName) {
-        this.threadSummaryOutputFileName = threadSummaryOutputFileName;
     }
 
     public String getSunJDK5ThreadThreadInfoPattern() {
@@ -213,22 +191,6 @@ public class LogParserConfiguration {
 
     public void setSunJDK8ThreadThreadInfoPattern(String sunJDK8ThreadThreadInfoPattern) {
         this.sunJDK8ThreadThreadInfoPattern = sunJDK8ThreadThreadInfoPattern;
-    }
-
-    public String getExceptionDetailsOutputFileName() {
-        return exceptionDetailsOutputFileName;
-    }
-
-    public void setExceptionDetailsOutputFileName(String exceptionDetailsOutputFileName) {
-        this.exceptionDetailsOutputFileName = exceptionDetailsOutputFileName;
-    }
-
-    public String getExceptionSummaryOutputFileName() {
-        return exceptionSummaryOutputFileName;
-    }
-
-    public void setExceptionSummaryOutputFileName(String exceptionSummaryOutputFileName) {
-        this.exceptionSummaryOutputFileName = exceptionSummaryOutputFileName;
     }
 
     public String getExceptionSecondLinePattern() {
@@ -335,19 +297,79 @@ public class LogParserConfiguration {
         this.standardAnalyzerActivated = standardAnalyzerActivated;
     }
 
-    public String getStandardSummaryOutputFileName() {
-        return standardSummaryOutputFileName;
+    public File getOutputDirectory() {
+        return outputDirectory;
     }
 
-    public void setStandardSummaryOutputFileName(String standardSummaryOutputFileName) {
-        this.standardSummaryOutputFileName = standardSummaryOutputFileName;
+    public void setOutputDirectory(File outputDirectory) {
+        this.outputDirectory = outputDirectory;
     }
 
-    public String getStandardDetailsOutputFileName() {
-        return standardDetailsOutputFileName;
+    public File getPerfDetailsOutputFile() {
+        return perfDetailsOutputFile;
     }
 
-    public void setStandardDetailsOutputFileName(String standardDetailsOutputFileName) {
-        this.standardDetailsOutputFileName = standardDetailsOutputFileName;
+    public void setPerfDetailsOutputFile(File perfDetailsOutputFile) {
+        this.perfDetailsOutputFile = perfDetailsOutputFile;
+    }
+
+    public File getPerfSummaryOutputFile() {
+        return perfSummaryOutputFile;
+    }
+
+    public void setPerfSummaryOutputFile(File perfSummaryOutputFile) {
+        this.perfSummaryOutputFile = perfSummaryOutputFile;
+    }
+
+    public File getThreadDetailsOutputFile() {
+        return threadDetailsOutputFile;
+    }
+
+    public void setThreadDetailsOutputFile(File threadDetailsOutputFile) {
+        this.threadDetailsOutputFile = threadDetailsOutputFile;
+    }
+
+    public File getThreadSummaryOutputFile() {
+        return threadSummaryOutputFile;
+    }
+
+    public void setThreadSummaryOutputFile(File threadSummaryOutputFile) {
+        this.threadSummaryOutputFile = threadSummaryOutputFile;
+    }
+
+    public File getExceptionDetailsOutputFile() {
+        return exceptionDetailsOutputFile;
+    }
+
+    public void setExceptionDetailsOutputFile(File exceptionDetailsOutputFile) {
+        this.exceptionDetailsOutputFile = exceptionDetailsOutputFile;
+    }
+
+    public File getExceptionSummaryOutputFile() {
+        return exceptionSummaryOutputFile;
+    }
+
+    public void setExceptionSummaryOutputFile(File exceptionSummaryOutputFile) {
+        this.exceptionSummaryOutputFile = exceptionSummaryOutputFile;
+    }
+
+    public File getStandardDetailsOutputFile() {
+        return standardDetailsOutputFile;
+    }
+
+    public void setStandardDetailsOutputFile(File standardDetailsOutputFile) {
+        this.standardDetailsOutputFile = standardDetailsOutputFile;
+    }
+
+    public File getStandardSummaryOutputFile() {
+        return standardSummaryOutputFile;
+    }
+
+    public void setStandardSummaryOutputFile(File standardSummaryOutputFile) {
+        this.standardSummaryOutputFile = standardSummaryOutputFile;
+    }
+
+    public String[] getHtmlResourcesToCopy() {
+        return htmlResourcesToCopy;
     }
 }
