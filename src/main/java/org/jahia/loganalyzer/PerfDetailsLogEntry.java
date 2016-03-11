@@ -1,7 +1,10 @@
 package org.jahia.loganalyzer;
 
-import java.util.Date;
 import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -108,16 +111,16 @@ public class PerfDetailsLogEntry extends AbstractDetailsLogEntry {
         return ipAddress;
     }
 
+    public void setIpAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
+    }
+
     public String getSessionID() {
         return sessionID;
     }
 
     public void setSessionID(String sessionID) {
         this.sessionID = sessionID;
-    }
-
-    public void setIpAddress(String ipAddress) {
-        this.ipAddress = ipAddress;
     }
 
     public String[] toStringArray(DateFormat dateFormat) {
@@ -138,22 +141,28 @@ public class PerfDetailsLogEntry extends AbstractDetailsLogEntry {
         return result;
     }
 
-    public String[] getColumnKeys() {
-        String[] result = new String[13];
-        result[0] = "perf.details.logLine";
-        result[1] = "perf.details.date";
-        result[2] = "perf.details.pid";
-        result[3] = "perf.details.urlKey";
-        result[4] = "perf.details.language";
-        result[5] = "perf.details.user";
-        result[6] = "perf.details.cacheMode";
-        result[7] = "perf.details.engineName";
-        result[8] = "perf.details.esi";
-        result[9] = "perf.details.ipAddress";
-        result[10] = "perf.details.sessionID";
-        result[11] = "perf.details.processingTime";
-        result[12] = "perf.details.url";
+    public LinkedHashMap<String, Object> getValues() {
+        LinkedHashMap<String, Object> result = new LinkedHashMap<>();
+        result.put("perf.details.logLine", getLineNumber());
+        result.put("perf.details.date", logDate);
+        result.put("perf.details.pid", pid);
+        result.put("perf.details.urlKey", urlKey);
+        result.put("perf.details.language", language);
+        result.put("perf.details.user", user);
+        result.put("perf.details.cacheMode", cacheMode);
+        result.put("perf.details.engineName", engineName);
+        result.put("perf.details.esi", esi);
+        result.put("perf.details.ipAddress", ipAddress);
+        result.put("perf.details.sessionID", sessionID);
+        result.put("perf.details.processingTime", processingTime);
+        result.put("perf.details.url", url);
         return result;
+    }
+
+    public String[] getColumnKeys() {
+        LinkedHashMap<String, Object> fakeValues = getValues();
+        List<String> columnKeyList = new ArrayList<String>(fakeValues.keySet());
+        return columnKeyList.toArray(new String[columnKeyList.size()]);
     }
     
 }

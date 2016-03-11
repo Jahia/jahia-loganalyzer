@@ -29,20 +29,24 @@ public abstract class WritingLineAnalyzer implements LineAnalyzer {
         summaryLogEntryWriters.add(csvSummaryLogEntryWriter);
 
         // HTML Output setup
-        File htmlDetailWriter = new File(detailsOutputFile.getPath() + ".html");
-        LogEntryWriter htmlDetailsLogEntryFile = new HTMLLogEntryWriter(htmlDetailWriter, logEntry, logParserConfiguration);
-        detailsLogEntryWriters.add(htmlDetailsLogEntryFile);
-        File htmlSummaryWriter = new File(summaryOutputFile.getPath() + ".html");
-        LogEntryWriter htmlSummaryLogEntryFile = new HTMLLogEntryWriter(htmlSummaryWriter, summaryLogEntry, logParserConfiguration);
-        summaryLogEntryWriters.add(htmlSummaryLogEntryFile);
+        File htmlDetailFile = new File(detailsOutputFile.getPath() + ".html");
+        LogEntryWriter htmlDetailsLogEntryWriter = new HTMLLogEntryWriter(htmlDetailFile, logEntry, logParserConfiguration);
+        detailsLogEntryWriters.add(htmlDetailsLogEntryWriter);
+        File htmlSummaryFile = new File(summaryOutputFile.getPath() + ".html");
+        LogEntryWriter htmlSummaryLogEntryWriter = new HTMLLogEntryWriter(htmlSummaryFile, summaryLogEntry, logParserConfiguration);
+        summaryLogEntryWriters.add(htmlSummaryLogEntryWriter);
 
         // JSON Output setup
-        File jsonDetailWriter = new File(detailsOutputFile.getPath() + ".json");
-        LogEntryWriter jsonDetailsLogEntryFile = new JSONLogEntryWriter(jsonDetailWriter, logEntry);
-        detailsLogEntryWriters.add(jsonDetailsLogEntryFile);
-        File jsonSummaryWriter = new File(summaryOutputFile.getPath() + ".json");
-        LogEntryWriter jsonSummaryLogEntryFile = new JSONLogEntryWriter(jsonSummaryWriter, summaryLogEntry);
-        summaryLogEntryWriters.add(jsonSummaryLogEntryFile);
+        File jsonDetailFile = new File(detailsOutputFile.getPath() + ".json");
+        LogEntryWriter jsonDetailsLogEntryWriter = new JSONLogEntryWriter(jsonDetailFile, logEntry);
+        detailsLogEntryWriters.add(jsonDetailsLogEntryWriter);
+        File jsonSummaryFile = new File(summaryOutputFile.getPath() + ".json");
+        LogEntryWriter jsonSummaryLogEntryWriter = new JSONLogEntryWriter(jsonSummaryFile, summaryLogEntry);
+        summaryLogEntryWriters.add(jsonSummaryLogEntryWriter);
+
+        File elasticSearchDetailFile = new File(detailsOutputFile.getPath() + ".es");
+        LogEntryWriter elasticSearchDetailWriter = new ElasticSearchLogEntryWriter(elasticSearchDetailFile, logEntry, logParserConfiguration);
+        detailsLogEntryWriters.add(elasticSearchDetailWriter);
 
     }
 

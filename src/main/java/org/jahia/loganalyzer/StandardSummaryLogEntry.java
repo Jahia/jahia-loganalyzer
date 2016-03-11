@@ -1,6 +1,9 @@
 package org.jahia.loganalyzer;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -61,12 +64,19 @@ public class StandardSummaryLogEntry implements LogEntry {
         return result;
     }
 
-    public String[] getColumnKeys() {
-        String[] result = new String[4];
-        result[0] = "standard.summary.level";
-        result[1] = "standard.summary.levelNumber";
-        result[2] = "standard.summary.message";
-        result[3] = "standard.summary.count";
+    public LinkedHashMap<String, Object> getValues() {
+        LinkedHashMap<String, Object> result = new LinkedHashMap<>();
+        result.put("standard.summary.level", level);
+        result.put("standard.summary.levelNumber", levelNumber);
+        result.put("standard.summary.message", message);
+        result.put("standard.summary.count", count);
         return result;
     }
+
+    public String[] getColumnKeys() {
+        LinkedHashMap<String, Object> fakeValues = getValues();
+        List<String> columnKeyList = new ArrayList<String>(fakeValues.keySet());
+        return columnKeyList.toArray(new String[columnKeyList.size()]);
+    }
+
 }

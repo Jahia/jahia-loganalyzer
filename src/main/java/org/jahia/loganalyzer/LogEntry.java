@@ -1,6 +1,7 @@
 package org.jahia.loganalyzer;
 
 import java.text.DateFormat;
+import java.util.LinkedHashMap;
 
 /**
  * Created by IntelliJ IDEA.
@@ -11,7 +12,9 @@ import java.text.DateFormat;
  */
 public interface LogEntry {
 
-    public String[] toStringArray(DateFormat dateFormat);
+    LinkedHashMap<String, Object> getValues();
 
-    public String[] getColumnKeys();
+    String[] toStringArray(DateFormat dateFormat);
+
+    String[] getColumnKeys();
 }

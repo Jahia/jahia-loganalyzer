@@ -118,13 +118,20 @@ public class ThreadSummaryLogEntry implements LogEntry {
         return result;
     }
 
-    public String[] getColumnKeys() {
-        String[] result = new String[5];
-        result[0] = "threaddump.summary.dumpNumber";
-        result[1] = "threaddump.summary.threadTotal";
-        result[2] = "threaddump.summary.date";
-        result[3] = "threaddump.summary.newThreads";
-        result[4] = "threaddump.summary.deadThreads";
+    public LinkedHashMap<String, Object> getValues() {
+        LinkedHashMap<String, Object> result = new LinkedHashMap<>();
+        result.put("threaddump.summary.dumpNumber", dumpNumber);
+        result.put("threaddump.summary.threadTotal", threadDumpDetailsLogEntries.size());
+        result.put("threaddump.summary.date", threadDumpDate);
+        result.put("threaddump.summary.newThreads", newThreadsList);
+        result.put("threaddump.summary.deadThreads", deadThreadsList);
         return result;
     }
+
+    public String[] getColumnKeys() {
+        LinkedHashMap<String, Object> fakeValues = getValues();
+        List<String> columnKeyList = new ArrayList<String>(fakeValues.keySet());
+        return columnKeyList.toArray(new String[columnKeyList.size()]);
+    }
+
 }

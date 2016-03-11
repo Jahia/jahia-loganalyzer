@@ -2,6 +2,7 @@ package org.jahia.loganalyzer;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -78,14 +79,20 @@ public class ExceptionDetailsLogEntry extends AbstractDetailsLogEntry {
         return result.toString();
     }
 
-    public String[] getColumnKeys() {
-        String[] result = new String[5];
-        result[0] = "exceptions.details.logLine";
-        result[1] = "exceptions.details.className";
-        result[2] = "exceptions.details.message";
-        result[3] = "exceptions.details.stackTrace";
-        result[4] = "exceptions.details.contextLines";
+    public LinkedHashMap<String, Object> getValues() {
+        LinkedHashMap<String, Object> result = new LinkedHashMap<>();
+        result.put("exceptions.details.logLine", getLineNumber());
+        result.put("exceptions.details.className", className);
+        result.put("exceptions.details.message", message);
+        result.put("exceptions.details.stackTrace", stackTrace);
+        result.put("exceptions.details.contextLines", contextLines);
         return result;
+    }
+
+    public String[] getColumnKeys() {
+        LinkedHashMap<String, Object> fakeValues = getValues();
+        List<String> columnKeyList = new ArrayList<String>(fakeValues.keySet());
+        return columnKeyList.toArray(new String[columnKeyList.size()]);
     }
 
     public String toString() {

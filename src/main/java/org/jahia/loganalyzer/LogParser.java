@@ -53,6 +53,8 @@ public class LogParser {
         lineAnalyzers.add(new StandardLogLineAnalyzer(logParserConfiguration));
         lineAnalyzers.add(new DefaultDummyLineAnalyzer());
         lineAnalyzer = new CompositeLineAnalyzer(lineAnalyzers);
+
+        ElasticSearchService.getInstance().setHomePath(logParserConfiguration.getOutputDirectory().getPath());
     }
 
     public JahiaTimeReports parse(Reader reader) throws IOException {

@@ -1,6 +1,9 @@
 package org.jahia.loganalyzer;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -40,13 +43,20 @@ public class ExceptionSummaryLogEntry implements LogEntry {
         return result;
     }
 
-    public String[] getColumnKeys() {
-        String[] result = new String[5];
-        result[0] = "exceptions.summary.count";
-        result[1] = "exceptions.summary.className";
-        result[2] = "exceptions.summary.message";
-        result[3] = "exceptions.summary.stackTrace";
-        result[4] = "exceptions.summary.contextLines";
+    public LinkedHashMap<String, Object> getValues() {
+        LinkedHashMap<String, Object> result = new LinkedHashMap<>();
+        result.put("exceptions.summary.count", count);
+        result.put("exceptions.summary.className", (exceptionDetailsLogEntry != null ? exceptionDetailsLogEntry.getClassName() : null));
+        result.put("exceptions.summary.message", (exceptionDetailsLogEntry != null ? exceptionDetailsLogEntry.getClassName() : null));
+        result.put("exceptions.summary.stackTrace", (exceptionDetailsLogEntry != null ? exceptionDetailsLogEntry.getStackTrace() : null));
+        result.put("exceptions.summary.contextLines", (exceptionDetailsLogEntry != null ? exceptionDetailsLogEntry.getContextLines() : null));
         return result;
     }
+
+    public String[] getColumnKeys() {
+        LinkedHashMap<String, Object> fakeValues = getValues();
+        List<String> columnKeyList = new ArrayList<String>(fakeValues.keySet());
+        return columnKeyList.toArray(new String[columnKeyList.size()]);
+    }
+
 }

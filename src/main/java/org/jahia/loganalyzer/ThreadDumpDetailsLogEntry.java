@@ -1,9 +1,10 @@
 package org.jahia.loganalyzer;
 
-import java.util.List;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.text.DateFormat;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -233,25 +234,32 @@ public class ThreadDumpDetailsLogEntry extends AbstractDetailsLogEntry {
         return result;
     }
 
-    public String[] getColumnKeys() {
-        String[] result = new String[17];
-        result[0] = "threaddump.details.logLine";
-        result[1] = "threaddump.details.dumpNumber";
-        result[2] = "threaddump.details.dumpDate";
-        result[3] = "threaddump.details.threadNumber";
-        result[4] = "threaddump.details.name";
-        result[5] = "threaddump.details.type";
-        result[6] = "threaddump.details.tid";
-        result[7] = "threaddump.details.nid";
-        result[8] = "threaddump.details.priority";
-        result[9] = "threaddump.details.state";
-        result[10] = "threaddump.details.stateInfo";
-        result[11] = "threaddump.details.stackTrace";
-        result[12] = "threaddump.details.totalWaiting";
-        result[13] = "threaddump.details.waitingOnLocks";
-        result[14] = "threaddump.details.totalHeld";
-        result[15] = "threaddump.details.holdingLocks";
-        result[16] = "threaddump.details.lockOwners";
+    public LinkedHashMap<String, Object> getValues() {
+        LinkedHashMap<String, Object> result = new LinkedHashMap<>();
+        result.put("threaddump.details.logLine", getLineNumber());
+        result.put("threaddump.details.dumpNumber", dumpNumber);
+        result.put("threaddump.details.dumpDate", dumpDate);
+        result.put("threaddump.details.threadNumber", threadNumber);
+        result.put("threaddump.details.name", name);
+        result.put("threaddump.details.type", type);
+        result.put("threaddump.details.tid", tid);
+        result.put("threaddump.details.nid", nid);
+        result.put("threaddump.details.priority", priority);
+        result.put("threaddump.details.state", state);
+        result.put("threaddump.details.stateInfo", stateInfo);
+        result.put("threaddump.details.stackTrace", stackTrace);
+        result.put("threaddump.details.totalWaiting", waitingOnLocks.size());
+        result.put("threaddump.details.waitingOnLocks", waitingOnLocks);
+        result.put("threaddump.details.totalHeld", holdingLocks.size());
+        result.put("threaddump.details.holdingLocks", holdingLocks);
+        result.put("threaddump.details.lockOwners", lockOwners);
         return result;
     }
+
+    public String[] getColumnKeys() {
+        LinkedHashMap<String, Object> fakeValues = getValues();
+        List<String> columnKeyList = new ArrayList<String>(fakeValues.keySet());
+        return columnKeyList.toArray(new String[columnKeyList.size()]);
+    }
+
 }

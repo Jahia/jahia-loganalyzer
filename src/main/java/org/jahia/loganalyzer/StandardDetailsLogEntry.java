@@ -1,7 +1,10 @@
 package org.jahia.loganalyzer;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -85,14 +88,21 @@ public class StandardDetailsLogEntry extends AbstractDetailsLogEntry {
         return result;
     }
 
-    public String[] getColumnKeys() {
-        String[] result = new String[6];
-        result[0] = "standard.details.logLine";
-        result[1] = "standard.details.date";
-        result[2] = "standard.details.level";
-        result[3] = "standard.details.levelNumber";
-        result[4] = "standard.details.logClassName";
-        result[5] = "standard.details.logMessage";
+    public LinkedHashMap<String, Object> getValues() {
+        LinkedHashMap<String, Object> result = new LinkedHashMap<>();
+        result.put("standard.details.logLine", getLineNumber());
+        result.put("standard.details.date", date);
+        result.put("standard.details.level", level);
+        result.put("standard.details.levelNumber", levelNumber);
+        result.put("standard.details.logClassName", className);
+        result.put("standard.details.logMessage", message);
         return result;
     }
+
+    public String[] getColumnKeys() {
+        LinkedHashMap<String, Object> fakeValues = getValues();
+        List<String> columnKeyList = new ArrayList<String>(fakeValues.keySet());
+        return columnKeyList.toArray(new String[columnKeyList.size()]);
+    }
+
 }

@@ -124,6 +124,17 @@
             <artifactId>jackson-core</artifactId>
             <version>${jackson-core-version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.elasticsearch</groupId>
+            <artifactId>elasticsearch</artifactId>
+            <version>2.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>net.java.dev.jna</groupId>
+            <artifactId>jna</artifactId>
+            <version>4.1.0</version>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>
@@ -152,15 +163,33 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>grunt build</id>
+                        <id>npm-compile-typescript</id>
                         <goals>
-                            <goal>grunt</goal>
+                            <goal>npm</goal>
                         </goals>
+                        <configuration>
+                            <arguments>run tsc</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>webpack build</id>
+                        <goals>
+                            <goal>webpack</goal>
+                        </goals>
+                        <!--
+                        <configuration>
+                            <arguments>-p</arguments>
+                        </configuration>
+                        -->
                     </execution>
                 </executions>
                 <configuration>
+                    <!--
                     <nodeVersion>v0.10.18</nodeVersion>
                     <npmVersion>1.3.8</npmVersion>
+                    -->
+                    <nodeVersion>v4.4.0</nodeVersion>
+                    <npmVersion>3.8.0</npmVersion>
                 </configuration>
             </plugin>
 
@@ -253,6 +282,12 @@
                             <transformers>
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ComponentsXmlResourceTransformer"/>
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>org.jahia.loganalyzer.gui.swing.LogAnalyzerMainDialog</mainClass>
+                                </transformer>
                             </transformers>
                         </configuration>
                     </execution>

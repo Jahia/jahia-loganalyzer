@@ -1,6 +1,9 @@
 package org.jahia.loganalyzer;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -92,15 +95,27 @@ public class PerfSummaryLogEntry implements LogEntry {
         return result;
     }
 
-    public String[] getColumnKeys() {
-        String[] result = new String[7];
-        result[0] = "perf.summary.pageID";
-        result[1] = "perf.summary.urlKey";
-        result[2] = "perf.summary.averagePageTime";
-        result[3] = "perf.summary.maxPageTime";
-        result[4] = "perf.summary.cumulatedPageTime";
-        result[5] = "perf.summary.pageHits";
-        result[6] = "perf.summary.url";
+    public LinkedHashMap<String, Object> getValues() {
+        LinkedHashMap<String, Object> result = new LinkedHashMap<>();
+        result.put("perf.summary.pageID", pageID);
+        result.put("perf.summary.urlKey", urlKey);
+        if (pageHits != 0) {
+            averagePageTime = cumulatedPageTime / pageHits;
+        } else {
+            averagePageTime = 0;
+        }
+        result.put("perf.summary.averagePageTime", averagePageTime);
+        result.put("perf.summary.maxPageTime", maxPageTime);
+        result.put("perf.summary.cumulatedPageTime", cumulatedPageTime);
+        result.put("perf.summary.pageHits", pageHits);
+        result.put("perf.summary.url", url);
         return result;
     }
+
+    public String[] getColumnKeys() {
+        LinkedHashMap<String, Object> fakeValues = getValues();
+        List<String> columnKeyList = new ArrayList<String>(fakeValues.keySet());
+        return columnKeyList.toArray(new String[columnKeyList.size()]);
+    }
+
 }
