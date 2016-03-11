@@ -1,7 +1,8 @@
 package org.jahia.loganalyzer;
 
 import org.apache.commons.io.FilenameUtils;
-import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.action.bulk.BulkProcessor;
+import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.client.Client;
 
 import java.io.File;
@@ -15,6 +16,7 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class ElasticSearchLogEntryWriter implements LogEntryWriter {
 
+    BulkProcessor bulkProcessor = ElasticSearchService.getInstance().getBulkProcessor();
     Client client = ElasticSearchService.getInstance().getClient();
     String indexName = null;
     String typeName = null;
@@ -41,9 +43,11 @@ public class ElasticSearchLogEntryWriter implements LogEntryWriter {
             }
             json.put(key, valueEntry.getValue());
         }
-        IndexResponse response = client.prepareIndex(indexName, typeName, Long.toString(idGenerator.incrementAndGet()))
-                .setSource(json)
-                .get();
+        IndexRequestBuilder indexRequestBuilder = client.prepareIndex(indexName, typeName, Long.toString(idGenerator.incrementAndGet()))
+                .setSource(json);
+
+        bulkProcessor.add(indexRequestBuilder.request());
+
     }
 
     @Override

@@ -2,7 +2,6 @@ package org.jahia.loganalyzer;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -14,7 +13,6 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class PerfDetailsLogEntry extends AbstractDetailsLogEntry {
-    private Date logDate;
     private int pid = -1;
     private String urlKey = "";
     private String language;
@@ -26,14 +24,6 @@ public class PerfDetailsLogEntry extends AbstractDetailsLogEntry {
     private String ipAddress;
     private String sessionID;
     private long processingTime = 0;
-
-    public Date getLogDate() {
-        return logDate;
-    }
-
-    public void setLogDate(Date logDate) {
-        this.logDate = logDate;
-    }
 
     public int getPid() {
         return pid;
@@ -126,7 +116,7 @@ public class PerfDetailsLogEntry extends AbstractDetailsLogEntry {
     public String[] toStringArray(DateFormat dateFormat) {
         String[] result = new String[13];
         result[0] = Long.toString(getLineNumber());
-        result[1] = dateFormat.format(logDate);
+        result[1] = dateFormat.format(getTimestamp());
         result[2] = Integer.toString(pid);
         result[3] = urlKey;
         result[4] = language;
@@ -144,7 +134,7 @@ public class PerfDetailsLogEntry extends AbstractDetailsLogEntry {
     public LinkedHashMap<String, Object> getValues() {
         LinkedHashMap<String, Object> result = new LinkedHashMap<>();
         result.put("perf.details.logLine", getLineNumber());
-        result.put("perf.details.date", logDate);
+        result.put("perf.details.date", getTimestamp());
         result.put("perf.details.pid", pid);
         result.put("perf.details.urlKey", urlKey);
         result.put("perf.details.language", language);

@@ -58,7 +58,7 @@ public class StandardLogLineAnalyzer extends WritingLineAnalyzer {
         Date parsedDate = null;
         try {
             parsedDate = dateFormat.parse(dateGroup);
-            detailsLogEntry.setDate(parsedDate);
+            detailsLogEntry.setTimestamp(parsedDate);
         } catch (ParseException e) {
             log.error("Error parsing date format in line " + line, e);
         }

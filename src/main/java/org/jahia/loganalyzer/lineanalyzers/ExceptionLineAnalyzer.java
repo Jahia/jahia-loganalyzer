@@ -72,6 +72,7 @@ public class ExceptionLineAnalyzer extends WritingLineAnalyzer {
                 return null;
             }
             currentExceptionDetailsLogEntry.setLineNumber(lineNumberReader.getLineNumber()-1);
+            currentExceptionDetailsLogEntry.setTimestamp(lastValidDateParsed);
             currentExceptionDetailsLogEntry.setClassName(firstLineMatcher.group(1));
             currentExceptionDetailsLogEntry.setMessage(firstLineMatcher.group(2));
             currentExceptionDetailsLogEntry.getContextLines().addAll(contextLines);

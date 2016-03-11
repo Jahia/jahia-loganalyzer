@@ -39,6 +39,7 @@ public class LogParser {
 
     public void init() throws IOException {
         // @todo make the following instantiation configurable so that we can choose the implementations to modify application input and output
+        ElasticSearchService.getInstance().setHomePath(logParserConfiguration.getOutputDirectory().getPath());
 
         List<LineAnalyzer> lineAnalyzers = new ArrayList<LineAnalyzer>();
         if (logParserConfiguration.isThreadDumpAnalyzerActivated()) {
@@ -53,8 +54,6 @@ public class LogParser {
         lineAnalyzers.add(new StandardLogLineAnalyzer(logParserConfiguration));
         lineAnalyzers.add(new DefaultDummyLineAnalyzer());
         lineAnalyzer = new CompositeLineAnalyzer(lineAnalyzers);
-
-        ElasticSearchService.getInstance().setHomePath(logParserConfiguration.getOutputDirectory().getPath());
     }
 
     public JahiaTimeReports parse(Reader reader) throws IOException {

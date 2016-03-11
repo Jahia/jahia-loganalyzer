@@ -70,7 +70,7 @@ public class JahiaPerfLineAnalyzer extends WritingLineAnalyzer {
         detailsLogEntry.setLineNumber(lineNumberReader.getLineNumber()-1);
         try {
             Date parsedDate = dateFormat.parse(dateGroup);
-            detailsLogEntry.setLogDate(parsedDate);
+            detailsLogEntry.setTimestamp(parsedDate);
         } catch (ParseException e) {
             log.error("Error parsing date format in line " + line, e); 
         }
@@ -106,7 +106,7 @@ public class JahiaPerfLineAnalyzer extends WritingLineAnalyzer {
         }
         perfSummary.put(pageKey, perfSummaryLogEntry);
 
-        return detailsLogEntry.getLogDate();
+        return detailsLogEntry.getTimestamp();
     }
 
     public void finishPreviousState() {

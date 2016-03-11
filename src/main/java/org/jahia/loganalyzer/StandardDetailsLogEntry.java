@@ -2,7 +2,6 @@ package org.jahia.loganalyzer;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -17,19 +16,10 @@ public class StandardDetailsLogEntry extends AbstractDetailsLogEntry {
 
     private String[] levels = { "trace", "debug", "info", "warn", "error", "fatal" };
 
-    private Date date;
     private String level;
     private int levelNumber = -1;
     private String className;
     private String message;
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
 
     public String getLevel() {
         return level;
@@ -80,7 +70,7 @@ public class StandardDetailsLogEntry extends AbstractDetailsLogEntry {
     public String[] toStringArray(DateFormat dateFormat) {
         String[] result = new String[6];
         result[0] = Long.toString(getLineNumber());
-        result[1] = dateFormat.format(date);
+        result[1] = dateFormat.format(getTimestamp());
         result[2] = level;
         result[3] = Integer.toString(levelNumber);
         result[4] = className;
@@ -91,7 +81,7 @@ public class StandardDetailsLogEntry extends AbstractDetailsLogEntry {
     public LinkedHashMap<String, Object> getValues() {
         LinkedHashMap<String, Object> result = new LinkedHashMap<>();
         result.put("standard.details.logLine", getLineNumber());
-        result.put("standard.details.date", date);
+        result.put("standard.details.date", getTimestamp());
         result.put("standard.details.level", level);
         result.put("standard.details.levelNumber", levelNumber);
         result.put("standard.details.logClassName", className);

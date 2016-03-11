@@ -1,5 +1,7 @@
 package org.jahia.loganalyzer;
 
+import java.util.Date;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Serge Huber
@@ -9,6 +11,7 @@ package org.jahia.loganalyzer;
  */
 public abstract class AbstractDetailsLogEntry implements LogEntry {
     private long lineNumber;
+    private Date timestamp;
 
     public long getLineNumber() {
         return lineNumber;
@@ -16,5 +19,13 @@ public abstract class AbstractDetailsLogEntry implements LogEntry {
 
     public void setLineNumber(long lineNumber) {
         this.lineNumber = lineNumber;
+    }
+
+    public Date getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
     }
 }
