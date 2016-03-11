@@ -22,7 +22,13 @@ public class ElasticSearchLogEntryWriter implements LogEntryWriter {
 
     public ElasticSearchLogEntryWriter(File htmlFile, LogEntry logEntry, LogParserConfiguration logParserConfiguration) {
         indexName = FilenameUtils.getBaseName(logParserConfiguration.getInputFile().getName()).toLowerCase();
+        if (indexName.contains(".")) {
+            indexName = indexName.replaceAll("\\.", "-");
+        }
         typeName = FilenameUtils.getBaseName(htmlFile.getPath()).toLowerCase();
+        if (typeName.contains(".")) {
+            typeName = typeName.replaceAll("\\.", "-");
+        }
     }
 
     @Override
