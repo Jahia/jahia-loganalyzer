@@ -52,12 +52,17 @@ public class ExceptionDetailsLogEntry extends AbstractDetailsLogEntry {
     }
 
     public String[] toStringArray(DateFormat dateFormat) {
-        String[] result = new String[5];
+        String[] result = new String[6];
         result[0] = Long.toString(getLineNumber());
-        result[1] = className;
-        result[2] = message;
-        result[3] = stackTraceToString();
-        result[4] = contextLinesToString();
+        if (getTimestamp() != null) {
+            result[1] = dateFormat.format(getTimestamp());
+        } else {
+            result[1] = "";
+        }
+        result[2] = className;
+        result[3] = message;
+        result[4] = stackTraceToString();
+        result[5] = contextLinesToString();
         return result;
     }
 
@@ -82,6 +87,7 @@ public class ExceptionDetailsLogEntry extends AbstractDetailsLogEntry {
     public LinkedHashMap<String, Object> getValues() {
         LinkedHashMap<String, Object> result = new LinkedHashMap<>();
         result.put("exceptions.details.logLine", getLineNumber());
+        result.put("exceptions.details.date", getTimestamp());
         result.put("exceptions.details.className", className);
         result.put("exceptions.details.message", message);
         result.put("exceptions.details.stackTrace", stackTrace);
