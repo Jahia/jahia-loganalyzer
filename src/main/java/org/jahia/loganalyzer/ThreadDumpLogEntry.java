@@ -6,11 +6,11 @@ import java.util.*;
 /**
  * This class represents a full Thread dump
  */
-public class ThreadDumpLogEntry implements LogEntry {
+public class ThreadDumpLogEntry implements TimestampedLogEntry {
 
-    private long dumpNumber;
+    private long threadDumpNumber;
     private long threadTotal;
-    private Date threadDumpDate;
+    private Date timestamp;
     private List<ThreadDumpThreadLogEntry> threadDumpDetailsLogEntries = new ArrayList<ThreadDumpThreadLogEntry>();
     private Map<String,String> threadNames = new TreeMap<String,String>();
     private String newThreadsList;
@@ -20,12 +20,12 @@ public class ThreadDumpLogEntry implements LogEntry {
         
     }
 
-    public long getDumpNumber() {
-        return dumpNumber;
+    public long getThreadDumpNumber() {
+        return threadDumpNumber;
     }
 
-    public void setDumpNumber(long dumpNumber) {
-        this.dumpNumber = dumpNumber;
+    public void setThreadDumpNumber(long threadDumpNumber) {
+        this.threadDumpNumber = threadDumpNumber;
     }
 
     public long getThreadTotal() {
@@ -36,12 +36,13 @@ public class ThreadDumpLogEntry implements LogEntry {
         this.threadTotal = threadTotal;
     }
 
-    public Date getThreadDumpDate() {
-        return threadDumpDate;
+    @Override
+    public Date getTimestamp() {
+        return timestamp;
     }
 
-    public void setThreadDumpDate(Date threadDumpDate) {
-        this.threadDumpDate = threadDumpDate;
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
     }
 
     public List<ThreadDumpThreadLogEntry> getThreadDumpLogEntries() {
@@ -101,26 +102,28 @@ public class ThreadDumpLogEntry implements LogEntry {
     }
 
     public String[] toStringArray(DateFormat dateFormat) {
-        String[] result = new String[5];
-        result[0] = Long.toString(dumpNumber);
+        String[] result = new String[6];
+        result[0] = Long.toString(threadDumpNumber);
         result[1] = Long.toString(threadDumpDetailsLogEntries.size());
-        if (threadDumpDate != null) {
-            result[2] = dateFormat.format(threadDumpDate);
+        if (timestamp != null) {
+            result[2] = dateFormat.format(timestamp);
         } else {
             result[2] = "";
         }
         result[3] = newThreadsList;
         result[4] = deadThreadsList;
+        result[5] = "Not implemented.";
         return result;
     }
 
     public LinkedHashMap<String, Object> getValues() {
         LinkedHashMap<String, Object> result = new LinkedHashMap<>();
-        result.put("threaddump.summary.dumpNumber", dumpNumber);
-        result.put("threaddump.summary.threadTotal", threadDumpDetailsLogEntries.size());
-        result.put("threaddump.summary.date", threadDumpDate);
-        result.put("threaddump.summary.newThreads", newThreadsList);
-        result.put("threaddump.summary.deadThreads", deadThreadsList);
+        result.put("threadDumpNumber", threadDumpNumber);
+        result.put("threadCount", threadDumpDetailsLogEntries.size());
+        result.put("timestamp", timestamp);
+        result.put("newThreadsInDump", newThreadsList);
+        result.put("deadThreadsInDump", deadThreadsList);
+        result.put("threadDumps", threadDumpDetailsLogEntries);
         return result;
     }
 

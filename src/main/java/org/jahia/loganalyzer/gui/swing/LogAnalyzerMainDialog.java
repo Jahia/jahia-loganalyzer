@@ -172,21 +172,21 @@ public class LogAnalyzerMainDialog extends JDialog {
                     }
 
                     // now we use the same parent directory for all output files
-                    File newPerfDetails = new File(targetDirectory, baseName + LogParserConfiguration.DEFAULT_PERF_DETAILS_OUTPUTFILENAME_SUFFIX);
+                    File newPerfDetails = new File(targetDirectory, LogParserConfiguration.DEFAULT_PERF_DETAILS_OUTPUTFILENAME);
                     perfDetailsCSVOutputFile.setText(newPerfDetails.getAbsoluteFile().toString());
-                    File newPerfSummary = new File(targetDirectory, baseName + LogParserConfiguration.DEFAULT_PERF_SUMMARY_OUTPUTFILENAME_SUFFIX);
+                    File newPerfSummary = new File(targetDirectory, LogParserConfiguration.DEFAULT_PERF_SUMMARY_OUTPUTFILENAME);
                     perfSummaryCSVOutputFile.setText(newPerfSummary.getAbsoluteFile().toString());
-                    File newThreadDetails = new File(targetDirectory, baseName + LogParserConfiguration.DEFAULT_THREAD_DETAILS_OUTPUTFILENAME_SUFFIX);
+                    File newThreadDetails = new File(targetDirectory, LogParserConfiguration.DEFAULT_THREAD_DETAILS_OUTPUTFILENAME);
                     threadDetailsCSVOutputFile.setText(newThreadDetails.getAbsoluteFile().toString());
-                    File newThreadSummary = new File(targetDirectory, baseName + LogParserConfiguration.DEFAULT_THREAD_SUMMARY_OUTPUTFILENAME_SUFFIX);
+                    File newThreadSummary = new File(targetDirectory, LogParserConfiguration.DEFAULT_THREAD_SUMMARY_OUTPUTFILENAME);
                     threadSummaryCSVOutputFile.setText(newThreadSummary.getAbsoluteFile().toString());
-                    File newExceptionDetails = new File(targetDirectory, baseName + LogParserConfiguration.DEFAULT_EXCEPTION_DETAILS_OUTPUTFILENAME_SUFFIX);
+                    File newExceptionDetails = new File(targetDirectory, LogParserConfiguration.DEFAULT_EXCEPTION_DETAILS_OUTPUTFILENAME);
                     exceptionDetailsCSVOutputFile.setText(newExceptionDetails.getAbsoluteFile().toString());
-                    File newExceptionSummary = new File(targetDirectory, baseName + LogParserConfiguration.DEFAULT_EXCEPTION_SUMMARY_OUTPUTFILENAME_SUFFIX);
+                    File newExceptionSummary = new File(targetDirectory, LogParserConfiguration.DEFAULT_EXCEPTION_SUMMARY_OUTPUTFILENAME);
                     exceptionSummaryCSVOutputFile.setText(newExceptionSummary.getAbsoluteFile().toString());
-                    File newStandardDetails = new File(targetDirectory, baseName + LogParserConfiguration.DEFAULT_STANDARD_DETAILS_OUTPUTFILENAME_SUFFIX);
+                    File newStandardDetails = new File(targetDirectory, LogParserConfiguration.DEFAULT_LOG_DETAILS_OUTPUTFILENAME);
                     standardDetailsCSVOutputFile.setText(newStandardDetails.getAbsoluteFile().toString());
-                    File newStandardSummary = new File(targetDirectory, baseName + LogParserConfiguration.DEFAULT_STANDARD_SUMMARY_OUTPUTFILENAME_SUFFIX);
+                    File newStandardSummary = new File(targetDirectory, LogParserConfiguration.DEFAULT_LOG_SUMMARY_OUTPUTFILENAME);
                     standardSummaryCSVOutputFile.setText(newStandardSummary.getAbsoluteFile().toString());
                 } else {
                 }

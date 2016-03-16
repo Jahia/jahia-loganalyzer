@@ -66,10 +66,10 @@ public class StandardSummaryLogEntry implements LogEntry {
 
     public LinkedHashMap<String, Object> getValues() {
         LinkedHashMap<String, Object> result = new LinkedHashMap<>();
-        result.put("standard.summary.level", level);
-        result.put("standard.summary.levelNumber", levelNumber);
-        result.put("standard.summary.message", message);
-        result.put("standard.summary.count", count);
+        result.put("logLevel", level);
+        result.put("logLevelNumber", levelNumber);
+        result.put("message", message);
+        result.put("count", count);
         return result;
     }
 

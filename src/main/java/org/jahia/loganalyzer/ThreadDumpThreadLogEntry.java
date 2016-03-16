@@ -10,15 +10,15 @@ import java.util.List;
  */
 public class ThreadDumpThreadLogEntry extends AbstractDetailsLogEntry {
 
-    private long dumpNumber;
+    private long threadDumpNumber;
     private long threadNumber;
-    private String name;
-    private String type = "normal";
-    private String tid;
-    private String nid;
-    private int priority;
-    private String state;
-    private String stateInfo;
+    private String threadName;
+    private String threadType = "normal";
+    private String threadId;
+    private String threadNativeId;
+    private int threadPriority;
+    private String threadState;
+    private String threadStateInfo;
     private List<String> stackTrace = new ArrayList<String>();
     private List<String> waitingOnLocks = new ArrayList<String>();
     private List<String> holdingLocks = new ArrayList<String>();
@@ -32,34 +32,34 @@ public class ThreadDumpThreadLogEntry extends AbstractDetailsLogEntry {
         buffer.append("logLine=");
         buffer.append(getLineNumber());
         buffer.append(",dump=");
-        buffer.append(dumpNumber);
+        buffer.append(threadDumpNumber);
         buffer.append(",date=");
         buffer.append(getTimestamp());
         buffer.append(",threadNumber=");
         buffer.append(threadNumber);
         buffer.append(",name=");
-        buffer.append(name);
+        buffer.append(threadName);
         buffer.append(",type=");
-        buffer.append(type);
+        buffer.append(threadType);
         buffer.append(",tid=");
-        buffer.append(tid);
+        buffer.append(threadId);
         buffer.append(",nid=");
-        buffer.append(nid);
+        buffer.append(threadNativeId);
         buffer.append(",priority=");
-        buffer.append(priority);
+        buffer.append(threadPriority);
         buffer.append(",state=");
-        buffer.append(state);
+        buffer.append(threadState);
         buffer.append(",state info=");
-        buffer.append(stateInfo);
+        buffer.append(threadStateInfo);
         return buffer.toString();
     }
 
-    public long getDumpNumber() {
-        return dumpNumber;
+    public long getThreadDumpNumber() {
+        return threadDumpNumber;
     }
 
-    public void setDumpNumber(long dumpNumber) {
-        this.dumpNumber = dumpNumber;
+    public void setThreadDumpNumber(long threadDumpNumber) {
+        this.threadDumpNumber = threadDumpNumber;
     }
 
     public long getThreadNumber() {
@@ -70,12 +70,12 @@ public class ThreadDumpThreadLogEntry extends AbstractDetailsLogEntry {
         this.threadNumber = threadNumber;
     }
 
-    public String getName() {
-        return name;
+    public String getThreadName() {
+        return threadName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setThreadName(String threadName) {
+        this.threadName = threadName;
     }
 
     public List<String> getStackTrace() {
@@ -86,52 +86,52 @@ public class ThreadDumpThreadLogEntry extends AbstractDetailsLogEntry {
         this.stackTrace = stackTrace;
     }
 
-    public String getType() {
-        return type;
+    public String getThreadType() {
+        return threadType;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setThreadType(String threadType) {
+        this.threadType = threadType;
     }
 
-    public String getTid() {
-        return tid;
+    public String getThreadId() {
+        return threadId;
     }
 
-    public void setTid(String tid) {
-        this.tid = tid;
+    public void setThreadId(String threadId) {
+        this.threadId = threadId;
     }
 
-    public String getNid() {
-        return nid;
+    public String getThreadNativeId() {
+        return threadNativeId;
     }
 
-    public void setNid(String nid) {
-        this.nid = nid;
+    public void setThreadNativeId(String threadNativeId) {
+        this.threadNativeId = threadNativeId;
     }
 
-    public int getPriority() {
-        return priority;
+    public int getThreadPriority() {
+        return threadPriority;
     }
 
-    public void setPriority(int priority) {
-        this.priority = priority;
+    public void setThreadPriority(int threadPriority) {
+        this.threadPriority = threadPriority;
     }
 
-    public String getState() {
-        return state;
+    public String getThreadState() {
+        return threadState;
     }
 
-    public void setState(String state) {
-        this.state = state;
+    public void setThreadState(String threadState) {
+        this.threadState = threadState;
     }
 
-    public String getStateInfo() {
-        return stateInfo;
+    public String getThreadStateInfo() {
+        return threadStateInfo;
     }
 
-    public void setStateInfo(String stateInfo) {
-        this.stateInfo = stateInfo;
+    public void setThreadStateInfo(String threadStateInfo) {
+        this.threadStateInfo = threadStateInfo;
     }
 
     public String stackTraceToString() {
@@ -197,20 +197,20 @@ public class ThreadDumpThreadLogEntry extends AbstractDetailsLogEntry {
     public String[] toStringArray(DateFormat dateFormat) {
         String[] result = new String[17];
         result[0] = Long.toString(getLineNumber());
-        result[1] = Long.toString(dumpNumber);
+        result[1] = Long.toString(threadDumpNumber);
         if (getTimestamp() != null) {
             result[2] = dateFormat.format(getTimestamp());
         } else {
             result[2] = "";
         }
         result[3] = Long.toString(threadNumber);
-        result[4] = name;
-        result[5] = type;
-        result[6] = tid;
-        result[7] = nid;
-        result[8] = Integer.toString(priority);
-        result[9] = state;
-        result[10] = stateInfo;
+        result[4] = threadName;
+        result[5] = threadType;
+        result[6] = threadId;
+        result[7] = threadNativeId;
+        result[8] = Integer.toString(threadPriority);
+        result[9] = threadState;
+        result[10] = threadStateInfo;
         result[11] = stackTraceToString();
         result[12] = Integer.toString(waitingOnLocks.size());
         result[13] = waitingOnLocksToString();
@@ -222,23 +222,23 @@ public class ThreadDumpThreadLogEntry extends AbstractDetailsLogEntry {
 
     public LinkedHashMap<String, Object> getValues() {
         LinkedHashMap<String, Object> result = new LinkedHashMap<>();
-        result.put("threaddump.details.logLine", getLineNumber());
-        result.put("threaddump.details.dumpNumber", dumpNumber);
-        result.put("threaddump.details.dumpDate", getTimestamp());
-        result.put("threaddump.details.threadNumber", threadNumber);
-        result.put("threaddump.details.name", name);
-        result.put("threaddump.details.type", type);
-        result.put("threaddump.details.tid", tid);
-        result.put("threaddump.details.nid", nid);
-        result.put("threaddump.details.priority", priority);
-        result.put("threaddump.details.state", state);
-        result.put("threaddump.details.stateInfo", stateInfo);
-        result.put("threaddump.details.stackTrace", stackTrace);
-        result.put("threaddump.details.totalWaiting", waitingOnLocks.size());
-        result.put("threaddump.details.waitingOnLocks", waitingOnLocks);
-        result.put("threaddump.details.totalHeld", holdingLocks.size());
-        result.put("threaddump.details.holdingLocks", holdingLocks);
-        result.put("threaddump.details.lockOwners", lockOwners);
+        result.put("lineNumber", getLineNumber());
+        result.put("threadDumpNumber", threadDumpNumber);
+        result.put("timestamp", getTimestamp());
+        result.put("threadNumber", threadNumber);
+        result.put("threadName", threadName);
+        result.put("threadType", threadType);
+        result.put("threadId", threadId);
+        result.put("threadNativeId", threadNativeId);
+        result.put("threadPriority", threadPriority);
+        result.put("threadState", threadState);
+        result.put("threadStateInfo", threadStateInfo);
+        result.put("stackTrace", stackTrace);
+        result.put("waitingOnLockCount", waitingOnLocks.size());
+        result.put("waitingOnLocks", waitingOnLocks);
+        result.put("heldLockCount", holdingLocks.size());
+        result.put("holdingLocks", holdingLocks);
+        result.put("lockOwners", lockOwners);
         return result;
     }
 

@@ -97,18 +97,18 @@ public class PerfSummaryLogEntry implements LogEntry {
 
     public LinkedHashMap<String, Object> getValues() {
         LinkedHashMap<String, Object> result = new LinkedHashMap<>();
-        result.put("perf.summary.pageID", pageID);
-        result.put("perf.summary.urlKey", urlKey);
+        result.put("pageId", pageID);
+        result.put("urlKey", urlKey);
         if (pageHits != 0) {
             averagePageTime = cumulatedPageTime / pageHits;
         } else {
             averagePageTime = 0;
         }
-        result.put("perf.summary.averagePageTime", averagePageTime);
-        result.put("perf.summary.maxPageTime", maxPageTime);
-        result.put("perf.summary.cumulatedPageTime", cumulatedPageTime);
-        result.put("perf.summary.pageHits", pageHits);
-        result.put("perf.summary.url", url);
+        result.put("averagePageTime", averagePageTime);
+        result.put("maxPageTime", maxPageTime);
+        result.put("cumulatedPageTime", cumulatedPageTime);
+        result.put("pageHits", pageHits);
+        result.put("url", url);
         return result;
     }
 

@@ -113,7 +113,7 @@ public class ThreadDumpLineAnalyzer extends WritingLineAnalyzer {
                 }
             }
 
-            currentSummaryLogEntry.setThreadDumpDate(dateToUse);
+            currentSummaryLogEntry.setTimestamp(dateToUse);
             threadDumpCount++;
         } else if (line.startsWith("\"")) {
             // we are in the case of a new thread
@@ -124,11 +124,11 @@ public class ThreadDumpLineAnalyzer extends WritingLineAnalyzer {
                 }
                 writeDetails(threadDumpThreadLogEntry);
                 currentSummaryLogEntry.getThreadDumpLogEntries().add(threadDumpThreadLogEntry);
-                currentSummaryLogEntry.getThreadNames().put(threadDumpThreadLogEntry.getTid(), threadDumpThreadLogEntry.getName());
+                currentSummaryLogEntry.getThreadNames().put(threadDumpThreadLogEntry.getThreadId(), threadDumpThreadLogEntry.getThreadName());
             }
             threadDumpThreadLogEntry = new ThreadDumpThreadLogEntry();
             threadDumpThreadLogEntry.setLineNumber(lineNumberReader.getLineNumber() - 1);
-            threadDumpThreadLogEntry.setDumpNumber(threadDumpCount);
+            threadDumpThreadLogEntry.setThreadDumpNumber(threadDumpCount);
             threadDumpThreadLogEntry.setTimestamp(lastValidDateParsed);
             threadDumpThreadLogEntry.setThreadNumber(++currentThreadCount);
 
@@ -141,51 +141,51 @@ public class ThreadDumpLineAnalyzer extends WritingLineAnalyzer {
                 if (!matches) {
                     matcher = sunJDK7ThreadInfoPattern.matcher(line);
                     if (matcher.matches()) {
-                        threadDumpThreadLogEntry.setName(matcher.group(1));
-                        threadDumpThreadLogEntry.setNid(matcher.group(2));
-                        threadDumpThreadLogEntry.setTid(matcher.group(2));
-                        threadDumpThreadLogEntry.setState(matcher.group(3).trim());
-                        threadDumpThreadLogEntry.setStateInfo(matcher.group(4));
+                        threadDumpThreadLogEntry.setThreadName(matcher.group(1));
+                        threadDumpThreadLogEntry.setThreadNativeId(matcher.group(2));
+                        threadDumpThreadLogEntry.setThreadId(matcher.group(2));
+                        threadDumpThreadLogEntry.setThreadState(matcher.group(3).trim());
+                        threadDumpThreadLogEntry.setThreadStateInfo(matcher.group(4));
                     } else {
                         matcher = sunJDK8ThreadInfoPattern.matcher(line);
                         if (matcher.matches()) {
-                            threadDumpThreadLogEntry.setName(matcher.group(1));
-                            threadDumpThreadLogEntry.setNid(matcher.group(7));
-                            threadDumpThreadLogEntry.setTid(matcher.group(6));
-                            threadDumpThreadLogEntry.setState(matcher.group(8).trim());
-                            threadDumpThreadLogEntry.setStateInfo(matcher.group(9));
+                            threadDumpThreadLogEntry.setThreadName(matcher.group(1));
+                            threadDumpThreadLogEntry.setThreadNativeId(matcher.group(7));
+                            threadDumpThreadLogEntry.setThreadId(matcher.group(6));
+                            threadDumpThreadLogEntry.setThreadState(matcher.group(8).trim());
+                            threadDumpThreadLogEntry.setThreadStateInfo(matcher.group(9));
                         } else {
                             log.warn("Line " + lineNumberReader.getLineNumber() + " doesn't match any Sun JDK Regexp : " + line);
-                            threadDumpThreadLogEntry.setName(line);
-                            threadDumpThreadLogEntry.setTid("invalid");
+                            threadDumpThreadLogEntry.setThreadName(line);
+                            threadDumpThreadLogEntry.setThreadId("invalid");
                             return null;
                         }
                     }
                 } else {
                     // using JDK 6 format
-                    threadDumpThreadLogEntry.setName(matcher.group(1));
-                    threadDumpThreadLogEntry.setTid(matcher.group(2));
-                    threadDumpThreadLogEntry.setState(matcher.group(3).trim());
-                    threadDumpThreadLogEntry.setStateInfo(matcher.group(4));
+                    threadDumpThreadLogEntry.setThreadName(matcher.group(1));
+                    threadDumpThreadLogEntry.setThreadId(matcher.group(2));
+                    threadDumpThreadLogEntry.setThreadState(matcher.group(3).trim());
+                    threadDumpThreadLogEntry.setThreadStateInfo(matcher.group(4));
                 }
             } else {
-                threadDumpThreadLogEntry.setName(matcher.group(1));
-                threadDumpThreadLogEntry.setType(matcher.group(2));
-                if (threadDumpThreadLogEntry.getType() != null) {
-                    threadDumpThreadLogEntry.setType(threadDumpThreadLogEntry.getType().trim());
+                threadDumpThreadLogEntry.setThreadName(matcher.group(1));
+                threadDumpThreadLogEntry.setThreadType(matcher.group(2));
+                if (threadDumpThreadLogEntry.getThreadType() != null) {
+                    threadDumpThreadLogEntry.setThreadType(threadDumpThreadLogEntry.getThreadType().trim());
                 }
                 try {
-                    threadDumpThreadLogEntry.setPriority(Integer.parseInt(matcher.group(3)));
+                    threadDumpThreadLogEntry.setThreadPriority(Integer.parseInt(matcher.group(3)));
                 } catch (NumberFormatException nfe) {
                     log.error("Couldn't parse priority for thread " + threadDumpThreadLogEntry + " in line : " + line, nfe);
                 }
-                threadDumpThreadLogEntry.setTid(matcher.group(4));
-                threadDumpThreadLogEntry.setNid(matcher.group(5));
-                threadDumpThreadLogEntry.setState(matcher.group(6).trim());
-                threadDumpThreadLogEntry.setStateInfo(matcher.group(8));
+                threadDumpThreadLogEntry.setThreadId(matcher.group(4));
+                threadDumpThreadLogEntry.setThreadNativeId(matcher.group(5));
+                threadDumpThreadLogEntry.setThreadState(matcher.group(6).trim());
+                threadDumpThreadLogEntry.setThreadStateInfo(matcher.group(8));
             }
         } else if (line.trim().startsWith("java.lang.Thread.State: ")) {
-            threadDumpThreadLogEntry.setState(line.substring("java.lang.Thread.State: ".length()));
+            threadDumpThreadLogEntry.setThreadState(line.substring("java.lang.Thread.State: ".length()));
         } else if (line.trim().startsWith("at ")) {
             threadDumpThreadLogEntry.getStackTrace().add(line.substring(1));
         } else if (line.trim().startsWith("- locked ")) {
@@ -208,7 +208,7 @@ public class ThreadDumpLineAnalyzer extends WritingLineAnalyzer {
         log.debug("Found end of thread dump, cleaning up...");
         if (currentSummaryLogEntry != null) {
             log.info("Found " + currentSummaryLogEntry.getThreadDumpLogEntries().size() + " threads in thread dump.");
-            currentSummaryLogEntry.setDumpNumber(threadDumpCount);
+            currentSummaryLogEntry.setThreadDumpNumber(threadDumpCount);
             currentSummaryLogEntry.computeDifferences(lastSummaryLogEntry);
             writeSummary(currentSummaryLogEntry);
             allThreadDumps.add(currentSummaryLogEntry);

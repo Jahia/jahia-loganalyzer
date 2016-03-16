@@ -133,19 +133,19 @@ public class PerfDetailsLogEntry extends AbstractDetailsLogEntry {
 
     public LinkedHashMap<String, Object> getValues() {
         LinkedHashMap<String, Object> result = new LinkedHashMap<>();
-        result.put("perf.details.logLine", getLineNumber());
-        result.put("perf.details.date", getTimestamp());
-        result.put("perf.details.pid", pid);
-        result.put("perf.details.urlKey", urlKey);
-        result.put("perf.details.language", language);
-        result.put("perf.details.user", user);
-        result.put("perf.details.cacheMode", cacheMode);
-        result.put("perf.details.engineName", engineName);
-        result.put("perf.details.esi", esi);
-        result.put("perf.details.ipAddress", ipAddress);
-        result.put("perf.details.sessionID", sessionID);
-        result.put("perf.details.processingTime", processingTime);
-        result.put("perf.details.url", url);
+        result.put("lineNumber", getLineNumber());
+        result.put("timestamp", getTimestamp());
+        result.put("pageId", pid);
+        result.put("urlKey", urlKey);
+        result.put("language", language);
+        result.put("user", user);
+        result.put("cacheMode", cacheMode);
+        result.put("engineName", engineName);
+        result.put("esi", esi);
+        result.put("ipAddress", ipAddress);
+        result.put("sessionID", sessionID);
+        result.put("processingTime", processingTime);
+        result.put("url", url);
         return result;
     }
 

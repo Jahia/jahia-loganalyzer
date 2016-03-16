@@ -9,7 +9,7 @@ import java.util.Date;
  * Time: 10:13:59
  * To change this template use File | Settings | File Templates.
  */
-public abstract class AbstractDetailsLogEntry implements LogEntry {
+public abstract class AbstractDetailsLogEntry implements TimestampedLogEntry {
     private long lineNumber;
     private Date timestamp;
 

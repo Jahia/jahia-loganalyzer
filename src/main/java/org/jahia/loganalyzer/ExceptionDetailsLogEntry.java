@@ -86,12 +86,12 @@ public class ExceptionDetailsLogEntry extends AbstractDetailsLogEntry {
 
     public LinkedHashMap<String, Object> getValues() {
         LinkedHashMap<String, Object> result = new LinkedHashMap<>();
-        result.put("exceptions.details.logLine", getLineNumber());
-        result.put("exceptions.details.date", getTimestamp());
-        result.put("exceptions.details.className", className);
-        result.put("exceptions.details.message", message);
-        result.put("exceptions.details.stackTrace", stackTrace);
-        result.put("exceptions.details.contextLines", contextLines);
+        result.put("lineNumber", getLineNumber());
+        result.put("timestamp", getTimestamp());
+        result.put("className", className);
+        result.put("message", message);
+        result.put("stackTrace", stackTrace);
+        result.put("contextLines", contextLines);
         return result;
     }
 

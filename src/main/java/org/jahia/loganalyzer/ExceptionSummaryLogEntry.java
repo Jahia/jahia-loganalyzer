@@ -45,11 +45,11 @@ public class ExceptionSummaryLogEntry implements LogEntry {
 
     public LinkedHashMap<String, Object> getValues() {
         LinkedHashMap<String, Object> result = new LinkedHashMap<>();
-        result.put("exceptions.summary.count", count);
-        result.put("exceptions.summary.className", (exceptionDetailsLogEntry != null ? exceptionDetailsLogEntry.getClassName() : null));
-        result.put("exceptions.summary.message", (exceptionDetailsLogEntry != null ? exceptionDetailsLogEntry.getClassName() : null));
-        result.put("exceptions.summary.stackTrace", (exceptionDetailsLogEntry != null ? exceptionDetailsLogEntry.getStackTrace() : null));
-        result.put("exceptions.summary.contextLines", (exceptionDetailsLogEntry != null ? exceptionDetailsLogEntry.getContextLines() : null));
+        result.put("count", count);
+        result.put("className", (exceptionDetailsLogEntry != null ? exceptionDetailsLogEntry.getClassName() : null));
+        result.put("message", (exceptionDetailsLogEntry != null ? exceptionDetailsLogEntry.getClassName() : null));
+        result.put("stackTrace", (exceptionDetailsLogEntry != null ? exceptionDetailsLogEntry.getStackTrace() : null));
+        result.put("contextLines", (exceptionDetailsLogEntry != null ? exceptionDetailsLogEntry.getContextLines() : null));
         return result;
     }
 

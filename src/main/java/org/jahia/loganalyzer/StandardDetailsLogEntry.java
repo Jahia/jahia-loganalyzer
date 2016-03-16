@@ -80,12 +80,12 @@ public class StandardDetailsLogEntry extends AbstractDetailsLogEntry {
 
     public LinkedHashMap<String, Object> getValues() {
         LinkedHashMap<String, Object> result = new LinkedHashMap<>();
-        result.put("standard.details.logLine", getLineNumber());
-        result.put("standard.details.date", getTimestamp());
-        result.put("standard.details.level", level);
-        result.put("standard.details.levelNumber", levelNumber);
-        result.put("standard.details.logClassName", className);
-        result.put("standard.details.logMessage", message);
+        result.put("lineNumber", getLineNumber());
+        result.put("timestamp", getTimestamp());
+        result.put("logLevel", level);
+        result.put("logLevelNumber", levelNumber);
+        result.put("className", className);
+        result.put("message", message);
         return result;
     }
 
