@@ -1,0 +1,42 @@
+{
+  "performance-details": {
+    "properties": {
+      "ipAddress": {
+        "type": "string"
+      },
+      "lineNumber": {
+        "type": "long"
+      },
+      "logType": {
+        "type": "string",
+        "index": "not_analyzed"
+      },
+      "pageId": {
+        "type": "long"
+      },
+      "processingTime": {
+        "type": "long"
+      },
+      "sessionID": {
+        "type": "string",
+        "index": "not_analyzed"
+      },
+      "timestamp": {
+        "type": "date",
+        "format": "strict_date_optional_time||epoch_millis"
+      },
+      "url": {
+        "type": "string",
+        "index": "not_analyzed"
+      },
+      "urlKey": {
+        "type": "string",
+        "index": "not_analyzed"
+      },
+      "user": {
+        "type": "string",
+        "index": "not_analyzed"
+      }
+    }
+  }
+}

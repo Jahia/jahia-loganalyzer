@@ -47,6 +47,9 @@ public abstract class WritingLineAnalyzer implements LineAnalyzer {
         File elasticSearchDetailFile = new File(detailsOutputFile.getPath() + ".es");
         LogEntryWriter elasticSearchDetailWriter = new ElasticSearchLogEntryWriter(elasticSearchDetailFile, logEntry, logParserConfiguration);
         detailsLogEntryWriters.add(elasticSearchDetailWriter);
+        File elasticSearchSummaryFile = new File(summaryOutputFile.getPath() + ".es");
+        LogEntryWriter elasticSearchSummaryWriter = new ElasticSearchLogEntryWriter(elasticSearchSummaryFile, logEntry, logParserConfiguration);
+        summaryLogEntryWriters.add(elasticSearchSummaryWriter);
 
     }
 

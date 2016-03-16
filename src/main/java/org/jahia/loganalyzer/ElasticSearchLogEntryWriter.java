@@ -1,6 +1,7 @@
 package org.jahia.loganalyzer;
 
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequestBuilder;
 import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsResponse;
 import org.elasticsearch.action.bulk.BulkProcessor;
@@ -9,6 +10,7 @@ import org.elasticsearch.client.Client;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
@@ -49,18 +51,34 @@ public class ElasticSearchLogEntryWriter implements LogEntryWriter {
             delIdx.execute().actionGet();
         }
 
-        client.admin().indices().prepareCreate(indexBaseName + indexTimestampSuffix)
-                .addMapping(typeName, "{\n" +
-                        "    \"" + typeName + "\": {\n" +
-                        "      \"properties\": {\n" +
-                        "        \"logType\": {\n" +
-                        "          \"type\": \"string\",\n" +
-                        "          \"index\":  \"not_analyzed\"" +
-                        "        }\n" +
-                        "      }\n" +
-                        "    }\n" +
-                        "  }")
-                .get();
+        InputStream mappingInputStream = this.getClass().getClassLoader().getResourceAsStream("es-mappings/" + typeName + ".json");
+        String mapping = null;
+        try {
+            if (mappingInputStream != null) {
+                mapping = IOUtils.toString(mappingInputStream);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (mapping == null) {
+            client.admin().indices().prepareCreate(indexBaseName + indexTimestampSuffix)
+                    .addMapping(typeName, "{\n" +
+                            "    \"" + typeName + "\": {\n" +
+                            "      \"properties\": {\n" +
+                            "        \"logType\": {\n" +
+                            "          \"type\": \"string\",\n" +
+                            "          \"index\":  \"not_analyzed\"" +
+                            "        }\n" +
+                            "      }\n" +
+                            "    }\n" +
+                            "  }")
+                    .get();
+        } else {
+            client.admin().indices().prepareCreate(indexBaseName + indexTimestampSuffix)
+                    .addMapping(typeName, mapping)
+                    .get();
+        }
 
         initializedIndices.add(indexName);
     }

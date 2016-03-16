@@ -1,0 +1,68 @@
+{
+  "threaddumps-details": {
+    "properties": {
+      "heldLockCount": {
+        "type": "long"
+      },
+      "holdingLocks": {
+        "type": "string",
+        "index": "not_analyzed"
+      },
+      "lineNumber": {
+        "type": "long"
+      },
+      "logType": {
+        "type": "string",
+        "index": "not_analyzed"
+      },
+      "stackTrace": {
+        "type": "string",
+        "index": "not_analyzed"
+      },
+      "threadDumpNumber": {
+        "type": "long"
+      },
+      "threadId": {
+        "type": "string",
+        "index": "not_analyzed"
+      },
+      "threadName": {
+        "type": "string",
+        "index": "not_analyzed"
+      },
+      "threadNativeId": {
+        "type": "string",
+        "index": "not_analyzed"
+      },
+      "threadNumber": {
+        "type": "long"
+      },
+      "threadPriority": {
+        "type": "long"
+      },
+      "threadState": {
+        "type": "string",
+        "index": "not_analyzed"
+      },
+      "threadStateInfo": {
+        "type": "string",
+        "index": "not_analyzed"
+      },
+      "threadType": {
+        "type": "string",
+        "index": "not_analyzed"
+      },
+      "timestamp": {
+        "type": "date",
+        "format": "strict_date_optional_time||epoch_millis"
+      },
+      "waitingOnLockCount": {
+        "type": "long"
+      },
+      "waitingOnLocks": {
+        "type": "string",
+        "index": "not_analyzed"
+      }
+    }
+  }
+}
