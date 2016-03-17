@@ -1,5 +1,4 @@
 {
-  "threaddumps-details": {
     "properties": {
       "heldLockCount": {
         "type": "long"
@@ -64,5 +63,4 @@
         "index": "not_analyzed"
       }
     }
-  }
 }

@@ -1,9 +1,7 @@
 package org.jahia.loganalyzer;
 
 import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -24,6 +22,7 @@ public class PerfDetailsLogEntry extends AbstractDetailsLogEntry {
     private String ipAddress;
     private String sessionID;
     private long processingTime = 0;
+    private Map<String, Double> location = new HashMap<String, Double>();
 
     public int getPid() {
         return pid;
@@ -113,8 +112,22 @@ public class PerfDetailsLogEntry extends AbstractDetailsLogEntry {
         this.sessionID = sessionID;
     }
 
+    public Map<String, Double> getLocation() {
+        return location;
+    }
+
+    public String locationToString() {
+        if (location == null || location.size() == 0) {
+            return null;
+        }
+        if (location.get("lat") == null || location.get("lon") == null) {
+            return null;
+        }
+        return location.get("lat").toString() + "," + location.get("lon").toString();
+    }
+
     public String[] toStringArray(DateFormat dateFormat) {
-        String[] result = new String[13];
+        String[] result = new String[14];
         result[0] = Long.toString(getLineNumber());
         result[1] = dateFormat.format(getTimestamp());
         result[2] = Integer.toString(pid);
@@ -128,6 +141,7 @@ public class PerfDetailsLogEntry extends AbstractDetailsLogEntry {
         result[10] = sessionID;
         result[11] = Long.toString(processingTime);
         result[12] = url;
+        result[13] = locationToString();
         return result;
     }
 
@@ -146,6 +160,9 @@ public class PerfDetailsLogEntry extends AbstractDetailsLogEntry {
         result.put("sessionID", sessionID);
         result.put("processingTime", processingTime);
         result.put("url", url);
+        if (locationToString() != null) {
+            result.put("location", locationToString());
+        }
         return result;
     }
 

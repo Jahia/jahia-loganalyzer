@@ -1,5 +1,4 @@
 {
-  "threaddumps-summary": {
     "properties": {
       "deadThreadsInDump": {
         "type": "string",
@@ -28,5 +27,4 @@
         "format": "strict_date_optional_time||epoch_millis"
       }
     }
-  }
 }

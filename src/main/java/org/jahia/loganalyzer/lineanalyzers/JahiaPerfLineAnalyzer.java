@@ -1,11 +1,19 @@
 package org.jahia.loganalyzer.lineanalyzers;
 
+import com.maxmind.db.CHMCache;
+import com.maxmind.geoip2.DatabaseReader;
+import com.maxmind.geoip2.exception.GeoIp2Exception;
+import com.maxmind.geoip2.model.CityResponse;
+import com.maxmind.geoip2.record.*;
 import org.jahia.loganalyzer.LogParserConfiguration;
 import org.jahia.loganalyzer.PerfDetailsLogEntry;
 import org.jahia.loganalyzer.PerfSummaryLogEntry;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.LineNumberReader;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,7 +32,7 @@ public class JahiaPerfLineAnalyzer extends WritingLineAnalyzer {
 
     private static final org.apache.commons.logging.Log log =
             org.apache.commons.logging.LogFactory.getLog(JahiaPerfLineAnalyzer.class);
-
+    DatabaseReader databaseReader = null;
     private Pattern linePattern;
     private DateFormat dateFormat;
     private String contextMapping;
@@ -44,6 +52,11 @@ public class JahiaPerfLineAnalyzer extends WritingLineAnalyzer {
         dateFormat = new SimpleDateFormat(logParserConfiguration.getDateFormatString());
         contextMapping = logParserConfiguration.getContextMapping();
         servletMapping = logParserConfiguration.getServletMapping();
+
+        InputStream maxMindDBStream = this.getClass().getResourceAsStream("/maxmind-db/GeoLite2-City.mmdb");
+        if (maxMindDBStream != null) {
+            databaseReader = new DatabaseReader.Builder(maxMindDBStream).withCache(new CHMCache()).build();
+        }
     }
 
     public boolean isForThisAnalyzer(String line, String nextLine, String nextNextLine) {
@@ -65,6 +78,31 @@ public class JahiaPerfLineAnalyzer extends WritingLineAnalyzer {
         String esiGroup = matcher.group(3);
         String userGroup = matcher.group(4);
         String ipAddressGroup = matcher.group(5);
+        if (ipAddressGroup != null && databaseReader != null) {
+            InetAddress ipAddress = null;
+            try {
+                ipAddress = InetAddress.getByName(ipAddressGroup);
+                // Replace "city" with the appropriate method for your database, e.g.,
+                // "country".
+                CityResponse response = databaseReader.city(ipAddress);
+                Country country = response.getCountry();
+                Subdivision subdivision = response.getMostSpecificSubdivision();
+                City city = response.getCity();
+                Postal postal = response.getPostal();
+                Location location = response.getLocation();
+                if (location != null && location.getLatitude() != null && location.getLongitude() != null) {
+                    detailsLogEntry.getLocation().put("lat", location.getLatitude());
+                    detailsLogEntry.getLocation().put("lon", location.getLongitude());
+                }
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+            } catch (GeoIp2Exception e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
         String sessionIDGroup = matcher.group(6);
         String processingTimeGroup = matcher.group(7);
         detailsLogEntry.setLineNumber(lineNumberReader.getLineNumber()-1);

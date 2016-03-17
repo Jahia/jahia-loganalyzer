@@ -4,6 +4,8 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequestBuilder;
 import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsResponse;
+import org.elasticsearch.action.admin.indices.mapping.put.PutMappingRequestBuilder;
+import org.elasticsearch.action.admin.indices.mapping.put.PutMappingResponse;
 import org.elasticsearch.action.bulk.BulkProcessor;
 import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.client.Client;
@@ -20,13 +22,13 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class ElasticSearchLogEntryWriter implements LogEntryWriter {
 
+    static Map<String, Set<String>> indexMappings = new HashMap<String, Set<String>>();
     BulkProcessor bulkProcessor = ElasticSearchService.getInstance().getBulkProcessor();
     Client client = ElasticSearchService.getInstance().getClient();
     String indexBaseName = null;
     String indexTimestampSuffix = "";
     String typeName = null;
     AtomicLong idGenerator = new AtomicLong(0);
-    Set<String> initializedIndices = new HashSet<String>();
 
     public ElasticSearchLogEntryWriter(File htmlFile, LogEntry logEntry, LogParserConfiguration logParserConfiguration) {
         indexBaseName = FilenameUtils.getBaseName(logParserConfiguration.getInputFile().getName()).toLowerCase();
@@ -41,14 +43,29 @@ public class ElasticSearchLogEntryWriter implements LogEntryWriter {
     }
 
     public void initIndex(String indexName) {
-        if (initializedIndices.contains(indexName)) {
+        if (indexMappings.containsKey(indexName)) {
             return;
         }
 
-        final IndicesExistsResponse res = client.admin().indices().prepareExists(indexBaseName + indexTimestampSuffix).execute().actionGet();
+        final IndicesExistsResponse res = client.admin().indices().prepareExists(indexName).execute().actionGet();
         if (res.isExists()) {
-            final DeleteIndexRequestBuilder delIdx = client.admin().indices().prepareDelete(indexBaseName + indexTimestampSuffix);
+            System.err.println("WARNING: Deleting old index instance: " + indexName);
+            final DeleteIndexRequestBuilder delIdx = client.admin().indices().prepareDelete(indexName);
             delIdx.execute().actionGet();
+        } else {
+            client.admin().indices().prepareCreate(indexName).get();
+        }
+
+        indexMappings.put(indexName, new HashSet<String>());
+    }
+
+    public void initMapping(String indexName, String typeName) {
+        if (indexMappings.containsKey(indexName) && indexMappings.get(indexName).contains(typeName)) {
+            return;
+        }
+        Set<String> mappings = indexMappings.get(indexName);
+        if (mappings == null) {
+            mappings = new HashSet<>();
         }
 
         InputStream mappingInputStream = this.getClass().getClassLoader().getResourceAsStream("es-mappings/" + typeName + ".json");
@@ -62,25 +79,21 @@ public class ElasticSearchLogEntryWriter implements LogEntryWriter {
         }
 
         if (mapping == null) {
-            client.admin().indices().prepareCreate(indexBaseName + indexTimestampSuffix)
-                    .addMapping(typeName, "{\n" +
-                            "    \"" + typeName + "\": {\n" +
-                            "      \"properties\": {\n" +
-                            "        \"logType\": {\n" +
-                            "          \"type\": \"string\",\n" +
-                            "          \"index\":  \"not_analyzed\"" +
-                            "        }\n" +
-                            "      }\n" +
-                            "    }\n" +
-                            "  }")
-                    .get();
-        } else {
-            client.admin().indices().prepareCreate(indexBaseName + indexTimestampSuffix)
-                    .addMapping(typeName, mapping)
-                    .get();
+            mapping = "{\n" +
+                    "      \"properties\": {\n" +
+                    "        \"logType\": {\n" +
+                    "          \"type\": \"string\",\n" +
+                    "          \"index\":  \"not_analyzed\"" +
+                    "        }\n" +
+                    "      }\n" +
+                    "  }";
         }
 
-        initializedIndices.add(indexName);
+        PutMappingRequestBuilder putMappingRequestBuilder = client.admin().indices().preparePutMapping(indexName);
+        PutMappingResponse putMappingResponse = putMappingRequestBuilder.setType(typeName).setSource(mapping).get();
+
+        mappings.add(typeName);
+        indexMappings.put(indexName, mappings);
     }
 
     @Override
@@ -104,6 +117,7 @@ public class ElasticSearchLogEntryWriter implements LogEntryWriter {
             }
         }
         initIndex(indexBaseName + indexTimestampSuffix);
+        initMapping(indexBaseName + indexTimestampSuffix, typeName);
         IndexRequestBuilder indexRequestBuilder = client.prepareIndex(indexBaseName + indexTimestampSuffix, typeName, Long.toString(idGenerator.incrementAndGet()))
                 .setSource(json);
 

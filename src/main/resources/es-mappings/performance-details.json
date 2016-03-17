@@ -1,8 +1,8 @@
 {
-  "performance-details": {
     "properties": {
       "ipAddress": {
-        "type": "string"
+        "type": "string",
+        "index": "not_analyzed"
       },
       "lineNumber": {
         "type": "long"
@@ -36,7 +36,9 @@
       "user": {
         "type": "string",
         "index": "not_analyzed"
+      },
+      "location": {
+        "type": "geo_point"
       }
     }
-  }
 }

@@ -6,6 +6,9 @@ DISCLAIMER
 This tool is provided without any guarantees, but isn't risky at all because all 
 it does is parse a log file :)
 
+This product includes GeoLite2 data created by MaxMind, available from
+<a href="http://www.maxmind.com">http://www.maxmind.com</a>.
+
 Features
 --------------------------------------------------------------------------------
 - Parsing of a single file or all the files in a directory
