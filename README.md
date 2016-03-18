@@ -52,6 +52,22 @@ You can now access the Angular 2 UI running as an ElasticSearch site plugin
 at the following URL :
 
     http://localhost:9200/_plugin/loganalyzer
+    
+Kibana Usage
+--------------------------------------------------------------------------------
+
+To use the LogAnalyzer with Kibana, first launch an analysis, and once it has 
+completed the embedded ElasticSearch will stay available. You can then start 
+Kibana and configure it with the following index name : 
+
+    loganalyzer-*
+    
+It will also ask you to select a timestamp field and there is only one in the
+LogAnalyzer data so simply save the "timestamp" field.
+
+Don't forget to set the proper date range on the top right corner otherwise
+you will probably not see any data as it defaults to the last 15 minutes. 
+You can select "Year to date" for example to see recent data.
 
 Output files
 --------------------------------------------------------------------------------

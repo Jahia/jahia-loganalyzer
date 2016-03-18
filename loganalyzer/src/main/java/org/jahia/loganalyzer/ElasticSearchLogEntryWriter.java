@@ -25,16 +25,12 @@ public class ElasticSearchLogEntryWriter implements LogEntryWriter {
     static Map<String, Set<String>> indexMappings = new HashMap<String, Set<String>>();
     BulkProcessor bulkProcessor = ElasticSearchService.getInstance().getBulkProcessor();
     Client client = ElasticSearchService.getInstance().getClient();
-    String indexBaseName = null;
+    String indexBaseName = "loganalyzer";
     String indexTimestampSuffix = "";
     String typeName = null;
     AtomicLong idGenerator = new AtomicLong(0);
 
     public ElasticSearchLogEntryWriter(File htmlFile, LogEntry logEntry, LogParserConfiguration logParserConfiguration) {
-        indexBaseName = FilenameUtils.getBaseName(logParserConfiguration.getInputFile().getName()).toLowerCase();
-        if (indexBaseName.contains(".")) {
-            indexBaseName = indexBaseName.replaceAll("\\.", "-");
-        }
         typeName = FilenameUtils.getBaseName(htmlFile.getPath()).toLowerCase();
         if (typeName.contains(".")) {
             typeName = typeName.replaceAll("\\.", "-");
