@@ -17,6 +17,10 @@ Features
 - Parsing of threads dumps to generate thread dump evolution
 - Parsing of the rest of log lines to report the most common lines and filter
   on log level
+- Outputs CSV & JSON reports
+- Embeds an ElasticSearch server and stores the parsed data into it
+- Provides an ElasticSearch plugin to visualize the data
+- Compatible with Kibana 4 for advanced data visualization
 
 Compiling
 --------------------------------------------------------------------------------

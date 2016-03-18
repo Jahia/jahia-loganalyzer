@@ -15,10 +15,9 @@
     <option name="historyRevisionsNumber" value="4" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="392381f2-1a3f-4d4a-971d-91bfb49657e3" name="Default" comment="- ElasticSearch site plugin now loads ! Available at http://localhost:9200/_plugin/loganalyzer . However it doesn't do anything yet :) &#10;- Fix issues with GeoIP address resolution for localhost addresses. Also improved error reporting for invalid IP addresses&#10;">
+    <list default="true" id="392381f2-1a3f-4d4a-971d-91bfb49657e3" name="Default" comment="- Change ElasticSearch index name to always be loganalyzer-*&#10;- Add some instructions in the README file on how to use it with Kibana&#10;&#10;">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/loganalyzer.iws" afterPath="$PROJECT_DIR$/loganalyzer.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/ElasticSearchLogEntryWriter.java" afterPath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/ElasticSearchLogEntryWriter.java" />
     </list>
     <ignored path=".idea/workspace.xml" />
     <ignored path="loganalyzer.iws" />
@@ -219,8 +218,8 @@
       <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8674912">
-              <caret line="70" column="0" selection-start-line="70" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.58303887">
+              <caret line="22" column="58" selection-start-line="22" selection-start-column="58" selection-end-line="22" selection-end-column="58" />
               <folding />
             </state>
           </provider>
@@ -1735,7 +1734,7 @@
       <workItem from="1457607985769" duration="26257000" />
       <workItem from="1458054444522" duration="1111000" />
       <workItem from="1458121973096" duration="293000" />
-      <workItem from="1458122556550" duration="47232000" />
+      <workItem from="1458122556550" duration="47626000" />
     </task>
     <task id="LOCAL-00001" summary="- Added support for JDK 7 thread dumps&#10;- Various minor bug fixes&#10;- Removed WebStart configuration">
       <created>1456843666034</created>
@@ -1851,11 +1850,17 @@
       <option name="project" value="LOCAL" />
       <updated>1458317808059</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="- Change ElasticSearch index name to always be loganalyzer-*&#10;- Add some instructions in the README file on how to use it with Kibana&#10;&#10;">
+      <created>1458318585074</created>
+      <option name="number" value="00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1458318585074</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="128540000" />
+    <option name="totallyTimeSpent" value="128934000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1954,7 +1959,8 @@
     <MESSAGE value="- Add Geo location for performance logs&#10;" />
     <MESSAGE value="- Major project refactoring to make it possible to build ElasticSearch plugins into the project" />
     <MESSAGE value="- ElasticSearch site plugin now loads ! Available at http://localhost:9200/_plugin/loganalyzer . However it doesn't do anything yet :) &#10;- Fix issues with GeoIP address resolution for localhost addresses. Also improved error reporting for invalid IP addresses&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="- ElasticSearch site plugin now loads ! Available at http://localhost:9200/_plugin/loganalyzer . However it doesn't do anything yet :) &#10;- Fix issues with GeoIP address resolution for localhost addresses. Also improved error reporting for invalid IP addresses&#10;" />
+    <MESSAGE value="- Change ElasticSearch index name to always be loganalyzer-*&#10;- Add some instructions in the README file on how to use it with Kibana&#10;&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Change ElasticSearch index name to always be loganalyzer-*&#10;- Add some instructions in the README file on how to use it with Kibana&#10;&#10;" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
@@ -2499,8 +2505,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8674912">
-          <caret line="70" column="0" selection-start-line="70" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.58303887">
+          <caret line="22" column="58" selection-start-line="22" selection-start-column="58" selection-end-line="22" selection-end-column="58" />
           <folding />
         </state>
       </provider>
