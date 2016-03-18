@@ -2,7 +2,7 @@
 <head>
     <title>Angular 2 QuickStart</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/styles.css">
 
     <!-- 1. Load libraries -->
     <!-- IE required polyfills, in this exact order -->
@@ -19,19 +19,19 @@
     <script>
         System.config({
             packages: {
-                app: {
+                'javascript/app': {
                     format: 'register',
                     defaultExtension: 'js'
                 }
             }
         });
-        System.import('app/main')
+        System.import('javascript/app/main')
                 .then(null, console.error.bind(console));
     </script>
 </head>
 
 <!-- 3. Display the application -->
 <body>
-<my-app>Loading...</my-app>
+<loganalyzer>Loading...</loganalyzer>
 </body>
 </html>

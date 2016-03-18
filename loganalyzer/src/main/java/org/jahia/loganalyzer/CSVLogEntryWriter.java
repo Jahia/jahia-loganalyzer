@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DateFormat;
-import java.util.ResourceBundle;
 
 /**
  * Created by IntelliJ IDEA.
@@ -25,11 +24,10 @@ public class CSVLogEntryWriter implements LogEntryWriter {
     public CSVLogEntryWriter(File csvFile, char separatorChar, LogEntry logEntry) throws IOException {
         FileWriter writer = new FileWriter(csvFile);
         csvWriter = new CSVWriter(writer, separatorChar);
-        ResourceBundle resourceBundle = ResourceBundle.getBundle("loganalyzer_messages");
         String[] columnKeys = logEntry.getColumnKeys();
         String[] columnNames = new String[columnKeys.length];
         for (int i=0; i < columnKeys.length; i++) {
-            columnNames[i] = resourceBundle.getString("org.jahia.loganalyzer.logentry.column.header." + columnKeys[i]);
+            columnNames[i] = ResourceUtils.getBundleString("org.jahia.loganalyzer.logentry.column.header." + columnKeys[i]);
         }
         csvWriter.writeNext(columnNames);
     }

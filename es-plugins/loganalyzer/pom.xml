@@ -84,13 +84,49 @@
                             <resources>
                                 <resource>
                                     <!-- the directory that is populated by Grunt -->
-                                    <directory>${project.build.directory}/js</directory>
+                                    <directory>${project.build.directory}/_site/javascript</directory>
                                     <includes>
                                         <include>**/*.js</include>
                                     </includes>
                                     <filtering>false</filtering>
                                 </resource>
                             </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
+                    <execution>
+                        <id>Copy required JavaScript modules</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <copy file="${project.basedir}/node_modules/es6-shim/es6-shim.min.js"
+                                      todir="${project.build.directory}/classes/_site/node_modules/es6-shim"/>
+                                <copy file="${project.basedir}/node_modules/es6-shim/es6-shim.map"
+                                      todir="${project.build.directory}/classes/_site/node_modules/es6-shim"/>
+                                <copy file="${project.basedir}/node_modules/systemjs/dist/system-polyfills.js"
+                                      todir="${project.build.directory}/classes/_site/node_modules/systemjs/dist"/>
+                                <copy file="${project.basedir}/node_modules/systemjs/dist/system-polyfills.js.map"
+                                      todir="${project.build.directory}/classes/_site/node_modules/systemjs/dist"/>
+                                <copy file="${project.basedir}/node_modules/angular2/es6/dev/src/testing/shims_for_IE.js"
+                                      todir="${project.build.directory}/classes/_site/node_modules/angular2/es6/dev/src/testing"/>
+
+                                <copy file="${project.basedir}/node_modules/angular2/bundles/angular2-polyfills.js"
+                                      todir="${project.build.directory}/classes/_site/node_modules/angular2/bundles"/>
+                                <copy file="${project.basedir}/node_modules/systemjs/dist/system.src.js"
+                                      todir="${project.build.directory}/classes/_site/node_modules/systemjs/dist"/>
+                                <copy file="${project.basedir}/node_modules/rxjs/bundles/Rx.js"
+                                      todir="${project.build.directory}/classes/_site/node_modules/rxjs/bundles"/>
+                                <copy file="${project.basedir}/node_modules/angular2/bundles/angular2.dev.js"
+                                      todir="${project.build.directory}/classes/_site/node_modules/angular2/bundles"/>
+                            </target>
                         </configuration>
                     </execution>
                 </executions>

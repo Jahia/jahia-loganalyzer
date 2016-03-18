@@ -33,6 +33,9 @@ public class ElasticSearchService {
 
     public synchronized void start() {
         System.setProperty("es.path.home", homePath);
+        File esSitePluginDirectory = new File(homePath, "plugins/loganalyzer");
+        ResourceUtils.extractZipResource("loganalyzer-es-site-plugin.jar", esSitePluginDirectory);
+
         if (node == null && client == null && bulkProcessor == null) {
             node = NodeBuilder.nodeBuilder().node();
             client = node.client();

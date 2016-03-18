@@ -1,12 +1,13 @@
 package org.jahia.loganalyzer;
 
-import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringEscapeUtils;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.text.DateFormat;
-import java.util.ResourceBundle;
 
 /**
  * Created by loom on 01.03.16.
@@ -20,12 +21,10 @@ public class HTMLLogEntryWriter implements LogEntryWriter {
         htmlWriter = new FileWriter(htmlFile);
         File targetDirectory = htmlFile.getParentFile();
         for (String htmlResourceToCopy : logParserConfiguration.getHtmlResourcesToCopy()) {
-            copyResourceToFile(htmlResourceToCopy, targetDirectory);
+            ResourceUtils.copyResourceToFile(htmlResourceToCopy, targetDirectory);
         }
-        ResourceBundle resourceBundle = ResourceBundle.getBundle("loganalyzer_messages");
         String[] columnKeys = logEntry.getColumnKeys();
         String[] columnNames = new String[columnKeys.length];
-        String htmlTemplate = IOUtils.toString(this.getClass().getClassLoader().getResourceAsStream("html/template.html"));
         try {
             htmlWriter.append("<!DOCTYPE html>");
             htmlWriter.append("<html lang=\"en\">\n");
@@ -66,7 +65,7 @@ public class HTMLLogEntryWriter implements LogEntryWriter {
             htmlWriter.append("      <thead>\n");
             htmlWriter.append("        <tr>");
             for (int i=0; i < columnKeys.length; i++) {
-                columnNames[i] = resourceBundle.getString("org.jahia.loganalyzer.logentry.column.header." + columnKeys[i]);
+                columnNames[i] = ResourceUtils.getBundleString("org.jahia.loganalyzer.logentry.column.header." + columnKeys[i]);
                 htmlWriter.append("<th data-sortable=\"true\">");
                 htmlWriter.append(StringEscapeUtils.escapeHtml(columnNames[i]));
                 htmlWriter.append("</th>");
@@ -109,23 +108,4 @@ public class HTMLLogEntryWriter implements LogEntryWriter {
         IOUtils.closeQuietly(htmlWriter);
     }
 
-    private boolean copyResourceToFile(String resourceLocation, File targetDirectory) {
-        InputStream resourceStream = this.getClass().getClassLoader().getResourceAsStream(resourceLocation);
-        String fileName = FilenameUtils.getName(resourceLocation);
-        File targetFile = new File(targetDirectory, fileName);
-        FileOutputStream fileOutputStream = null;
-        try {
-            fileOutputStream = new FileOutputStream(targetFile);
-            IOUtils.copy(resourceStream, fileOutputStream);
-            return true;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            IOUtils.closeQuietly(fileOutputStream);
-            IOUtils.closeQuietly(resourceStream);
-        }
-        return false;
-    }
 }

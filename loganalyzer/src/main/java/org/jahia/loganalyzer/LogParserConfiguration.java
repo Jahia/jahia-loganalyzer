@@ -74,7 +74,7 @@ public class LogParserConfiguration {
     private String servletMapping = "/cms";
     private int standardMinimumLogLevel = 4; // FATAL is default extraction level
     private String[] htmlResourcesToCopy = new String[]{
-            "html/css/log-analyzer.css"
+            "loganalyzer-es-site-plugin.jar"
     };
 
     public LogParserConfiguration() {

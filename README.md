@@ -45,6 +45,14 @@ application is run. The CSV files should open fine with Microsoft Excel.
 
 See the TODO.txt file for information about stuff that isn't done yet :)
 
+Output GUI
+--------------------------------------------------------------------------------
+
+You can now access the Angular 2 UI running as an ElasticSearch site plugin 
+at the following URL :
+
+    http://localhost:9200/_plugin/loganalyzer
+
 Output files
 --------------------------------------------------------------------------------
 Here is a brief descriptions of the output files and their generated content 

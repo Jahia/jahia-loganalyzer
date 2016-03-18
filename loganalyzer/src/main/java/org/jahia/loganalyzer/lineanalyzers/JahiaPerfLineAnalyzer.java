@@ -78,7 +78,10 @@ public class JahiaPerfLineAnalyzer extends WritingLineAnalyzer {
         String esiGroup = matcher.group(3);
         String userGroup = matcher.group(4);
         String ipAddressGroup = matcher.group(5);
-        if (ipAddressGroup != null && databaseReader != null) {
+        if (ipAddressGroup != null &&
+                databaseReader != null &&
+                !"127.0.0.1".equals(ipAddressGroup) &&
+                !"localhost".equals(ipAddressGroup)) {
             InetAddress ipAddress = null;
             try {
                 ipAddress = InetAddress.getByName(ipAddressGroup);
@@ -95,11 +98,11 @@ public class JahiaPerfLineAnalyzer extends WritingLineAnalyzer {
                     detailsLogEntry.getLocation().put("lon", location.getLongitude());
                 }
             } catch (UnknownHostException e) {
-                e.printStackTrace();
+                log.error("IP Address format error on line:" + line, e);
             } catch (GeoIp2Exception e) {
-                e.printStackTrace();
+                log.error("IP Address geo location error on line:" + line, e);
             } catch (IOException e) {
-                e.printStackTrace();
+                log.error("IP Address I/O Error on line:" + line, e);
             }
 
         }

@@ -39,7 +39,6 @@ public class ElasticSearchLogEntryWriter implements LogEntryWriter {
         if (typeName.contains(".")) {
             typeName = typeName.replaceAll("\\.", "-");
         }
-
     }
 
     public void initIndex(String indexName) {
