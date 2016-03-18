@@ -1,0 +1,101 @@
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.jahia.loganalyzer</groupId>
+        <artifactId>loganalyzer-es-plugins</artifactId>
+        <version>0.5-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>loganalyzer-es-site-plugin</artifactId>
+    <packaging>jar</packaging>
+    <name>Jahia Log Analyzer ElasticSearch Site Plugin</name>
+
+    <build>
+        <plugins>
+
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <!-- Use the latest released version:
+                https://repo1.maven.org/maven2/com/github/eirslett/frontend-maven-plugin/ -->
+                <version>0.0.29</version>
+                <executions>
+                    <execution>
+                        <id>install node and npm</id>
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>npm install</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <!-- Optional configuration which provides for running any npm command -->
+                        <configuration>
+                            <arguments>install</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>npm-compile-typescript</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>run tsc</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>webpack build</id>
+                        <goals>
+                            <goal>webpack</goal>
+                        </goals>
+                        <!--
+                        <configuration>
+                            <arguments>-p</arguments>
+                        </configuration>
+                        -->
+                    </execution>
+                </executions>
+                <configuration>
+                    <!--
+                    <nodeVersion>v0.10.18</nodeVersion>
+                    <npmVersion>1.3.8</npmVersion>
+                    -->
+                    <nodeVersion>v4.4.0</nodeVersion>
+                    <npmVersion>3.8.0</npmVersion>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
+                <executions>
+                    <execution>
+                        <id>prepare-package-javascript</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <!-- Copy all generated javascript files into the final directory structure -->
+                            <outputDirectory>${project.build.outputDirectory}/${project.artifactId}</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <!-- the directory that is populated by Grunt -->
+                                    <directory>${project.build.directory}/js</directory>
+                                    <includes>
+                                        <include>**/*.js</include>
+                                    </includes>
+                                    <filtering>false</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

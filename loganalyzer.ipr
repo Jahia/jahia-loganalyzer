@@ -42,16 +42,26 @@
       <profile default="true" name="Default" enabled="false">
         <processorPath useClasspath="true" />
       </profile>
-      <profile default="false" name="Annotation profile for loganalyzer" enabled="true">
+      <profile default="false" name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="loganalyzer" />
+        <module name="loganalyzer (1)" />
+      </profile>
+      <profile default="false" name="Annotation profile for loganalyzer (2)" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="loganalyzer (2)" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="loganalyzer" target="1.7" />
+      <module name="loganalyzer" target="1.5" />
+      <module name="loganalyzer (1)" target="1.5" />
+      <module name="loganalyzer (2)" target="1.7" />
+      <module name="loganalyzer-es-plugins" target="1.5" />
     </bytecodeTargetLevel>
   </component>
   <component name="CopyrightManager" default="" />
@@ -306,6 +316,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/loganalyzer.iml" filepath="$PROJECT_DIR$/loganalyzer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/es-plugins/loganalyzer/loganalyzer (1).iml" filepath="$PROJECT_DIR$/es-plugins/loganalyzer/loganalyzer (1).iml" />
+      <module fileurl="file://$PROJECT_DIR$/loganalyzer/loganalyzer (2).iml" filepath="$PROJECT_DIR$/loganalyzer/loganalyzer (2).iml" />
+      <module fileurl="file://$PROJECT_DIR$/es-plugins/loganalyzer-es-plugins.iml" filepath="$PROJECT_DIR$/es-plugins/loganalyzer-es-plugins.iml" />
     </modules>
   </component>
   <component name="ProjectResources">
@@ -364,6 +377,7 @@
     <option name="USE_ALTERNATE_LOCATION" value="false" />
   </component>
   <component name="TypeScriptCompiler">
+    <option name="isCompilerEnabled" value="true" />
     <option name="useConfig" value="true" />
   </component>
   <component name="VCS.FileViewConfiguration">
