@@ -1,4 +1,6 @@
-package org.jahia.loganalyzer;
+package org.jahia.loganalyzer.analyzers.performance;
+
+import org.jahia.loganalyzer.BaseLogEntry;
 
 import java.text.DateFormat;
 import java.util.*;
@@ -6,11 +8,11 @@ import java.util.*;
 /**
  * Created by IntelliJ IDEA.
  * User: Serge Huber
- * Date: 22 ao�t 2007
+ * Date: 22 aout 2007
  * Time: 09:19:24
  * To change this template use File | Settings | File Templates.
  */
-public class PerfDetailsLogEntry extends AbstractDetailsLogEntry {
+public class PerfDetailsLogEntry extends BaseLogEntry {
     private int pid = -1;
     private String urlKey = "";
     private String language;
@@ -23,6 +25,10 @@ public class PerfDetailsLogEntry extends AbstractDetailsLogEntry {
     private String sessionID;
     private long processingTime = 0;
     private Map<String, Double> location = new HashMap<String, Double>();
+
+    public PerfDetailsLogEntry(long startLineNumber, long endLineNumber, Date timestamp, String jvmIdentifier, String source) {
+        super(startLineNumber, endLineNumber, timestamp, jvmIdentifier, source);
+    }
 
     public int getPid() {
         return pid;
@@ -126,29 +132,25 @@ public class PerfDetailsLogEntry extends AbstractDetailsLogEntry {
         return location.get("lat").toString() + "," + location.get("lon").toString();
     }
 
-    public String[] toStringArray(DateFormat dateFormat) {
-        String[] result = new String[14];
-        result[0] = Long.toString(getLineNumber());
-        result[1] = dateFormat.format(getTimestamp());
-        result[2] = Integer.toString(pid);
-        result[3] = urlKey;
-        result[4] = language;
-        result[5] = user;
-        result[6] = cacheMode;
-        result[7] = engineName;
-        result[8] = esi;
-        result[9] = ipAddress;
-        result[10] = sessionID;
-        result[11] = Long.toString(processingTime);
-        result[12] = url;
-        result[13] = locationToString();
+    public List<String> toStringList(DateFormat dateFormat) {
+        List<String> result = super.toStringList(dateFormat);
+        result.add(Integer.toString(pid));
+        result.add(urlKey);
+        result.add(language);
+        result.add(user);
+        result.add(cacheMode);
+        result.add(engineName);
+        result.add(esi);
+        result.add(ipAddress);
+        result.add(sessionID);
+        result.add(Long.toString(processingTime));
+        result.add(url);
+        result.add(locationToString());
         return result;
     }
 
     public LinkedHashMap<String, Object> getValues() {
-        LinkedHashMap<String, Object> result = new LinkedHashMap<>();
-        result.put("lineNumber", getLineNumber());
-        result.put("timestamp", getTimestamp());
+        LinkedHashMap<String, Object> result = super.getValues();
         result.put("pageId", pid);
         result.put("urlKey", urlKey);
         result.put("language", language);
@@ -166,10 +168,4 @@ public class PerfDetailsLogEntry extends AbstractDetailsLogEntry {
         return result;
     }
 
-    public String[] getColumnKeys() {
-        LinkedHashMap<String, Object> fakeValues = getValues();
-        List<String> columnKeyList = new ArrayList<String>(fakeValues.keySet());
-        return columnKeyList.toArray(new String[columnKeyList.size()]);
-    }
-    
 }

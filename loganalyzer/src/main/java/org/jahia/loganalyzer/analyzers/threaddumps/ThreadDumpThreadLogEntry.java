@@ -1,14 +1,17 @@
-package org.jahia.loganalyzer;
+package org.jahia.loganalyzer.analyzers.threaddumps;
+
+import org.jahia.loganalyzer.BaseLogEntry;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
  * This class represents a single thread inside a thread dump
  */
-public class ThreadDumpThreadLogEntry extends AbstractDetailsLogEntry {
+public class ThreadDumpThreadLogEntry extends BaseLogEntry {
 
     private long threadDumpNumber;
     private long threadNumber;
@@ -24,13 +27,15 @@ public class ThreadDumpThreadLogEntry extends AbstractDetailsLogEntry {
     private List<String> holdingLocks = new ArrayList<String>();
     private List<String> lockOwners = new ArrayList<String>();
 
-    public ThreadDumpThreadLogEntry() {
+    public ThreadDumpThreadLogEntry(long startLineNumber, long endLineNumber, Date timestamp, String jvmIdentifier, String source) {
+        super(startLineNumber, endLineNumber, timestamp, jvmIdentifier, source);
     }
+
 
     public String toString() {
         StringBuffer buffer = new StringBuffer();
         buffer.append("logLine=");
-        buffer.append(getLineNumber());
+        buffer.append(getStartLineNumber());
         buffer.append(",dump=");
         buffer.append(threadDumpNumber);
         buffer.append(",date=");
@@ -194,37 +199,29 @@ public class ThreadDumpThreadLogEntry extends AbstractDetailsLogEntry {
         this.lockOwners = lockOwners;
     }
 
-    public String[] toStringArray(DateFormat dateFormat) {
-        String[] result = new String[17];
-        result[0] = Long.toString(getLineNumber());
-        result[1] = Long.toString(threadDumpNumber);
-        if (getTimestamp() != null) {
-            result[2] = dateFormat.format(getTimestamp());
-        } else {
-            result[2] = "";
-        }
-        result[3] = Long.toString(threadNumber);
-        result[4] = threadName;
-        result[5] = threadType;
-        result[6] = threadId;
-        result[7] = threadNativeId;
-        result[8] = Integer.toString(threadPriority);
-        result[9] = threadState;
-        result[10] = threadStateInfo;
-        result[11] = stackTraceToString();
-        result[12] = Integer.toString(waitingOnLocks.size());
-        result[13] = waitingOnLocksToString();
-        result[14] = Integer.toString(holdingLocks.size());
-        result[15] = holdingLocksToString();
-        result[16] = lockOwnersToString();
+    public List<String> toStringList(DateFormat dateFormat) {
+        List<String> result = super.toStringList(dateFormat);
+        result.add(Long.toString(threadDumpNumber));
+        result.add(Long.toString(threadNumber));
+        result.add(threadName);
+        result.add(threadType);
+        result.add(threadId);
+        result.add(threadNativeId);
+        result.add(Integer.toString(threadPriority));
+        result.add(threadState);
+        result.add(threadStateInfo);
+        result.add(stackTraceToString());
+        result.add(Integer.toString(waitingOnLocks.size()));
+        result.add(waitingOnLocksToString());
+        result.add(Integer.toString(holdingLocks.size()));
+        result.add(holdingLocksToString());
+        result.add(lockOwnersToString());
         return result;
     }
 
     public LinkedHashMap<String, Object> getValues() {
-        LinkedHashMap<String, Object> result = new LinkedHashMap<>();
-        result.put("lineNumber", getLineNumber());
+        LinkedHashMap<String, Object> result = super.getValues();
         result.put("threadDumpNumber", threadDumpNumber);
-        result.put("timestamp", getTimestamp());
         result.put("threadNumber", threadNumber);
         result.put("threadName", threadName);
         result.put("threadType", threadType);
@@ -240,12 +237,6 @@ public class ThreadDumpThreadLogEntry extends AbstractDetailsLogEntry {
         result.put("holdingLocks", holdingLocks);
         result.put("lockOwners", lockOwners);
         return result;
-    }
-
-    public String[] getColumnKeys() {
-        LinkedHashMap<String, Object> fakeValues = getValues();
-        List<String> columnKeyList = new ArrayList<String>(fakeValues.keySet());
-        return columnKeyList.toArray(new String[columnKeyList.size()]);
     }
 
 }

@@ -1,4 +1,6 @@
-package org.jahia.loganalyzer;
+package org.jahia.loganalyzer.writers;
+
+import org.jahia.loganalyzer.LogEntry;
 
 import java.io.IOException;
 

@@ -1,4 +1,6 @@
-package org.jahia.loganalyzer;
+package org.jahia.loganalyzer.analyzers.threaddumps;
+
+import org.jahia.loganalyzer.BaseLogEntry;
 
 import java.text.DateFormat;
 import java.util.*;
@@ -6,20 +8,22 @@ import java.util.*;
 /**
  * This class represents a full Thread dump
  */
-public class ThreadDumpLogEntry implements TimestampedLogEntry {
+public class ThreadDumpLogEntry extends BaseLogEntry {
 
     private long threadDumpNumber;
     private long threadTotal;
-    private Date timestamp;
     private List<ThreadDumpThreadLogEntry> threadDumpDetailsLogEntries = new ArrayList<ThreadDumpThreadLogEntry>();
     private Map<String,String> threadNames = new TreeMap<String,String>();
     private String newThreadsList;
     private String deadThreadsList;
     private List<String> locks = new ArrayList<>();
 
-    public ThreadDumpLogEntry() {
-        
+    private List<ThreadInfo> stuckThreads = new ArrayList<ThreadInfo>();
+
+    public ThreadDumpLogEntry(long startLineNumber, long endLineNumber, Date timestamp, String jvmIdentifier, String source) {
+        super(startLineNumber, endLineNumber, timestamp, jvmIdentifier, source);
     }
+
 
     public long getThreadDumpNumber() {
         return threadDumpNumber;
@@ -37,15 +41,6 @@ public class ThreadDumpLogEntry implements TimestampedLogEntry {
         this.threadTotal = threadTotal;
     }
 
-    @Override
-    public Date getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
-    }
-
     public List<ThreadDumpThreadLogEntry> getThreadDumpLogEntries() {
         return threadDumpDetailsLogEntries;
     }
@@ -60,6 +55,14 @@ public class ThreadDumpLogEntry implements TimestampedLogEntry {
 
     public void setThreadNames(Map<String, String> threadNames) {
         this.threadNames = threadNames;
+    }
+
+    public List<ThreadInfo> getStuckThreads() {
+        return stuckThreads;
+    }
+
+    public void setStuckThreads(List<ThreadInfo> stuckThreads) {
+        this.stuckThreads = stuckThreads;
     }
 
     public void computeDifferences(ThreadDumpLogEntry lastSummaryLogEntry) {
@@ -102,18 +105,14 @@ public class ThreadDumpLogEntry implements TimestampedLogEntry {
         deadThreadsList = deadThreadsBuffer.toString();
     }
 
-    public String[] toStringArray(DateFormat dateFormat) {
-        String[] result = new String[6];
-        result[0] = Long.toString(threadDumpNumber);
-        result[1] = Long.toString(threadDumpDetailsLogEntries.size());
-        if (timestamp != null) {
-            result[2] = dateFormat.format(timestamp);
-        } else {
-            result[2] = "";
-        }
-        result[3] = newThreadsList;
-        result[4] = deadThreadsList;
-        result[5] = "Not implemented.";
+    public List<String> toStringList(DateFormat dateFormat) {
+        List<String> result = super.toStringList(dateFormat);
+        result.add(Long.toString(threadDumpNumber));
+        result.add(Long.toString(threadDumpDetailsLogEntries.size()));
+        result.add(newThreadsList);
+        result.add(deadThreadsList);
+        result.add("Not implemented.");
+        result.add(stuckThreads.toString());
         return result;
     }
 
@@ -121,17 +120,12 @@ public class ThreadDumpLogEntry implements TimestampedLogEntry {
         LinkedHashMap<String, Object> result = new LinkedHashMap<>();
         result.put("threadDumpNumber", threadDumpNumber);
         result.put("threadCount", threadDumpDetailsLogEntries.size());
-        result.put("timestamp", timestamp);
+        result.put("timestamp", getTimestamp());
         result.put("newThreadsInDump", newThreadsList);
         result.put("deadThreadsInDump", deadThreadsList);
         result.put("threadDumps", threadDumpDetailsLogEntries);
+        result.put("stuckThreads", stuckThreads);
         return result;
-    }
-
-    public String[] getColumnKeys() {
-        LinkedHashMap<String, Object> fakeValues = getValues();
-        List<String> columnKeyList = new ArrayList<String>(fakeValues.keySet());
-        return columnKeyList.toArray(new String[columnKeyList.size()]);
     }
 
 }

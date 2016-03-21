@@ -1,7 +1,9 @@
-package org.jahia.loganalyzer;
+package org.jahia.loganalyzer.analyzers.loglevel;
+
+import org.jahia.loganalyzer.BaseLogEntry;
 
 import java.text.DateFormat;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -12,12 +14,16 @@ import java.util.List;
  * Time: 11:59:08
  * To change this template use File | Settings | File Templates.
  */
-public class StandardSummaryLogEntry implements LogEntry {
+public class StandardSummaryLogEntry extends BaseLogEntry {
 
     private String level;
     private int levelNumber;
     private String message;
     private long count;
+
+    public StandardSummaryLogEntry(long startLineNumber, long endLineNumber, Date timestamp, String jvmIdentifier, String source) {
+        super(startLineNumber, endLineNumber, timestamp, jvmIdentifier, source);
+    }
 
     public String getLevel() {
         return level;
@@ -55,28 +61,22 @@ public class StandardSummaryLogEntry implements LogEntry {
         count++;
     }
 
-    public String[] toStringArray(DateFormat dateFormat) {
-        String[] result = new String[4];
-        result[0] = level; 
-        result[1] = Integer.toString(levelNumber);
-        result[2] = message;
-        result[3] = Long.toString(count);
+    public List<String> toStringList(DateFormat dateFormat) {
+        List<String> result = super.toStringList(dateFormat);
+        result.add(level);
+        result.add(Integer.toString(levelNumber));
+        result.add(message);
+        result.add(Long.toString(count));
         return result;
     }
 
     public LinkedHashMap<String, Object> getValues() {
-        LinkedHashMap<String, Object> result = new LinkedHashMap<>();
+        LinkedHashMap<String, Object> result = super.getValues();
         result.put("logLevel", level);
         result.put("logLevelNumber", levelNumber);
         result.put("message", message);
         result.put("count", count);
         return result;
-    }
-
-    public String[] getColumnKeys() {
-        LinkedHashMap<String, Object> fakeValues = getValues();
-        List<String> columnKeyList = new ArrayList<String>(fakeValues.keySet());
-        return columnKeyList.toArray(new String[columnKeyList.size()]);
     }
 
 }

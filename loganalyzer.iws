@@ -15,11 +15,41 @@
     <option name="historyRevisionsNumber" value="4" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="392381f2-1a3f-4d4a-971d-91bfb49657e3" name="Default" comment="- Improve feature README&#10;">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/Thread.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
+    <list default="true" id="392381f2-1a3f-4d4a-971d-91bfb49657e3" name="Default" comment="- Start implementing better thread reporting">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/BaseLogEntry.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/requestload/RequestLoadLineAnalyzer.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/threaddumps/ThreadInfo.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/AbstractDetailsLogEntry.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/Thread.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/TimestampedLogEntry.java" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/CSVLogEntryWriter.java" afterPath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/writers/CSVLogEntryWriter.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/ElasticSearchLogEntryWriter.java" afterPath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/writers/ElasticSearchLogEntryWriter.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/ElasticSearchService.java" afterPath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/writers/ElasticSearchService.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/ExceptionDetailsLogEntry.java" afterPath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/exceptions/ExceptionDetailsLogEntry.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/ExceptionSummaryLogEntry.java" afterPath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/exceptions/ExceptionSummaryLogEntry.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/HTMLLogEntryWriter.java" afterPath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/writers/HTMLLogEntryWriter.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/JSONLogEntryWriter.java" afterPath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/writers/JSONLogEntryWriter.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/LogEntryWriter.java" afterPath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/writers/LogEntryWriter.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/PerfDetailsLogEntry.java" afterPath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/performance/PerfDetailsLogEntry.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/PerfSummaryLogEntry.java" afterPath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/performance/PerfSummaryLogEntry.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/StandardDetailsLogEntry.java" afterPath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/loglevel/StandardDetailsLogEntry.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/StandardSummaryLogEntry.java" afterPath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/loglevel/StandardSummaryLogEntry.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/ThreadDumpLogEntry.java" afterPath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/threaddumps/ThreadDumpLogEntry.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/ThreadDumpThreadLogEntry.java" afterPath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/threaddumps/ThreadDumpThreadLogEntry.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/lineanalyzers/CompositeLineAnalyzer.java" afterPath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/core/CompositeLineAnalyzer.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/lineanalyzers/DefaultDummyLineAnalyzer.java" afterPath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/core/DefaultDummyLineAnalyzer.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/lineanalyzers/ExceptionLineAnalyzer.java" afterPath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/exceptions/ExceptionLineAnalyzer.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/lineanalyzers/JahiaPerfLineAnalyzer.java" afterPath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/performance/JahiaPerfLineAnalyzer.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/lineanalyzers/LineAnalyzer.java" afterPath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/core/LineAnalyzer.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/lineanalyzers/StandardLogLineAnalyzer.java" afterPath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/loglevel/StandardLogLineAnalyzer.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/lineanalyzers/ThreadDumpLineAnalyzer.java" afterPath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/threaddumps/ThreadDumpLineAnalyzer.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/lineanalyzers/WritingLineAnalyzer.java" afterPath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/core/WritingLineAnalyzer.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/loganalyzer.iws" afterPath="$PROJECT_DIR$/loganalyzer.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/ThreadDumpLogEntry.java" afterPath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/ThreadDumpLogEntry.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/LogEntry.java" afterPath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/LogEntry.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/LogParser.java" afterPath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/LogParser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/gui/swing/LogAnalyzerMainDialog.java" afterPath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/gui/swing/LogAnalyzerMainDialog.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/loganalyzer/src/main/resources/loganalyzer_messages.properties" afterPath="$PROJECT_DIR$/loganalyzer/src/main/resources/loganalyzer_messages.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/loganalyzer/src/test/java/org/jahia/loganalyzer/LogParserTest.java" afterPath="$PROJECT_DIR$/loganalyzer/src/test/java/org/jahia/loganalyzer/LogParserTest.java" />
     </list>
     <ignored path=".idea/workspace.xml" />
     <ignored path="loganalyzer.iws" />
@@ -59,7 +89,7 @@
     <option name="exportFileName" value="CompareDirectories.txt" />
   </component>
   <component name="CreatePatchCommitExecutor">
-    <option name="PATCH_PATH" value="" />
+    <option name="PATCH_PATH" value="$PROJECT_DIR$/../jahia_dev/trunk" />
   </component>
   <component name="DebuggerManager">
     <line_breakpoints converted="true">
@@ -132,50 +162,34 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="ThreadDumpLogEntry.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/ThreadDumpLogEntry.java">
+        <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/threaddumps/ThreadDumpLogEntry.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="17" column="51" selection-start-line="17" selection-start-column="51" selection-end-line="17" selection-end-column="51" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Thread.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/Thread.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.25506073">
-              <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-              <folding />
+              <caret line="58" column="0" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
+              <folding>
+                <element signature="e#693#705#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="ThreadDumpLineAnalyzer.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/lineanalyzers/ThreadDumpLineAnalyzer.java">
+        <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/threaddumps/ThreadDumpLineAnalyzer.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="160" column="40" selection-start-line="160" selection-start-column="40" selection-end-line="160" selection-end-column="40" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ThreadDumpThreadLogEntry.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/ThreadDumpThreadLogEntry.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-              <folding />
+              <caret line="121" column="0" selection-start-line="121" selection-start-column="0" selection-end-line="121" selection-end-column="0" />
+              <folding>
+                <element signature="e#1669#1688#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="ElasticSearchLogEntryWriter.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/ElasticSearchLogEntryWriter.java">
+        <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/writers/ElasticSearchLogEntryWriter.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+              <caret line="63" column="31" selection-start-line="63" selection-start-column="31" selection-end-line="63" selection-end-column="31" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -183,31 +197,41 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ElasticSearchService.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/ElasticSearchService.java">
+      <file leaf-file-name="ExceptionLineAnalyzer.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/exceptions/ExceptionLineAnalyzer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="71" column="0" selection-start-line="71" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
+            <state vertical-scroll-proportion="-7.0">
+              <caret line="72" column="191" selection-start-line="72" selection-start-column="183" selection-end-line="72" selection-end-column="191" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/es-plugins/loganalyzer/src/main/resources/_site/index.html">
+      <file leaf-file-name="StandardLogLineAnalyzer.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/loglevel/StandardLogLineAnalyzer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.166667">
-              <caret line="17" column="31" selection-start-line="17" selection-start-column="31" selection-end-line="17" selection-end-column="31" />
+            <state vertical-scroll-proportion="0.31932774">
+              <caret line="73" column="33" selection-start-line="73" selection-start-column="33" selection-end-line="73" selection-end-column="33" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="JahiaPerfLineAnalyzer.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/lineanalyzers/JahiaPerfLineAnalyzer.java">
+        <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/performance/JahiaPerfLineAnalyzer.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="44" column="29" selection-start-line="44" selection-start-column="29" selection-end-line="44" selection-end-column="29" />
+              <caret line="137" column="165" selection-start-line="137" selection-start-column="165" selection-end-line="137" selection-end-column="165" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ElasticSearchService.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/writers/ElasticSearchService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="71" column="0" selection-start-line="71" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -217,26 +241,35 @@
         <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/gui/swing/LogAnalyzerMainDialog.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="29" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+              <caret line="609" column="42" selection-start-line="609" selection-start-column="42" selection-end-line="609" selection-end-column="42" />
               <folding>
                 <element signature="method#$$$setupUI$$$#0;class#LogAnalyzerMainDialog#0" expanded="false" />
-                <marker date="1458317800000" expanded="true" signature="2814:2820" placeholder="{...}" />
-                <marker date="1458317800000" expanded="false" signature="16814:33413" placeholder="UI Designer generated code" />
+                <element signature="e#33985#33991#0" expanded="true" />
+                <marker date="1458565051000" expanded="false" signature="16767:33366" placeholder="UI Designer generated code" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/README.md">
+      <file leaf-file-name="loganalyzer_messages.properties" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/resources/loganalyzer_messages.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.1034484">
-              <caret line="6" column="26" selection-start-line="6" selection-start-column="26" selection-end-line="6" selection-end-column="26" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="3" column="58" selection-start-line="3" selection-start-column="58" selection-end-line="3" selection-end-column="58" />
               <folding />
             </state>
           </provider>
-          <provider editor-type-id="MarkdownPreviewEditor">
-            <state />
+        </entry>
+      </file>
+      <file leaf-file-name="BaseLogEntry.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/BaseLogEntry.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="75" column="47" selection-start-line="75" selection-start-column="47" selection-end-line="75" selection-end-column="47" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
           </provider>
         </entry>
       </file>
@@ -270,46 +303,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/ElasticSearchService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/LogParser.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/ExceptionSummaryLogEntry.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/ExceptionDetailsLogEntry.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/PerfSummaryLogEntry.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/StandardDetailsLogEntry.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/StandardSummaryLogEntry.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/TimestampedLogEntry.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/AbstractDetailsLogEntry.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/ThreadDumpLineAnalyzer.java" />
-        <option value="/Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/src.zip!/java/text/SimpleDateFormat.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/JSONLogEntryWriter.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/LogParserConfiguration.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/gui/swing/LogAnalyzerMainDialog.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/ThreadDumpLogEntry.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/ThreadDumpThreadLogEntry.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/es-mappings/log-details.json" />
-        <option value="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/WritingLineAnalyzer.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/lineanalyzers/JahiaPerfLineAnalyzer.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/loganalyzer_messages.properties" />
-        <option value="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/PerfDetailsLogEntry.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/es-mappings/exceptions-details.json" />
-        <option value="$PROJECT_DIR$/src/main/resources/es-mappings/performance-details.json" />
-        <option value="$PROJECT_DIR$/src/main/resources/es-mappings/threaddumps-details.json" />
-        <option value="$PROJECT_DIR$/src/main/resources/es-mappings/threaddumps-summary.json" />
-        <option value="$PROJECT_DIR$/src/main/java/org/jahia/loganalyzer/ElasticSearchLogEntryWriter.java" />
-        <option value="/Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/src.zip!/java/nio/file/Files.java" />
-        <option value="$PROJECT_DIR$/es-plugins/loganalyzer/src/main/resources/plugin-descriptor.properties" />
-        <option value="$PROJECT_DIR$/core/pom.xml" />
-        <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/es-plugins/pom.xml" />
-        <option value="$PROJECT_DIR$/es-plugins/loganalyzer/tsconfig.json" />
-        <option value="$PROJECT_DIR$/es-plugins/loganalyzer/webpack.config.js" />
-        <option value="$PROJECT_DIR$/es-plugins/loganalyzer/package.json" />
-        <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/LogParserConfiguration.java" />
-        <option value="/Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/src.zip!/java/util/ResourceBundle.java" />
-        <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/HTMLLogEntryWriter.java" />
-        <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/CSVLogEntryWriter.java" />
-        <option value="$MAVEN_REPOSITORY$/commons-io/commons-io/2.4/commons-io-2.4-sources.jar!/org/apache/commons/io/FileUtils.java" />
-        <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/ResourceUtils.java" />
         <option value="$PROJECT_DIR$/loganalyzer/pom.xml" />
         <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/ElasticSearchService.java" />
         <option value="$PROJECT_DIR$/es-plugins/loganalyzer/pom.xml" />
@@ -317,10 +310,50 @@
         <option value="$PROJECT_DIR$/es-plugins/loganalyzer/src/main/resources/_site/javascript/app/main.ts" />
         <option value="$PROJECT_DIR$/es-plugins/loganalyzer/src/main/resources/_site/index.html" />
         <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/lineanalyzers/JahiaPerfLineAnalyzer.java" />
-        <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/ElasticSearchLogEntryWriter.java" />
         <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/ThreadDumpLogEntry.java" />
+        <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/lineanalyzers/RequestLoadLineAnalyzer.java" />
         <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/Thread.java" />
+        <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/lineanalyzers/ThreadDumpLineAnalyzer.java" />
+        <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/ThreadInfo.java" />
+        <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/TimestampedLogEntry.java" />
+        <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/AbstractSummaryLogEntry.java" />
+        <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/LineTimestampedLogEntry.java" />
+        <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/StandardSummaryLogEntry.java" />
+        <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/AbstractDetailsLogEntry.java" />
+        <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/PerfSummaryLogEntry.java" />
+        <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/ExceptionSummaryLogEntry.java" />
+        <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/ElasticSearchLogEntryWriter.java" />
+        <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/ThreadDumpThreadLogEntry.java" />
+        <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/ExceptionDetailsLogEntry.java" />
+        <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/PerfDetailsLogEntry.java" />
+        <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/ThreadDumpLogEntry.java" />
+        <option value="/Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/src.zip!/javax/swing/ProgressMonitorInputStream.java" />
+        <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/gui/swing/LogAnalyzerMainDialog.java" />
+        <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/LogParser.java" />
+        <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/core/LineAnalyzer.java" />
+        <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/core/DefaultDummyLineAnalyzer.java" />
+        <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/core/WritingLineAnalyzer.java" />
+        <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/core/CompositeLineAnalyzer.java" />
+        <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/requestload/RequestLoadLineAnalyzer.java" />
+        <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/LogEntry.java" />
+        <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/exceptions/ExceptionDetailsLogEntry.java" />
+        <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/exceptions/ExceptionSummaryLogEntry.java" />
+        <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/loglevel/StandardDetailsLogEntry.java" />
+        <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/loglevel/StandardSummaryLogEntry.java" />
+        <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/performance/PerfDetailsLogEntry.java" />
+        <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/performance/PerfSummaryLogEntry.java" />
+        <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/threaddumps/ThreadDumpLogEntry.java" />
+        <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/threaddumps/ThreadDumpThreadLogEntry.java" />
+        <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/writers/CSVLogEntryWriter.java" />
+        <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/writers/HTMLLogEntryWriter.java" />
+        <option value="$PROJECT_DIR$/loganalyzer/src/test/java/org/jahia/loganalyzer/LogParserTest.java" />
+        <option value="$PROJECT_DIR$/loganalyzer/src/main/resources/loganalyzer_messages.properties" />
+        <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/BaseLogEntry.java" />
+        <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/writers/ElasticSearchLogEntryWriter.java" />
+        <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/exceptions/ExceptionLineAnalyzer.java" />
+        <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/loglevel/StandardLogLineAnalyzer.java" />
+        <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/performance/JahiaPerfLineAnalyzer.java" />
+        <option value="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/threaddumps/ThreadDumpLineAnalyzer.java" />
       </list>
     </option>
   </component>
@@ -374,8 +407,8 @@
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
     <option name="y" value="23" />
-    <option name="width" value="2560" />
-    <option name="height" value="1355" />
+    <option name="width" value="1280" />
+    <option name="height" value="715" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -816,6 +849,74 @@
               <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="loganalyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jahia-loganalyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="loganalyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jahia" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="loganalyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="loganalyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jahia-loganalyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="loganalyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -887,6 +988,324 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="loganalyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jahia" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="loganalyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="writers" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="loganalyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jahia-loganalyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="loganalyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jahia" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="loganalyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="analyzers" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="threaddumps" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="loganalyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jahia-loganalyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="loganalyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jahia" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="loganalyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="analyzers" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="requestload" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="loganalyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jahia-loganalyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="loganalyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jahia" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="loganalyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="analyzers" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="performance" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="loganalyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jahia-loganalyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="loganalyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jahia" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="loganalyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="analyzers" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="loglevel" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="loganalyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jahia-loganalyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="loganalyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jahia" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="loganalyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="analyzers" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="exceptions" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="loganalyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jahia-loganalyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="loganalyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jahia" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="loganalyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="analyzers" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="loganalyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jahia-loganalyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="es-plugins" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -940,6 +1359,7 @@
     <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
+    <property name="extract.method.default.visibility" value="private" />
   </component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
@@ -947,12 +1367,40 @@
       <recent name="org.jahia.loganalyzer.lineanalyzers" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/es-plugins/loganalyzer" />
-      <recent name="$PROJECT_DIR$/loganalyzer" />
-      <recent name="$PROJECT_DIR$/src/main/resources/maxmind-db" />
+      <recent name="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/core" />
+      <recent name="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/writers" />
+      <recent name="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/requestload" />
+      <recent name="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/threaddumps" />
+      <recent name="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/loglevel" />
     </key>
   </component>
   <component name="RunManager" selected="Application.Main GUI">
+    <configuration default="false" name="LogParserTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" runner="emma">
+        <pattern>
+          <option name="PATTERN" value="org.jahia.loganalyzer.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="loganalyzer (2)" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="org.jahia.loganalyzer" />
+      <option name="MAIN_CLASS_NAME" value="org.jahia.loganalyzer.LogParserTest" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="wholeProject" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
     <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
       <module name="" />
       <option name="ACTIVITY_CLASS" value="" />
@@ -1635,9 +2083,15 @@
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
-    <list size="1">
+    <list size="2">
       <item index="0" class="java.lang.String" itemvalue="Application.Main GUI" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.LogParserTest" />
     </list>
+    <recent_temporary>
+      <list size="1">
+        <item index="0" class="java.lang.String" itemvalue="JUnit.LogParserTest" />
+      </list>
+    </recent_temporary>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
       <Host>localhost</Host>
       <Port>5050</Port>
@@ -1676,7 +2130,7 @@
       <workItem from="1457607985769" duration="26257000" />
       <workItem from="1458054444522" duration="1111000" />
       <workItem from="1458121973096" duration="293000" />
-      <workItem from="1458122556550" duration="50726000" />
+      <workItem from="1458122556550" duration="69507000" />
     </task>
     <task id="LOCAL-00001" summary="- Added support for JDK 7 thread dumps&#10;- Various minor bug fixes&#10;- Removed WebStart configuration">
       <created>1456843666034</created>
@@ -1804,11 +2258,25 @@
       <option name="project" value="LOCAL" />
       <updated>1458318948841</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="- Start implementing better thread reporting">
+      <created>1458551526923</created>
+      <option name="number" value="00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1458551526923</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
+  <component name="TestHistory">
+    <history-entry file="LogParserTest - 2016.03.21 at 11h 27m 07s.xml">
+      <configuration name="LogParserTest" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="LogParserTest - 2016.03.21 at 11h 27m 46s.xml">
+      <configuration name="LogParserTest" configurationId="JUnit" />
+    </history-entry>
+  </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="132034000" />
+    <option name="totallyTimeSpent" value="150815000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1820,7 +2288,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="2560" height="1355" extended-state="6" />
+    <frame x="0" y="23" width="1280" height="715" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1647758" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1834,14 +2302,14 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32922733" sideWeight="0.0" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14694202" sideWeight="0.6707727" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31987077" sideWeight="0.6707727" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3346519" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33386838" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24959612" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3041599" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38683787" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.47030497" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="SVN Repositories" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32922733" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Maven projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1883,7 +2351,6 @@
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="PERFORM_UPDATE_IN_BACKGROUND" value="false" />
     <option name="PERFORM_COMMIT_IN_BACKGROUND" value="false" />
-    <MESSAGE value="Update project to be compatible with JDK 6 and more robust towards corrupted logs" />
     <MESSAGE value="Create hotfix branch" />
     <MESSAGE value="Create tag" />
     <MESSAGE value="- Added support for JDK 7 thread dumps&#10;- Various minor bug fixes&#10;- Removed WebStart configuration" />
@@ -1908,7 +2375,8 @@
     <MESSAGE value="- ElasticSearch site plugin now loads ! Available at http://localhost:9200/_plugin/loganalyzer . However it doesn't do anything yet :) &#10;- Fix issues with GeoIP address resolution for localhost addresses. Also improved error reporting for invalid IP addresses&#10;" />
     <MESSAGE value="- Change ElasticSearch index name to always be loganalyzer-*&#10;- Add some instructions in the README file on how to use it with Kibana&#10;&#10;" />
     <MESSAGE value="- Improve feature README&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Improve feature README&#10;" />
+    <MESSAGE value="- Start implementing better thread reporting" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Start implementing better thread reporting" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
@@ -1952,12 +2420,12 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/lineanalyzers/ExceptionLineAnalyzer.java</url>
-          <line>87</line>
+          <url>file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/exceptions/ExceptionLineAnalyzer.java</url>
+          <line>85</line>
           <properties />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/lineanalyzers/JahiaPerfLineAnalyzer.java</url>
+          <url>file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/performance/JahiaPerfLineAnalyzer.java</url>
           <line>73</line>
           <properties />
           <option name="timeStamp" value="3" />
@@ -1969,19 +2437,25 @@
           <option name="timeStamp" value="12" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/ElasticSearchLogEntryWriter.java</url>
-          <line>46</line>
+          <url>file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/threaddumps/ThreadDumpLineAnalyzer.java</url>
+          <line>162</line>
           <properties />
-          <option name="timeStamp" value="35" />
+          <option name="timeStamp" value="47" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>jar://$MAVEN_REPOSITORY$/org/elasticsearch/elasticsearch/2.2.0/elasticsearch-2.2.0-sources.jar!/org/elasticsearch/plugins/PluginsService.java</url>
-          <line>125</line>
+          <url>file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/threaddumps/ThreadDumpLineAnalyzer.java</url>
+          <line>234</line>
           <properties />
-          <option name="timeStamp" value="37" />
+          <option name="timeStamp" value="52" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/writers/ElasticSearchLogEntryWriter.java</url>
+          <line>50</line>
+          <properties />
+          <option name="timeStamp" value="53" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="39" />
+      <option name="time" value="54" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -2030,171 +2504,6 @@
     </option>
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$MAVEN_REPOSITORY$/org/elasticsearch/elasticsearch/2.2.0/elasticsearch-2.2.0-sources.jar!/org/elasticsearch/bootstrap/JarHell.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="151" column="23" selection-start-line="151" selection-start-column="23" selection-end-line="151" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/elasticsearch/elasticsearch/2.2.0/elasticsearch-2.2.0-sources.jar!/org/elasticsearch/plugins/PluginManagerCliParser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="251" column="35" selection-start-line="251" selection-start-column="35" selection-end-line="251" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/elasticsearch/elasticsearch/2.2.0/elasticsearch-2.2.0-sources.jar!/org/elasticsearch/plugins/PluginManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="210" column="17" selection-start-line="210" selection-start-column="17" selection-end-line="210" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/resources/elasticsearch.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="25" selection-start-line="0" selection-start-column="25" selection-end-line="0" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/elasticsearch/elasticsearch/2.2.0/elasticsearch-2.2.0-sources.jar!/org/elasticsearch/common/settings/Settings.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="91" column="13" selection-start-line="91" selection-start-column="13" selection-end-line="91" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/elasticsearch/elasticsearch/2.2.0/elasticsearch-2.2.0-sources.jar!/org/elasticsearch/node/NodeBuilder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="144" column="22" selection-start-line="144" selection-start-column="22" selection-end-line="144" selection-end-column="22" />
-          <folding>
-            <element signature="e#2351#2352#0" expanded="false" />
-            <element signature="e#2391#2392#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/elasticsearch/elasticsearch/2.2.0/elasticsearch-2.2.0-sources.jar!/org/elasticsearch/node/Node.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="127" column="0" selection-start-line="127" selection-start-column="0" selection-end-line="127" selection-end-column="0" />
-          <folding>
-            <element signature="e#5860#5885#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/src.zip!/java/nio/file/Files.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="409" column="40" selection-start-line="409" selection-start-column="40" selection-end-line="409" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/elasticsearch/elasticsearch/2.2.0/elasticsearch-2.2.0-sources.jar!/org/elasticsearch/plugins/PluginInfo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="83" column="29" selection-start-line="83" selection-start-column="29" selection-end-line="83" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/es-plugins/loganalyzer/src/main/resources/plugin-descriptor.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="60" selection-start-line="10" selection-start-column="60" selection-end-line="10" selection-end-column="60" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-51.25">
-          <caret line="82" column="0" selection-start-line="82" selection-start-column="0" selection-end-line="82" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/es-plugins/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.125">
-          <caret line="5" column="36" selection-start-line="5" selection-start-column="36" selection-end-line="5" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/es-plugins/loganalyzer/node_modules/typescript/bin/tsc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/es-plugins/loganalyzer/webpack.config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="4" column="48" selection-start-line="4" selection-start-column="48" selection-end-line="4" selection-end-column="48" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/es-plugins/loganalyzer/node_modules/es6-shim/es6-shim.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="26" column="14" selection-start-line="26" selection-start-column="14" selection-end-line="26" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/es-plugins/loganalyzer/node_modules/rxjs/Rx.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/es-plugins/loganalyzer/node_modules/rxjs/bundles/Rx.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/es-plugins/loganalyzer/node_modules/angular2/es6/prod/src/testing/shims_for_IE.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="21" column="43" selection-start-line="21" selection-start-column="43" selection-end-line="21" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/es-plugins/loganalyzer/node_modules/.bin/typings">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/es-plugins/loganalyzer/typings.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/es-plugins/loganalyzer/tsconfig.json">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-8.75">
@@ -2230,7 +2539,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/LogEntryWriter.java">
+    <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/writers/LogEntryWriter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
@@ -2246,14 +2555,6 @@
             <element signature="e#13106#13107#0" expanded="false" />
             <element signature="e#13152#13153#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/CSVLogEntryWriter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="30" column="12" selection-start-line="30" selection-start-column="12" selection-end-line="30" selection-end-column="12" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2286,14 +2587,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/HTMLLogEntryWriter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="54" column="30" selection-start-line="54" selection-start-column="30" selection-end-line="54" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/loganalyzer/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-11.875">
@@ -2309,14 +2602,6 @@
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/elasticsearch/elasticsearch/2.2.0/elasticsearch-2.2.0-sources.jar!/org/elasticsearch/plugins/PluginsService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.50282484">
-          <caret line="52" column="24" selection-start-line="52" selection-start-column="24" selection-end-line="52" selection-end-column="24" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2379,44 +2664,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/gui/swing/LogAnalyzerMainDialog.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="29" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-          <folding>
-            <element signature="method#$$$setupUI$$$#0;class#LogAnalyzerMainDialog#0" expanded="false" />
-            <marker date="1458317800000" expanded="true" signature="2814:2820" placeholder="{...}" />
-            <marker date="1458317800000" expanded="false" signature="16814:33413" placeholder="UI Designer generated code" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/lineanalyzers/JahiaPerfLineAnalyzer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="44" column="29" selection-start-line="44" selection-start-column="29" selection-end-line="44" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/ElasticSearchService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="71" column="0" selection-start-line="71" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/ElasticSearchLogEntryWriter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-3.1034484">
@@ -2428,34 +2675,268 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/lineanalyzers/ThreadDumpLineAnalyzer.java">
+    <entry file="jar://$MAVEN_REPOSITORY$/org/elasticsearch/elasticsearch/2.2.0/elasticsearch-2.2.0-sources.jar!/org/elasticsearch/plugins/PluginsService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="160" column="40" selection-start-line="160" selection-start-column="40" selection-end-line="160" selection-end-column="40" />
+          <caret line="138" column="44" selection-start-line="138" selection-start-column="44" selection-end-line="138" selection-end-column="44" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/threaddumps/ThreadInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/JahiaTimeReports.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/ThreadDumpLogEntry.java">
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home/src.zip!/javax/swing/ProgressMonitorInputStream.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="17" column="51" selection-start-line="17" selection-start-column="51" selection-end-line="17" selection-end-column="51" />
+          <caret line="79" column="11" selection-start-line="79" selection-start-column="11" selection-end-line="79" selection-end-column="11" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/ThreadDumpThreadLogEntry.java">
+    <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/LogParser.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+          <caret line="77" column="57" selection-start-line="77" selection-start-column="57" selection-end-line="77" selection-end-column="57" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/Thread.java">
+    <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/core/LineAnalyzer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.25506073">
-          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="21" column="112" selection-start-line="21" selection-start-column="112" selection-end-line="21" selection-end-column="112" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/core/WritingLineAnalyzer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="13" column="3" selection-start-line="13" selection-start-column="3" selection-end-line="13" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/core/DefaultDummyLineAnalyzer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/core/CompositeLineAnalyzer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="10" column="63" selection-start-line="10" selection-start-column="63" selection-end-line="10" selection-end-column="63" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/requestload/RequestLoadLineAnalyzer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="28" column="187" selection-start-line="28" selection-start-column="187" selection-end-line="28" selection-end-column="187" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/LogEntry.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="14" column="12" selection-start-line="14" selection-start-column="12" selection-end-line="14" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/exceptions/ExceptionSummaryLogEntry.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="53" column="65" selection-start-line="53" selection-start-column="65" selection-end-line="53" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/loglevel/StandardDetailsLogEntry.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="93" column="4" selection-start-line="93" selection-start-column="4" selection-end-line="93" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/loglevel/StandardSummaryLogEntry.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="22" column="23" selection-start-line="22" selection-start-column="23" selection-end-line="22" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/threaddumps/ThreadDumpThreadLogEntry.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="39" column="40" selection-start-line="39" selection-start-column="40" selection-end-line="39" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/exceptions/ExceptionDetailsLogEntry.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="98" column="4" selection-start-line="98" selection-start-column="4" selection-end-line="98" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/performance/PerfDetailsLogEntry.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="29" column="41" selection-start-line="29" selection-start-column="41" selection-end-line="29" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/performance/PerfSummaryLogEntry.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="102" column="65" selection-start-line="102" selection-start-column="65" selection-end-line="102" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/writers/CSVLogEntryWriter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="17" column="15" selection-start-line="17" selection-start-column="15" selection-end-line="17" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/writers/HTMLLogEntryWriter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="75" column="0" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/loganalyzer/src/test/java/org/jahia/loganalyzer/LogParserTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="56" column="0" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/resources/loganalyzer_messages.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="3" column="58" selection-start-line="3" selection-start-column="58" selection-end-line="3" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/BaseLogEntry.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="75" column="47" selection-start-line="75" selection-start-column="47" selection-end-line="75" selection-end-column="47" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/writers/ElasticSearchService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="71" column="0" selection-start-line="71" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/writers/ElasticSearchLogEntryWriter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="63" column="31" selection-start-line="63" selection-start-column="31" selection-end-line="63" selection-end-column="31" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/exceptions/ExceptionLineAnalyzer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.0">
+          <caret line="72" column="191" selection-start-line="72" selection-start-column="183" selection-end-line="72" selection-end-column="191" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/performance/JahiaPerfLineAnalyzer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="137" column="165" selection-start-line="137" selection-start-column="165" selection-end-line="137" selection-end-column="165" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/gui/swing/LogAnalyzerMainDialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="609" column="42" selection-start-line="609" selection-start-column="42" selection-end-line="609" selection-end-column="42" />
+          <folding>
+            <element signature="method#$$$setupUI$$$#0;class#LogAnalyzerMainDialog#0" expanded="false" />
+            <element signature="e#33985#33991#0" expanded="true" />
+            <marker date="1458565051000" expanded="false" signature="16767:33366" placeholder="UI Designer generated code" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/threaddumps/ThreadDumpLogEntry.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="58" column="0" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
+          <folding>
+            <element signature="e#693#705#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/threaddumps/ThreadDumpLineAnalyzer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="121" column="0" selection-start-line="121" selection-start-column="0" selection-end-line="121" selection-end-column="0" />
+          <folding>
+            <element signature="e#1669#1688#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/analyzers/loglevel/StandardLogLineAnalyzer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.31932774">
+          <caret line="73" column="33" selection-start-line="73" selection-start-column="33" selection-end-line="73" selection-end-column="33" />
           <folding />
         </state>
       </provider>

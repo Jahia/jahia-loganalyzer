@@ -1,17 +1,21 @@
-package org.jahia.loganalyzer;
+package org.jahia.loganalyzer.writers;
 
 import au.com.bytecode.opencsv.CSVWriter;
 import org.apache.commons.io.IOUtils;
+import org.jahia.loganalyzer.LogEntry;
+import org.jahia.loganalyzer.ResourceUtils;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
  * User: Serge Huber
- * Date: 22 ao�t 2007
+ * Date: 22 aout 2007
  * Time: 12:09:25
  * To change this template use File | Settings | File Templates.
  */
@@ -24,19 +28,20 @@ public class CSVLogEntryWriter implements LogEntryWriter {
     public CSVLogEntryWriter(File csvFile, char separatorChar, LogEntry logEntry) throws IOException {
         FileWriter writer = new FileWriter(csvFile);
         csvWriter = new CSVWriter(writer, separatorChar);
-        String[] columnKeys = logEntry.getColumnKeys();
-        String[] columnNames = new String[columnKeys.length];
-        for (int i=0; i < columnKeys.length; i++) {
-            columnNames[i] = ResourceUtils.getBundleString("org.jahia.loganalyzer.logentry.column.header." + columnKeys[i]);
+        List<String> columnKeys = logEntry.getColumnKeys();
+        List<String> columnNames = new ArrayList<>();
+        for (String columnKey : columnKeys) {
+            columnNames.add(ResourceUtils.getBundleString("org.jahia.loganalyzer.logentry.column.header." + columnKey));
         }
-        csvWriter.writeNext(columnNames);
+        csvWriter.writeNext(columnNames.toArray(new String[columnNames.size()]));
     }
 
     public void write(LogEntry logEntry) {
         if (logEntry == null) {
             return;
         }
-        csvWriter.writeNext(logEntry.toStringArray(dateFormat));
+        List<String> columnStrings = logEntry.toStringList(dateFormat);
+        csvWriter.writeNext(columnStrings.toArray(new String[columnStrings.size()]));
     }
 
     public void close() throws IOException {

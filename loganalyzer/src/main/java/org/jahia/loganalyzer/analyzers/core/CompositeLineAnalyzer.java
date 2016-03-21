@@ -1,5 +1,6 @@
-package org.jahia.loganalyzer.lineanalyzers;
+package org.jahia.loganalyzer.analyzers.core;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.util.Date;
@@ -7,11 +8,10 @@ import java.util.Deque;
 import java.util.List;
 
 /**
- * Created by IntelliJ IDEA.
+ * A line analyzer that delegates to an array of line analyzers
  * User: Serge Huber
  * Date: 8 juil. 2008
  * Time: 10:31:22
- * To change this template use File | Settings | File Templates.
  */
 public class CompositeLineAnalyzer implements LineAnalyzer {
 
@@ -22,9 +22,9 @@ public class CompositeLineAnalyzer implements LineAnalyzer {
         this.lineAnalyzers = lineAnalyzers;        
     }
 
-    public boolean isForThisAnalyzer(String line, String nextLine, String nextNextLine) {
+    public boolean isForThisAnalyzer(String line, String nextLine, String nextNextLine, File file, String jvmIdentifier) {
         for (LineAnalyzer lineAnalyzer : lineAnalyzers) {
-            if (lineAnalyzer.isForThisAnalyzer(line, nextLine, nextNextLine)) {
+            if (lineAnalyzer.isForThisAnalyzer(line, nextLine, nextNextLine, file, jvmIdentifier)) {
                 if (lineAnalyzer != currentlyActiveAnalyzer) {
                     if (currentlyActiveAnalyzer != null) {
                         currentlyActiveAnalyzer.finishPreviousState();
@@ -37,9 +37,9 @@ public class CompositeLineAnalyzer implements LineAnalyzer {
         return false;
     }
 
-    public Date parseLine(String line, String nextLine, String nextNextLine, Deque<String> contextLines, LineNumberReader lineNumberReader, Date lastValidDateParsed) throws IOException {
-        if (isForThisAnalyzer(line, nextLine, nextNextLine)) {
-            return currentlyActiveAnalyzer.parseLine(line, nextLine, nextNextLine, contextLines, lineNumberReader, lastValidDateParsed);
+    public Date parseLine(String line, String nextLine, String nextNextLine, Deque<String> contextLines, LineNumberReader lineNumberReader, Date lastValidDateParsed, File file, String jvmIdentifier) throws IOException {
+        if (isForThisAnalyzer(line, nextLine, nextNextLine, file, jvmIdentifier)) {
+            return currentlyActiveAnalyzer.parseLine(line, nextLine, nextNextLine, contextLines, lineNumberReader, lastValidDateParsed, file, jvmIdentifier);
         }
         return null;
     }

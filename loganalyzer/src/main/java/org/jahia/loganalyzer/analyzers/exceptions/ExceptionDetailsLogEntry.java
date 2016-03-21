@@ -1,7 +1,10 @@
-package org.jahia.loganalyzer;
+package org.jahia.loganalyzer.analyzers.exceptions;
+
+import org.jahia.loganalyzer.BaseLogEntry;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -12,12 +15,16 @@ import java.util.List;
  * Time: 16:26:28
  * To change this template use File | Settings | File Templates.
  */
-public class ExceptionDetailsLogEntry extends AbstractDetailsLogEntry {
+public class ExceptionDetailsLogEntry extends BaseLogEntry {
 
     private String className;
     private String message;
     private List<String> stackTrace = new ArrayList<String>();
     private List<String> contextLines = new ArrayList<String>();
+
+    public ExceptionDetailsLogEntry(long startLineNumber, long endLineNumber, Date timestamp, String jvmIdentifier, String source) {
+        super(startLineNumber, endLineNumber, timestamp, jvmIdentifier, source);
+    }
 
     public String getClassName() {
         return className;
@@ -51,18 +58,12 @@ public class ExceptionDetailsLogEntry extends AbstractDetailsLogEntry {
         this.contextLines = contextLines;
     }
 
-    public String[] toStringArray(DateFormat dateFormat) {
-        String[] result = new String[6];
-        result[0] = Long.toString(getLineNumber());
-        if (getTimestamp() != null) {
-            result[1] = dateFormat.format(getTimestamp());
-        } else {
-            result[1] = "";
-        }
-        result[2] = className;
-        result[3] = message;
-        result[4] = stackTraceToString();
-        result[5] = contextLinesToString();
+    public List<String> toStringList(DateFormat dateFormat) {
+        List<String> result = super.toStringList(dateFormat);
+        result.add(className);
+        result.add(message);
+        result.add(stackTraceToString());
+        result.add(contextLinesToString());
         return result;
     }
 
@@ -85,9 +86,7 @@ public class ExceptionDetailsLogEntry extends AbstractDetailsLogEntry {
     }
 
     public LinkedHashMap<String, Object> getValues() {
-        LinkedHashMap<String, Object> result = new LinkedHashMap<>();
-        result.put("lineNumber", getLineNumber());
-        result.put("timestamp", getTimestamp());
+        LinkedHashMap<String, Object> result = super.getValues();
         result.put("className", className);
         result.put("message", message);
         result.put("stackTrace", stackTrace);
@@ -95,14 +94,9 @@ public class ExceptionDetailsLogEntry extends AbstractDetailsLogEntry {
         return result;
     }
 
-    public String[] getColumnKeys() {
-        LinkedHashMap<String, Object> fakeValues = getValues();
-        List<String> columnKeyList = new ArrayList<String>(fakeValues.keySet());
-        return columnKeyList.toArray(new String[columnKeyList.size()]);
-    }
-
     public String toString() {
         StringBuffer result = new StringBuffer();
+        result.append(super.toString());
         result.append(className);
         result.append(";");
         result.append(message);

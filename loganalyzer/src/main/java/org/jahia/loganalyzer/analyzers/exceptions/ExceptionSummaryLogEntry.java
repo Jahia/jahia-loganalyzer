@@ -1,7 +1,9 @@
-package org.jahia.loganalyzer;
+package org.jahia.loganalyzer.analyzers.exceptions;
+
+import org.jahia.loganalyzer.BaseLogEntry;
 
 import java.text.DateFormat;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -12,10 +14,14 @@ import java.util.List;
  * Time: 14:16:53
  * To change this template use File | Settings | File Templates.
  */
-public class ExceptionSummaryLogEntry implements LogEntry {
+public class ExceptionSummaryLogEntry extends BaseLogEntry {
 
     private long count = 0;
     private ExceptionDetailsLogEntry exceptionDetailsLogEntry;
+
+    public ExceptionSummaryLogEntry(long startLineNumber, long endLineNumber, Date timestamp, String jvmIdentifier, String source) {
+        super(startLineNumber, endLineNumber, timestamp, jvmIdentifier, source);
+    }
 
     public long getCount() {
         return count;
@@ -33,30 +39,24 @@ public class ExceptionSummaryLogEntry implements LogEntry {
         this.exceptionDetailsLogEntry = exceptionDetailsLogEntry;
     }
 
-    public String[] toStringArray(DateFormat dateFormat) {
-        String[] result = new String[5];
-        result[0] = Long.toString(count);
-        result[1] = exceptionDetailsLogEntry.getClassName();
-        result[2] = exceptionDetailsLogEntry.getMessage();
-        result[3] = exceptionDetailsLogEntry.stackTraceToString();
-        result[4] = exceptionDetailsLogEntry.contextLinesToString();
+    public List<String> toStringList(DateFormat dateFormat) {
+        List<String> result = super.toStringList(dateFormat);
+        result.add(Long.toString(count));
+        result.add(exceptionDetailsLogEntry.getClassName());
+        result.add(exceptionDetailsLogEntry.getMessage());
+        result.add(exceptionDetailsLogEntry.stackTraceToString());
+        result.add(exceptionDetailsLogEntry.contextLinesToString());
         return result;
     }
 
     public LinkedHashMap<String, Object> getValues() {
-        LinkedHashMap<String, Object> result = new LinkedHashMap<>();
+        LinkedHashMap<String, Object> result = super.getValues();
         result.put("count", count);
         result.put("className", (exceptionDetailsLogEntry != null ? exceptionDetailsLogEntry.getClassName() : null));
         result.put("message", (exceptionDetailsLogEntry != null ? exceptionDetailsLogEntry.getClassName() : null));
         result.put("stackTrace", (exceptionDetailsLogEntry != null ? exceptionDetailsLogEntry.getStackTrace() : null));
         result.put("contextLines", (exceptionDetailsLogEntry != null ? exceptionDetailsLogEntry.getContextLines() : null));
         return result;
-    }
-
-    public String[] getColumnKeys() {
-        LinkedHashMap<String, Object> fakeValues = getValues();
-        List<String> columnKeyList = new ArrayList<String>(fakeValues.keySet());
-        return columnKeyList.toArray(new String[columnKeyList.size()]);
     }
 
 }

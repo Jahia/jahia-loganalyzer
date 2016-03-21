@@ -1,7 +1,15 @@
 package org.jahia.loganalyzer;
 
-import org.jahia.loganalyzer.lineanalyzers.*;
+import org.jahia.loganalyzer.analyzers.core.CompositeLineAnalyzer;
+import org.jahia.loganalyzer.analyzers.core.DefaultDummyLineAnalyzer;
+import org.jahia.loganalyzer.analyzers.core.LineAnalyzer;
+import org.jahia.loganalyzer.analyzers.exceptions.ExceptionLineAnalyzer;
+import org.jahia.loganalyzer.analyzers.loglevel.StandardLogLineAnalyzer;
+import org.jahia.loganalyzer.analyzers.performance.JahiaPerfLineAnalyzer;
+import org.jahia.loganalyzer.analyzers.threaddumps.ThreadDumpLineAnalyzer;
+import org.jahia.loganalyzer.writers.ElasticSearchService;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.io.Reader;
@@ -56,7 +64,7 @@ public class LogParser {
         lineAnalyzer = new CompositeLineAnalyzer(lineAnalyzers);
     }
 
-    public JahiaTimeReports parse(Reader reader) throws IOException {
+    public JahiaTimeReports parse(Reader reader, File file, String jvmIdentifier) throws IOException {
         JahiaTimeReports timeReports = new JahiaTimeReports();
 
         LineNumberReader lineNumberReader = new LineNumberReader(reader);
@@ -67,7 +75,7 @@ public class LogParser {
         try {
             while (( currentLine != null ) && (nextLine != null)) {
                 nextNextLine = lineNumberReader.readLine();
-                Date lastDateFound = lineAnalyzer.parseLine(currentLine, nextLine, nextNextLine, contextLines, lineNumberReader, lastValidDateParsed);
+                Date lastDateFound = lineAnalyzer.parseLine(currentLine, nextLine, nextNextLine, contextLines, lineNumberReader, lastValidDateParsed, file, jvmIdentifier);
                 if (lastDateFound != null) {
                     lastValidDateParsed = lastDateFound;
                 }

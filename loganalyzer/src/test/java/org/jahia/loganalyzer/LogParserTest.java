@@ -54,7 +54,7 @@ public class LogParserTest extends TestCase {
         logParserConfiguration.setContextMapping("");
         logParserConfiguration.setServletMapping("/PFUE");
         logParser.setLogParserConfiguration(logParserConfiguration);
-        logParser.parse(reader);
+        logParser.parse(reader, inputFile, "jvm");
         logParser.stop();
     }
 }

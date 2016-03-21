@@ -1,9 +1,9 @@
-package org.jahia.loganalyzer.lineanalyzers;
+package org.jahia.loganalyzer.analyzers.exceptions;
 
-import org.jahia.loganalyzer.ExceptionDetailsLogEntry;
-import org.jahia.loganalyzer.ExceptionSummaryLogEntry;
 import org.jahia.loganalyzer.LogParserConfiguration;
+import org.jahia.loganalyzer.analyzers.core.WritingLineAnalyzer;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.util.Date;
@@ -14,11 +14,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by IntelliJ IDEA.
+ * A line analyzer that parses exceptions
+ *
  * User: Serge Huber
  * Date: 8 juil. 2008
  * Time: 11:08:16
- * To change this template use File | Settings | File Templates.
  */
 public class ExceptionLineAnalyzer extends WritingLineAnalyzer {
 
@@ -33,13 +33,13 @@ public class ExceptionLineAnalyzer extends WritingLineAnalyzer {
     private Map<String, ExceptionSummaryLogEntry> exceptionSummaryMap = new HashMap<String, ExceptionSummaryLogEntry>();
 
     public ExceptionLineAnalyzer(LogParserConfiguration logParserConfiguration) throws IOException {
-        super(logParserConfiguration.getExceptionDetailsOutputFile(), logParserConfiguration.getExceptionSummaryOutputFile(), logParserConfiguration.getCsvSeparatorChar(), new ExceptionDetailsLogEntry(), new ExceptionSummaryLogEntry(), logParserConfiguration);
+        super(logParserConfiguration.getExceptionDetailsOutputFile(), logParserConfiguration.getExceptionSummaryOutputFile(), logParserConfiguration.getCsvSeparatorChar(), new ExceptionDetailsLogEntry(0, 0, null, null, ""), new ExceptionSummaryLogEntry(0, 0, null, null, ""), logParserConfiguration);
         secondLinePattern = Pattern.compile(logParserConfiguration.getExceptionSecondLinePattern());
         firstLinePattern = Pattern.compile(logParserConfiguration.getExceptionFirstLinePattern());
         causedByPattern = Pattern.compile(logParserConfiguration.getExceptionCausedByPattern());
     }
 
-    public boolean isForThisAnalyzer(String line, String nextLine, String nextNextLine) {
+    public boolean isForThisAnalyzer(String line, String nextLine, String nextNextLine, File file, String jvmIdentifier) {
         if (inException) {
             Matcher matcher = secondLinePattern.matcher(line);
             if (matcher.matches()) {
@@ -61,18 +61,16 @@ public class ExceptionLineAnalyzer extends WritingLineAnalyzer {
         return false;  
     }
 
-    public Date parseLine(String line, String nextLine, String nextNextLine, Deque<String> contextLines, LineNumberReader lineNumberReader, Date lastValidDateParsed) {
+    public Date parseLine(String line, String nextLine, String nextNextLine, Deque<String> contextLines, LineNumberReader lineNumberReader, Date lastValidDateParsed, File file, String jvmIdentifier) {
         if (!inException) {
             log.trace("Found exception " + line);
             inException = true;
-            currentExceptionDetailsLogEntry = new ExceptionDetailsLogEntry();
             Matcher firstLineMatcher = firstLinePattern.matcher(line);
             if (!firstLineMatcher.matches()) {
                 log.warn("Couldn't parse first line of exception, ignoring. Line "+Integer.toString(lineNumberReader.getLineNumber()-1)+"=" + line);
                 return null;
             }
-            currentExceptionDetailsLogEntry.setLineNumber(lineNumberReader.getLineNumber()-1);
-            currentExceptionDetailsLogEntry.setTimestamp(lastValidDateParsed);
+            currentExceptionDetailsLogEntry = new ExceptionDetailsLogEntry(lineNumberReader.getLineNumber() - 1, lineNumberReader.getLineNumber() - 1, lastValidDateParsed, jvmIdentifier, file.getName());
             currentExceptionDetailsLogEntry.setClassName(firstLineMatcher.group(1));
             currentExceptionDetailsLogEntry.setMessage(firstLineMatcher.group(2));
             currentExceptionDetailsLogEntry.getContextLines().addAll(contextLines);
@@ -100,7 +98,7 @@ public class ExceptionLineAnalyzer extends WritingLineAnalyzer {
         writeDetails(currentExceptionDetailsLogEntry);
         ExceptionSummaryLogEntry exceptionSummaryLogEntry = exceptionSummaryMap.get(currentExceptionDetailsLogEntry.toString());
         if (exceptionSummaryLogEntry == null) {
-            exceptionSummaryLogEntry = new ExceptionSummaryLogEntry();
+            exceptionSummaryLogEntry = new ExceptionSummaryLogEntry(0, 0, null, null, null);
             exceptionSummaryLogEntry.setExceptionLogEntry(currentExceptionDetailsLogEntry);
         }
         exceptionSummaryLogEntry.setCount(exceptionSummaryLogEntry.getCount()+1);

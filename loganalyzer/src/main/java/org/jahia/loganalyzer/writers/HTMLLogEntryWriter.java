@@ -1,13 +1,18 @@
-package org.jahia.loganalyzer;
+package org.jahia.loganalyzer.writers;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringEscapeUtils;
+import org.jahia.loganalyzer.LogEntry;
+import org.jahia.loganalyzer.LogParserConfiguration;
+import org.jahia.loganalyzer.ResourceUtils;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by loom on 01.03.16.
@@ -23,8 +28,8 @@ public class HTMLLogEntryWriter implements LogEntryWriter {
         for (String htmlResourceToCopy : logParserConfiguration.getHtmlResourcesToCopy()) {
             ResourceUtils.copyResourceToFile(htmlResourceToCopy, targetDirectory);
         }
-        String[] columnKeys = logEntry.getColumnKeys();
-        String[] columnNames = new String[columnKeys.length];
+        List<String> columnKeys = logEntry.getColumnKeys();
+        List<String> columnNames = new ArrayList<>();
         try {
             htmlWriter.append("<!DOCTYPE html>");
             htmlWriter.append("<html lang=\"en\">\n");
@@ -64,10 +69,11 @@ public class HTMLLogEntryWriter implements LogEntryWriter {
             htmlWriter.append("    <table class=\"table table-striped laTable\">\n");
             htmlWriter.append("      <thead>\n");
             htmlWriter.append("        <tr>");
-            for (int i=0; i < columnKeys.length; i++) {
-                columnNames[i] = ResourceUtils.getBundleString("org.jahia.loganalyzer.logentry.column.header." + columnKeys[i]);
+            for (String columnKey : columnKeys) {
+                String columnName = ResourceUtils.getBundleString("org.jahia.loganalyzer.logentry.column.header." + columnKey);
+                columnNames.add(columnName);
                 htmlWriter.append("<th data-sortable=\"true\">");
-                htmlWriter.append(StringEscapeUtils.escapeHtml(columnNames[i]));
+                htmlWriter.append(StringEscapeUtils.escapeHtml(columnName));
                 htmlWriter.append("</th>");
             }
             htmlWriter.append("</tr>\n");
@@ -81,7 +87,7 @@ public class HTMLLogEntryWriter implements LogEntryWriter {
     public void write(LogEntry logEntry) {
         try {
             htmlWriter.append("        <tr>");
-            for (String columnValue : logEntry.toStringArray(dateFormat)) {
+            for (String columnValue : logEntry.toStringList(dateFormat)) {
                 htmlWriter.append("<td>");
                 if (columnValue != null && columnValue.contains("\n")) {
                     htmlWriter.append("<pre>");

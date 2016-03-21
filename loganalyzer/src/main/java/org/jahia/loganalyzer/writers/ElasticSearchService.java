@@ -1,4 +1,4 @@
-package org.jahia.loganalyzer;
+package org.jahia.loganalyzer.writers;
 
 import org.elasticsearch.action.bulk.BulkProcessor;
 import org.elasticsearch.action.bulk.BulkRequest;
@@ -6,6 +6,7 @@ import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.node.Node;
 import org.elasticsearch.node.NodeBuilder;
+import org.jahia.loganalyzer.ResourceUtils;
 
 import java.io.File;
 

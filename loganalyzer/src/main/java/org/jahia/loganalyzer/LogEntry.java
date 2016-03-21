@@ -1,20 +1,29 @@
 package org.jahia.loganalyzer;
 
 import java.text.DateFormat;
+import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 /**
- * Created by IntelliJ IDEA.
- * User: Serge Huber
- * Date: 8 juil. 2008
- * Time: 16:06:17
- * To change this template use File | Settings | File Templates.
+ * Common interface for all log entries.
  */
 public interface LogEntry {
 
     LinkedHashMap<String, Object> getValues();
 
-    String[] toStringArray(DateFormat dateFormat);
+    List<String> toStringList(DateFormat dateFormat);
 
-    String[] getColumnKeys();
+    List<String> getColumnKeys();
+
+    String getJvmIdentifier();
+
+    long getStartLineNumber();
+
+    long getEndLineNumber();
+
+    Date getTimestamp();
+
+    String getSource();
+
 }

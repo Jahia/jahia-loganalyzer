@@ -1,5 +1,6 @@
-package org.jahia.loganalyzer.lineanalyzers;
+package org.jahia.loganalyzer.analyzers.core;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.util.Date;
@@ -18,7 +19,7 @@ public interface LineAnalyzer {
      * @param line
      * @return
      */
-    boolean isForThisAnalyzer(String line, String nextLine, String nextNextLine);
+    boolean isForThisAnalyzer(String line, String nextLine, String nextNextLine, File file, String jvmIdentifier);
 
     /**
      * Process the line with the analyzer
@@ -26,7 +27,7 @@ public interface LineAnalyzer {
      * @param reader
      * @throws IOException
      */
-    Date parseLine(String line, String nextLine, String nextNextLine, Deque<String> contextLines, LineNumberReader reader, Date lastValidDateParsed) throws IOException;
+    Date parseLine(String line, String nextLine, String nextNextLine, Deque<String> contextLines, LineNumberReader reader, Date lastValidDateParsed, File file, String jvmIdentifier) throws IOException;
 
     /**
      * This method is called when this analyzer is being switched to another one by the composite analyzer,

@@ -1,6 +1,8 @@
-package org.jahia.loganalyzer.lineanalyzers;
+package org.jahia.loganalyzer.analyzers.core;
 
-import org.jahia.loganalyzer.*;
+import org.jahia.loganalyzer.LogEntry;
+import org.jahia.loganalyzer.LogParserConfiguration;
+import org.jahia.loganalyzer.writers.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,11 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by IntelliJ IDEA.
+ * Abstract class common to all line analyzers that produce output directly (which is almost all of them except the
+ * default and composite ones)
+ *
  * User: Serge Huber
  * Date: 8 juil. 2008
  * Time: 12:30:27
- * To change this template use File | Settings | File Templates.
  */
 public abstract class WritingLineAnalyzer implements LineAnalyzer {
 

@@ -1,14 +1,15 @@
-package org.jahia.loganalyzer;
+package org.jahia.loganalyzer.writers;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
-import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequestBuilder;
 import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsResponse;
 import org.elasticsearch.action.admin.indices.mapping.put.PutMappingRequestBuilder;
 import org.elasticsearch.action.admin.indices.mapping.put.PutMappingResponse;
 import org.elasticsearch.action.bulk.BulkProcessor;
 import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.client.Client;
+import org.jahia.loganalyzer.LogEntry;
+import org.jahia.loganalyzer.LogParserConfiguration;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,9 +45,9 @@ public class ElasticSearchLogEntryWriter implements LogEntryWriter {
 
         final IndicesExistsResponse res = client.admin().indices().prepareExists(indexName).execute().actionGet();
         if (res.isExists()) {
-            System.err.println("WARNING: Deleting old index instance: " + indexName);
-            final DeleteIndexRequestBuilder delIdx = client.admin().indices().prepareDelete(indexName);
-            delIdx.execute().actionGet();
+            //final DeleteIndexRequestBuilder delIdx = client.admin().indices().prepareDelete(indexName);
+            // delIdx.execute().actionGet();
+            new Throwable("WARNING: " + indexName + " already exists, this normally shouldn't happen !").printStackTrace();
         } else {
             client.admin().indices().prepareCreate(indexName).get();
         }
@@ -103,9 +104,8 @@ public class ElasticSearchLogEntryWriter implements LogEntryWriter {
         }
         // this is a hack to get around issue : https://github.com/elastic/kibana/issues/5684
         json.put("logType", typeName);
-        if (logEntry instanceof TimestampedLogEntry) {
-            TimestampedLogEntry timestampedLogEntry = (TimestampedLogEntry) logEntry;
-            Date timestamp = timestampedLogEntry.getTimestamp();
+        if (logEntry.getTimestamp() != null) {
+            Date timestamp = logEntry.getTimestamp();
             if (timestamp != null) {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 indexTimestampSuffix = "-" + dateFormat.format(timestamp);

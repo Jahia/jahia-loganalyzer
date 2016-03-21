@@ -3,6 +3,7 @@ package org.jahia.loganalyzer.gui.swing;
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.looks.plastic.PlasticXPLookAndFeel;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -15,10 +16,7 @@ import java.io.*;
 import java.net.JarURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
@@ -602,18 +600,30 @@ public class LogAnalyzerMainDialog extends JDialog {
                 if (!inputFile.exists()) {
                     return;
                 }
+                String jvmIdentifier = "jvm";
                 if (inputFile.isDirectory()) {
-                    File[] files = inputFile.listFiles();
+
+                    SortedSet<File> sortedFiles = new TreeSet<File>(FileUtils.listFiles(inputFile, null, true));
                     LogParser logParser = new LogParser();
                     logParser.setLogParserConfiguration(logParserConfiguration);
-                    for (File file : files) {
+                    for (File file : sortedFiles) {
+                        String filePath = file.getPath();
+                        int jvmIdentifierPos = filePath.indexOf("jvm-");
+                        if (jvmIdentifierPos >= 0) {
+                            int fileSeparatorPos = filePath.indexOf(File.separator, jvmIdentifierPos);
+                            if (fileSeparatorPos >= 0) {
+                                jvmIdentifier = filePath.substring(jvmIdentifierPos + "jvm-".length(), fileSeparatorPos);
+                            } else {
+                                jvmIdentifier = filePath.substring(jvmIdentifierPos + "jvm-".length());
+                            }
+                        }
                         InputStream in = new BufferedInputStream(
                                 new ProgressMonitorInputStream(
                                         LogAnalyzerMainDialog.this,
                                         "Reading " + file,
                                         new FileInputStream(file)));
                         InputStreamReader reader = new InputStreamReader(in);
-                        logParser.parse(reader);
+                        logParser.parse(reader, file, jvmIdentifier);
                         in.close();
                     }
                     logParser.stop();
@@ -626,7 +636,7 @@ public class LogAnalyzerMainDialog extends JDialog {
                     InputStreamReader reader = new InputStreamReader(in);
                     LogParser logParser = new LogParser();
                     logParser.setLogParserConfiguration(logParserConfiguration);
-                    logParser.parse(reader);
+                    logParser.parse(reader, logParserConfiguration.getInputFile(), jvmIdentifier);
                     in.close();
                     logParser.stop();
                 }

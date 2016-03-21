@@ -1,4 +1,4 @@
-package org.jahia.loganalyzer.lineanalyzers;
+package org.jahia.loganalyzer.analyzers.performance;
 
 import com.maxmind.db.CHMCache;
 import com.maxmind.geoip2.DatabaseReader;
@@ -6,9 +6,9 @@ import com.maxmind.geoip2.exception.GeoIp2Exception;
 import com.maxmind.geoip2.model.CityResponse;
 import com.maxmind.geoip2.record.*;
 import org.jahia.loganalyzer.LogParserConfiguration;
-import org.jahia.loganalyzer.PerfDetailsLogEntry;
-import org.jahia.loganalyzer.PerfSummaryLogEntry;
+import org.jahia.loganalyzer.analyzers.core.WritingLineAnalyzer;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.LineNumberReader;
@@ -22,11 +22,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by IntelliJ IDEA.
+ * A line analyzer that parses DX's performance line to extract performance and other interesting request data such as
+ * sessionIDs, IP Adresses, etc. It can also use the MaxMind GeoIP database to resolve IP addresses against the GeoIP
+ * data
  * User: Serge Huber
- * Date: 22 ao�t 2007
+ * Date: 22 aout 2007
  * Time: 12:49:15
- * To change this template use File | Settings | File Templates.
  */
 public class JahiaPerfLineAnalyzer extends WritingLineAnalyzer {
 
@@ -43,7 +44,7 @@ public class JahiaPerfLineAnalyzer extends WritingLineAnalyzer {
      *
      */
     public JahiaPerfLineAnalyzer(LogParserConfiguration logParserConfiguration) throws IOException {
-        super(logParserConfiguration.getPerfDetailsOutputFile(), logParserConfiguration.getPerfSummaryOutputFile(), logParserConfiguration.getCsvSeparatorChar(), new PerfDetailsLogEntry(), new PerfSummaryLogEntry(), logParserConfiguration);
+        super(logParserConfiguration.getPerfDetailsOutputFile(), logParserConfiguration.getPerfSummaryOutputFile(), logParserConfiguration.getCsvSeparatorChar(), new PerfDetailsLogEntry(0, 0, null, null, null), new PerfSummaryLogEntry(0, 0, null, null, null), logParserConfiguration);
         if (logParserConfiguration.getPatternList().size() > 0) {
             linePattern = Pattern.compile((String)logParserConfiguration.getPatternList().get(0));
         } else {
@@ -59,14 +60,13 @@ public class JahiaPerfLineAnalyzer extends WritingLineAnalyzer {
         }
     }
 
-    public boolean isForThisAnalyzer(String line, String nextLine, String nextNextLine) {
+    public boolean isForThisAnalyzer(String line, String nextLine, String nextNextLine, File file, String jvmIdentifier) {
         Matcher matcher = linePattern.matcher(line);
         boolean matches = matcher.matches();
         return matches;
     }
 
-    public Date parseLine(String line, String nextLine, String nextNextLine, Deque<String> contextLines, LineNumberReader lineNumberReader, Date lastValidDateParsed) {
-        PerfDetailsLogEntry detailsLogEntry = new PerfDetailsLogEntry();
+    public Date parseLine(String line, String nextLine, String nextNextLine, Deque<String> contextLines, LineNumberReader lineNumberReader, Date lastValidDateParsed, File file, String jvmIdentifier) {
 
         Matcher matcher = linePattern.matcher(line);
         boolean matches = matcher.matches();
@@ -78,6 +78,15 @@ public class JahiaPerfLineAnalyzer extends WritingLineAnalyzer {
         String esiGroup = matcher.group(3);
         String userGroup = matcher.group(4);
         String ipAddressGroup = matcher.group(5);
+        String sessionIDGroup = matcher.group(6);
+        String processingTimeGroup = matcher.group(7);
+        Date parsedDate = null;
+        try {
+            parsedDate = dateFormat.parse(dateGroup);
+        } catch (ParseException e) {
+            log.error("Error parsing date format in line " + line, e); 
+        }
+        PerfDetailsLogEntry detailsLogEntry = new PerfDetailsLogEntry(lineNumberReader.getLineNumber() - 1, lineNumberReader.getLineNumber() - 1, parsedDate, jvmIdentifier, file.getName());
         if (ipAddressGroup != null &&
                 databaseReader != null &&
                 !"127.0.0.1".equals(ipAddressGroup) &&
@@ -106,15 +115,6 @@ public class JahiaPerfLineAnalyzer extends WritingLineAnalyzer {
             }
 
         }
-        String sessionIDGroup = matcher.group(6);
-        String processingTimeGroup = matcher.group(7);
-        detailsLogEntry.setLineNumber(lineNumberReader.getLineNumber()-1);
-        try {
-            Date parsedDate = dateFormat.parse(dateGroup);
-            detailsLogEntry.setTimestamp(parsedDate);
-        } catch (ParseException e) {
-            log.error("Error parsing date format in line " + line, e); 
-        }
         processURL(urlGroup, detailsLogEntry, line);
         detailsLogEntry.setUrl(urlGroup);
         detailsLogEntry.setEsi(esiGroup);
@@ -135,7 +135,7 @@ public class JahiaPerfLineAnalyzer extends WritingLineAnalyzer {
         String pageKey = Integer.toString(detailsLogEntry.getPid()) + "-" + detailsLogEntry.getUrlKey();
         PerfSummaryLogEntry perfSummaryLogEntry = perfSummary.get(pageKey);
         if (perfSummaryLogEntry == null) {
-            perfSummaryLogEntry = new PerfSummaryLogEntry();
+            perfSummaryLogEntry = new PerfSummaryLogEntry(lineNumberReader.getLineNumber() - 1, lineNumberReader.getLineNumber() - 1, parsedDate, jvmIdentifier, file.getName());
             perfSummaryLogEntry.setPageID(detailsLogEntry.getPid());
             perfSummaryLogEntry.setUrlKey(detailsLogEntry.getUrlKey());
             perfSummaryLogEntry.setUrl(detailsLogEntry.getUrl());

@@ -1,7 +1,9 @@
-package org.jahia.loganalyzer;
+package org.jahia.loganalyzer.analyzers.performance;
+
+import org.jahia.loganalyzer.BaseLogEntry;
 
 import java.text.DateFormat;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -12,7 +14,7 @@ import java.util.List;
  * Time: 13:44:45
  * To change this template use File | Settings | File Templates.
  */
-public class PerfSummaryLogEntry implements LogEntry {
+public class PerfSummaryLogEntry extends BaseLogEntry {
 
     private int pageID;
     private String urlKey;
@@ -22,9 +24,10 @@ public class PerfSummaryLogEntry implements LogEntry {
     private long pageHits;
     private String url;
 
-    public PerfSummaryLogEntry() {
-        
+    public PerfSummaryLogEntry(long startLineNumber, long endLineNumber, Date timestamp, String jvmIdentifier, String source) {
+        super(startLineNumber, endLineNumber, timestamp, jvmIdentifier, source);
     }
+
 
     public int getPageID() {
         return pageID;
@@ -82,21 +85,21 @@ public class PerfSummaryLogEntry implements LogEntry {
         this.url = url;
     }
 
-    public String[] toStringArray(DateFormat dateFormat) {
-        String[] result = new String[7];
-        result[0] = Integer.toString(pageID);
-        result[1] = urlKey;
+    public List<String> toStringList(DateFormat dateFormat) {
+        List<String> result = super.toStringList(dateFormat);
+        result.add(Integer.toString(pageID));
+        result.add(urlKey);
         averagePageTime = cumulatedPageTime / pageHits;
-        result[2] = Double.toString(averagePageTime);
-        result[3] = Long.toString(maxPageTime);
-        result[4] = Long.toString(cumulatedPageTime);
-        result[5] = Long.toString(pageHits);
-        result[6] = url;
+        result.add(Double.toString(averagePageTime));
+        result.add(Long.toString(maxPageTime));
+        result.add(Long.toString(cumulatedPageTime));
+        result.add(Long.toString(pageHits));
+        result.add(url);
         return result;
     }
 
     public LinkedHashMap<String, Object> getValues() {
-        LinkedHashMap<String, Object> result = new LinkedHashMap<>();
+        LinkedHashMap<String, Object> result = super.getValues();
         result.put("pageId", pageID);
         result.put("urlKey", urlKey);
         if (pageHits != 0) {
@@ -110,12 +113,6 @@ public class PerfSummaryLogEntry implements LogEntry {
         result.put("pageHits", pageHits);
         result.put("url", url);
         return result;
-    }
-
-    public String[] getColumnKeys() {
-        LinkedHashMap<String, Object> fakeValues = getValues();
-        List<String> columnKeyList = new ArrayList<String>(fakeValues.keySet());
-        return columnKeyList.toArray(new String[columnKeyList.size()]);
     }
 
 }

@@ -1,7 +1,9 @@
-package org.jahia.loganalyzer;
+package org.jahia.loganalyzer.analyzers.loglevel;
+
+import org.jahia.loganalyzer.BaseLogEntry;
 
 import java.text.DateFormat;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -12,7 +14,7 @@ import java.util.List;
  * Time: 14:14:44
  * To change this template use File | Settings | File Templates.
  */
-public class StandardDetailsLogEntry extends AbstractDetailsLogEntry {
+public class StandardDetailsLogEntry extends BaseLogEntry {
 
     private String[] levels = { "trace", "debug", "info", "warn", "error", "fatal" };
 
@@ -20,6 +22,10 @@ public class StandardDetailsLogEntry extends AbstractDetailsLogEntry {
     private int levelNumber = -1;
     private String className;
     private String message;
+
+    public StandardDetailsLogEntry(long startLineNumber, long endLineNumber, Date timestamp, String jvmIdentifier, String source) {
+        super(startLineNumber, endLineNumber, timestamp, jvmIdentifier, source);
+    }
 
     public String getLevel() {
         return level;
@@ -67,32 +73,22 @@ public class StandardDetailsLogEntry extends AbstractDetailsLogEntry {
         this.message = message;
     }
 
-    public String[] toStringArray(DateFormat dateFormat) {
-        String[] result = new String[6];
-        result[0] = Long.toString(getLineNumber());
-        result[1] = dateFormat.format(getTimestamp());
-        result[2] = level;
-        result[3] = Integer.toString(levelNumber);
-        result[4] = className;
-        result[5] = message;
+    public List<String> toStringList(DateFormat dateFormat) {
+        List<String> result = super.toStringList(dateFormat);
+        result.add(level);
+        result.add(Integer.toString(levelNumber));
+        result.add(className);
+        result.add(message);
         return result;
     }
 
     public LinkedHashMap<String, Object> getValues() {
-        LinkedHashMap<String, Object> result = new LinkedHashMap<>();
-        result.put("lineNumber", getLineNumber());
-        result.put("timestamp", getTimestamp());
+        LinkedHashMap<String, Object> result = super.getValues();
         result.put("logLevel", level);
         result.put("logLevelNumber", levelNumber);
         result.put("className", className);
         result.put("message", message);
         return result;
-    }
-
-    public String[] getColumnKeys() {
-        LinkedHashMap<String, Object> fakeValues = getValues();
-        List<String> columnKeyList = new ArrayList<String>(fakeValues.keySet());
-        return columnKeyList.toArray(new String[columnKeyList.size()]);
     }
 
 }

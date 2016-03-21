@@ -1,10 +1,11 @@
-package org.jahia.loganalyzer;
+package org.jahia.loganalyzer.writers;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.io.IOUtils;
+import org.jahia.loganalyzer.LogEntry;
 
 import java.io.File;
 import java.io.FileWriter;
