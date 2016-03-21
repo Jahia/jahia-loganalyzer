@@ -6,11 +6,10 @@ import java.text.DateFormat;
 import java.util.*;
 
 /**
- * Created by IntelliJ IDEA.
+ * A single request line parsed from a Jahia DX log
  * User: Serge Huber
- * Date: 22 aout 2007
+ * Date: August 22nd, 2007
  * Time: 09:19:24
- * To change this template use File | Settings | File Templates.
  */
 public class PerfDetailsLogEntry extends BaseLogEntry {
     private int pid = -1;

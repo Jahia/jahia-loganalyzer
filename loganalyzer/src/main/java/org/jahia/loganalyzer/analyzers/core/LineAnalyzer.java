@@ -7,11 +7,10 @@ import java.util.Date;
 import java.util.Deque;
 
 /**
- * Created by IntelliJ IDEA.
+ * Common interface for all line analyzer implementations
  * User: Serge Huber
- * Date: 22 ao�t 2007
+ * Date: August 22th, 2007
  * Time: 12:51:57
- * To change this template use File | Settings | File Templates.
  */
 public interface LineAnalyzer {
     /**

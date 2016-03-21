@@ -8,11 +8,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
- * Created by IntelliJ IDEA.
+ * A standard log entry that is above a specified minimum log level
  * User: Serge Huber
- * Date: 9 juil. 2008
+ * Date: July 9th, 2008
  * Time: 14:14:44
- * To change this template use File | Settings | File Templates.
  */
 public class StandardDetailsLogEntry extends BaseLogEntry {
 

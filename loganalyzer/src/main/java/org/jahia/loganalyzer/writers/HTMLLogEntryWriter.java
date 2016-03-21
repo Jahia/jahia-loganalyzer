@@ -15,7 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by loom on 01.03.16.
+ * A log writer that output to an HTML file (along with required associated resources such as CSS, JavaScript,
+ * etc...)
  */
 public class HTMLLogEntryWriter implements LogEntryWriter {
 

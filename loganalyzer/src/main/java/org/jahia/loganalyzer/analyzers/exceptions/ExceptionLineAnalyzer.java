@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
  * A line analyzer that parses exceptions
  *
  * User: Serge Huber
- * Date: 8 juil. 2008
+ * Date: July 8th, 2008
  * Time: 11:08:16
  */
 public class ExceptionLineAnalyzer extends WritingLineAnalyzer {

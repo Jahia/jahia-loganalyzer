@@ -11,7 +11,7 @@ import org.jahia.loganalyzer.ResourceUtils;
 import java.io.File;
 
 /**
- * Created by loom on 11.03.16.
+ * An embedded ElasticSearch installation
  */
 public class ElasticSearchService {
 

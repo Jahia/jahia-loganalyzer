@@ -21,7 +21,6 @@ import java.util.regex.Pattern;
  * User: Serge Huber
  * Date: 9 juil. 2008
  * Time: 10:32:06
- * To change this template use File | Settings | File Templates.
  */
 public class StandardLogLineAnalyzer extends WritingLineAnalyzer {
 

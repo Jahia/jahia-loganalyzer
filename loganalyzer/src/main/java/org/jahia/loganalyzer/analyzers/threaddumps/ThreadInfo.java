@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by loom on 21.03.16.
+ * Represents a thread parseed from a Thread Dump
  */
 public class ThreadInfo {
 

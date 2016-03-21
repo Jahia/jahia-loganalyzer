@@ -5,11 +5,10 @@ import org.jahia.loganalyzer.LogEntry;
 import java.io.IOException;
 
 /**
- * Created by IntelliJ IDEA.
+ * Common interface for all log entry writers
  * User: Serge Huber
- * Date: 22 ao�t 2007
+ * Date: August 22nd, 2007
  * Time: 12:08:37
- * To change this template use File | Settings | File Templates.
  */
 public interface LogEntryWriter {
     void write(LogEntry logEntry);

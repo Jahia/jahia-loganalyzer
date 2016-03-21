@@ -14,7 +14,7 @@ import java.util.List;
  * default and composite ones)
  *
  * User: Serge Huber
- * Date: 8 juil. 2008
+ * Date: July 8th, 2008
  * Time: 12:30:27
  */
 public abstract class WritingLineAnalyzer implements LineAnalyzer {

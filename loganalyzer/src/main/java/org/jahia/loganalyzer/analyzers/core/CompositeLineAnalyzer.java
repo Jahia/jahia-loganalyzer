@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * A line analyzer that delegates to an array of line analyzers
  * User: Serge Huber
- * Date: 8 juil. 2008
+ * Date: July 8th, 2008
  * Time: 10:31:22
  */
 public class CompositeLineAnalyzer implements LineAnalyzer {

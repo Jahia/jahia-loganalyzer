@@ -15,7 +15,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Created by loom on 08.03.16.
+ * A log writer that output to JSON files
  */
 public class JSONLogEntryWriter implements LogEntryWriter {
 

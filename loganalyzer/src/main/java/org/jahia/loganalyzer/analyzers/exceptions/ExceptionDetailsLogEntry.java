@@ -9,11 +9,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
- * Created by IntelliJ IDEA.
+ * Represents an Exception parsed from a log
  * User: Serge Huber
- * Date: 8 juil. 2008
+ * Date: July 8th, 2008
  * Time: 16:26:28
- * To change this template use File | Settings | File Templates.
  */
 public class ExceptionDetailsLogEntry extends BaseLogEntry {
 

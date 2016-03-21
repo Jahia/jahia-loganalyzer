@@ -9,11 +9,10 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by IntelliJ IDEA.
+ * Global configuration for the Log Analyzer application
  * User: Serge Huber
- * Date: 22 ao�t 2007
+ * Date: August 22nd, 2007
  * Time: 11:55:39
- * To change this template use File | Settings | File Templates.
  */
 public class LogParserConfiguration {
 

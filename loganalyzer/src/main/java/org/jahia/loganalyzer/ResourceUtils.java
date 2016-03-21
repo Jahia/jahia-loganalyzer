@@ -10,7 +10,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 /**
- * Created by loom on 18.03.16.
+ * Various static utilities to make dealing with resources bundles and files a little easier.
  */
 public class ResourceUtils {
 

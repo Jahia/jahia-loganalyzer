@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
  * sessionIDs, IP Adresses, etc. It can also use the MaxMind GeoIP database to resolve IP addresses against the GeoIP
  * data
  * User: Serge Huber
- * Date: 22 aout 2007
+ * Date: August 22nd, 2007
  * Time: 12:49:15
  */
 public class JahiaPerfLineAnalyzer extends WritingLineAnalyzer {

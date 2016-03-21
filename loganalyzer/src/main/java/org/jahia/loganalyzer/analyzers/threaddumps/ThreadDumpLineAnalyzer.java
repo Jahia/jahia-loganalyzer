@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 /**
  * A log analyzer that parses Thread dumps from logs
  * User: Serge Huber
- * Date: 8 juil. 2008
+ * Date: July 8th, 2008
  * Time: 11:07:20
  */
 public class ThreadDumpLineAnalyzer extends WritingLineAnalyzer {

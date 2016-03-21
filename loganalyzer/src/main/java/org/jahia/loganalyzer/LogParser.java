@@ -16,11 +16,10 @@ import java.io.Reader;
 import java.util.*;
 
 /**
- * Created by IntelliJ IDEA.
+ * This class contains the actual log file parser.
  * User: Serge Huber
- * Date: 22 ao�t 2007
+ * Date: August 22nd, 2007
  * Time: 11:04:18
- * To change this template use File | Settings | File Templates.
  */
 public class LogParser {
 
@@ -64,9 +63,7 @@ public class LogParser {
         lineAnalyzer = new CompositeLineAnalyzer(lineAnalyzers);
     }
 
-    public JahiaTimeReports parse(Reader reader, File file, String jvmIdentifier) throws IOException {
-        JahiaTimeReports timeReports = new JahiaTimeReports();
-
+    public void parse(Reader reader, File file, String jvmIdentifier) throws IOException {
         LineNumberReader lineNumberReader = new LineNumberReader(reader);
 
         String currentLine = lineNumberReader.readLine();
@@ -91,7 +88,6 @@ public class LogParser {
             log.error("Error on line " + Integer.toString(lineNumberReader.getLineNumber()) + ": " + currentLine );
             throw ioe;
         }
-        return timeReports;
     }
 
     public void stop() throws IOException {

@@ -11,7 +11,7 @@ import java.util.Deque;
  * aren't picked up by any other line analyzer
  *
  * User: Serge Huber
- * Date: 8 juil. 2008
+ * Date: July 8th, 2008
  * Time: 11:16:57
  */
 public class DefaultDummyLineAnalyzer implements LineAnalyzer {

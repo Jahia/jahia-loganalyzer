@@ -8,11 +8,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
- * Created by IntelliJ IDEA.
+ * A summary of all "standard" log entries parsed in the logs
  * User: Serge Huber
- * Date: 14 juil. 2008
+ * Date: July 14th, 2008
  * Time: 11:59:08
- * To change this template use File | Settings | File Templates.
  */
 public class StandardSummaryLogEntry extends BaseLogEntry {
 

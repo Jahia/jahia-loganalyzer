@@ -19,7 +19,7 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * Created by loom on 11.03.16.
+ * A log entry writer that output to an ElasticSearch service
  */
 public class ElasticSearchLogEntryWriter implements LogEntryWriter {
 

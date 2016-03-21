@@ -13,11 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by IntelliJ IDEA.
+ * A log writer that outputs to a CSV file
  * User: Serge Huber
- * Date: 22 aout 2007
+ * Date: August 22nd, 2007
  * Time: 12:09:25
- * To change this template use File | Settings | File Templates.
  */
 public class CSVLogEntryWriter implements LogEntryWriter {
 

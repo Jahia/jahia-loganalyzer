@@ -8,11 +8,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
- * Created by IntelliJ IDEA.
+ * A summary of all the exceptions encountered in all logs
  * User: Serge Huber
- * Date: 10 juil. 2008
+ * Date: July 10th, 2008
  * Time: 14:16:53
- * To change this template use File | Settings | File Templates.
  */
 public class ExceptionSummaryLogEntry extends BaseLogEntry {
 
