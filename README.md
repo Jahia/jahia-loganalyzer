@@ -4,7 +4,7 @@ Jahia Log Analyzer Tool
 DISCLAIMER
 --------------------------------------------------------------------------------
 This tool is provided without any guarantees, but isn't risky at all because all 
-it does is parse a log file :)
+it does is parse log files :)
 
 This product includes GeoLite2 data created by MaxMind, available from
 <a href="http://www.maxmind.com">http://www.maxmind.com</a>.

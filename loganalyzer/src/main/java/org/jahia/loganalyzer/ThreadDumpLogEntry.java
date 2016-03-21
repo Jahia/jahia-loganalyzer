@@ -15,6 +15,7 @@ public class ThreadDumpLogEntry implements TimestampedLogEntry {
     private Map<String,String> threadNames = new TreeMap<String,String>();
     private String newThreadsList;
     private String deadThreadsList;
+    private List<String> locks = new ArrayList<>();
 
     public ThreadDumpLogEntry() {
         
