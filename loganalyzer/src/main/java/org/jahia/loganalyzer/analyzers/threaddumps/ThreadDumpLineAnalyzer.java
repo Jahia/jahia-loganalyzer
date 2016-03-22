@@ -255,7 +255,10 @@ public class ThreadDumpLineAnalyzer extends WritingLineAnalyzer {
             if (threadDumpThreadLogEntry != null) {
                 completeLastThread();
             }
-            log.info("Found " + currentThreadDumpLogEntry.getThreadDumpLogEntries().size() + " threads in thread dump, stuck=" + currentThreadDumpLogEntry.getStuckThreads().size() + ".");
+            log.info("Found " + currentThreadDumpLogEntry.getThreadDumpLogEntries().size() +
+                    " threads in thread dump for jvm=" + currentThreadDumpLogEntry.getJvmIdentifier() +
+                    " source=" + currentThreadDumpLogEntry.getSource() +
+                    " stuck=" + currentThreadDumpLogEntry.getStuckThreads().size() + ".");
             currentThreadDumpLogEntry.setThreadDumpNumber(threadDumpCount);
             currentThreadDumpLogEntry.computeDifferences(lastThreadDumpLogEntry);
             writeSummary(currentThreadDumpLogEntry);

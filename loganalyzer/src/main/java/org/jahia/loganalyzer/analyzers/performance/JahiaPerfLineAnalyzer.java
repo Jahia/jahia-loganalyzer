@@ -45,7 +45,7 @@ public class JahiaPerfLineAnalyzer extends WritingLineAnalyzer {
      */
     public JahiaPerfLineAnalyzer(LogParserConfiguration logParserConfiguration) throws IOException {
         super(logParserConfiguration.getPerfDetailsOutputFile(), logParserConfiguration.getPerfSummaryOutputFile(), logParserConfiguration.getCsvSeparatorChar(), new PerfDetailsLogEntry(0, 0, null, null, null), new PerfSummaryLogEntry(0, 0, null, null, null), logParserConfiguration);
-        if (logParserConfiguration.getPatternList().size() > 0) {
+        if (logParserConfiguration.getPatternList() != null && logParserConfiguration.getPatternList().size() > 0) {
             linePattern = Pattern.compile((String)logParserConfiguration.getPatternList().get(0));
         } else {
             linePattern = Pattern.compile(logParserConfiguration.getPerfMatchingPattern());
@@ -90,7 +90,9 @@ public class JahiaPerfLineAnalyzer extends WritingLineAnalyzer {
         if (ipAddressGroup != null &&
                 databaseReader != null &&
                 !"127.0.0.1".equals(ipAddressGroup) &&
-                !"localhost".equals(ipAddressGroup)) {
+                !"localhost".equals(ipAddressGroup) &&
+                !ipAddressGroup.startsWith("10.") &&
+                !ipAddressGroup.startsWith("176.")) {
             InetAddress ipAddress = null;
             try {
                 ipAddress = InetAddress.getByName(ipAddressGroup);
