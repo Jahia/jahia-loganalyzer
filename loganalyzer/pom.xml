@@ -120,7 +120,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>org.jahia.loganalyzer.gui.swing.LogAnalyzerMainDialog</mainClass>
+                            <mainClass>org.jahia.loganalyzer.JahiaLogAnalyzer</mainClass>
                             <addClasspath>true</addClasspath>
                             <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
                             <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
@@ -178,7 +178,7 @@
                                         implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>org.jahia.loganalyzer.gui.swing.LogAnalyzerMainDialog</mainClass>
+                                    <mainClass>org.jahia.loganalyzer.JahiaLogAnalyzer</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>

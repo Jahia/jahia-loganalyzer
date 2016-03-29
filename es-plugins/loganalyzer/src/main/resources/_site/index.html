@@ -1,8 +1,12 @@
 <html>
 <head>
-    <title>Angular 2 QuickStart</title>
+    <title>Jahia Log Analyzer</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link rel="stylesheet" href="css/styles.css">
+
+    <!-- We use dynamic base URL generation since during development we don't deploy changes -->
+    <script>document.write('<base href="' + document.location + '" />');</script>
 
     <!-- 1. Load libraries -->
     <!-- IE required polyfills, in this exact order -->
@@ -14,6 +18,8 @@
     <script src="node_modules/systemjs/dist/system.src.js"></script>
     <script src="node_modules/rxjs/bundles/Rx.js"></script>
     <script src="node_modules/angular2/bundles/angular2.dev.js"></script>
+    <script src="node_modules/angular2/bundles/router.dev.js"></script>
+    <script src="node_modules/angular2/bundles/http.dev.js"></script>
 
     <!-- 2. Configure SystemJS -->
     <script>

@@ -134,7 +134,8 @@ public class LogParserConfiguration {
         try {
             baseName = FilenameUtils.getBaseName(inputFile.getCanonicalPath());
             if (inputFile.isDirectory()) {
-                outputDirectory = inputFile;
+                outputDirectory = new File(inputFile, "loganalyzer-results");
+                outputDirectory.mkdirs();
             } else {
                 outputDirectory = new File(inputFile.getParentFile(), baseName + "-loganalyzer-results");
                 outputDirectory.mkdirs();

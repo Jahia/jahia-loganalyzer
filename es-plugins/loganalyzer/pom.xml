@@ -126,6 +126,11 @@
                                       todir="${project.build.directory}/classes/_site/node_modules/rxjs/bundles"/>
                                 <copy file="${project.basedir}/node_modules/angular2/bundles/angular2.dev.js"
                                       todir="${project.build.directory}/classes/_site/node_modules/angular2/bundles"/>
+                                <copy file="${project.basedir}/node_modules/angular2/bundles/router.dev.js"
+                                      todir="${project.build.directory}/classes/_site/node_modules/angular2/bundles"/>
+                                <copy file="${project.basedir}/node_modules/angular2/bundles/http.dev.js"
+                                      todir="${project.build.directory}/classes/_site/node_modules/angular2/bundles"/>
+
                             </target>
                         </configuration>
                     </execution>

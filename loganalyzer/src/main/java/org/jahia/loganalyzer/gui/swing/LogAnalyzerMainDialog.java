@@ -159,7 +159,8 @@ public class LogAnalyzerMainDialog extends JDialog {
 
                     File targetDirectory = null;
                     if (file.isDirectory()) {
-                        targetDirectory = file;
+                        targetDirectory = new File(file, "loganalyzer-results");
+                        targetDirectory.mkdirs();
                     } else {
                         targetDirectory = new File(file.getParentFile(), baseName + "-loganalyzer-results");
                         targetDirectory.mkdirs();
