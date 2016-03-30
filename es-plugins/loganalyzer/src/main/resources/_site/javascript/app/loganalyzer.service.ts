@@ -11,30 +11,27 @@ export class LogAnalyzerService {
 
     private _logAnalyzerUrl = 'http://localhost:9200/loganalyzer-*';  // URL to web api
 
-    getPerformance() {
-
-        return this.http.get(this._logAnalyzerUrl + '/performance-details/_search?q=*&sort=timestamp:desc&from=0&size=10')
+    getPerformance(sort = 'timestamp:desc', offset = 0, size = 10) {
+        return this.http.get(this._logAnalyzerUrl + '/performance-details/_search?q=*&sort=' + sort + '&from=' + offset + '&size=' + size)
             .map(res => <LogSearchResult> res.json())
             .catch(this.handleError);
 
     }
 
-    getExceptions() {
-
-        return this.http.get(this._logAnalyzerUrl + '/exceptions-details/_search?q=*&sort=timestamp:desc&from=0&size=10')
+    getExceptions(sort = 'timestamp:desc', offset = 0, size = 10) {
+        return this.http.get(this._logAnalyzerUrl + '/exceptions-details/_search?q=*&sort=' + sort + '&from=' + offset + '&size=' + size)
             .map(res => <LogSearchResult> res.json())
             .catch(this.handleError);
     }
 
-    getThreadDumps() {
-
-        return this.http.get(this._logAnalyzerUrl + '/threaddumps-details/_search?q=*&sort=timestamp:desc&from=0&size=10')
+    getThreadDumps(sort = 'timestamp:desc', offset = 0, size = 10) {
+        return this.http.get(this._logAnalyzerUrl + '/threaddumps-details/_search?q=*&sort=' + sort + '&from=' + offset + '&size=' + size)
             .map(res => <LogSearchResult> res.json())
             .catch(this.handleError);
     }
 
-    getLogs() {
-        return this.http.get(this._logAnalyzerUrl + '/log-details/_search?q=*&sort=timestamp:desc&from=0&size=10')
+    getLogs(sort = 'timestamp:desc', offset = 0, size = 10) {
+        return this.http.get(this._logAnalyzerUrl + '/log-details/_search?q=*&sort=' + sort + '&from=' + offset + '&size=' + size)
             .map(res => <LogSearchResult> res.json())
             .catch(this.handleError);
     }
