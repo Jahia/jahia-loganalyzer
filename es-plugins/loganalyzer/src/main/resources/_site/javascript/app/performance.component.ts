@@ -2,22 +2,13 @@ import {Component, OnInit} from 'angular2/core';
 import {Router} from 'angular2/router';
 import {LogAnalyzerService} from './loganalyzer.service';
 import {LogSearchResult} from './loganalyzer.app.component';
+import {DataTableComponent} from './datatable.component';
 
 @Component({
     selector: 'loganalyzer-performance',
-    template: `<table *ngIf="logSearchResult">
-      <thead>
-          <tr>
-            <th *ngFor="#key of keys(logSearchResult.hits.hits[0]._source);">{{key}}</th>
-          </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="#hit of logSearchResult.hits.hits">
-        <td *ngFor="#key of keys(hit._source);">{{hit._source[key]}}</td>
-      </tr>
-      </tbody>
-    </table>`,
-    styles: ['']
+    template: `<loganalyzer-datatable [logSearchResult]="logSearchResult">`,
+    styles: [''],
+    directives: [DataTableComponent]
 })
 export class PerformanceComponent implements OnInit {
 
@@ -32,10 +23,6 @@ export class PerformanceComponent implements OnInit {
             logSearchResult => this.logSearchResult = logSearchResult,
             errorMessage => this.errorMessage = <any>errorMessage
         );
-    }
-
-    keys(myObject:any):Array<string> {
-        return Object.keys(myObject);
     }
 
 }

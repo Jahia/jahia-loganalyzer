@@ -23,12 +23,12 @@ export class LogSearchResult {
     selector: 'loganalyzer',
     template: `
     <h1>{{title}}</h1>
-    <nav>
-      <a [routerLink]="['Performance']">Performance</a>
-      <a [routerLink]="['Exceptions']">Exceptions</a>
-      <a [routerLink]="['ThreadDumps']">Thread dumps</a>
-      <a [routerLink]="['Logs']">Logs</a>
-    </nav>
+    <ul class="nav nav-tabs">
+      <li role="presentation"><a [routerLink]="['Performance']">Performance</a></li>
+      <li role="presentation"><a [routerLink]="['Exceptions']">Exceptions</a></li>
+      <li role="presentation"><a [routerLink]="['ThreadDumps']">Thread dumps</a></li>
+      <li role="presentation"><a [routerLink]="['Logs']">Logs</a></li>
+    </ul>
     <router-outlet></router-outlet>
   `,
     styles: [],
