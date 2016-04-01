@@ -3,6 +3,7 @@ import {Router} from 'angular2/router';
 import {LogAnalyzerService} from './loganalyzer.service';
 import {LogSearchResult} from './loganalyzer.app.component';
 import {DataTableComponent} from './datatable.component';
+import {Observable}     from 'rxjs/Observable';
 
 @Component({
     selector: 'loganalyzer-exceptions',
@@ -16,13 +17,10 @@ export class ExceptionsComponent implements OnInit {
     }
 
     errorMessage:string;
-    logSearchResult:LogSearchResult;
+    logSearchResult:Observable<LogSearchResult>;
 
     ngOnInit() {
-        this._logAnalyzerService.getExceptions().subscribe(
-            logSearchResult => this.logSearchResult = logSearchResult,
-            errorMessage => this.errorMessage = <any>errorMessage
-        );
+        this.logSearchResult = this._logAnalyzerService.getExceptions();
     }
 
 }

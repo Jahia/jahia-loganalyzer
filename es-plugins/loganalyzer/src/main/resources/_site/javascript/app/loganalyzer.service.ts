@@ -12,6 +12,7 @@ export class LogAnalyzerService {
     private _logAnalyzerUrl = 'http://localhost:9200/loganalyzer-*';  // URL to web api
 
     getPerformance(sort = 'timestamp:desc', offset = 0, size = 10) {
+        console.log("Requesting with sort=" + sort + " offset=" + offset + " size=" + size + "...");
         return this.http.get(this._logAnalyzerUrl + '/performance-details/_search?q=*&sort=' + sort + '&from=' + offset + '&size=' + size)
             .map(res => <LogSearchResult> res.json())
             .catch(this.handleError);
