@@ -31,7 +31,7 @@ export class DataTableComponent implements OnInit {
     constructor() {
     }
 
-    @Input() logSearchResult:Observable<LogSearchResult>;
+    private _logSearchResult:LogSearchResult;
     @Output() updateTable:EventEmitter<any> = new EventEmitter();
     private startDate:string;
     private endDate:string;
@@ -41,17 +41,24 @@ export class DataTableComponent implements OnInit {
     private cols:Array<any> = [];
 
     ngOnInit() {
-        this.logSearchResult.subscribe(result => {
-            this.totalRecords = result.hits.total;
-            console.log('Updating data table from back-end. totalRecords=' + this.totalRecords);
-            for (let hit of result.hits.hits) {
-                this.tableData.push(hit._source);
-            }
-            let columnKeys:Array<string> = this.keys(this.tableData[0]);
-            for (let columnKey of columnKeys) {
-                this.cols.push({field: columnKey, header: columnKey});
-            }
-        });
+    }
+
+    @Input()
+    set logSearchResult(logSearchResult:LogSearchResult) {
+        if (logSearchResult === undefined) {
+            return;
+        }
+        this.totalRecords = logSearchResult.hits.total;
+        console.log('Updating data table from back-end. totalRecords=' + this.totalRecords);
+        this.tableData = [];
+        for (let hit of logSearchResult.hits.hits) {
+            this.tableData.push(hit._source);
+        }
+        let columnKeys:Array<string> = this.keys(this.tableData[0]);
+        this.cols = [];
+        for (let columnKey of columnKeys) {
+            this.cols.push({field: columnKey, header: columnKey});
+        }
     }
 
     keys(myObject:any):Array<string> {

@@ -17,15 +17,15 @@ export class PerformanceComponent implements OnInit {
     }
 
     errorMessage:string;
-    logSearchResult:Observable<LogSearchResult>;
+    logSearchResult:LogSearchResult;
 
     ngOnInit() {
-        this.logSearchResult = this._logAnalyzerService.getPerformance();
+        this._logAnalyzerService.getPerformance().subscribe(result => this.logSearchResult = result);
     }
 
     updateTable(event:any) {
         console.log("Received lazy load event, reloading performance table...", event);
-        this.logSearchResult = this._logAnalyzerService.getPerformance(event.sortField, event.first, event.rows);
+        this._logAnalyzerService.getPerformance(event.sortField, event.first, event.rows).subscribe(result => this.logSearchResult = result);
     }
 
 }

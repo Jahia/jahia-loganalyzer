@@ -15,13 +15,10 @@
     <option name="historyRevisionsNumber" value="4" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="392381f2-1a3f-4d4a-971d-91bfb49657e3" name="Default" comment="- Introduce new datatable component shared between all other components&#10;- Added PrimeNG for datepicker and possibly more elements later&#10;- Added Bootstrap but might removed it later if we don't really need it.">
+    <list default="true" id="392381f2-1a3f-4d4a-971d-91bfb49657e3" name="Default" comment="- Try to get pagination to work, not there yet.">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/es-plugins/loganalyzer/src/main/resources/_site/javascript/app/datatable.component.ts" afterPath="$PROJECT_DIR$/es-plugins/loganalyzer/src/main/resources/_site/javascript/app/datatable.component.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/es-plugins/loganalyzer/src/main/resources/_site/javascript/app/exceptions.component.ts" afterPath="$PROJECT_DIR$/es-plugins/loganalyzer/src/main/resources/_site/javascript/app/exceptions.component.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/es-plugins/loganalyzer/src/main/resources/_site/javascript/app/loganalyzer.service.ts" afterPath="$PROJECT_DIR$/es-plugins/loganalyzer/src/main/resources/_site/javascript/app/loganalyzer.service.ts" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/es-plugins/loganalyzer/src/main/resources/_site/javascript/app/performance.component.ts" afterPath="$PROJECT_DIR$/es-plugins/loganalyzer/src/main/resources/_site/javascript/app/performance.component.ts" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/loganalyzer.iws" afterPath="$PROJECT_DIR$/loganalyzer.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/gui/swing/LogAnalyzerMainDialog.java" afterPath="$PROJECT_DIR$/loganalyzer/src/main/java/org/jahia/loganalyzer/gui/swing/LogAnalyzerMainDialog.java" />
     </list>
     <ignored path=".idea/workspace.xml" />
     <ignored path="loganalyzer.iws" />
@@ -163,16 +160,16 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="datatable.component.ts" pinned="false" current-in-tab="false">
+      <file leaf-file-name="datatable.component.ts" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/es-plugins/loganalyzer/src/main/resources/_site/javascript/app/datatable.component.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="20" column="128" selection-start-line="20" selection-start-column="128" selection-end-line="20" selection-end-column="128" />
+            <state vertical-scroll-proportion="0.55518943">
+              <caret line="54" column="45" selection-start-line="54" selection-start-column="45" selection-end-line="54" selection-end-column="45" />
               <folding>
-                <marker date="1459525493000" expanded="true" signature="478:748" placeholder="..." />
-                <marker date="1459525493000" expanded="true" signature="505:612" placeholder="..." />
-                <marker date="1459525493000" expanded="true" signature="639:740" placeholder="..." />
-                <marker date="1459525493000" expanded="true" signature="909:1048" placeholder="..." />
+                <marker date="1459526543000" expanded="true" signature="478:748" placeholder="..." />
+                <marker date="1459526543000" expanded="true" signature="505:612" placeholder="..." />
+                <marker date="1459526543000" expanded="true" signature="639:740" placeholder="..." />
+                <marker date="1459526543000" expanded="true" signature="909:1048" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -210,11 +207,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="loganalyzer.service.ts" pinned="false" current-in-tab="true">
+      <file leaf-file-name="loganalyzer.service.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/es-plugins/loganalyzer/src/main/resources/_site/javascript/app/loganalyzer.service.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5436573">
-              <caret line="22" column="56" selection-start-line="22" selection-start-column="56" selection-end-line="22" selection-end-column="56" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="21" column="62" selection-start-line="21" selection-start-column="62" selection-end-line="21" selection-end-column="62" />
               <folding />
             </state>
           </provider>
@@ -224,7 +221,7 @@
         <entry file="file://$PROJECT_DIR$/es-plugins/loganalyzer/src/main/resources/_site/javascript/app/performance.component.ts">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="27" column="113" selection-start-line="27" selection-start-column="113" selection-end-line="27" selection-end-column="113" />
+              <caret line="22" column="93" selection-start-line="22" selection-start-column="93" selection-end-line="22" selection-end-column="93" />
               <folding />
             </state>
           </provider>
@@ -319,9 +316,9 @@
         <option value="$PROJECT_DIR$/es-plugins/loganalyzer/pom.xml" />
         <option value="$PROJECT_DIR$/es-plugins/loganalyzer/src/main/resources/_site/index.html" />
         <option value="$PROJECT_DIR$/es-plugins/loganalyzer/src/main/resources/_site/javascript/app/exceptions.component.ts" />
-        <option value="$PROJECT_DIR$/es-plugins/loganalyzer/src/main/resources/_site/javascript/app/datatable.component.ts" />
-        <option value="$PROJECT_DIR$/es-plugins/loganalyzer/src/main/resources/_site/javascript/app/performance.component.ts" />
         <option value="$PROJECT_DIR$/es-plugins/loganalyzer/src/main/resources/_site/javascript/app/loganalyzer.service.ts" />
+        <option value="$PROJECT_DIR$/es-plugins/loganalyzer/src/main/resources/_site/javascript/app/performance.component.ts" />
+        <option value="$PROJECT_DIR$/es-plugins/loganalyzer/src/main/resources/_site/javascript/app/datatable.component.ts" />
       </list>
     </option>
   </component>
@@ -1077,6 +1074,52 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="app" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="loganalyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jahia-loganalyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="es-plugins" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="loganalyzer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="_site" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="javascript" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="datatable.component.ts" />
+              <option name="myItemType" value="com.intellij.lang.typescript.compiler.ui.projectView.TypeScriptNestingTreeNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -1898,7 +1941,7 @@
       <workItem from="1458121973096" duration="293000" />
       <workItem from="1458122556550" duration="82205000" />
       <workItem from="1458647573852" duration="23000" />
-      <workItem from="1458648589565" duration="65209000" />
+      <workItem from="1458648589565" duration="65712000" />
     </task>
     <task id="LOCAL-00001" summary="- Added support for JDK 7 thread dumps&#10;- Various minor bug fixes&#10;- Removed WebStart configuration">
       <created>1456843666034</created>
@@ -2068,7 +2111,13 @@
       <option name="project" value="LOCAL" />
       <updated>1459438372549</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="- Try to get pagination to work, not there yet.">
+      <created>1459526149008</created>
+      <option name="number" value="00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1459526149008</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -2080,7 +2129,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="228745000" />
+    <option name="totallyTimeSpent" value="229248000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -2155,7 +2204,6 @@
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="PERFORM_UPDATE_IN_BACKGROUND" value="false" />
     <option name="PERFORM_COMMIT_IN_BACKGROUND" value="false" />
-    <MESSAGE value="- Add context lines for exception logging&#10;" />
     <MESSAGE value="- Fix build number to work with Git&#10;- Change back to JDK L&amp;F." />
     <MESSAGE value="- Switch to Nimbus L&amp;F and fallback to JGoodies if not available." />
     <MESSAGE value="Make it possible to use CSS files for HTML output" />
@@ -2180,7 +2228,8 @@
     <MESSAGE value="- Ok we now have a (very) basic Angular 2 app that loads the data from the ES backend&#10;" />
     <MESSAGE value="- Use parameters for back-end ES queries (using default values)" />
     <MESSAGE value="- Introduce new datatable component shared between all other components&#10;- Added PrimeNG for datepicker and possibly more elements later&#10;- Added Bootstrap but might removed it later if we don't really need it." />
-    <option name="LAST_COMMIT_MESSAGE" value="- Introduce new datatable component shared between all other components&#10;- Added PrimeNG for datepicker and possibly more elements later&#10;- Added Bootstrap but might removed it later if we don't really need it." />
+    <MESSAGE value="- Try to get pagination to work, not there yet." />
+    <option name="LAST_COMMIT_MESSAGE" value="- Try to get pagination to work, not there yet." />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
@@ -2455,7 +2504,7 @@
           <caret line="157" column="22" selection-start-line="157" selection-start-column="22" selection-end-line="157" selection-end-column="22" />
           <folding>
             <element signature="method#$$$setupUI$$$#0;class#LogAnalyzerMainDialog#0" expanded="false" />
-            <marker date="1459494199000" expanded="true" signature="2461:2467" placeholder="{...}" />
+            <marker date="1459526141000" expanded="true" signature="2461:2467" placeholder="{...}" />
           </folding>
         </state>
       </provider>
@@ -2721,32 +2770,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/es-plugins/loganalyzer/src/main/resources/_site/javascript/app/datatable.component.ts">
+    <entry file="file://$PROJECT_DIR$/es-plugins/loganalyzer/src/main/resources/_site/javascript/app/loganalyzer.service.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="20" column="128" selection-start-line="20" selection-start-column="128" selection-end-line="20" selection-end-column="128" />
-          <folding>
-            <marker date="1459525493000" expanded="true" signature="478:748" placeholder="..." />
-            <marker date="1459525493000" expanded="true" signature="505:612" placeholder="..." />
-            <marker date="1459525493000" expanded="true" signature="639:740" placeholder="..." />
-            <marker date="1459525493000" expanded="true" signature="909:1048" placeholder="..." />
-          </folding>
+          <caret line="21" column="62" selection-start-line="21" selection-start-column="62" selection-end-line="21" selection-end-column="62" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/es-plugins/loganalyzer/src/main/resources/_site/javascript/app/performance.component.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="27" column="113" selection-start-line="27" selection-start-column="113" selection-end-line="27" selection-end-column="113" />
+          <caret line="22" column="93" selection-start-line="22" selection-start-column="93" selection-end-line="22" selection-end-column="93" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/es-plugins/loganalyzer/src/main/resources/_site/javascript/app/loganalyzer.service.ts">
+    <entry file="file://$PROJECT_DIR$/es-plugins/loganalyzer/src/main/resources/_site/javascript/app/datatable.component.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5436573">
-          <caret line="22" column="56" selection-start-line="22" selection-start-column="56" selection-end-line="22" selection-end-column="56" />
-          <folding />
+        <state vertical-scroll-proportion="0.55518943">
+          <caret line="54" column="45" selection-start-line="54" selection-start-column="45" selection-end-line="54" selection-end-column="45" />
+          <folding>
+            <marker date="1459526543000" expanded="true" signature="478:748" placeholder="..." />
+            <marker date="1459526543000" expanded="true" signature="505:612" placeholder="..." />
+            <marker date="1459526543000" expanded="true" signature="639:740" placeholder="..." />
+            <marker date="1459526543000" expanded="true" signature="909:1048" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
