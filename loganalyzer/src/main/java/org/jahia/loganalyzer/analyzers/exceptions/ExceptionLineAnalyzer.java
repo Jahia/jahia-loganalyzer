@@ -39,6 +39,10 @@ public class ExceptionLineAnalyzer extends WritingLineAnalyzer {
         causedByPattern = Pattern.compile(logParserConfiguration.getExceptionCausedByPattern());
     }
 
+    public String getKey() {
+        return "exception";
+    }
+
     public boolean isForThisAnalyzer(String line, String nextLine, String nextNextLine, File file, String jvmIdentifier) {
         if (inException) {
             Matcher matcher = secondLinePattern.matcher(line);

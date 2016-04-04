@@ -50,6 +50,10 @@ public class ThreadDumpLineAnalyzer extends WritingLineAnalyzer {
         sunJDK8ThreadInfoPattern = Pattern.compile(logParserConfiguration.getSunJDK8ThreadThreadInfoPattern());
     }
 
+    public String getKey() {
+        return "threaddump";
+    }
+
     public boolean isForThisAnalyzer(String line, String nextLine, String nextNextLine, File file, String jvmIdentifier) {
         if (inThreadDump) {
             // we must now check that it is indeed a valid thread dump line

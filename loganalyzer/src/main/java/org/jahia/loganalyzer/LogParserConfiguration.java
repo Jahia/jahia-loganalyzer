@@ -25,6 +25,10 @@ public class LogParserConfiguration {
     public static final String DEFAULT_EXCEPTION_SUMMARY_OUTPUTFILENAME = "exceptions-summary";
     public static final String DEFAULT_LOG_DETAILS_OUTPUTFILENAME = "log-details";
     public static final String DEFAULT_LOG_SUMMARY_OUTPUTFILENAME = "log-summary";
+    public static final String DEFAULT_GC_DETAILS_OUTPUTFILENAME = "gc-details";
+    public static final String DEFAULT_GC_SUMMARY_OUTPUTFILENAME = "gc-summary";
+    public static final String DEFAULT_REQUESTLOAD_DETAILS_OUTPUTFILENAME = "requestload-details";
+    public static final String DEFAULT_REQUESTLOAD_SUMMARY_OUTPUTFILENAME = "requestload-summary";
     private static final org.apache.commons.logging.Log log =
             org.apache.commons.logging.LogFactory.getLog(LogParserConfiguration.class);
     private static final String DEFAULT_DATE_FORMAT_STRING = "yyyy-MM-dd HH:mm:ss,SSS";
@@ -66,6 +70,13 @@ public class LogParserConfiguration {
     private File standardDetailsOutputFile = new File(outputDirectory, DEFAULT_LOG_DETAILS_OUTPUTFILENAME);
     private File standardSummaryOutputFile = new File(outputDirectory, DEFAULT_LOG_SUMMARY_OUTPUTFILENAME);
     private String standardLogAnalyzerPattern = "(\\d\\d\\d\\d-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d,\\d\\d\\d):? (.*) \\[([\\w\\.]*)] ([\\w\\.]*\\:\\d* )?- (.*)";
+
+    private File gcDetailsOutputFile = new File(outputDirectory, DEFAULT_GC_DETAILS_OUTPUTFILENAME);
+    private File gcSummaryOutputFile = new File(outputDirectory, DEFAULT_GC_SUMMARY_OUTPUTFILENAME);
+
+    private File requestLoadDetailsOutputFile = new File(outputDirectory, DEFAULT_REQUESTLOAD_DETAILS_OUTPUTFILENAME);
+    private File requestLoadSummaryOutputFile = new File(outputDirectory, DEFAULT_REQUESTLOAD_SUMMARY_OUTPUTFILENAME);
+
     private char csvSeparatorChar;
     private List patternList;
     private String dateFormatString = DEFAULT_DATE_FORMAT_STRING;
@@ -148,6 +159,10 @@ public class LogParserConfiguration {
             this.exceptionSummaryOutputFile = new File(outputDirectory, DEFAULT_EXCEPTION_SUMMARY_OUTPUTFILENAME);
             this.standardDetailsOutputFile = new File(outputDirectory, DEFAULT_LOG_DETAILS_OUTPUTFILENAME);
             this.standardSummaryOutputFile = new File(outputDirectory, DEFAULT_LOG_SUMMARY_OUTPUTFILENAME);
+            this.gcDetailsOutputFile = new File(outputDirectory, DEFAULT_GC_DETAILS_OUTPUTFILENAME);
+            this.gcSummaryOutputFile = new File(outputDirectory, DEFAULT_GC_SUMMARY_OUTPUTFILENAME);
+            this.requestLoadDetailsOutputFile = new File(outputDirectory, DEFAULT_REQUESTLOAD_DETAILS_OUTPUTFILENAME);
+            this.requestLoadSummaryOutputFile = new File(outputDirectory, DEFAULT_REQUESTLOAD_SUMMARY_OUTPUTFILENAME);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -367,6 +382,38 @@ public class LogParserConfiguration {
 
     public void setStandardSummaryOutputFile(File standardSummaryOutputFile) {
         this.standardSummaryOutputFile = standardSummaryOutputFile;
+    }
+
+    public File getGcDetailsOutputFile() {
+        return gcDetailsOutputFile;
+    }
+
+    public void setGcDetailsOutputFile(File gcDetailsOutputFile) {
+        this.gcDetailsOutputFile = gcDetailsOutputFile;
+    }
+
+    public File getGcSummaryOutputFile() {
+        return gcSummaryOutputFile;
+    }
+
+    public void setGcSummaryOutputFile(File gcSummaryOutputFile) {
+        this.gcSummaryOutputFile = gcSummaryOutputFile;
+    }
+
+    public File getRequestLoadDetailsOutputFile() {
+        return requestLoadDetailsOutputFile;
+    }
+
+    public void setRequestLoadDetailsOutputFile(File requestLoadDetailsOutputFile) {
+        this.requestLoadDetailsOutputFile = requestLoadDetailsOutputFile;
+    }
+
+    public File getRequestLoadSummaryOutputFile() {
+        return requestLoadSummaryOutputFile;
+    }
+
+    public void setRequestLoadSummaryOutputFile(File requestLoadSummaryOutputFile) {
+        this.requestLoadSummaryOutputFile = requestLoadSummaryOutputFile;
     }
 
     public String[] getHtmlResourcesToCopy() {

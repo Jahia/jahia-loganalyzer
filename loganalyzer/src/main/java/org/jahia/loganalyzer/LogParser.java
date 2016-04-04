@@ -4,8 +4,10 @@ import org.jahia.loganalyzer.analyzers.core.CompositeLineAnalyzer;
 import org.jahia.loganalyzer.analyzers.core.DefaultDummyLineAnalyzer;
 import org.jahia.loganalyzer.analyzers.core.LineAnalyzer;
 import org.jahia.loganalyzer.analyzers.exceptions.ExceptionLineAnalyzer;
+import org.jahia.loganalyzer.analyzers.garbagecollection.GarbageCollectionLineAnalyzer;
 import org.jahia.loganalyzer.analyzers.loglevel.StandardLogLineAnalyzer;
 import org.jahia.loganalyzer.analyzers.performance.JahiaPerfLineAnalyzer;
+import org.jahia.loganalyzer.analyzers.requestload.RequestLoadLineAnalyzer;
 import org.jahia.loganalyzer.analyzers.threaddumps.ThreadDumpLineAnalyzer;
 import org.jahia.loganalyzer.writers.ElasticSearchService;
 
@@ -58,6 +60,8 @@ public class LogParser {
         if (logParserConfiguration.isPerformanceAnalyzerActivated()) {
             lineAnalyzers.add(new JahiaPerfLineAnalyzer(logParserConfiguration));
         }
+        lineAnalyzers.add(new RequestLoadLineAnalyzer(logParserConfiguration));
+        lineAnalyzers.add(new GarbageCollectionLineAnalyzer(logParserConfiguration));
         lineAnalyzers.add(new StandardLogLineAnalyzer(logParserConfiguration));
         lineAnalyzers.add(new DefaultDummyLineAnalyzer());
         lineAnalyzer = new CompositeLineAnalyzer(lineAnalyzers);

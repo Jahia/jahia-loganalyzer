@@ -13,6 +13,14 @@ import java.util.Deque;
  * Time: 12:51:57
  */
 public interface LineAnalyzer {
+
+    /**
+     * Get a unique key to identify this line analyzer
+     *
+     * @return
+     */
+    String getKey();
+
     /**
      * Checks whether the current line is going to be sent to a specific analyzer.
      * @param line

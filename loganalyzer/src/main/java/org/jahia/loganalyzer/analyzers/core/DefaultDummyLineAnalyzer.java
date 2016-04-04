@@ -16,6 +16,10 @@ import java.util.Deque;
  */
 public class DefaultDummyLineAnalyzer implements LineAnalyzer {
 
+    public String getKey() {
+        return "dummy";
+    }
+
     public boolean isForThisAnalyzer(String line, String nextLine, String nextNextLine, File file, String jvmIdentifier) {
         return true;
     }

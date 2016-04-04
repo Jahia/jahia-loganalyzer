@@ -22,6 +22,11 @@ public class CompositeLineAnalyzer implements LineAnalyzer {
         this.lineAnalyzers = lineAnalyzers;        
     }
 
+    public String getKey() {
+        return "composite";
+    }
+
+
     public boolean isForThisAnalyzer(String line, String nextLine, String nextNextLine, File file, String jvmIdentifier) {
         for (LineAnalyzer lineAnalyzer : lineAnalyzers) {
             if (lineAnalyzer.isForThisAnalyzer(line, nextLine, nextNextLine, file, jvmIdentifier)) {

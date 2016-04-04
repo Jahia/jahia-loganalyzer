@@ -60,6 +60,10 @@ public class JahiaPerfLineAnalyzer extends WritingLineAnalyzer {
         }
     }
 
+    public String getKey() {
+        return "performance";
+    }
+
     public boolean isForThisAnalyzer(String line, String nextLine, String nextNextLine, File file, String jvmIdentifier) {
         Matcher matcher = linePattern.matcher(line);
         boolean matches = matcher.matches();

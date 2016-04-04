@@ -39,6 +39,10 @@ public class StandardLogLineAnalyzer extends WritingLineAnalyzer {
         standardMinimumLogLevel = logParserConfiguration.getStandardMinimumLogLevel();
     }
 
+    public String getKey() {
+        return "loglevel";
+    }
+
     public boolean isForThisAnalyzer(String line, String nextLine, String nextNextLine, File file, String jvmIdentifier) {
         Matcher matcher = standardLogPattern.matcher(line);
         boolean matches = matcher.matches();
