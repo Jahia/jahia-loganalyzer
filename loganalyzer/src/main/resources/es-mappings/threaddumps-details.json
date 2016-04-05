@@ -1,14 +1,25 @@
 {
   "properties": {
+    "jvmIdentifier": {
+      "type": "string",
+      "index": "not_analyzed"
+    },
+    "source": {
+      "type": "string",
+      "index": "not_analyzed"
+    },
+    "startLineNumber": {
+      "type": "long"
+    },
+    "endLineNumber": {
+      "type": "long"
+    },
     "heldLockCount": {
       "type": "long"
     },
     "holdingLocks": {
       "type": "string",
       "index": "not_analyzed"
-    },
-    "lineNumber": {
-      "type": "long"
     },
     "logType": {
       "type": "string",

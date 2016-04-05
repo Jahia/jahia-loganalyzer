@@ -1,11 +1,22 @@
 {
   "properties": {
-    "ipAddress": {
+    "jvmIdentifier": {
       "type": "string",
       "index": "not_analyzed"
     },
-    "lineNumber": {
+    "source": {
+      "type": "string",
+      "index": "not_analyzed"
+    },
+    "startLineNumber": {
       "type": "long"
+    },
+    "endLineNumber": {
+      "type": "long"
+    },
+    "ipAddress": {
+      "type": "string",
+      "index": "not_analyzed"
     },
     "logType": {
       "type": "string",

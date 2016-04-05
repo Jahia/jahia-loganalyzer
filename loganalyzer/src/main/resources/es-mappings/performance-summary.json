@@ -10,7 +10,8 @@
       "type": "long"
     },
     "jvmIdentifier": {
-      "type": "string"
+      "type": "string",
+      "index": "not_analyzed"
     },
     "logType": {
       "type": "string",
@@ -26,7 +27,8 @@
       "type": "long"
     },
     "source": {
-      "type": "string"
+      "type": "string",
+      "index": "not_analyzed"
     },
     "startLineNumber": {
       "type": "long"
