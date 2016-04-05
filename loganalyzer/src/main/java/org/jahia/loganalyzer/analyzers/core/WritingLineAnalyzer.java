@@ -2,7 +2,10 @@ package org.jahia.loganalyzer.analyzers.core;
 
 import org.jahia.loganalyzer.LogEntry;
 import org.jahia.loganalyzer.LogParserConfiguration;
-import org.jahia.loganalyzer.writers.*;
+import org.jahia.loganalyzer.writers.CSVLogEntryWriter;
+import org.jahia.loganalyzer.writers.ElasticSearchLogEntryWriter;
+import org.jahia.loganalyzer.writers.JSONLogEntryWriter;
+import org.jahia.loganalyzer.writers.LogEntryWriter;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,14 +34,6 @@ public abstract class WritingLineAnalyzer implements LineAnalyzer {
         LogEntryWriter csvSummaryLogEntryWriter = new CSVLogEntryWriter(csvSummaryFile, csvOutputSeparatorChar, summaryLogEntry);
         summaryLogEntryWriters.add(csvSummaryLogEntryWriter);
 
-        // HTML Output setup
-        File htmlDetailFile = new File(detailsOutputFile.getPath() + ".html");
-        LogEntryWriter htmlDetailsLogEntryWriter = new HTMLLogEntryWriter(htmlDetailFile, detailsLogEntry, logParserConfiguration);
-        detailsLogEntryWriters.add(htmlDetailsLogEntryWriter);
-        File htmlSummaryFile = new File(summaryOutputFile.getPath() + ".html");
-        LogEntryWriter htmlSummaryLogEntryWriter = new HTMLLogEntryWriter(htmlSummaryFile, summaryLogEntry, logParserConfiguration);
-        summaryLogEntryWriters.add(htmlSummaryLogEntryWriter);
-
         // JSON Output setup
         File jsonDetailFile = new File(detailsOutputFile.getPath() + ".json");
         LogEntryWriter jsonDetailsLogEntryWriter = new JSONLogEntryWriter(jsonDetailFile, detailsLogEntry);
@@ -47,6 +42,7 @@ public abstract class WritingLineAnalyzer implements LineAnalyzer {
         LogEntryWriter jsonSummaryLogEntryWriter = new JSONLogEntryWriter(jsonSummaryFile, summaryLogEntry);
         summaryLogEntryWriters.add(jsonSummaryLogEntryWriter);
 
+        // ElasticSearch writer
         File elasticSearchDetailFile = new File(detailsOutputFile.getPath() + ".es");
         LogEntryWriter elasticSearchDetailWriter = new ElasticSearchLogEntryWriter(elasticSearchDetailFile, detailsLogEntry, logParserConfiguration);
         detailsLogEntryWriters.add(elasticSearchDetailWriter);

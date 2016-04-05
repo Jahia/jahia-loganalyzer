@@ -73,38 +73,47 @@ Don't forget to set the proper date range on the top right corner otherwise
 you will probably not see any data as it defaults to the last 15 minutes. 
 You can select "Year to date" for example to see recent data.
 
+We also provide an import file for Kibana default visualizations and dashboard.
+You can find it in the file : 
+
+    kibana-export.json 
+    
+at the root of this project. To import it, launch Kibana 4, go into Settings->
+Objects and click on Import and use the import file. You should then be able
+to open the saved visualizations and dashboards.
+
 Output files
 --------------------------------------------------------------------------------
 Here is a brief descriptions of the output files and their generated content 
 
-- jahia-perf-details.csv/.html
+- jahia-perf-details.csv/.json
   Contains the full list of extracted Jahia request performance data. 
   
-- jahia-perf-summary.csv/.html
+- jahia-perf-summary.csv/.json
   Contains a view of cumulated request times for a specific Jahia pages
   
-- jahia-exception-details.csv/.html
+- jahia-exception-details.csv/.json
   Contains details of all the exceptions found in the log
   
-- jahia-exception-summary.csv/.html
+- jahia-exception-summary.csv/.json
   Contains a summary of the number of times the same exception was encountered
   in the log files
 
-- jahia-thread-details.csv/.html
+- jahia-thread-details.csv/.json
   Contains all the threads that were found in the thread dumps generated in the
   log file. 
   
-- jahia-thread-summary.csv/.html
+- jahia-thread-summary.csv/.json
   Contains a summary view of the number of threads in the different thread 
   dumps, as well as the differences between the thread dumps (new threads,
   old threads). Note : it is a good idea to generate lots of thread dumps to
   improve the quality of this data.
 
-- jahia-standard-details.csv/.html
+- jahia-standard-details.csv/.json
   Contains all the log files NOT parsed by the performance analyzer, and that
   are above the logging level specified in the user interface.
 
-- jahia-standard-summary.csv/.html
+- jahia-standard-summary.csv/.json
   Contains a summary view of the number of times a specific message was logged,
   regardless of the logging level specified in the user interface.
   
