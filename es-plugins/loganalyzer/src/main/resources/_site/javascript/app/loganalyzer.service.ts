@@ -11,28 +11,26 @@ export class LogAnalyzerService {
 
     private _logAnalyzerUrl = 'http://localhost:9200/loganalyzer-*';  // URL to web api
 
-    getPerformance(sort = 'timestamp:desc', offset = 0, size = 10) {
-        console.log("Requesting with sort=" + sort + " offset=" + offset + " size=" + size + "...");
-        return this.http.get(this._logAnalyzerUrl + '/performance-details/_search?q=*&sort=' + sort + '&from=' + offset + '&size=' + size)
-            .map(res => <LogSearchResult> res.json())
-            .catch(this.handleError);
-
+    getPerformance(sort?:string, offset?:number, size?:number) {
+        return this.getMetrics('performance', '*', sort, offset, size);
     }
 
-    getExceptions(sort = 'timestamp:desc', offset = 0, size = 10) {
-        return this.http.get(this._logAnalyzerUrl + '/exceptions-details/_search?q=*&sort=' + sort + '&from=' + offset + '&size=' + size)
-            .map(res => <LogSearchResult> res.json())
-            .catch(this.handleError);
+    getExceptions(sort?:string, offset?:number, size?:number) {
+        return this.getMetrics('exceptions', '*', sort, offset, size);
     }
 
-    getThreadDumps(sort = 'timestamp:desc', offset = 0, size = 10) {
-        return this.http.get(this._logAnalyzerUrl + '/threaddumps-details/_search?q=*&sort=' + sort + '&from=' + offset + '&size=' + size)
-            .map(res => <LogSearchResult> res.json())
-            .catch(this.handleError);
+    getThreadDumps(sort?:string, offset?:number, size?:number) {
+        return this.getMetrics('threaddumps', '*', sort, offset, size);
     }
 
-    getLogs(sort = 'timestamp:desc', offset = 0, size = 10) {
-        return this.http.get(this._logAnalyzerUrl + '/log-details/_search?q=*&sort=' + sort + '&from=' + offset + '&size=' + size)
+    getLogs(sort?:string, offset?:number, size?:number) {
+        return this.getMetrics('log', '*', sort, offset, size);
+    }
+
+    getMetrics(metric:string, query:string = '*', sort:string = 'timestamp:desc', offset:number = 0, size:number = 10) {
+        console.log("Requesting " + metric + " with query=" + query + " and sort=" + sort + " offset=" + offset + " size=" + size + "...");
+        return this.http.get(this._logAnalyzerUrl + '/' + metric + '-details/_search?q=' + query
+                + '&sort=' + sort + '&from=' + offset + '&size=' + size)
             .map(res => <LogSearchResult> res.json())
             .catch(this.handleError);
     }

@@ -26,6 +26,8 @@ target/
 /es-plugins/loganalyzer/node_modules
 /es-plugins/loganalyzer/typings
 /es-plugins/loganalyzer/etc
+/es-plugins/loganalyzer/src/main/resources/_site/javascript/app/*.js
+/es-plugins/loganalyzer/src/main/resources/_site/javascript/app/*.js.map
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
