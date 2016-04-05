@@ -1,10 +1,7 @@
 package org.jahia.loganalyzer.analyzers.core;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.LineNumberReader;
 import java.util.Date;
-import java.util.Deque;
 
 /**
  * This is the default line analyzer, that will always be called as a last resort, just to ignore lines that
@@ -20,18 +17,17 @@ public class DefaultDummyLineAnalyzer implements LineAnalyzer {
         return "dummy";
     }
 
-    public boolean isForThisAnalyzer(String line, String nextLine, String nextNextLine, File file, String jvmIdentifier) {
+    public boolean isForThisAnalyzer(LineAnalyzerContext context) {
         return true;
     }
 
-    public Date parseLine(String line, String nextLine, String nextNextLine, Deque<String> contextLines, LineNumberReader lineNumberReader, Date lastValidDateParsed, File file, String jvmIdentifier) {
+    public Date parseLine(LineAnalyzerContext context) {
         return null;
     }
 
-    public void finishPreviousState() {
+    public void finishPreviousState(LineAnalyzerContext context) {
     }
 
     public void stop() throws IOException {
-        //To change body of implemented methods use File | Settings | File Templates.
     }
 }

@@ -51,7 +51,7 @@ public class ElasticSearchLogEntryWriter implements LogEntryWriter {
         if (res.isExists()) {
             //final DeleteIndexRequestBuilder delIdx = client.admin().indices().prepareDelete(indexName);
             // delIdx.execute().actionGet();
-            new Throwable("WARNING: " + indexName + " already exists, this normally shouldn't happen !").printStackTrace();
+            new Throwable("WARNING: " + indexName + " already exists, this normally shouldn't happen ! This might happen if you have another instance of the LogAnalyzer running !").printStackTrace();
         } else {
             client.admin().indices().prepareCreate(indexName).get();
         }

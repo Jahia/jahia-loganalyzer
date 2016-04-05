@@ -1,0 +1,42 @@
+{
+  "properties": {
+    "endLineNumber": {
+      "type": "long"
+    },
+    "fromSize": {
+      "type": "long"
+    },
+    "gcMessage": {
+      "type": "string"
+    },
+    "gcTimeInSeconds": {
+      "type": "double"
+    },
+    "gcType": {
+      "type": "string"
+    },
+    "heapSize": {
+      "type": "long"
+    },
+    "jvmIdentifier": {
+      "type": "string"
+    },
+    "logType": {
+      "type": "string",
+      "index": "not_analyzed"
+    },
+    "source": {
+      "type": "string"
+    },
+    "startLineNumber": {
+      "type": "long"
+    },
+    "timestamp": {
+      "type": "date",
+      "format": "strict_date_optional_time||epoch_millis"
+    },
+    "toSize": {
+      "type": "long"
+    }
+  }
+}

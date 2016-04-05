@@ -1,13 +1,11 @@
 package org.jahia.loganalyzer.analyzers.exceptions;
 
 import org.jahia.loganalyzer.LogParserConfiguration;
+import org.jahia.loganalyzer.analyzers.core.LineAnalyzerContext;
 import org.jahia.loganalyzer.analyzers.core.WritingLineAnalyzer;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.LineNumberReader;
 import java.util.Date;
-import java.util.Deque;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -43,21 +41,21 @@ public class ExceptionLineAnalyzer extends WritingLineAnalyzer {
         return "exception";
     }
 
-    public boolean isForThisAnalyzer(String line, String nextLine, String nextNextLine, File file, String jvmIdentifier) {
+    public boolean isForThisAnalyzer(LineAnalyzerContext context) {
         if (inException) {
-            Matcher matcher = secondLinePattern.matcher(line);
+            Matcher matcher = secondLinePattern.matcher(context.getLine());
             if (matcher.matches()) {
                 return true;
             }
-            if (line.startsWith("Caused by:")) {
+            if (context.getLine().startsWith("Caused by:")) {
                 return true;
             }
         }
-        if (nextLine != null) {
-            Matcher matcher = secondLinePattern.matcher(nextLine);
+        if (context.getNextLine() != null) {
+            Matcher matcher = secondLinePattern.matcher(context.getNextLine());
             if (matcher.matches()) {
                 if (inException) {
-                    finishPreviousState();
+                    finishPreviousState(context);
                 }
                 return true;
             }
@@ -65,40 +63,41 @@ public class ExceptionLineAnalyzer extends WritingLineAnalyzer {
         return false;  
     }
 
-    public Date parseLine(String line, String nextLine, String nextNextLine, Deque<String> contextLines, LineNumberReader lineNumberReader, Date lastValidDateParsed, File file, String jvmIdentifier) {
+    public Date parseLine(LineAnalyzerContext context) {
         if (!inException) {
-            log.trace("Found exception " + line);
+            log.trace("Found exception " + context.getLine());
             inException = true;
-            Matcher firstLineMatcher = firstLinePattern.matcher(line);
+            Matcher firstLineMatcher = firstLinePattern.matcher(context.getLine());
             if (!firstLineMatcher.matches()) {
-                log.warn("Couldn't parse first line of exception, ignoring. Line "+Integer.toString(lineNumberReader.getLineNumber()-1)+"=" + line);
+                log.warn("Couldn't parse first line of exception, ignoring. Line " + Long.toString(context.getLineNumber()) + "=" + context.getLine());
                 return null;
             }
-            currentExceptionDetailsLogEntry = new ExceptionDetailsLogEntry(lineNumberReader.getLineNumber() - 1, lineNumberReader.getLineNumber() - 1, lastValidDateParsed, jvmIdentifier, file.getName());
+            currentExceptionDetailsLogEntry = new ExceptionDetailsLogEntry(context.getLineNumber(), context.getLineNumber(), context.getLastValidDateParsed(), context.getJvmIdentifier(), context.getFile().getName());
             currentExceptionDetailsLogEntry.setClassName(firstLineMatcher.group(1));
             currentExceptionDetailsLogEntry.setMessage(firstLineMatcher.group(2));
-            currentExceptionDetailsLogEntry.getContextLines().addAll(contextLines);
+            currentExceptionDetailsLogEntry.getContextLines().addAll(context.getContextLines());
         } else {
-            Matcher secondLineMatcher = secondLinePattern.matcher(line);
+            Matcher secondLineMatcher = secondLinePattern.matcher(context.getLine());
             if (secondLineMatcher.matches()) {
-                currentExceptionDetailsLogEntry.getStackTrace().add(line);
+                currentExceptionDetailsLogEntry.getStackTrace().add(context.getLine());
             } else {
-                Matcher causedByMatcher = causedByPattern.matcher(line);
+                Matcher causedByMatcher = causedByPattern.matcher(context.getLine());
                 if (causedByMatcher.matches()) {
-                    currentExceptionDetailsLogEntry.getStackTrace().add(line);
+                    currentExceptionDetailsLogEntry.getStackTrace().add(context.getLine());
                 } else {
-                    log.warn("Unexcepted line in exception,ignoring :" + line);
+                    log.warn("Unexcepted line in exception,ignoring :" + context.getLine());
                 }
             }
         }
         return null;
     }
 
-    public void finishPreviousState() {
+    public void finishPreviousState(LineAnalyzerContext context) {
         if (currentExceptionDetailsLogEntry == null) {
             inException = false;
             return;
         }
+        currentExceptionDetailsLogEntry.setEndLineNumber(context.getLineNumber());
         writeDetails(currentExceptionDetailsLogEntry);
         ExceptionSummaryLogEntry exceptionSummaryLogEntry = exceptionSummaryMap.get(currentExceptionDetailsLogEntry.toString());
         if (exceptionSummaryLogEntry == null) {

@@ -1,13 +1,11 @@
 package org.jahia.loganalyzer.analyzers.garbagecollection;
 
 import org.jahia.loganalyzer.LogParserConfiguration;
+import org.jahia.loganalyzer.analyzers.core.LineAnalyzerContext;
 import org.jahia.loganalyzer.analyzers.core.WritingLineAnalyzer;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.LineNumberReader;
 import java.util.Date;
-import java.util.Deque;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -31,23 +29,23 @@ public class GarbageCollectionLineAnalyzer extends WritingLineAnalyzer {
     }
 
     @Override
-    public boolean isForThisAnalyzer(String line, String nextLine, String nextNextLine, File file, String jvmIdentifier) {
-        return line.startsWith("[GC") || line.startsWith("[Full GC");
+    public boolean isForThisAnalyzer(LineAnalyzerContext context) {
+        return context.getLine().startsWith("[GC") || context.getLine().startsWith("[Full GC");
     }
 
     @Override
-    public Date parseLine(String line, String nextLine, String nextNextLine, Deque<String> contextLines, LineNumberReader reader, Date lastValidDateParsed, File file, String jvmIdentifier) throws IOException {
-        Matcher matcher = gcPattern.matcher(line);
+    public Date parseLine(LineAnalyzerContext context) throws IOException {
+        Matcher matcher = gcPattern.matcher(context.getLine());
         if (!matcher.matches()) {
             return null;
         }
         double gcTimeInSeconds = Double.parseDouble(matcher.group(6));
         Date newDate = null;
-        if (lastValidDateParsed != null) {
-            long newTime = lastValidDateParsed.getTime() + (long) (gcTimeInSeconds * 1000.0);
+        if (context.getLastValidDateParsed() != null) {
+            long newTime = context.getLastValidDateParsed().getTime() + (long) (gcTimeInSeconds * 1000.0);
             newDate = new Date(newTime);
         }
-        GarbageCollectionLogEntry garbageCollectionLogEntry = new GarbageCollectionLogEntry(reader.getLineNumber(), reader.getLineNumber(), newDate, jvmIdentifier, file.getName());
+        GarbageCollectionLogEntry garbageCollectionLogEntry = new GarbageCollectionLogEntry(context.getLineNumber(), context.getLineNumber(), newDate, context.getJvmIdentifier(), context.getFile().getName());
         garbageCollectionLogEntry.setGcType(matcher.group(1));
         garbageCollectionLogEntry.setGcMessage(matcher.group(2));
         garbageCollectionLogEntry.setFromSize(Long.parseLong(matcher.group(3)));
@@ -59,7 +57,7 @@ public class GarbageCollectionLineAnalyzer extends WritingLineAnalyzer {
     }
 
     @Override
-    public void finishPreviousState() {
+    public void finishPreviousState(LineAnalyzerContext context) {
 
     }
 }

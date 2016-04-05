@@ -1,16 +1,14 @@
 package org.jahia.loganalyzer.analyzers.requestload;
 
 import org.jahia.loganalyzer.LogParserConfiguration;
+import org.jahia.loganalyzer.analyzers.core.LineAnalyzerContext;
 import org.jahia.loganalyzer.analyzers.core.WritingLineAnalyzer;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.LineNumberReader;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Deque;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,13 +36,13 @@ public class RequestLoadLineAnalyzer extends WritingLineAnalyzer {
     }
 
     @Override
-    public boolean isForThisAnalyzer(String line, String nextLine, String nextNextLine, File file, String jvmIdentifier) {
-        return line.contains("Jahia Request Load =");
+    public boolean isForThisAnalyzer(LineAnalyzerContext context) {
+        return context.getLine().contains("Jahia Request Load =");
     }
 
     @Override
-    public Date parseLine(String line, String nextLine, String nextNextLine, Deque<String> contextLines, LineNumberReader reader, Date lastValidDateParsed, File file, String jvmIdentifier) throws IOException {
-        Matcher loadAverageMatcher = loadAveragePattern.matcher(line);
+    public Date parseLine(LineAnalyzerContext context) throws IOException {
+        Matcher loadAverageMatcher = loadAveragePattern.matcher(context.getLine());
         if (!loadAverageMatcher.matches()) {
             return null;
         }
@@ -74,10 +72,10 @@ public class RequestLoadLineAnalyzer extends WritingLineAnalyzer {
         try {
             parsedDate = dateFormat.parse(dateGroup);
         } catch (ParseException e) {
-            log.error("Error parsing date format in line " + line, e);
+            log.error("Error parsing date format in line " + context.getLine(), e);
         }
 
-        RequestLoadLogEntry requestLoadLogEntry = new RequestLoadLogEntry(reader.getLineNumber(), reader.getLineNumber(), parsedDate, jvmIdentifier, file.getName());
+        RequestLoadLogEntry requestLoadLogEntry = new RequestLoadLogEntry(context.getLineNumber(), context.getLineNumber(), parsedDate, context.getJvmIdentifier(), context.getFile().getName());
         requestLoadLogEntry.setOneMinuteLoad(oneMinuteLoad);
         requestLoadLogEntry.setFiveMinuteLoad(fiveMinuteLoad);
         requestLoadLogEntry.setFifteenMinuteLoad(fifteenMinuteLoad);
@@ -86,7 +84,6 @@ public class RequestLoadLineAnalyzer extends WritingLineAnalyzer {
     }
 
     @Override
-    public void finishPreviousState() {
-
+    public void finishPreviousState(LineAnalyzerContext context) {
     }
 }

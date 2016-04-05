@@ -1,25 +1,35 @@
 {
   "properties": {
-    "ipAddress": {
-      "type": "string",
-      "index": "not_analyzed"
+    "averagePageTime": {
+      "type": "double"
     },
-    "lineNumber": {
+    "cumulatedPageTime": {
       "type": "long"
+    },
+    "endLineNumber": {
+      "type": "long"
+    },
+    "jvmIdentifier": {
+      "type": "string"
     },
     "logType": {
       "type": "string",
       "index": "not_analyzed"
     },
+    "maxPageTime": {
+      "type": "long"
+    },
+    "pageHits": {
+      "type": "long"
+    },
     "pageId": {
       "type": "long"
     },
-    "processingTime": {
-      "type": "long"
+    "source": {
+      "type": "string"
     },
-    "sessionID": {
-      "type": "string",
-      "index": "not_analyzed"
+    "startLineNumber": {
+      "type": "long"
     },
     "timestamp": {
       "type": "date",
@@ -32,13 +42,6 @@
     "urlKey": {
       "type": "string",
       "index": "not_analyzed"
-    },
-    "user": {
-      "type": "string",
-      "index": "not_analyzed"
-    },
-    "location": {
-      "type": "geo_point"
     }
   }
 }

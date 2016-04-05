@@ -1,14 +1,18 @@
 {
   "properties": {
-    "className": {
-      "type": "string",
-      "index": "not_analyzed"
+    "count": {
+      "type": "long"
     },
-    "contextLines": {
-      "type": "string",
-      "index": "not_analyzed"
+    "endLineNumber": {
+      "type": "long"
     },
-    "lineNumber": {
+    "jvmIdentifier": {
+      "type": "string"
+    },
+    "logLevel": {
+      "type": "string"
+    },
+    "logLevelNumber": {
       "type": "long"
     },
     "logType": {
@@ -19,9 +23,11 @@
       "type": "string",
       "index": "not_analyzed"
     },
-    "stackTrace": {
-      "type": "string",
-      "index": "not_analyzed"
+    "source": {
+      "type": "string"
+    },
+    "startLineNumber": {
+      "type": "long"
     },
     "timestamp": {
       "type": "date",

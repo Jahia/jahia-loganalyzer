@@ -3,6 +3,7 @@ package org.jahia.loganalyzer;
 import org.jahia.loganalyzer.analyzers.core.CompositeLineAnalyzer;
 import org.jahia.loganalyzer.analyzers.core.DefaultDummyLineAnalyzer;
 import org.jahia.loganalyzer.analyzers.core.LineAnalyzer;
+import org.jahia.loganalyzer.analyzers.core.LineAnalyzerContext;
 import org.jahia.loganalyzer.analyzers.exceptions.ExceptionLineAnalyzer;
 import org.jahia.loganalyzer.analyzers.garbagecollection.GarbageCollectionLineAnalyzer;
 import org.jahia.loganalyzer.analyzers.loglevel.StandardLogLineAnalyzer;
@@ -73,10 +74,20 @@ public class LogParser {
         String currentLine = lineNumberReader.readLine();
         String nextLine = lineNumberReader.readLine();
         String nextNextLine = null;
+        LineAnalyzerContext lineAnalyzerContext = new LineAnalyzerContext();
+        lineAnalyzerContext.setLineNumberReader(lineNumberReader);
+        lineAnalyzerContext.setFile(file);
+        lineAnalyzerContext.setJvmIdentifier(jvmIdentifier);
         try {
             while (( currentLine != null ) && (nextLine != null)) {
                 nextNextLine = lineNumberReader.readLine();
-                Date lastDateFound = lineAnalyzer.parseLine(currentLine, nextLine, nextNextLine, contextLines, lineNumberReader, lastValidDateParsed, file, jvmIdentifier);
+                lineAnalyzerContext.setLine(currentLine);
+                lineAnalyzerContext.setNextLine(nextLine);
+                lineAnalyzerContext.setNextNextLine(nextNextLine);
+                lineAnalyzerContext.setContextLines(contextLines);
+                lineAnalyzerContext.setLastValidDateParsed(lastValidDateParsed);
+                lineAnalyzerContext.setLineNumber(lineNumberReader.getLineNumber() - 1);
+                Date lastDateFound = lineAnalyzer.parseLine(lineAnalyzerContext);
                 if (lastDateFound != null) {
                     lastValidDateParsed = lastDateFound;
                 }
@@ -87,7 +98,7 @@ public class LogParser {
                 currentLine = nextLine;
                 nextLine = nextNextLine;
             }
-            lineAnalyzer.finishPreviousState();
+            lineAnalyzer.finishPreviousState(lineAnalyzerContext);
         } catch (IOException ioe) {
             log.error("Error on line " + Integer.toString(lineNumberReader.getLineNumber()) + ": " + currentLine );
             throw ioe;

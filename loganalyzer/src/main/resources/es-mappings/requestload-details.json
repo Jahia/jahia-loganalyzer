@@ -1,0 +1,33 @@
+{
+  "properties": {
+    "endLineNumber": {
+      "type": "long"
+    },
+    "fifteenMinuteLoad": {
+      "type": "double"
+    },
+    "fiveMinuteLoad": {
+      "type": "double"
+    },
+    "jvmIdentifier": {
+      "type": "string"
+    },
+    "logType": {
+      "type": "string",
+      "index": "not_analyzed"
+    },
+    "oneMinuteLoad": {
+      "type": "double"
+    },
+    "source": {
+      "type": "string"
+    },
+    "startLineNumber": {
+      "type": "long"
+    },
+    "timestamp": {
+      "type": "date",
+      "format": "strict_date_optional_time||epoch_millis"
+    }
+  }
+}

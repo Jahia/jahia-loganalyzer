@@ -1,10 +1,7 @@
 package org.jahia.loganalyzer.analyzers.core;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.LineNumberReader;
 import java.util.Date;
-import java.util.Deque;
 import java.util.List;
 
 /**
@@ -27,12 +24,12 @@ public class CompositeLineAnalyzer implements LineAnalyzer {
     }
 
 
-    public boolean isForThisAnalyzer(String line, String nextLine, String nextNextLine, File file, String jvmIdentifier) {
+    public boolean isForThisAnalyzer(LineAnalyzerContext context) {
         for (LineAnalyzer lineAnalyzer : lineAnalyzers) {
-            if (lineAnalyzer.isForThisAnalyzer(line, nextLine, nextNextLine, file, jvmIdentifier)) {
+            if (lineAnalyzer.isForThisAnalyzer(context)) {
                 if (lineAnalyzer != currentlyActiveAnalyzer) {
                     if (currentlyActiveAnalyzer != null) {
-                        currentlyActiveAnalyzer.finishPreviousState();
+                        currentlyActiveAnalyzer.finishPreviousState(context);
                     }
                     currentlyActiveAnalyzer = lineAnalyzer;
                 }
@@ -42,16 +39,16 @@ public class CompositeLineAnalyzer implements LineAnalyzer {
         return false;
     }
 
-    public Date parseLine(String line, String nextLine, String nextNextLine, Deque<String> contextLines, LineNumberReader lineNumberReader, Date lastValidDateParsed, File file, String jvmIdentifier) throws IOException {
-        if (isForThisAnalyzer(line, nextLine, nextNextLine, file, jvmIdentifier)) {
-            return currentlyActiveAnalyzer.parseLine(line, nextLine, nextNextLine, contextLines, lineNumberReader, lastValidDateParsed, file, jvmIdentifier);
+    public Date parseLine(LineAnalyzerContext context) throws IOException {
+        if (isForThisAnalyzer(context)) {
+            return currentlyActiveAnalyzer.parseLine(context);
         }
         return null;
     }
 
-    public void finishPreviousState() {
+    public void finishPreviousState(LineAnalyzerContext context) {
         for (LineAnalyzer lineAnalyzer : lineAnalyzers) {
-            lineAnalyzer.finishPreviousState();
+            lineAnalyzer.finishPreviousState(context);
         }
     }
 

@@ -6,18 +6,20 @@ import com.maxmind.geoip2.exception.GeoIp2Exception;
 import com.maxmind.geoip2.model.CityResponse;
 import com.maxmind.geoip2.record.*;
 import org.jahia.loganalyzer.LogParserConfiguration;
+import org.jahia.loganalyzer.analyzers.core.LineAnalyzerContext;
 import org.jahia.loganalyzer.analyzers.core.WritingLineAnalyzer;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.LineNumberReader;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -64,15 +66,15 @@ public class PerformanceLineAnalyzer extends WritingLineAnalyzer {
         return "performance";
     }
 
-    public boolean isForThisAnalyzer(String line, String nextLine, String nextNextLine, File file, String jvmIdentifier) {
-        Matcher matcher = linePattern.matcher(line);
+    public boolean isForThisAnalyzer(LineAnalyzerContext context) {
+        Matcher matcher = linePattern.matcher(context.getLine());
         boolean matches = matcher.matches();
         return matches;
     }
 
-    public Date parseLine(String line, String nextLine, String nextNextLine, Deque<String> contextLines, LineNumberReader lineNumberReader, Date lastValidDateParsed, File file, String jvmIdentifier) {
+    public Date parseLine(LineAnalyzerContext context) {
 
-        Matcher matcher = linePattern.matcher(line);
+        Matcher matcher = linePattern.matcher(context.getLine());
         boolean matches = matcher.matches();
         if (!matches) {
             return null;
@@ -88,9 +90,9 @@ public class PerformanceLineAnalyzer extends WritingLineAnalyzer {
         try {
             parsedDate = dateFormat.parse(dateGroup);
         } catch (ParseException e) {
-            log.error("Error parsing date format in line " + line, e); 
+            log.error("Error parsing date format in line " + context.getLine(), e);
         }
-        PerformanceDetailsLogEntry detailsLogEntry = new PerformanceDetailsLogEntry(lineNumberReader.getLineNumber() - 1, lineNumberReader.getLineNumber() - 1, parsedDate, jvmIdentifier, file.getName());
+        PerformanceDetailsLogEntry detailsLogEntry = new PerformanceDetailsLogEntry(context.getLineNumber(), context.getLineNumber(), parsedDate, context.getJvmIdentifier(), context.getFile().getName());
         if (ipAddressGroup != null &&
                 databaseReader != null &&
                 !"127.0.0.1".equals(ipAddressGroup) &&
@@ -113,15 +115,15 @@ public class PerformanceLineAnalyzer extends WritingLineAnalyzer {
                     detailsLogEntry.getLocation().put("lon", location.getLongitude());
                 }
             } catch (UnknownHostException e) {
-                log.error("IP Address format error on line:" + line, e);
+                log.error("IP Address format error on line:" + context.getLine(), e);
             } catch (GeoIp2Exception e) {
-                log.error("IP Address geo location error on line:" + line, e);
+                log.error("IP Address geo location error on line:" + context.getLine(), e);
             } catch (IOException e) {
-                log.error("IP Address I/O Error on line:" + line, e);
+                log.error("IP Address I/O Error on line:" + context.getLine(), e);
             }
 
         }
-        processURL(urlGroup, detailsLogEntry, line);
+        processURL(urlGroup, detailsLogEntry, context.getLine());
         detailsLogEntry.setUrl(urlGroup);
         detailsLogEntry.setEsi(esiGroup);
         detailsLogEntry.setUser(userGroup);
@@ -141,7 +143,7 @@ public class PerformanceLineAnalyzer extends WritingLineAnalyzer {
         String pageKey = Integer.toString(detailsLogEntry.getPid()) + "-" + detailsLogEntry.getUrlKey();
         PerformanceSummaryLogEntry performanceSummaryLogEntry = perfSummary.get(pageKey);
         if (performanceSummaryLogEntry == null) {
-            performanceSummaryLogEntry = new PerformanceSummaryLogEntry(lineNumberReader.getLineNumber() - 1, lineNumberReader.getLineNumber() - 1, parsedDate, jvmIdentifier, file.getName());
+            performanceSummaryLogEntry = new PerformanceSummaryLogEntry(context.getLineNumber(), context.getLineNumber(), parsedDate, context.getJvmIdentifier(), context.getFile().getName());
             performanceSummaryLogEntry.setPageID(detailsLogEntry.getPid());
             performanceSummaryLogEntry.setUrlKey(detailsLogEntry.getUrlKey());
             performanceSummaryLogEntry.setUrl(detailsLogEntry.getUrl());
@@ -156,8 +158,7 @@ public class PerformanceLineAnalyzer extends WritingLineAnalyzer {
         return detailsLogEntry.getTimestamp();
     }
 
-    public void finishPreviousState() {
-        //To change body of implemented methods use File | Settings | File Templates.
+    public void finishPreviousState(LineAnalyzerContext context) {
     }
 
 

@@ -1,16 +1,14 @@
 package org.jahia.loganalyzer.analyzers.loglevel;
 
 import org.jahia.loganalyzer.LogParserConfiguration;
+import org.jahia.loganalyzer.analyzers.core.LineAnalyzerContext;
 import org.jahia.loganalyzer.analyzers.core.WritingLineAnalyzer;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.LineNumberReader;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Deque;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
@@ -43,14 +41,14 @@ public class StandardLogLineAnalyzer extends WritingLineAnalyzer {
         return "loglevel";
     }
 
-    public boolean isForThisAnalyzer(String line, String nextLine, String nextNextLine, File file, String jvmIdentifier) {
-        Matcher matcher = standardLogPattern.matcher(line);
+    public boolean isForThisAnalyzer(LineAnalyzerContext context) {
+        Matcher matcher = standardLogPattern.matcher(context.getLine());
         boolean matches = matcher.matches();
         return matches;
     }
 
-    public Date parseLine(String line, String nextLine, String nextNextLine, Deque<String> contextLines, LineNumberReader reader, Date lastValidDateParsed, File file, String jvmIdentifier) throws IOException {
-        Matcher matcher = standardLogPattern.matcher(line);
+    public Date parseLine(LineAnalyzerContext context) throws IOException {
+        Matcher matcher = standardLogPattern.matcher(context.getLine());
         boolean matches = matcher.matches();
         if (!matches) {
             return null;
@@ -60,9 +58,9 @@ public class StandardLogLineAnalyzer extends WritingLineAnalyzer {
         try {
             parsedDate = dateFormat.parse(dateGroup);
         } catch (ParseException e) {
-            log.error("Error parsing date format in line " + line, e);
+            log.error("Error parsing date format in line " + context.getLine(), e);
         }
-        StandardDetailsLogEntry detailsLogEntry = new StandardDetailsLogEntry(reader.getLineNumber() - 1, reader.getLineNumber() - 1, parsedDate, jvmIdentifier, file.getName());
+        StandardDetailsLogEntry detailsLogEntry = new StandardDetailsLogEntry(context.getLineNumber(), context.getLineNumber(), parsedDate, context.getJvmIdentifier(), context.getFile().getName());
         detailsLogEntry.setLevel(matcher.group(2));
         detailsLogEntry.setClassName(matcher.group(3));
         // group 4 is not used.
@@ -74,7 +72,7 @@ public class StandardLogLineAnalyzer extends WritingLineAnalyzer {
 
         StandardSummaryLogEntry standardSummaryLogEntry = standardSummary.get(Integer.toString(detailsLogEntry.getLevelNumber()) + ":" + detailsLogEntry.getMessage());
         if (standardSummaryLogEntry == null) {
-            standardSummaryLogEntry = new StandardSummaryLogEntry(0, 0, parsedDate, jvmIdentifier, file.getName());
+            standardSummaryLogEntry = new StandardSummaryLogEntry(0, 0, parsedDate, context.getJvmIdentifier(), context.getFile().getName());
             standardSummaryLogEntry.setLevel(detailsLogEntry.getLevel());
             standardSummaryLogEntry.setLevelNumber(detailsLogEntry.getLevelNumber());
             standardSummaryLogEntry.setMessage(detailsLogEntry.getMessage());
@@ -85,7 +83,7 @@ public class StandardLogLineAnalyzer extends WritingLineAnalyzer {
         return parsedDate;
     }
 
-    public void finishPreviousState() {
+    public void finishPreviousState(LineAnalyzerContext context) {
     }
 
     public void stop() throws IOException {

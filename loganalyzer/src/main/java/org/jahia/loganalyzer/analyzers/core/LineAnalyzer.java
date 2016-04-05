@@ -1,10 +1,7 @@
 package org.jahia.loganalyzer.analyzers.core;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.LineNumberReader;
 import java.util.Date;
-import java.util.Deque;
 
 /**
  * Common interface for all line analyzer implementations
@@ -23,27 +20,24 @@ public interface LineAnalyzer {
 
     /**
      * Checks whether the current line is going to be sent to a specific analyzer.
-     * @param line
      * @return
      */
-    boolean isForThisAnalyzer(String line, String nextLine, String nextNextLine, File file, String jvmIdentifier);
+    boolean isForThisAnalyzer(LineAnalyzerContext context);
 
     /**
      * Process the line with the analyzer
-     * @param line
-     * @param reader
      * @throws IOException
      */
-    Date parseLine(String line, String nextLine, String nextNextLine, Deque<String> contextLines, LineNumberReader reader, Date lastValidDateParsed, File file, String jvmIdentifier) throws IOException;
+    Date parseLine(LineAnalyzerContext context) throws IOException;
 
     /**
      * This method is called when this analyzer is being switched to another one by the composite analyzer,
      * so that it can cleanup it's state before passing control to another analyzer
      */
-    void finishPreviousState();
+    void finishPreviousState(LineAnalyzerContext context);
 
     /**
-     * Used to free any resources used by the line analyzer
+     * Used to free any resources used by the line analyzer and write summary information
      */
     void stop() throws IOException;
 }
