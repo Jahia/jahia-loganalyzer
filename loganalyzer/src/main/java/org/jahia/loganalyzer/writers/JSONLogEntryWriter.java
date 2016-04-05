@@ -34,6 +34,10 @@ public class JSONLogEntryWriter implements LogEntryWriter {
         jsonGenerator.writeStartArray();
     }
 
+    public String getFileExtension() {
+        return "json";
+    }
+
     public void write(LogEntry logEntry) {
         try {
             jsonGenerator.writeStartObject();

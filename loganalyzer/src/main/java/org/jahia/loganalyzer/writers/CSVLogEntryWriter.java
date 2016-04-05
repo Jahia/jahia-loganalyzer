@@ -35,6 +35,10 @@ public class CSVLogEntryWriter implements LogEntryWriter {
         csvWriter.writeNext(columnNames.toArray(new String[columnNames.size()]));
     }
 
+    public String getFileExtension() {
+        return "csv";
+    }
+
     public void write(LogEntry logEntry) {
         if (logEntry == null) {
             return;

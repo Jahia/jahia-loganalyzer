@@ -38,6 +38,10 @@ public class ElasticSearchLogEntryWriter implements LogEntryWriter {
         }
     }
 
+    public String getFileExtension() {
+        return "";
+    }
+
     public void initIndex(String indexName) {
         if (indexMappings.containsKey(indexName)) {
             return;

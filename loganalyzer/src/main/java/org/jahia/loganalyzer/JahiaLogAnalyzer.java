@@ -79,7 +79,10 @@ public class JahiaLogAnalyzer {
             try {
                 logParserConfiguration.setInputFile(inputFile);
                 analyze(null);
-                log.info("Analysis completed. Keeping embedded ElasticSearch server running, press CTRL-C to quit...");
+                log.info("Analysis completed. ");
+                log.info("You can access ElasticSearch plugin at http://localhost:9200/_plugin/loganalyzer");
+                log.info("If you have Kibana 4+ running, you can access it at http://localhost:5601");
+                log.info("Keeping embedded ElasticSearch server running, press CTRL-C to quit...");
                 while (true) {
                     try {
                         Thread.sleep(1000);

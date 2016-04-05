@@ -11,6 +11,9 @@ import java.io.IOException;
  * Time: 12:08:37
  */
 public interface LogEntryWriter {
+
+    String getFileExtension();
+
     void write(LogEntry logEntry);
 
     void close() throws IOException;

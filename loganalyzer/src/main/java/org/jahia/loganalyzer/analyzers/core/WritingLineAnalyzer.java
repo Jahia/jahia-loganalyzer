@@ -22,10 +22,10 @@ public abstract class WritingLineAnalyzer implements LineAnalyzer {
     private List<LogEntryWriter> detailsLogEntryWriters = new ArrayList<LogEntryWriter>();
     private List<LogEntryWriter> summaryLogEntryWriters = new ArrayList<LogEntryWriter>();
 
-    public WritingLineAnalyzer(File detailsOutputFile, File summaryOutputFile, char csvOutputSeparatorChar, LogEntry logEntry, LogEntry summaryLogEntry, LogParserConfiguration logParserConfiguration) throws IOException {
+    public WritingLineAnalyzer(File detailsOutputFile, File summaryOutputFile, char csvOutputSeparatorChar, LogEntry detailsLogEntry, LogEntry summaryLogEntry, LogParserConfiguration logParserConfiguration) throws IOException {
         // CSV Output setup
         File csvDetailsFile = new File(detailsOutputFile.getPath() + ".csv");
-        LogEntryWriter csvDetailsLogEntryWriter = new CSVLogEntryWriter(csvDetailsFile, csvOutputSeparatorChar, logEntry);
+        LogEntryWriter csvDetailsLogEntryWriter = new CSVLogEntryWriter(csvDetailsFile, csvOutputSeparatorChar, detailsLogEntry);
         detailsLogEntryWriters.add(csvDetailsLogEntryWriter);
         File csvSummaryFile = new File(summaryOutputFile.getPath() + ".csv");
         LogEntryWriter csvSummaryLogEntryWriter = new CSVLogEntryWriter(csvSummaryFile, csvOutputSeparatorChar, summaryLogEntry);
@@ -33,7 +33,7 @@ public abstract class WritingLineAnalyzer implements LineAnalyzer {
 
         // HTML Output setup
         File htmlDetailFile = new File(detailsOutputFile.getPath() + ".html");
-        LogEntryWriter htmlDetailsLogEntryWriter = new HTMLLogEntryWriter(htmlDetailFile, logEntry, logParserConfiguration);
+        LogEntryWriter htmlDetailsLogEntryWriter = new HTMLLogEntryWriter(htmlDetailFile, detailsLogEntry, logParserConfiguration);
         detailsLogEntryWriters.add(htmlDetailsLogEntryWriter);
         File htmlSummaryFile = new File(summaryOutputFile.getPath() + ".html");
         LogEntryWriter htmlSummaryLogEntryWriter = new HTMLLogEntryWriter(htmlSummaryFile, summaryLogEntry, logParserConfiguration);
@@ -41,17 +41,17 @@ public abstract class WritingLineAnalyzer implements LineAnalyzer {
 
         // JSON Output setup
         File jsonDetailFile = new File(detailsOutputFile.getPath() + ".json");
-        LogEntryWriter jsonDetailsLogEntryWriter = new JSONLogEntryWriter(jsonDetailFile, logEntry);
+        LogEntryWriter jsonDetailsLogEntryWriter = new JSONLogEntryWriter(jsonDetailFile, detailsLogEntry);
         detailsLogEntryWriters.add(jsonDetailsLogEntryWriter);
         File jsonSummaryFile = new File(summaryOutputFile.getPath() + ".json");
         LogEntryWriter jsonSummaryLogEntryWriter = new JSONLogEntryWriter(jsonSummaryFile, summaryLogEntry);
         summaryLogEntryWriters.add(jsonSummaryLogEntryWriter);
 
         File elasticSearchDetailFile = new File(detailsOutputFile.getPath() + ".es");
-        LogEntryWriter elasticSearchDetailWriter = new ElasticSearchLogEntryWriter(elasticSearchDetailFile, logEntry, logParserConfiguration);
+        LogEntryWriter elasticSearchDetailWriter = new ElasticSearchLogEntryWriter(elasticSearchDetailFile, detailsLogEntry, logParserConfiguration);
         detailsLogEntryWriters.add(elasticSearchDetailWriter);
         File elasticSearchSummaryFile = new File(summaryOutputFile.getPath() + ".es");
-        LogEntryWriter elasticSearchSummaryWriter = new ElasticSearchLogEntryWriter(elasticSearchSummaryFile, logEntry, logParserConfiguration);
+        LogEntryWriter elasticSearchSummaryWriter = new ElasticSearchLogEntryWriter(elasticSearchSummaryFile, detailsLogEntry, logParserConfiguration);
         summaryLogEntryWriters.add(elasticSearchSummaryWriter);
 
     }

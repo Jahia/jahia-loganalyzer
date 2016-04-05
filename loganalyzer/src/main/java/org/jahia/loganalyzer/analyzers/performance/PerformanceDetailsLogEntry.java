@@ -11,7 +11,7 @@ import java.util.*;
  * Date: August 22nd, 2007
  * Time: 09:19:24
  */
-public class PerfDetailsLogEntry extends BaseLogEntry {
+public class PerformanceDetailsLogEntry extends BaseLogEntry {
     private int pid = -1;
     private String urlKey = "";
     private String language;
@@ -25,7 +25,7 @@ public class PerfDetailsLogEntry extends BaseLogEntry {
     private long processingTime = 0;
     private Map<String, Double> location = new HashMap<String, Double>();
 
-    public PerfDetailsLogEntry(long startLineNumber, long endLineNumber, Date timestamp, String jvmIdentifier, String source) {
+    public PerformanceDetailsLogEntry(long startLineNumber, long endLineNumber, Date timestamp, String jvmIdentifier, String source) {
         super(startLineNumber, endLineNumber, timestamp, jvmIdentifier, source);
     }
 

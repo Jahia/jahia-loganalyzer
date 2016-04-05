@@ -29,22 +29,22 @@ import java.util.regex.Pattern;
  * Date: August 22nd, 2007
  * Time: 12:49:15
  */
-public class JahiaPerfLineAnalyzer extends WritingLineAnalyzer {
+public class PerformanceLineAnalyzer extends WritingLineAnalyzer {
 
     private static final org.apache.commons.logging.Log log =
-            org.apache.commons.logging.LogFactory.getLog(JahiaPerfLineAnalyzer.class);
+            org.apache.commons.logging.LogFactory.getLog(PerformanceLineAnalyzer.class);
     DatabaseReader databaseReader = null;
     private Pattern linePattern;
     private DateFormat dateFormat;
     private String contextMapping;
     private String servletMapping;
-    private Map<String, PerfSummaryLogEntry> perfSummary = new HashMap<String, PerfSummaryLogEntry>();
+    private Map<String, PerformanceSummaryLogEntry> perfSummary = new HashMap<String, PerformanceSummaryLogEntry>();
 
     /**
      *
      */
-    public JahiaPerfLineAnalyzer(LogParserConfiguration logParserConfiguration) throws IOException {
-        super(logParserConfiguration.getPerfDetailsOutputFile(), logParserConfiguration.getPerfSummaryOutputFile(), logParserConfiguration.getCsvSeparatorChar(), new PerfDetailsLogEntry(0, 0, null, null, null), new PerfSummaryLogEntry(0, 0, null, null, null), logParserConfiguration);
+    public PerformanceLineAnalyzer(LogParserConfiguration logParserConfiguration) throws IOException {
+        super(logParserConfiguration.getPerfDetailsOutputFile(), logParserConfiguration.getPerfSummaryOutputFile(), logParserConfiguration.getCsvSeparatorChar(), new PerformanceDetailsLogEntry(0, 0, null, null, null), new PerformanceSummaryLogEntry(0, 0, null, null, null), logParserConfiguration);
         if (logParserConfiguration.getPatternList() != null && logParserConfiguration.getPatternList().size() > 0) {
             linePattern = Pattern.compile((String)logParserConfiguration.getPatternList().get(0));
         } else {
@@ -90,7 +90,7 @@ public class JahiaPerfLineAnalyzer extends WritingLineAnalyzer {
         } catch (ParseException e) {
             log.error("Error parsing date format in line " + line, e); 
         }
-        PerfDetailsLogEntry detailsLogEntry = new PerfDetailsLogEntry(lineNumberReader.getLineNumber() - 1, lineNumberReader.getLineNumber() - 1, parsedDate, jvmIdentifier, file.getName());
+        PerformanceDetailsLogEntry detailsLogEntry = new PerformanceDetailsLogEntry(lineNumberReader.getLineNumber() - 1, lineNumberReader.getLineNumber() - 1, parsedDate, jvmIdentifier, file.getName());
         if (ipAddressGroup != null &&
                 databaseReader != null &&
                 !"127.0.0.1".equals(ipAddressGroup) &&
@@ -139,19 +139,19 @@ public class JahiaPerfLineAnalyzer extends WritingLineAnalyzer {
 
         // now let's accumulate results
         String pageKey = Integer.toString(detailsLogEntry.getPid()) + "-" + detailsLogEntry.getUrlKey();
-        PerfSummaryLogEntry perfSummaryLogEntry = perfSummary.get(pageKey);
-        if (perfSummaryLogEntry == null) {
-            perfSummaryLogEntry = new PerfSummaryLogEntry(lineNumberReader.getLineNumber() - 1, lineNumberReader.getLineNumber() - 1, parsedDate, jvmIdentifier, file.getName());
-            perfSummaryLogEntry.setPageID(detailsLogEntry.getPid());
-            perfSummaryLogEntry.setUrlKey(detailsLogEntry.getUrlKey());
-            perfSummaryLogEntry.setUrl(detailsLogEntry.getUrl());
+        PerformanceSummaryLogEntry performanceSummaryLogEntry = perfSummary.get(pageKey);
+        if (performanceSummaryLogEntry == null) {
+            performanceSummaryLogEntry = new PerformanceSummaryLogEntry(lineNumberReader.getLineNumber() - 1, lineNumberReader.getLineNumber() - 1, parsedDate, jvmIdentifier, file.getName());
+            performanceSummaryLogEntry.setPageID(detailsLogEntry.getPid());
+            performanceSummaryLogEntry.setUrlKey(detailsLogEntry.getUrlKey());
+            performanceSummaryLogEntry.setUrl(detailsLogEntry.getUrl());
         }
-        perfSummaryLogEntry.setCumulatedPageTime(perfSummaryLogEntry.getCumulatedPageTime() + detailsLogEntry.getProcessingTime());
-        perfSummaryLogEntry.setPageHits(perfSummaryLogEntry.getPageHits()+1);
-        if (perfSummaryLogEntry.getMaxPageTime() < detailsLogEntry.getProcessingTime()) {
-            perfSummaryLogEntry.setMaxPageTime(detailsLogEntry.getProcessingTime());
+        performanceSummaryLogEntry.setCumulatedPageTime(performanceSummaryLogEntry.getCumulatedPageTime() + detailsLogEntry.getProcessingTime());
+        performanceSummaryLogEntry.setPageHits(performanceSummaryLogEntry.getPageHits() + 1);
+        if (performanceSummaryLogEntry.getMaxPageTime() < detailsLogEntry.getProcessingTime()) {
+            performanceSummaryLogEntry.setMaxPageTime(detailsLogEntry.getProcessingTime());
         }
-        perfSummary.put(pageKey, perfSummaryLogEntry);
+        perfSummary.put(pageKey, performanceSummaryLogEntry);
 
         return detailsLogEntry.getTimestamp();
     }
@@ -161,7 +161,7 @@ public class JahiaPerfLineAnalyzer extends WritingLineAnalyzer {
     }
 
 
-    private void processURL(String url, PerfDetailsLogEntry detailsLogEntry, String line) {
+    private void processURL(String url, PerformanceDetailsLogEntry detailsLogEntry, String line) {
         boolean hasPid = false;
         StringTokenizer tokenizer = new StringTokenizer(url, "/?&");
         String leftOverURL = new String(url);
@@ -222,8 +222,8 @@ public class JahiaPerfLineAnalyzer extends WritingLineAnalyzer {
     }
 
     public void stop() throws IOException {
-        for (PerfSummaryLogEntry perfSummaryLogEntry : perfSummary.values()) {
-            writeSummary(perfSummaryLogEntry);
+        for (PerformanceSummaryLogEntry performanceSummaryLogEntry : perfSummary.values()) {
+            writeSummary(performanceSummaryLogEntry);
         }
         super.stop();
     }

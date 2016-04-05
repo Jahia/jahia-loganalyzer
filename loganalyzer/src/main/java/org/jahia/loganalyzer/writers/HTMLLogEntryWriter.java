@@ -85,6 +85,10 @@ public class HTMLLogEntryWriter implements LogEntryWriter {
         }
     }
 
+    public String getFileExtension() {
+        return "html";
+    }
+
     public void write(LogEntry logEntry) {
         try {
             htmlWriter.append("        <tr>");

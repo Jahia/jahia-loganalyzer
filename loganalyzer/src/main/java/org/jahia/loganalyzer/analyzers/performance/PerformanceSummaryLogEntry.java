@@ -14,7 +14,7 @@ import java.util.List;
  * Time: 13:44:45
  * To change this template use File | Settings | File Templates.
  */
-public class PerfSummaryLogEntry extends BaseLogEntry {
+public class PerformanceSummaryLogEntry extends BaseLogEntry {
 
     private int pageID;
     private String urlKey;
@@ -24,7 +24,7 @@ public class PerfSummaryLogEntry extends BaseLogEntry {
     private long pageHits;
     private String url;
 
-    public PerfSummaryLogEntry(long startLineNumber, long endLineNumber, Date timestamp, String jvmIdentifier, String source) {
+    public PerformanceSummaryLogEntry(long startLineNumber, long endLineNumber, Date timestamp, String jvmIdentifier, String source) {
         super(startLineNumber, endLineNumber, timestamp, jvmIdentifier, source);
     }
 
