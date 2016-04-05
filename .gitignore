@@ -21,6 +21,11 @@
 hs_err_pid*
 ### Maven template
 target/
+/catalina.out
+/es-plugins/loganalyzer/node
+/es-plugins/loganalyzer/node_modules
+/es-plugins/loganalyzer/typings
+/es-plugins/loganalyzer/etc
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
