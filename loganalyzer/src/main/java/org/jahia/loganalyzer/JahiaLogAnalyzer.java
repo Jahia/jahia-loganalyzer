@@ -78,8 +78,11 @@ public class JahiaLogAnalyzer {
         } else {
             try {
                 logParserConfiguration.setInputFile(inputFile);
-                analyze(null);
-                log.info("Analysis completed. ");
+                if (analyze(null)) {
+                    log.info("Analysis completed. ");
+                } else {
+                    log.info("Previous analysis found, using previous data.");
+                }
                 log.info("You can access ElasticSearch plugin at http://localhost:9200/_plugin/loganalyzer");
                 log.info("If you have Kibana 4+ running, you can access it at http://localhost:5601");
                 log.info("Keeping embedded ElasticSearch server running, press CTRL-C to quit...");
@@ -96,17 +99,19 @@ public class JahiaLogAnalyzer {
         }
     }
 
-    public void analyze(Component uiComponent) throws IOException {
+    public boolean analyze(Component uiComponent) throws IOException {
         File inputFile = logParserConfiguration.getInputFile();
         if (!inputFile.exists()) {
-            return;
+            return true;
         }
         String jvmIdentifier = "jvm";
         if (inputFile.isDirectory()) {
-
             SortedSet<File> sortedFiles = new TreeSet<File>(FileUtils.listFiles(inputFile, null, true));
             LogParser logParser = new LogParser();
             logParser.setLogParserConfiguration(logParserConfiguration);
+            if (logParserConfiguration.getOutputDirectory().exists()) {
+                return false;
+            }
             for (File file : sortedFiles) {
                 String filePath = file.getPath();
                 int jvmIdentifierPos = filePath.indexOf("jvm-");
@@ -128,15 +133,18 @@ public class JahiaLogAnalyzer {
         } else {
             File file = logParserConfiguration.getInputFile();
             Reader reader = getFileReader(uiComponent, file);
-            log.info("Parsing file " + file + "...");
             LogParser logParser = new LogParser();
             logParser.setLogParserConfiguration(logParserConfiguration);
+            if (logParserConfiguration.getOutputDirectory().exists()) {
+                return false;
+            }
+            log.info("Parsing file " + file + "...");
             logParser.parse(reader, file, jvmIdentifier);
             log.info("Parsing of file " + file + " completed.");
             reader.close();
             logParser.stop();
         }
-
+        return true;
     }
 
     private Reader getFileReader(Component uiComponent, File file) throws FileNotFoundException {

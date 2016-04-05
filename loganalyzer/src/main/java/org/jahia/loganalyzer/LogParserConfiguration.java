@@ -146,10 +146,14 @@ public class LogParserConfiguration {
             baseName = FilenameUtils.getBaseName(inputFile.getCanonicalPath());
             if (inputFile.isDirectory()) {
                 outputDirectory = new File(inputFile, "loganalyzer-results");
-                outputDirectory.mkdirs();
+                if (!outputDirectory.exists()) {
+                    outputDirectory.mkdirs();
+                }
             } else {
                 outputDirectory = new File(inputFile.getParentFile(), baseName + "-loganalyzer-results");
-                outputDirectory.mkdirs();
+                if (!outputDirectory.exists()) {
+                    outputDirectory.mkdirs();
+                }
             }
             this.perfDetailsOutputFile = new File(outputDirectory, DEFAULT_PERF_DETAILS_OUTPUTFILENAME);
             this.perfSummaryOutputFile = new File(outputDirectory, DEFAULT_PERF_SUMMARY_OUTPUTFILENAME);
