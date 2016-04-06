@@ -87,7 +87,7 @@ public class ThreadDumpLineAnalyzer extends WritingLineAnalyzer {
 
     public Date parseLine(LineAnalyzerContext context) throws IOException {
 
-        this.lastValidDateParsed = lastValidDateParsed;
+        this.lastValidDateParsed = context.getLastValidDateParsed();
         if (!lineMatches(context.getLine()) && lineMatches(context.getNextLine())) {
             return null;
         }
