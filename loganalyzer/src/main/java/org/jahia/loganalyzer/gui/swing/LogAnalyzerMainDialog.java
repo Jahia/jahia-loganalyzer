@@ -160,14 +160,8 @@ public class LogAnalyzerMainDialog extends JDialog {
                     File targetDirectory = null;
                     if (file.isDirectory()) {
                         targetDirectory = new File(file, "loganalyzer-results");
-                        if (!targetDirectory.exists()) {
-                            targetDirectory.mkdirs();
-                        }
                     } else {
                         targetDirectory = new File(file.getParentFile(), baseName + "-loganalyzer-results");
-                        if (!targetDirectory.exists()) {
-                            targetDirectory.mkdirs();
-                        }
                     }
 
                     // now we use the same parent directory for all output files

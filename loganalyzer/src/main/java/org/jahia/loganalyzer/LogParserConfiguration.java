@@ -29,6 +29,8 @@ public class LogParserConfiguration {
     public static final String DEFAULT_GC_SUMMARY_OUTPUTFILENAME = "gc-summary";
     public static final String DEFAULT_REQUESTLOAD_DETAILS_OUTPUTFILENAME = "requestload-details";
     public static final String DEFAULT_REQUESTLOAD_SUMMARY_OUTPUTFILENAME = "requestload-summary";
+    public static final String DEFAULT_JACKRABBITBUNDLECACHE_DETAILS_OUTPUTFILENAME = "jackrabbitbundlecache-details";
+    public static final String DEFAULT_JACKRABBITBUNDLECACHE_SUMMARY_OUTPUTFILENAME = "jackrabbitbundlecache-summary";
     private static final org.apache.commons.logging.Log log =
             org.apache.commons.logging.LogFactory.getLog(LogParserConfiguration.class);
     private static final String DEFAULT_DATE_FORMAT_STRING = "yyyy-MM-dd HH:mm:ss,SSS";
@@ -76,6 +78,9 @@ public class LogParserConfiguration {
 
     private File requestLoadDetailsOutputFile = new File(outputDirectory, DEFAULT_REQUESTLOAD_DETAILS_OUTPUTFILENAME);
     private File requestLoadSummaryOutputFile = new File(outputDirectory, DEFAULT_REQUESTLOAD_SUMMARY_OUTPUTFILENAME);
+
+    private File jackrabbitBundleCacheDetailsOutputFile = new File(outputDirectory, DEFAULT_JACKRABBITBUNDLECACHE_DETAILS_OUTPUTFILENAME);
+    private File jackrabbitBundleCacheSummaryOutputFile = new File(outputDirectory, DEFAULT_JACKRABBITBUNDLECACHE_SUMMARY_OUTPUTFILENAME);
 
     private char csvSeparatorChar;
     private List patternList;
@@ -146,14 +151,8 @@ public class LogParserConfiguration {
             baseName = FilenameUtils.getBaseName(inputFile.getCanonicalPath());
             if (inputFile.isDirectory()) {
                 outputDirectory = new File(inputFile, "loganalyzer-results");
-                if (!outputDirectory.exists()) {
-                    outputDirectory.mkdirs();
-                }
             } else {
                 outputDirectory = new File(inputFile.getParentFile(), baseName + "-loganalyzer-results");
-                if (!outputDirectory.exists()) {
-                    outputDirectory.mkdirs();
-                }
             }
             this.perfDetailsOutputFile = new File(outputDirectory, DEFAULT_PERF_DETAILS_OUTPUTFILENAME);
             this.perfSummaryOutputFile = new File(outputDirectory, DEFAULT_PERF_SUMMARY_OUTPUTFILENAME);
@@ -167,6 +166,9 @@ public class LogParserConfiguration {
             this.gcSummaryOutputFile = new File(outputDirectory, DEFAULT_GC_SUMMARY_OUTPUTFILENAME);
             this.requestLoadDetailsOutputFile = new File(outputDirectory, DEFAULT_REQUESTLOAD_DETAILS_OUTPUTFILENAME);
             this.requestLoadSummaryOutputFile = new File(outputDirectory, DEFAULT_REQUESTLOAD_SUMMARY_OUTPUTFILENAME);
+            this.jackrabbitBundleCacheDetailsOutputFile = new File(outputDirectory, DEFAULT_JACKRABBITBUNDLECACHE_DETAILS_OUTPUTFILENAME);
+            this.jackrabbitBundleCacheSummaryOutputFile = new File(outputDirectory, DEFAULT_JACKRABBITBUNDLECACHE_SUMMARY_OUTPUTFILENAME);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -418,6 +420,22 @@ public class LogParserConfiguration {
 
     public void setRequestLoadSummaryOutputFile(File requestLoadSummaryOutputFile) {
         this.requestLoadSummaryOutputFile = requestLoadSummaryOutputFile;
+    }
+
+    public File getJackrabbitBundleCacheDetailsOutputFile() {
+        return jackrabbitBundleCacheDetailsOutputFile;
+    }
+
+    public void setJackrabbitBundleCacheDetailsOutputFile(File jackrabbitBundleCacheDetailsOutputFile) {
+        this.jackrabbitBundleCacheDetailsOutputFile = jackrabbitBundleCacheDetailsOutputFile;
+    }
+
+    public File getJackrabbitBundleCacheSummaryOutputFile() {
+        return jackrabbitBundleCacheSummaryOutputFile;
+    }
+
+    public void setJackrabbitBundleCacheSummaryOutputFile(File jackrabbitBundleCacheSummaryOutputFile) {
+        this.jackrabbitBundleCacheSummaryOutputFile = jackrabbitBundleCacheSummaryOutputFile;
     }
 
     public String[] getHtmlResourcesToCopy() {

@@ -17,6 +17,9 @@ Features
 - Parsing of threads dumps to generate thread dump evolution
 - Parsing of the rest of log lines to report the most common lines and filter
   on log level
+- Parsing of garbage collection activity 
+- Parsing of Jahia DX request load activity
+- Parsing of Jackrabbit bundle cache logs
 - Outputs CSV & JSON reports
 - Embeds an ElasticSearch server and stores the parsed data into it
 - Provides an ElasticSearch plugin to visualize the data

@@ -107,11 +107,12 @@ public class JahiaLogAnalyzer {
         String jvmIdentifier = "jvm";
         if (inputFile.isDirectory()) {
             SortedSet<File> sortedFiles = new TreeSet<File>(FileUtils.listFiles(inputFile, null, true));
-            LogParser logParser = new LogParser();
-            logParser.setLogParserConfiguration(logParserConfiguration);
             if (logParserConfiguration.getOutputDirectory().exists()) {
                 return false;
             }
+            createOutputDirectory(logParserConfiguration);
+            LogParser logParser = new LogParser();
+            logParser.setLogParserConfiguration(logParserConfiguration);
             for (File file : sortedFiles) {
                 String filePath = file.getPath();
                 int jvmIdentifierPos = filePath.indexOf("jvm-");
@@ -132,12 +133,13 @@ public class JahiaLogAnalyzer {
             logParser.stop();
         } else {
             File file = logParserConfiguration.getInputFile();
-            Reader reader = getFileReader(uiComponent, file);
-            LogParser logParser = new LogParser();
-            logParser.setLogParserConfiguration(logParserConfiguration);
             if (logParserConfiguration.getOutputDirectory().exists()) {
                 return false;
             }
+            createOutputDirectory(logParserConfiguration);
+            Reader reader = getFileReader(uiComponent, file);
+            LogParser logParser = new LogParser();
+            logParser.setLogParserConfiguration(logParserConfiguration);
             log.info("Parsing file " + file + "...");
             logParser.parse(reader, file, jvmIdentifier);
             log.info("Parsing of file " + file + " completed.");
@@ -145,6 +147,13 @@ public class JahiaLogAnalyzer {
             logParser.stop();
         }
         return true;
+    }
+
+    private void createOutputDirectory(LogParserConfiguration logParserConfiguration) {
+        File outputDirectory = logParserConfiguration.getOutputDirectory();
+        if (!outputDirectory.exists()) {
+            outputDirectory.mkdirs();
+        }
     }
 
     private Reader getFileReader(Component uiComponent, File file) throws FileNotFoundException {

@@ -6,6 +6,7 @@ import org.jahia.loganalyzer.analyzers.core.LineAnalyzer;
 import org.jahia.loganalyzer.analyzers.core.LineAnalyzerContext;
 import org.jahia.loganalyzer.analyzers.exceptions.ExceptionLineAnalyzer;
 import org.jahia.loganalyzer.analyzers.garbagecollection.GarbageCollectionLineAnalyzer;
+import org.jahia.loganalyzer.analyzers.jackrabbitbundlecache.JackrabbitBundleCacheLineAnalyzer;
 import org.jahia.loganalyzer.analyzers.loglevel.StandardLogLineAnalyzer;
 import org.jahia.loganalyzer.analyzers.performance.PerformanceLineAnalyzer;
 import org.jahia.loganalyzer.analyzers.requestload.RequestLoadLineAnalyzer;
@@ -62,6 +63,7 @@ public class LogParser {
             lineAnalyzers.add(new PerformanceLineAnalyzer(logParserConfiguration));
         }
         lineAnalyzers.add(new RequestLoadLineAnalyzer(logParserConfiguration));
+        lineAnalyzers.add(new JackrabbitBundleCacheLineAnalyzer(logParserConfiguration));
         lineAnalyzers.add(new GarbageCollectionLineAnalyzer(logParserConfiguration));
         lineAnalyzers.add(new StandardLogLineAnalyzer(logParserConfiguration));
         lineAnalyzers.add(new DefaultDummyLineAnalyzer());
