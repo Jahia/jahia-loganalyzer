@@ -7,5 +7,14 @@ version of the Jahia Log Analysis tool :
 - In Jahia, add sessionID output and support in the log analyzer for this output.
 - Documentation with screenshots and maybe even a small movie to illustrate how to use
 - Look into possibility to detect in which subsystem a thread is (Lucene, 
-  etc...), could we do this through stack analysis ? What about global Jahia actions ?
+  etc...), could we do this through stack analysis ? What about global Jahia actions ? (see ThreadLogic that even uses
+  stack traces to issue recommendations based on certain common traces)
 - Add support for parsing /site/ in URL
+- Fix URL parsing issues to reflect modern Jahia DX URLs
+- Make it possible to develop plugins for the line analyzers
+- Make it possible to configure new line analyzers simply by using regexp -> property mapping in ES
+- Make it possible to use a remote ElasticSearch instance
+- Make it possible to incrementally parse logs so that we can for example schedule the log analyzer in cron jobs to
+populate the ElasticSearch backend
+- Fix a better solution for the configuration if we are to support plugins
+

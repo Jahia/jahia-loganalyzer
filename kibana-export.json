@@ -270,5 +270,19 @@
         "searchSourceJSON": "{\"index\":\"loganalyzer-*\",\"query\":{\"query_string\":{\"query\":\"logType:jackrabbitbundlecache-details\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
+  },
+  {
+    "_id": "Jackrabbit-Bundle-Cache-Efficiency-per-node",
+    "_type": "visualization",
+    "_source": {
+      "title": "Jackrabbit Bundle Cache Efficiency per node",
+      "visState": "{\"title\":\"Jackrabbit Bundle Cache Efficiency\",\"type\":\"line\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"showCircles\":true,\"smoothLines\":false,\"interpolate\":\"linear\",\"scale\":\"linear\",\"drawLinesBetweenPoints\":true,\"radiusRatio\":9,\"times\":[],\"addTimeMarker\":false,\"defaultYExtents\":false,\"setYExtents\":false,\"yAxis\":{}},\"aggs\":[{\"id\":\"2\",\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"timestamp\",\"interval\":\"auto\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"5\",\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"accessCount\"}},{\"id\":\"6\",\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"missCount\"}},{\"id\":\"7\",\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"cacheName\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"5\"}},{\"id\":\"8\",\"type\":\"terms\",\"schema\":\"split\",\"params\":{\"field\":\"jvmIdentifier\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"5\",\"row\":true}}],\"listeners\":{}}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"loganalyzer-*\",\"query\":{\"query_string\":{\"query\":\"logType:jackrabbitbundlecache-details\",\"analyze_wildcard\":true}},\"filter\":[]}"
+      }
+    }
   }
 ]

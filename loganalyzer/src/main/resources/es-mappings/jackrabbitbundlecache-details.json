@@ -1,0 +1,45 @@
+{
+  "properties": {
+    "accessCount": {
+      "type": "long"
+    },
+    "cacheName": {
+      "type": "string",
+      "index": "not_analyzed"
+    },
+    "elementCount": {
+      "type": "long"
+    },
+    "endLineNumber": {
+      "type": "long"
+    },
+    "jvmIdentifier": {
+      "type": "string",
+      "index": "not_analyzed"
+    },
+    "logType": {
+      "type": "string",
+      "index": "not_analyzed"
+    },
+    "maxMemoryKb": {
+      "type": "long"
+    },
+    "missCount": {
+      "type": "long"
+    },
+    "source": {
+      "type": "string",
+      "index": "not_analyzed"
+    },
+    "startLineNumber": {
+      "type": "long"
+    },
+    "timestamp": {
+      "type": "date",
+      "format": "strict_date_optional_time||epoch_millis"
+    },
+    "usedMemoryKb": {
+      "type": "long"
+    }
+  }
+}
