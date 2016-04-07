@@ -49,6 +49,7 @@ public class LogParserTest extends TestCase {
             inputFile = new File(url.getPath());
         }
         logParserConfiguration.setInputFile(inputFile);
+        logParserConfiguration.getOutputDirectory().mkdirs();
         logParserConfiguration.setPatternList(new ArrayList());
         logParserConfiguration.setDateFormatString(DEFAULT_DATE_FORMAT_STRING);
         logParserConfiguration.setContextMapping("");
