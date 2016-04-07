@@ -17,4 +17,5 @@ version of the Jahia Log Analysis tool :
 - Make it possible to incrementally parse logs so that we can for example schedule the log analyzer in cron jobs to
 populate the ElasticSearch backend
 - Fix a better solution for the configuration if we are to support plugins
-
+- Make it possible to use scripts (Groovy,Javascript) to extend the log analyzer
+- Transform it into an Apache Karaf OSGi application ?
