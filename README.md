@@ -21,7 +21,8 @@ Features
 - Parsing of Jahia DX request load activity
 - Parsing of Jackrabbit bundle cache logs
 - Outputs CSV & JSON reports
-- Embeds an ElasticSearch server and stores the parsed data into it
+- Embeds an ElasticSearch server and stores the parsed data into it, a distant
+ElasticSearch may also be used.
 - Provides an ElasticSearch plugin to visualize the data
 - Compatible with Kibana 4 for advanced data visualization
 
@@ -44,10 +45,23 @@ Requirements :
 
 To run : 
 
-cd target 
-jar -jar loganalyzer-VERSION.jar
+    cd target 
+    jar [-DremoteServers=REMOTE_SERVER_LIST] -jar loganalyzer-VERSION.jar TARGET_FILE_OR_DIRECTORY
 
-Output of parsing is generated in CSV and HTML files in the same directory from which the 
+where : 
+- REMOTE_SERVER_LIST: is an optional list of remote ElasticSearch servers to use to output 
+the result of the parsing. It should be a comma seperated list of host:port values such as:
+
+    localhost:9300
+    10.0.1.0:9300, 10.0.1.1:9300
+    
+if this parameter is not specified it will start an embedded ElasticSearch server.
+    
+- TARGET_FILE_OR_DIRECTORY: an optional reference to a file or directory that will be used as
+the source of parsing. If none is specified the tool will start the GUI that allows to select
+a file and change some options.
+
+Output of parsing is generated in CSV and JSON files in the same directory from which the 
 application is run. The CSV files should open fine with Microsoft Excel.
 
 See the TODO.txt file for information about stuff that isn't done yet :)
