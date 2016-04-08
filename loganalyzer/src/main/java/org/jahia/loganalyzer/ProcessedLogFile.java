@@ -20,8 +20,11 @@ public class ProcessedLogFile {
 
     public ProcessedLogFile(File outputDirectory, File file) throws IOException {
         String relativePath = file.getCanonicalPath();
-        if (relativePath.startsWith(outputDirectory.getCanonicalPath())) {
+        if (relativePath.startsWith(outputDirectory.getCanonicalPath() + File.separator)) {
             relativePath = relativePath.substring(outputDirectory.getCanonicalPath().length() + File.separator.length());
+        }
+        if (relativePath.startsWith(outputDirectory.getCanonicalPath())) {
+            relativePath = relativePath.substring(outputDirectory.getCanonicalPath().length());
         }
         this.relativePath = relativePath;
         this.length = file.length();

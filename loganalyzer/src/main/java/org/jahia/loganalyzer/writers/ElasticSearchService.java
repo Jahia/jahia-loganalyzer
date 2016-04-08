@@ -19,7 +19,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 /**
- * An embedded ElasticSearch installation
+ * A service that either starts an embedded ElasticSearch server or connects to a distant server.
  */
 public class ElasticSearchService {
 
@@ -43,6 +43,10 @@ public class ElasticSearchService {
 
     public void setHomePath(String homePath) {
         this.homePath = homePath;
+    }
+
+    public boolean isRemote() {
+        return remoteESServers.size() != 0;
     }
 
     public synchronized void start() {

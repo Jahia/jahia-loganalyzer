@@ -67,7 +67,7 @@ public class StandardLogLineAnalyzer extends WritingLineAnalyzer {
         detailsLogEntry.setMessage(matcher.group(5));
 
         if (detailsLogEntry.getLevelNumber() >= standardMinimumLogLevel) {
-            writeDetails(detailsLogEntry);
+            writeDetails(detailsLogEntry, context.getMinimalTimestamp());
         }
 
         StandardSummaryLogEntry standardSummaryLogEntry = standardSummary.get(Integer.toString(detailsLogEntry.getLevelNumber()) + ":" + detailsLogEntry.getMessage());
@@ -88,7 +88,7 @@ public class StandardLogLineAnalyzer extends WritingLineAnalyzer {
 
     public void stop() throws IOException {
         for (StandardSummaryLogEntry standardSummaryLogEntry : standardSummary.values()) {
-            writeSummary(standardSummaryLogEntry);
+            writeSummary(standardSummaryLogEntry, -1);
         }
         super.stop();
     }

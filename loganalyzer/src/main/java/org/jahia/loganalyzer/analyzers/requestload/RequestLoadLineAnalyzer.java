@@ -79,7 +79,7 @@ public class RequestLoadLineAnalyzer extends WritingLineAnalyzer {
         requestLoadLogEntry.setOneMinuteLoad(oneMinuteLoad);
         requestLoadLogEntry.setFiveMinuteLoad(fiveMinuteLoad);
         requestLoadLogEntry.setFifteenMinuteLoad(fifteenMinuteLoad);
-        writeDetails(requestLoadLogEntry);
+        writeDetails(requestLoadLogEntry, context.getMinimalTimestamp());
         return parsedDate;
     }
 

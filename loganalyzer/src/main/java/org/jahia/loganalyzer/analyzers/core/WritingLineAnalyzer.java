@@ -61,13 +61,19 @@ public abstract class WritingLineAnalyzer implements LineAnalyzer {
         }
     }
 
-    public void writeDetails(LogEntry logEntry) {
+    public void writeDetails(LogEntry logEntry, long minimalTimestamp) {
+        if (minimalTimestamp > -1 && logEntry.getTimestamp() != null && logEntry.getTimestamp().getTime() <= minimalTimestamp) {
+            return;
+        }
         for (LogEntryWriter detailsLogEntryWriter : detailsLogEntryWriters) {
             detailsLogEntryWriter.write(logEntry);
         }
     }
 
-    public void writeSummary(LogEntry logEntry) {
+    public void writeSummary(LogEntry logEntry, long minimalTimestamp) {
+        if (minimalTimestamp > -1 && logEntry.getTimestamp() != null && logEntry.getTimestamp().getTime() <= minimalTimestamp) {
+            return;
+        }
         for (LogEntryWriter summaryLogEntryWriter : summaryLogEntryWriters) {
             summaryLogEntryWriter.write(logEntry);
         }

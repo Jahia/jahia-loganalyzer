@@ -18,6 +18,7 @@ public class LineAnalyzerContext {
     private File file;
     private String jvmIdentifier;
     private long lineNumber;
+    private long minimalTimestamp = -1;
 
     public LineAnalyzerContext() {
     }
@@ -92,5 +93,13 @@ public class LineAnalyzerContext {
 
     public void setLineNumber(long lineNumber) {
         this.lineNumber = lineNumber;
+    }
+
+    public long getMinimalTimestamp() {
+        return minimalTimestamp;
+    }
+
+    public void setMinimalTimestamp(long minimalTimestamp) {
+        this.minimalTimestamp = minimalTimestamp;
     }
 }

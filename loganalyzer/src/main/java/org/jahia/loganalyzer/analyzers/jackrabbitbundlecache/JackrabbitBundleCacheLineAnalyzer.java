@@ -96,7 +96,7 @@ public class JackrabbitBundleCacheLineAnalyzer extends WritingLineAnalyzer {
         jackrabbitBundleCacheLogEntry.setMaxMemoryKb(maxMemoryKb);
         jackrabbitBundleCacheLogEntry.setAccessCount(accessCount);
         jackrabbitBundleCacheLogEntry.setMissCount(missCount);
-        writeDetails(jackrabbitBundleCacheLogEntry);
+        writeDetails(jackrabbitBundleCacheLogEntry, context.getMinimalTimestamp());
         return parsedDate;
     }
 

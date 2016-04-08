@@ -70,7 +70,7 @@ public class LogParser {
         lineAnalyzer = new CompositeLineAnalyzer(lineAnalyzers);
     }
 
-    public Date parse(Reader reader, File file, String jvmIdentifier) throws IOException {
+    public ProcessedLogFile parse(Reader reader, File file, String jvmIdentifier, long minimalTimestamp) throws IOException {
         lastValidDateParsed = null;
         LineNumberReader lineNumberReader = new LineNumberReader(reader);
 
@@ -81,6 +81,7 @@ public class LogParser {
         lineAnalyzerContext.setLineNumberReader(lineNumberReader);
         lineAnalyzerContext.setFile(file);
         lineAnalyzerContext.setJvmIdentifier(jvmIdentifier);
+        lineAnalyzerContext.setMinimalTimestamp(minimalTimestamp);
         try {
             while (( currentLine != null ) && (nextLine != null)) {
                 nextNextLine = lineNumberReader.readLine();
@@ -106,7 +107,11 @@ public class LogParser {
             log.error("Error on line " + Integer.toString(lineNumberReader.getLineNumber()) + ": " + currentLine );
             throw ioe;
         }
-        return lastValidDateParsed;
+        ProcessedLogFile processedLogFile = new ProcessedLogFile(logParserConfiguration.getInputFile(), file);
+        if (lastValidDateParsed != null) {
+            processedLogFile.setLastModificationTime(lastValidDateParsed.getTime());
+        }
+        return processedLogFile;
     }
 
     public void stop() throws IOException {

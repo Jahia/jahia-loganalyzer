@@ -98,7 +98,7 @@ public class ExceptionLineAnalyzer extends WritingLineAnalyzer {
             return;
         }
         currentExceptionDetailsLogEntry.setEndLineNumber(context.getLineNumber());
-        writeDetails(currentExceptionDetailsLogEntry);
+        writeDetails(currentExceptionDetailsLogEntry, context.getMinimalTimestamp());
         ExceptionSummaryLogEntry exceptionSummaryLogEntry = exceptionSummaryMap.get(currentExceptionDetailsLogEntry.toString());
         if (exceptionSummaryLogEntry == null) {
             exceptionSummaryLogEntry = new ExceptionSummaryLogEntry(0, 0, null, null, null);
@@ -111,7 +111,7 @@ public class ExceptionLineAnalyzer extends WritingLineAnalyzer {
 
     public void stop() throws IOException {
         for (ExceptionSummaryLogEntry exceptionSummaryLogEntry : exceptionSummaryMap.values()) {
-            writeSummary(exceptionSummaryLogEntry);
+            writeSummary(exceptionSummaryLogEntry, -1);
         }
         super.stop();
     }

@@ -12,9 +12,8 @@ import java.util.ArrayList;
 /**
  * Created by IntelliJ IDEA.
  * User: Serge Huber
- * Date: 24 ao�t 2007
+ * Date: 24 aout 2007
  * Time: 08:43:00
- * To change this template use File | Settings | File Templates.
  */
 public class LogParserTest extends TestCase {
 
@@ -55,7 +54,7 @@ public class LogParserTest extends TestCase {
         logParserConfiguration.setContextMapping("");
         logParserConfiguration.setServletMapping("/PFUE");
         logParser.setLogParserConfiguration(logParserConfiguration);
-        logParser.parse(reader, inputFile, "jvm");
+        logParser.parse(reader, inputFile, "jvm", -1);
         logParser.stop();
     }
 }

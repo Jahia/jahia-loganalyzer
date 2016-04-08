@@ -23,7 +23,6 @@ public class CompositeLineAnalyzer implements LineAnalyzer {
         return "composite";
     }
 
-
     public boolean isForThisAnalyzer(LineAnalyzerContext context) {
         for (LineAnalyzer lineAnalyzer : lineAnalyzers) {
             if (lineAnalyzer.isForThisAnalyzer(context)) {

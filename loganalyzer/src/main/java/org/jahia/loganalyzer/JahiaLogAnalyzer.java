@@ -1,11 +1,13 @@
 package org.jahia.loganalyzer;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jgoodies.looks.plastic.PlasticXPLookAndFeel;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jahia.loganalyzer.gui.swing.LogAnalyzerMainDialog;
+import org.jahia.loganalyzer.writers.ElasticSearchService;
 
 import javax.swing.*;
 import java.io.*;
@@ -81,14 +83,16 @@ public class JahiaLogAnalyzer {
                 } else {
                     log.info("Previous analysis found, using previous data.");
                 }
-                log.info("You can access ElasticSearch plugin at http://localhost:9200/_plugin/loganalyzer");
-                log.info("If you have Kibana 4+ running, you can access it at http://localhost:5601");
-                log.info("Keeping embedded ElasticSearch server running, press CTRL-C to quit...");
-                while (true) {
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        // ignore
+                if (!ElasticSearchService.getInstance().isRemote()) {
+                    log.info("You can access ElasticSearch plugin at http://localhost:9200/_plugin/loganalyzer");
+                    log.info("If you have Kibana 4+ running, you can access it at http://localhost:5601");
+                    log.info("Keeping embedded ElasticSearch server running, press CTRL-C to quit...");
+                    while (true) {
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            // ignore
+                        }
                     }
                 }
             } catch (IOException e) {
@@ -118,10 +122,8 @@ public class JahiaLogAnalyzer {
 
                 ProcessedLogFile processedLogFile = new ProcessedLogFile(logParserConfiguration.getInputFile(), file);
                 if (processedLogFiles.contains(processedLogFile)) {
+                    log.info("File " + file + " already parsed previously, skipping");
                     continue;
-                } else {
-                    // @todo here we should check if we have a timestamp for the file in which case we will skip all
-                    // entries before the timestamp
                 }
                 String filePath = file.getPath();
                 int jvmIdentifierPos = filePath.indexOf("jvm-");
@@ -135,12 +137,9 @@ public class JahiaLogAnalyzer {
                 }
                 Reader reader = getFileReader(uiComponent, file);
                 log.info("Parsing file " + file + "...");
-                Date lastValidDateParsed = logParser.parse(reader, file, jvmIdentifier);
+                processedLogFile = logParser.parse(reader, file, jvmIdentifier, processedLogFile.getLastParsedTimestamp());
                 log.info("Parsing of file " + file + " completed.");
                 reader.close();
-                if (lastValidDateParsed != null) {
-                    processedLogFile.setLastParsedTimestamp(lastValidDateParsed.getTime());
-                }
                 processedLogFiles.add(processedLogFile);
             }
             logParser.stop();
@@ -158,19 +157,14 @@ public class JahiaLogAnalyzer {
                 logParser.setLogParserConfiguration(logParserConfiguration);
                 logParser.stop();
             } else {
-                // @todo here we should check if we have a timestamp for the file in which case we will skip all
-                // entries before the timestamp
                 LogParser logParser = new LogParser();
                 logParser.setLogParserConfiguration(logParserConfiguration);
                 Reader reader = getFileReader(uiComponent, file);
                 log.info("Parsing file " + file + "...");
-                Date lastValidDateParsed = logParser.parse(reader, file, jvmIdentifier);
+                processedLogFile = logParser.parse(reader, file, jvmIdentifier, processedLogFile.getLastParsedTimestamp());
                 log.info("Parsing of file " + file + " completed.");
                 reader.close();
                 logParser.stop();
-                if (lastValidDateParsed != null) {
-                    processedLogFile.setLastParsedTimestamp(lastValidDateParsed.getTime());
-                }
                 processedLogFiles.add(processedLogFile);
                 saveProcessedLogFiles(processedLogFiles);
             }
@@ -196,7 +190,8 @@ public class JahiaLogAnalyzer {
         }
         ObjectMapper mapper = new ObjectMapper();
         try {
-            List<ProcessedLogFile> processedLogFiles = (List<ProcessedLogFile>) mapper.readValue(processedFilesFile, List.class);
+            List<ProcessedLogFile> processedLogFiles = mapper.readValue(processedFilesFile, new TypeReference<List<ProcessedLogFile>>() {
+            });
             return processedLogFiles;
         } catch (IOException e) {
             log.error("Error reading loading processed file list from " + processedFilesFile, e);

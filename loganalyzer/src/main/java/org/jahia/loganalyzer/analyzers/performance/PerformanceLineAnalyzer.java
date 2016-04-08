@@ -137,7 +137,7 @@ public class PerformanceLineAnalyzer extends WritingLineAnalyzer {
         }
         detailsLogEntry.setProcessingTime(processingTime);
 
-        writeDetails(detailsLogEntry);
+        writeDetails(detailsLogEntry, context.getMinimalTimestamp());
 
         // now let's accumulate results
         String pageKey = Integer.toString(detailsLogEntry.getPid()) + "-" + detailsLogEntry.getUrlKey();
@@ -224,7 +224,7 @@ public class PerformanceLineAnalyzer extends WritingLineAnalyzer {
 
     public void stop() throws IOException {
         for (PerformanceSummaryLogEntry performanceSummaryLogEntry : perfSummary.values()) {
-            writeSummary(performanceSummaryLogEntry);
+            writeSummary(performanceSummaryLogEntry, -1);
         }
         super.stop();
     }

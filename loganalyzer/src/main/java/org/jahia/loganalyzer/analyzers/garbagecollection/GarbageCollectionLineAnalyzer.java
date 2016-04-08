@@ -52,7 +52,7 @@ public class GarbageCollectionLineAnalyzer extends WritingLineAnalyzer {
         garbageCollectionLogEntry.setToSize(Long.parseLong(matcher.group(4)));
         garbageCollectionLogEntry.setHeapSize(Long.parseLong(matcher.group(5)));
         garbageCollectionLogEntry.setGcTimeInSeconds(gcTimeInSeconds);
-        writeDetails(garbageCollectionLogEntry);
+        writeDetails(garbageCollectionLogEntry, context.getMinimalTimestamp());
         return newDate;
     }
 

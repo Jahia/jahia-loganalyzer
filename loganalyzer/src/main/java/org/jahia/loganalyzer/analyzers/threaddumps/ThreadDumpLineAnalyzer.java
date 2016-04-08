@@ -212,7 +212,7 @@ public class ThreadDumpLineAnalyzer extends WritingLineAnalyzer {
             log.trace("Thread " + currentThreadCount + " : " + threadDumpThreadLogEntry);
         }
         threadDumpThreadLogEntry.setEndLineNumber(context.getLineNumber());
-        writeDetails(threadDumpThreadLogEntry);
+        writeDetails(threadDumpThreadLogEntry, context.getMinimalTimestamp());
 
         ThreadInfo newThreadInfo = new ThreadInfo(threadDumpThreadLogEntry.getThreadId());
         newThreadInfo.setThreadName(threadDumpThreadLogEntry.getThreadName());
@@ -266,7 +266,7 @@ public class ThreadDumpLineAnalyzer extends WritingLineAnalyzer {
             currentThreadDumpLogEntry.setThreadDumpNumber(threadDumpCount);
             currentThreadDumpLogEntry.computeDifferences(lastThreadDumpLogEntry);
             currentThreadDumpLogEntry.setEndLineNumber(context.getLineNumber());
-            writeSummary(currentThreadDumpLogEntry);
+            writeSummary(currentThreadDumpLogEntry, context.getMinimalTimestamp());
             allThreadDumps.add(currentThreadDumpLogEntry);
         }
         inThreadDump = false;
