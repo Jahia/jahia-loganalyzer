@@ -70,7 +70,8 @@ public class LogParser {
         lineAnalyzer = new CompositeLineAnalyzer(lineAnalyzers);
     }
 
-    public void parse(Reader reader, File file, String jvmIdentifier) throws IOException {
+    public Date parse(Reader reader, File file, String jvmIdentifier) throws IOException {
+        lastValidDateParsed = null;
         LineNumberReader lineNumberReader = new LineNumberReader(reader);
 
         String currentLine = lineNumberReader.readLine();
@@ -105,6 +106,7 @@ public class LogParser {
             log.error("Error on line " + Integer.toString(lineNumberReader.getLineNumber()) + ": " + currentLine );
             throw ioe;
         }
+        return lastValidDateParsed;
     }
 
     public void stop() throws IOException {

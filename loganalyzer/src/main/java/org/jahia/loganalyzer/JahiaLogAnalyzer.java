@@ -1,5 +1,6 @@
 package org.jahia.loganalyzer;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jgoodies.looks.plastic.PlasticXPLookAndFeel;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
@@ -7,14 +8,11 @@ import org.apache.commons.logging.LogFactory;
 import org.jahia.loganalyzer.gui.swing.LogAnalyzerMainDialog;
 
 import javax.swing.*;
-import java.awt.*;
 import java.io.*;
 import java.net.JarURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Date;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
@@ -99,7 +97,7 @@ public class JahiaLogAnalyzer {
         }
     }
 
-    public boolean analyze(Component uiComponent) throws IOException {
+    public boolean analyze(java.awt.Component uiComponent) throws IOException {
         File inputFile = logParserConfiguration.getInputFile();
         if (!inputFile.exists()) {
             return true;
@@ -107,13 +105,24 @@ public class JahiaLogAnalyzer {
         String jvmIdentifier = "jvm";
         if (inputFile.isDirectory()) {
             SortedSet<File> sortedFiles = new TreeSet<File>(FileUtils.listFiles(inputFile, null, true));
-            if (logParserConfiguration.getOutputDirectory().exists()) {
-                return false;
+            if (!logParserConfiguration.getOutputDirectory().exists()) {
+                createOutputDirectory(logParserConfiguration);
             }
-            createOutputDirectory(logParserConfiguration);
+            List<ProcessedLogFile> processedLogFiles = getProcessedLogFiles();
             LogParser logParser = new LogParser();
             logParser.setLogParserConfiguration(logParserConfiguration);
             for (File file : sortedFiles) {
+                if (file.getCanonicalPath().startsWith(logParserConfiguration.getOutputDirectory().getCanonicalPath())) {
+                    continue;
+                }
+
+                ProcessedLogFile processedLogFile = new ProcessedLogFile(logParserConfiguration.getInputFile(), file);
+                if (processedLogFiles.contains(processedLogFile)) {
+                    continue;
+                } else {
+                    // @todo here we should check if we have a timestamp for the file in which case we will skip all
+                    // entries before the timestamp
+                }
                 String filePath = file.getPath();
                 int jvmIdentifierPos = filePath.indexOf("jvm-");
                 if (jvmIdentifierPos >= 0) {
@@ -126,25 +135,45 @@ public class JahiaLogAnalyzer {
                 }
                 Reader reader = getFileReader(uiComponent, file);
                 log.info("Parsing file " + file + "...");
-                logParser.parse(reader, file, jvmIdentifier);
+                Date lastValidDateParsed = logParser.parse(reader, file, jvmIdentifier);
                 log.info("Parsing of file " + file + " completed.");
                 reader.close();
+                if (lastValidDateParsed != null) {
+                    processedLogFile.setLastParsedTimestamp(lastValidDateParsed.getTime());
+                }
+                processedLogFiles.add(processedLogFile);
             }
             logParser.stop();
+            saveProcessedLogFiles(processedLogFiles);
         } else {
             File file = logParserConfiguration.getInputFile();
-            if (logParserConfiguration.getOutputDirectory().exists()) {
-                return false;
+            if (!logParserConfiguration.getOutputDirectory().exists()) {
+                createOutputDirectory(logParserConfiguration);
             }
-            createOutputDirectory(logParserConfiguration);
-            Reader reader = getFileReader(uiComponent, file);
-            LogParser logParser = new LogParser();
-            logParser.setLogParserConfiguration(logParserConfiguration);
-            log.info("Parsing file " + file + "...");
-            logParser.parse(reader, file, jvmIdentifier);
-            log.info("Parsing of file " + file + " completed.");
-            reader.close();
-            logParser.stop();
+            List<ProcessedLogFile> processedLogFiles = getProcessedLogFiles();
+            ProcessedLogFile processedLogFile = new ProcessedLogFile(logParserConfiguration.getInputFile().getParentFile(), file);
+            if (processedLogFiles.contains(processedLogFile)) {
+                // we instantiate the log parser just to make sure the embedded ElasticSearch is started.
+                LogParser logParser = new LogParser();
+                logParser.setLogParserConfiguration(logParserConfiguration);
+                logParser.stop();
+            } else {
+                // @todo here we should check if we have a timestamp for the file in which case we will skip all
+                // entries before the timestamp
+                LogParser logParser = new LogParser();
+                logParser.setLogParserConfiguration(logParserConfiguration);
+                Reader reader = getFileReader(uiComponent, file);
+                log.info("Parsing file " + file + "...");
+                Date lastValidDateParsed = logParser.parse(reader, file, jvmIdentifier);
+                log.info("Parsing of file " + file + " completed.");
+                reader.close();
+                logParser.stop();
+                if (lastValidDateParsed != null) {
+                    processedLogFile.setLastParsedTimestamp(lastValidDateParsed.getTime());
+                }
+                processedLogFiles.add(processedLogFile);
+                saveProcessedLogFiles(processedLogFiles);
+            }
         }
         return true;
     }
@@ -156,7 +185,43 @@ public class JahiaLogAnalyzer {
         }
     }
 
-    private Reader getFileReader(Component uiComponent, File file) throws FileNotFoundException {
+    private List<ProcessedLogFile> getProcessedLogFiles() {
+        File outputDirectory = logParserConfiguration.getOutputDirectory();
+        if (!outputDirectory.exists()) {
+            return new ArrayList<ProcessedLogFile>();
+        }
+        File processedFilesFile = new File(outputDirectory, "processed.json");
+        if (!processedFilesFile.exists()) {
+            return new ArrayList<ProcessedLogFile>();
+        }
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            List<ProcessedLogFile> processedLogFiles = (List<ProcessedLogFile>) mapper.readValue(processedFilesFile, List.class);
+            return processedLogFiles;
+        } catch (IOException e) {
+            log.error("Error reading loading processed file list from " + processedFilesFile, e);
+        }
+        return new ArrayList<ProcessedLogFile>();
+    }
+
+    private void saveProcessedLogFiles(List<ProcessedLogFile> processedLogFiles) {
+        File outputDirectory = logParserConfiguration.getOutputDirectory();
+        if (!outputDirectory.exists()) {
+            return;
+        }
+        File processedFilesFile = new File(outputDirectory, "processed.json");
+        if (!processedFilesFile.getParentFile().exists()) {
+            processedFilesFile.getParentFile().mkdirs();
+        }
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            mapper.writeValue(processedFilesFile, processedLogFiles);
+        } catch (IOException e) {
+            log.error("Error writing processed log file " + processedFilesFile, e);
+        }
+    }
+
+    private Reader getFileReader(java.awt.Component uiComponent, File file) throws FileNotFoundException {
         if (uiComponent != null) {
             InputStream in = new BufferedInputStream(
                     new ProgressMonitorInputStream(
