@@ -7,6 +7,7 @@ import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.node.Node;
 import org.elasticsearch.node.NodeBuilder;
@@ -64,8 +65,11 @@ public class ElasticSearchService {
                 }
             }
         }
+        Settings settings = Settings.settingsBuilder()
+                .put("cluster.name", "elasticsearch").build();
         if (remoteESServers.size() != 0) {
-            TransportClient transportClient = TransportClient.builder().build();
+            log.info("Connecting to remote ElasticSearch at addresses: " + remoteESServers + "...");
+            TransportClient transportClient = TransportClient.builder().settings(settings).build();
             for (String remoteESServer : remoteESServers) {
                 String[] remoteESServerParts = remoteESServer.split(":");
                 try {
@@ -76,10 +80,11 @@ public class ElasticSearchService {
             }
             client = transportClient;
         } else {
+            log.info("Starting embedded ElasticSearch server in " + homePath + "...");
             System.setProperty("es.path.home", homePath);
             File esSitePluginDirectory = new File(homePath, "plugins/loganalyzer");
             ResourceUtils.extractZipResource("loganalyzer-es-site-plugin.jar", esSitePluginDirectory);
-            node = NodeBuilder.nodeBuilder().node();
+            node = NodeBuilder.nodeBuilder().settings(settings).node();
             client = node.client();
         }
 
@@ -90,18 +95,21 @@ public class ElasticSearchService {
                         @Override
                         public void beforeBulk(long executionId,
                                                BulkRequest request) {
+                            log.debug("Before Bulk");
                         }
 
                         @Override
                         public void afterBulk(long executionId,
                                               BulkRequest request,
                                               BulkResponse response) {
+                            log.debug("After Bulk");
                         }
 
                         @Override
                         public void afterBulk(long executionId,
                                               BulkRequest request,
                                               Throwable failure) {
+                            log.error("After Bulk (failure)", failure);
                         }
                     })
                     .build();

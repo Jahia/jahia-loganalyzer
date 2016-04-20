@@ -1,0 +1,62 @@
+[
+  {
+    "id": "thread-pool-executor-parking",
+    "level": "NORMAL",
+    "threadState": "WAITING",
+    "ignore": true,
+    "linesToMatch": [
+      "\\Qat sun.misc.Unsafe.park(Native Method)\\E",
+      "\\Qat java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:\\E\\d+\\Q)\\E",
+      "\\Qat java.util.concurrent.SynchronousQueue$TransferStack.awaitFulfill(SynchronousQueue.java:\\E\\d+\\Q)\\E",
+      "\\Qat java.util.concurrent.SynchronousQueue$TransferStack.transfer(SynchronousQueue.java:\\E\\d+\\Q)\\E",
+      "\\Qat java.util.concurrent.SynchronousQueue.poll(SynchronousQueue.java:\\E\\d+\\Q)\\E",
+      "\\Qat java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:\\E\\d+\\Q)\\E",
+      "\\Qat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:\\E\\d+\\Q)\\E",
+      "\\Qat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:\\E\\d+\\Q)\\E",
+      "\\Qat java.lang.Thread.run(Thread.java:\\E\\d+\\Q)\\E"
+    ]
+  },
+  {
+    "id": "ldap-socket-reading",
+    "level": "NORMAL",
+    "threadState": "WAITING",
+    "ignore": false,
+    "linesToMatch": [
+      "\\Qat java.net.SocketInputStream.socketRead0(Native Method)\\E",
+      "\\Qat java.net.SocketInputStream.read(SocketInputStream.java:\\E\\d+\\Q)\\E",
+      "\\Qat java.net.SocketInputStream.read(SocketInputStream.java:\\E\\d+\\Q)\\E",
+      "\\Qat java.io.BufferedInputStream.fill(BufferedInputStream.java:\\E\\d+\\Q)\\E",
+      "\\Qat java.io.BufferedInputStream.read1(BufferedInputStream.java:\\E\\d+\\Q)\\E",
+      "\\Qat java.io.BufferedInputStream.read(BufferedInputStream.java:\\E\\d+\\Q)\\E",
+      "\\Qat com.sun.jndi.ldap.Connection.run(Connection.java:\\E\\d+\\Q)\\E"
+    ]
+  },
+  {
+    "id": "postgresql-query-result-reading-socket-reading",
+    "level": "NORMAL",
+    "threadState": "WAITING",
+    "ignore": false,
+    "linesToMatch": [
+      "\\Qat java.net.SocketInputStream.socketRead0(Native Method)\\E",
+      "\\Qat java.net.SocketInputStream.read(SocketInputStream.java:\\E\\d+\\Q)\\E",
+      "\\Qat java.net.SocketInputStream.read(SocketInputStream.java:\\E\\d+\\Q)\\E",
+      "\\Qat org.postgresql.core.VisibleBufferedInputStream.readMore(VisibleBufferedInputStream.java:\\E\\d+\\Q)\\E",
+      "\\Qat org.postgresql.core.VisibleBufferedInputStream.ensureBytes(VisibleBufferedInputStream.java:\\E\\d+\\Q)\\E",
+      "\\Qat org.postgresql.core.VisibleBufferedInputStream.read(VisibleBufferedInputStream.java:\\E\\d+\\Q)\\E",
+      "\\Qat org.postgresql.core.PGStream.ReceiveChar(PGStream.java:\\E\\d+\\Q)\\E",
+      "\\Qat org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:\\E\\d+\\Q)\\E",
+      "\\Qat org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:\\E\\d+\\Q)\\E"
+    ]
+  },
+  {
+    "id": "socket-reading",
+    "level": "NORMAL",
+    "threadState": "WAITING",
+    "ignore": false,
+    "linesToMatch": [
+      "\\Qat java.net.SocketInputStream.socketRead0(Native Method)\\E",
+      "\\Qat java.net.SocketInputStream.read(SocketInputStream.java:\\E\\d+\\Q)\\E",
+      "\\Qat java.net.SocketInputStream.read(SocketInputStream.java:\\E\\d+\\Q)\\E"
+    ]
+  }
+]

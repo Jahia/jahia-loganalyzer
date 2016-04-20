@@ -1,6 +1,7 @@
 package org.jahia.loganalyzer.analyzers.threaddumps;
 
 import org.jahia.loganalyzer.BaseLogEntry;
+import org.jahia.loganalyzer.stacktrace.StackTraceService;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class ThreadDumpThreadLogEntry extends BaseLogEntry {
     private String threadState;
     private String threadStateInfo;
     private List<String> stackTrace = new ArrayList<String>();
+    private List<String> stackTraceDefinitionIds = new ArrayList<>();
     private List<String> waitingOnLocks = new ArrayList<String>();
     private List<String> holdingLocks = new ArrayList<String>();
     private List<String> lockOwners = new ArrayList<String>();
@@ -89,6 +91,7 @@ public class ThreadDumpThreadLogEntry extends BaseLogEntry {
 
     public void setStackTrace(List<String> stackTrace) {
         this.stackTrace = stackTrace;
+        this.stackTraceDefinitionIds = StackTraceService.getInstance().getDefinitionIdsFromStackTrace(stackTrace);
     }
 
     public String getThreadType() {
@@ -200,6 +203,7 @@ public class ThreadDumpThreadLogEntry extends BaseLogEntry {
     }
 
     public List<String> toStringList(DateFormat dateFormat) {
+        this.stackTraceDefinitionIds = StackTraceService.getInstance().getDefinitionIdsFromStackTrace(stackTrace);
         List<String> result = super.toStringList(dateFormat);
         result.add(Long.toString(threadDumpNumber));
         result.add(Long.toString(threadNumber));
@@ -211,6 +215,9 @@ public class ThreadDumpThreadLogEntry extends BaseLogEntry {
         result.add(threadState);
         result.add(threadStateInfo);
         result.add(stackTraceToString());
+        result.add(Integer.toString(stackTrace.size()));
+        result.add(Integer.toString(stackTrace.hashCode()));
+        result.add(stackTraceDefinitionIds.toString());
         result.add(Integer.toString(waitingOnLocks.size()));
         result.add(waitingOnLocksToString());
         result.add(Integer.toString(holdingLocks.size()));
@@ -220,6 +227,7 @@ public class ThreadDumpThreadLogEntry extends BaseLogEntry {
     }
 
     public LinkedHashMap<String, Object> getValues() {
+        this.stackTraceDefinitionIds = StackTraceService.getInstance().getDefinitionIdsFromStackTrace(stackTrace);
         LinkedHashMap<String, Object> result = super.getValues();
         result.put("threadDumpNumber", threadDumpNumber);
         result.put("threadNumber", threadNumber);
@@ -231,6 +239,9 @@ public class ThreadDumpThreadLogEntry extends BaseLogEntry {
         result.put("threadState", threadState);
         result.put("threadStateInfo", threadStateInfo);
         result.put("stackTrace", stackTrace);
+        result.put("stackTraceLength", stackTrace.size());
+        result.put("stackTraceHashCode", stackTrace.hashCode());
+        result.put("stackTraceDefinitionIds", stackTraceDefinitionIds);
         result.put("waitingOnLockCount", waitingOnLocks.size());
         result.put("waitingOnLocks", waitingOnLocks);
         result.put("heldLockCount", holdingLocks.size());

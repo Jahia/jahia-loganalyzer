@@ -1,6 +1,7 @@
 package org.jahia.loganalyzer.analyzers.exceptions;
 
 import org.jahia.loganalyzer.BaseLogEntry;
+import org.jahia.loganalyzer.stacktrace.StackTraceService;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class ExceptionDetailsLogEntry extends BaseLogEntry {
     private String message;
     private List<String> stackTrace = new ArrayList<String>();
     private List<String> contextLines = new ArrayList<String>();
+    private List<String> stackTraceDefinitionIds = new ArrayList<>();
 
     public ExceptionDetailsLogEntry(long startLineNumber, long endLineNumber, Date timestamp, String jvmIdentifier, String source) {
         super(startLineNumber, endLineNumber, timestamp, jvmIdentifier, source);
@@ -47,6 +49,7 @@ public class ExceptionDetailsLogEntry extends BaseLogEntry {
 
     public void setStackTrace(List<String> stackTrace) {
         this.stackTrace = stackTrace;
+        this.stackTraceDefinitionIds = StackTraceService.getInstance().getDefinitionIdsFromStackTrace(stackTrace);
     }
 
     public List<String> getContextLines() {
@@ -58,10 +61,14 @@ public class ExceptionDetailsLogEntry extends BaseLogEntry {
     }
 
     public List<String> toStringList(DateFormat dateFormat) {
+        this.stackTraceDefinitionIds = StackTraceService.getInstance().getDefinitionIdsFromStackTrace(stackTrace);
         List<String> result = super.toStringList(dateFormat);
         result.add(className);
         result.add(message);
         result.add(stackTraceToString());
+        result.add(Integer.toString(stackTrace.size()));
+        result.add(Integer.toString(stackTrace.hashCode()));
+        result.add(stackTraceDefinitionIds.toString());
         result.add(contextLinesToString());
         return result;
     }
@@ -85,10 +92,14 @@ public class ExceptionDetailsLogEntry extends BaseLogEntry {
     }
 
     public LinkedHashMap<String, Object> getValues() {
+        this.stackTraceDefinitionIds = StackTraceService.getInstance().getDefinitionIdsFromStackTrace(stackTrace);
         LinkedHashMap<String, Object> result = super.getValues();
         result.put("className", className);
         result.put("message", message);
         result.put("stackTrace", stackTrace);
+        result.put("stackTraceLength", stackTrace.size());
+        result.put("stackTraceHashCode", stackTrace.hashCode());
+        result.put("stackTraceDefinitionIds", stackTraceDefinitionIds);
         result.put("contextLines", contextLines);
         return result;
     }
