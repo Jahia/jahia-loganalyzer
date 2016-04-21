@@ -56,13 +56,11 @@ public class StackTraceDefinition {
     public void setLinesToMatch(List<String> linesToMatch) {
         this.linesToMatch = linesToMatch;
         StringBuilder linesToMatchBuilder = new StringBuilder();
-        linesToMatchBuilder.append(".*");
         for (String lineToMatch : linesToMatch) {
             linesToMatchBuilder.append("\\s*");
             linesToMatchBuilder.append(lineToMatch);
             linesToMatchBuilder.append("\\s*");
         }
-        linesToMatchBuilder.append(".*");
         Pattern linesToMatchPattern = Pattern.compile(linesToMatchBuilder.toString());
         setLinesToMatchPattern(linesToMatchPattern);
     }

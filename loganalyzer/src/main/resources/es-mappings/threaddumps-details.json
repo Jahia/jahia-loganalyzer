@@ -29,6 +29,16 @@
       "type": "string",
       "index": "not_analyzed"
     },
+    "stackTraceDefinitionIds": {
+      "type": "string",
+      "index": "not_analyzed"
+    },
+    "stackTraceHashCode": {
+      "type": "long"
+    },
+    "stackTraceLength": {
+      "type": "long"
+    },
     "threadDumpNumber": {
       "type": "long"
     },

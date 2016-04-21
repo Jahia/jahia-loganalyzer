@@ -1,5 +1,9 @@
 {
   "properties": {
+    "cacheMode": {
+      "type": "string",
+      "index": "not_analyzed"
+    },
     "jvmIdentifier": {
       "type": "string",
       "index": "not_analyzed"

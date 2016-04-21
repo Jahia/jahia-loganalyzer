@@ -61,7 +61,7 @@ public class StackTraceService {
         String stringStackTrace = stackStraceToString(stackTrace);
         for (StackTraceDefinition stackTraceDefinition : stackTraceDefinitions) {
             Matcher linesToMatchMatcher = stackTraceDefinition.getLinesToMatchPattern().matcher(stringStackTrace);
-            if (linesToMatchMatcher.matches()) {
+            if (linesToMatchMatcher.find()) {
                 definitions.add(stackTraceDefinition);
             }
         }

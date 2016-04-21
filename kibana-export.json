@@ -284,5 +284,33 @@
         "searchSourceJSON": "{\"index\":\"loganalyzer-*\",\"query\":{\"query_string\":{\"query\":\"logType:jackrabbitbundlecache-details\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
+  },
+  {
+    "_id": "Most-frequent-methods-in-exceptions",
+    "_type": "visualization",
+    "_source": {
+      "title": "Most frequent methods in exceptions",
+      "visState": "{\"title\":\"New Visualization\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"stackTrace\",\"size\":100,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"loganalyzer-*\",\"query\":{\"query_string\":{\"query\":\"logType:exceptions-details\",\"analyze_wildcard\":true}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "Most-frequent-methods-in-Thread-Dumps",
+    "_type": "visualization",
+    "_source": {
+      "title": "Most frequent methods in Thread Dumps",
+      "visState": "{\"title\":\"Most frequent methods in exceptions\",\"type\":\"table\",\"params\":{\"perPage\":10,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false},\"aggs\":[{\"id\":\"1\",\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"stackTrace\",\"size\":100,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"loganalyzer-*\",\"query\":{\"query_string\":{\"query\":\"logType:threaddumps-details\",\"analyze_wildcard\":true}},\"filter\":[]}"
+      }
+    }
   }
 ]

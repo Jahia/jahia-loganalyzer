@@ -1,0 +1,8 @@
+    at java.net.SocketInputStream.socketRead0(Native Method)
+    at java.net.SocketInputStream.read(SocketInputStream.java:152)
+    at java.net.SocketInputStream.read(SocketInputStream.java:122)
+    at java.io.BufferedInputStream.fill(BufferedInputStream.java:235)
+    at java.io.BufferedInputStream.read1(BufferedInputStream.java:275)
+    at java.io.BufferedInputStream.read(BufferedInputStream.java:334)
+    at com.sun.jndi.ldap.Connection.run(Connection.java:853)
+    at java.lang.Thread.run(Thread.java:745)

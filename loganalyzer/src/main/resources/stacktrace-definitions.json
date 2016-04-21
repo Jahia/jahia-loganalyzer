@@ -58,5 +58,49 @@
       "\\Qat java.net.SocketInputStream.read(SocketInputStream.java:\\E\\d+\\Q)\\E",
       "\\Qat java.net.SocketInputStream.read(SocketInputStream.java:\\E\\d+\\Q)\\E"
     ]
+  },
+  {
+    "id": "http-keep-alive-timer",
+    "level": "NORMAL",
+    "threadState": "WAITING",
+    "ignore": false,
+    "linesToMatch": [
+      "\\Qat java.lang.Thread.sleep(Native Method)\\E",
+      "\\Qat sun.net.www.http.KeepAliveCache.run(KeepAliveCache.java:\\E\\d+\\Q)\\E",
+      "\\Qat java.lang.Thread.run(Thread.java:\\E\\d+\\Q)\\E"
+    ]
+  },
+  {
+    "id": "javamelody-jspwrapper-invoke",
+    "level": "NORMAL",
+    "threadState": "RUNNING",
+    "ignore": false,
+    "linesToMatch": [
+      "\\Qat net.bull.javamelody.JspWrapper.invoke(JspWrapper.java:\\E\\d+\\Q)\\E"
+    ]
+  },
+  {
+    "id": "javamelody-jdbcwrapper-invoke",
+    "level": "NORMAL",
+    "threadState": "RUNNING",
+    "ignore": false,
+    "linesToMatch": [
+      "\\Qat net.bull.javamelody.JdbcWrapper$DelegatingInvocationHandler.invoke(JdbcWrapper.java:\\E\\d+\\Q)\\E"
+    ]
+  },
+  {
+    "id": "jackrabbit-bundle-load-from-database",
+    "level": "NORMAL",
+    "threadState": "RUNNING",
+    "ignore": false,
+    "linesToMatch": [
+      "\\Qat org.apache.jackrabbit.core.util.db.ConnectionHelper.execute(ConnectionHelper.java:\\E\\d+\\Q)\\E",
+      "\\Qat org.apache.jackrabbit.core.util.db.ConnectionHelper.reallyExec(ConnectionHelper.java:\\E\\d+\\Q)\\E",
+      "\\Qat org.apache.jackrabbit.core.util.db.ConnectionHelper$3.call(ConnectionHelper.java:\\E\\d+\\Q)\\E",
+      "\\Qat org.apache.jackrabbit.core.util.db.ConnectionHelper$3.call(ConnectionHelper.java:\\E\\d+\\Q)\\E",
+      "\\Qat org.apache.jackrabbit.core.util.db.ConnectionHelper$RetryManager.doTry(ConnectionHelper.java:\\E\\d+\\Q)\\E",
+      "\\Qat org.apache.jackrabbit.core.util.db.ConnectionHelper.exec(ConnectionHelper.java:\\E\\d+\\Q)\\E",
+      "\\Qat org.apache.jackrabbit.core.persistence.pool.BundleDbPersistenceManager.loadBundle(BundleDbPersistenceManager.java:\\E\\d+\\Q)\\E",
+    ]
   }
 ]
