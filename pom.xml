@@ -33,6 +33,8 @@
     <properties>
         <jackson-core-version>2.7.0</jackson-core-version>
         <jahia.site.path></jahia.site.path>
+        <version.karaf>4.0.4</version.karaf>
+        <version.cxf>3.1.6</version.cxf>
     </properties>
 
     <licenses>
@@ -224,6 +226,8 @@
     <modules>
         <module>es-plugins</module>
         <module>loganalyzer</module>
+        <module>features</module>
+        <module>package</module>
     </modules>
 
 </project>
