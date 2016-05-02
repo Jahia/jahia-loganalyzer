@@ -25,6 +25,10 @@ it does is parse log files :)
 This product includes GeoLite2 data created by MaxMind, available from
 <a href="http://www.maxmind.com">http://www.maxmind.com</a>.
 
+License
+--------------------------------------------------------------------------------
+This tool is licensed under the Apache Software License, V2
+
 Features
 --------------------------------------------------------------------------------
 - Parsing of a single file or all the files in a directory
