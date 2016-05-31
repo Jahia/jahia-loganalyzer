@@ -74,7 +74,7 @@ the result of the parsing. It should be a comma seperated list of host:port valu
     localhost:9300
     10.0.1.0:9300, 10.0.1.1:9300
     
-if this parameter is not specified it will start an embedded ElasticSearch server.
+if this parameter is not specified ijt will start an embedded ElasticSearch server.
 
 Once Karaf has decompressed and started you can launch a log file analysis by using the 
 command:
