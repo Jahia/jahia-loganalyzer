@@ -55,7 +55,7 @@ Requirements :
 
 To compile :
 
-mvn package
+    mvn clean install
 
 Execution
 --------------------------------------------------------------------------------
@@ -65,9 +65,8 @@ Requirements :
 
 To run : 
 
-    cd target 
-    jar [-DremoteServers=REMOTE_SERVER_LIST] -jar loganalyzer-VERSION.jar TARGET_FILE_OR_DIRECTORY
-
+    ./launch.sh [-DremoteServers=REMOTE_SERVER_LIST]
+    
 where : 
 - REMOTE_SERVER_LIST: is an optional list of remote ElasticSearch servers to use to output 
 the result of the parsing. It should be a comma seperated list of host:port values such as:
@@ -76,10 +75,28 @@ the result of the parsing. It should be a comma seperated list of host:port valu
     10.0.1.0:9300, 10.0.1.1:9300
     
 if this parameter is not specified it will start an embedded ElasticSearch server.
-    
+
+Once Karaf has decompressed and started you can launch a log file analysis by using the 
+command:
+
+    analyze TARGET_FILE_OR_DIRECTORY
+
+where:
 - TARGET_FILE_OR_DIRECTORY: an optional reference to a file or directory that will be used as
 the source of parsing. If none is specified the tool will start the GUI that allows to select
 a file and change some options.
+
+This command will launch the analysis in the background. You can watch the logs using either:
+
+    ld
+    
+or : 
+
+    log:tail (ctrl-c to stop watching the logs)
+    
+Once you are done with the Log Analyzer, you can simply exit using : 
+
+    shutdown
 
 Output of parsing is generated in CSV and JSON files in the same directory from which the 
 application is run. The CSV files should open fine with Microsoft Excel.
