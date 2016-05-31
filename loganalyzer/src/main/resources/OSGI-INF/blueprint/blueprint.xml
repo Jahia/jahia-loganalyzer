@@ -33,11 +33,16 @@
 
     <reference id="elasticSearchService" interface="org.jahia.loganalyzer.writers.ElasticSearchService"/>
 
+    <bean id="commandExecutorServiceImpl" class="org.jahia.loganalyzer.internal.CommandExecutorServiceImpl"
+          init-method="start" destroy-method="stop"/>
+    <service id="commandExecutorService" ref="commandExecutorServiceImpl" auto-export="interfaces"/>
+
     <bean id="jahiaLogAnalyzerImpl" class="org.jahia.loganalyzer.internal.JahiaLogAnalyzerImpl"
           init-method="start" destroy-method="stop">
         <property name="elasticSearchService" ref="elasticSearchService"/>
         <property name="bundleContext" ref="blueprintBundleContext"/>
     </bean>
     <service id="jahiaLogAnalyzer" ref="jahiaLogAnalyzerImpl" auto-export="interfaces"/>
+
 
 </blueprint>

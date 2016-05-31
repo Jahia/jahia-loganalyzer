@@ -166,6 +166,7 @@ public class JahiaLogAnalyzerImpl implements JahiaLogAnalyzer {
     public boolean analyze(java.awt.Component uiComponent) throws IOException {
         File inputFile = logParserConfiguration.getInputFile();
         if (!inputFile.exists()) {
+            log.warn("Couldn't find file " + inputFile);
             return true;
         }
         String jvmIdentifier = "jvm";
