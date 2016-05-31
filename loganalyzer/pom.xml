@@ -24,21 +24,51 @@
     </parent>
 
     <artifactId>loganalyzer</artifactId>
-    <packaging>jar</packaging>
-    <name>Jahia Log Analyzer</name>
+    <packaging>bundle</packaging>
+    <name>Jahia Log Analyzer :: Log Analyzer Service</name>
 
     <dependencies>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>test</scope>
+            <groupId>org.jahia.loganalyzer</groupId>
+            <artifactId>loganalyzer-api</artifactId>
+            <version>0.5-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>net.sf.opencsv</groupId>
-            <artifactId>opencsv</artifactId>
-            <version>2.1</version>
-            <scope>compile</scope>
+            <groupId>org.jahia.loganalyzer</groupId>
+            <artifactId>loganalyzer-configuration</artifactId>
+            <version>0.5-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jahia.loganalyzer</groupId>
+            <artifactId>loganalyzer-services-stacktrace</artifactId>
+            <version>0.5-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jahia.loganalyzer</groupId>
+            <artifactId>loganalyzer-lineanalyzers-core</artifactId>
+            <version>0.5-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jahia.loganalyzer</groupId>
+            <artifactId>loganalyzer-lineanalyzers-standard</artifactId>
+            <version>0.5-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jahia.loganalyzer</groupId>
+            <artifactId>loganalyzer-lineanalyzers-jahia</artifactId>
+            <version>0.5-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jahia.loganalyzer</groupId>
+            <artifactId>loganalyzer-writers</artifactId>
+            <version>0.5-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.jgoodies</groupId>
@@ -49,16 +79,6 @@
             <groupId>com.jgoodies</groupId>
             <artifactId>forms</artifactId>
             <version>1.2.1</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-            <version>1.1.1</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-configuration</groupId>
-            <artifactId>commons-configuration</artifactId>
-            <version>1.10</version>
         </dependency>
         <dependency>
             <groupId>commons-collections</groupId>
@@ -81,20 +101,26 @@
             <version>${jackson-core-version}</version>
         </dependency>
         <dependency>
-            <groupId>org.elasticsearch</groupId>
-            <artifactId>elasticsearch</artifactId>
-            <version>2.3.1</version>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.core</artifactId>
+            <version>6.0.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Test dependencies -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>net.java.dev.jna</groupId>
-            <artifactId>jna</artifactId>
-            <version>4.1.0</version>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.12</version>
+            <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>com.maxmind.geoip2</groupId>
-            <artifactId>geoip2</artifactId>
-            <version>2.6.0</version>
-        </dependency>
+
     </dependencies>
 
     <build>
@@ -129,13 +155,29 @@
             </plugin>
 
             <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <configuration>
+                    <instructions>
+                        <Implementation-Build>${buildNumber}</Implementation-Build>
+                        <Implementation-Timestamp>${timestamp}</Implementation-Timestamp>
+                        <Import-Package>
+                            com.sun.java.swing.plaf.*;resolution:=optional,
+                            *
+                        </Import-Package>
+                    </instructions>
+                </configuration>
+            </plugin>
+
+            <!--
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>2.6</version>
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>org.jahia.loganalyzer.JahiaLogAnalyzer</mainClass>
+                            <mainClass>org.jahia.loganalyzer.internal.JahiaLogAnalyzerImpl</mainClass>
                             <addClasspath>true</addClasspath>
                             <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
                             <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
@@ -145,15 +187,6 @@
                             <Implementation-Timestamp>${timestamp}</Implementation-Timestamp>
                         </manifestEntries>
                     </archive>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.5.1</version>
-                <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
                 </configuration>
             </plugin>
 
@@ -193,13 +226,14 @@
                                         implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>org.jahia.loganalyzer.JahiaLogAnalyzer</mainClass>
+                                    <mainClass>org.jahia.loganalyzer.internal.JahiaLogAnalyzerImpl</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
+            -->
 
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>

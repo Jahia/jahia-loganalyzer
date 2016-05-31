@@ -25,7 +25,7 @@
 
     <artifactId>loganalyzer-es-plugins</artifactId>
     <packaging>pom</packaging>
-    <name>Jahia Log Analyzer ElasticSearch Plugins Root</name>
+    <name>Jahia Log Analyzer :: ElasticSearch Plugins</name>
 
     <modules>
         <module>loganalyzer</module>

@@ -25,7 +25,7 @@
 
     <artifactId>loganalyzer-es-site-plugin</artifactId>
     <packaging>jar</packaging>
-    <name>Jahia Log Analyzer ElasticSearch Site Plugin</name>
+    <name>Jahia Log Analyzer :: ElasticSearch Plugins :: Site Plugin</name>
 
     <build>
         <plugins>

@@ -26,6 +26,9 @@ package org.jahia.loganalyzer;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.jahia.loganalyzer.configuration.LogParserConfiguration;
+import org.jahia.loganalyzer.internal.LogParserImpl;
+import org.jahia.loganalyzer.writers.internal.ElasticSearchServiceImpl;
 
 import java.io.*;
 import java.net.URISyntaxException;
@@ -33,7 +36,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 /**
- * Created by IntelliJ IDEA.
+ * A unit test for the LogParser implementation
  * User: Serge Huber
  * Date: 24 aout 2007
  * Time: 08:43:00
@@ -58,9 +61,10 @@ public class LogParserTest extends TestCase {
     }
 
     public void testLogParser() throws IOException {
-        LogParser logParser = new LogParser();
+        LogParserImpl logParser = new LogParserImpl();
+        ElasticSearchServiceImpl elasticSearchServiceImpl = new ElasticSearchServiceImpl();
+        logParser.setElasticSearchService(elasticSearchServiceImpl);
         LogParserConfiguration logParserConfiguration = new LogParserConfiguration();
-        logParserConfiguration.setCsvSeparatorChar(';');
         InputStream jahiaLogStream = this.getClass().getResourceAsStream("/jahia-tomcat/catalina.out");
         Reader reader = new InputStreamReader(jahiaLogStream);
         File inputFile = null;
