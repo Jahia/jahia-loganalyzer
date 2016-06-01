@@ -1,10 +1,8 @@
-/loganalyzer.iml
-/loganalyzer.ipr
-/loganalyzer.iws
+*.iml
+*.ipr
+*.iws
+.svn/
 /sodexo-logs
-/loganalyzer/loganalyzer (2).iml
-/es-plugins/loganalyzer-es-plugins.iml
-/es-plugins/loganalyzer/loganalyzer (1).iml
 /*-loganalyzer-results
 ### Java template
 *.class

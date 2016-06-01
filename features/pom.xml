@@ -25,9 +25,54 @@
 
     <artifactId>loganalyzer-karaf</artifactId>
     <packaging>feature</packaging>
-    <name>Jahia Log Analyzer Karaf Feature</name>
+    <name>Jahia Log Analyzer :: Karaf Feature</name>
 
     <dependencies>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jahia.loganalyzer</groupId>
+            <artifactId>loganalyzer-api</artifactId>
+            <version>0.5-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jahia.loganalyzer</groupId>
+            <artifactId>loganalyzer-common</artifactId>
+            <version>0.5-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jahia.loganalyzer</groupId>
+            <artifactId>loganalyzer-configuration</artifactId>
+            <version>0.5-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jahia.loganalyzer</groupId>
+            <artifactId>loganalyzer-services-stacktrace</artifactId>
+            <version>0.5-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jahia.loganalyzer</groupId>
+            <artifactId>loganalyzer-lineanalyzers-core</artifactId>
+            <version>0.5-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jahia.loganalyzer</groupId>
+            <artifactId>loganalyzer-lineanalyzers-standard</artifactId>
+            <version>0.5-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jahia.loganalyzer</groupId>
+            <artifactId>loganalyzer-lineanalyzers-jahia</artifactId>
+            <version>0.5-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jahia.loganalyzer</groupId>
+            <artifactId>loganalyzer-writers</artifactId>
+            <version>0.5-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>org.jahia.loganalyzer</groupId>
             <artifactId>loganalyzer</artifactId>
