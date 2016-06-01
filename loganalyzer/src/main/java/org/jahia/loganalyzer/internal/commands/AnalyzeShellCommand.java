@@ -65,9 +65,9 @@ public class AnalyzeShellCommand implements Action {
                 Long startTime = System.currentTimeMillis();
                 setName("Log Analysis");
                 if (inputFile.isFile()) {
-                    setDescription("Analysis of the log file " + inputFile.getAbsolutePath());
+                    setDescription("File " + inputFile.toString());
                 } else {
-                    setDescription("Analysis of the logs in directory " + inputFile.getAbsolutePath());
+                    setDescription("Directory " + inputFile.toString());
                 }
                 jahiaLogAnalyzer.start(inputFile);
                 executorTaskService.getExecutorTasks().remove(this);
