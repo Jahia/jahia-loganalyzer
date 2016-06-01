@@ -22,10 +22,11 @@
            xsi:schemaLocation="http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
            http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0 http://aries.apache.org/schemas/blueprint-cm/blueprint-cm-1.1.0.xsd">
 
-    <cm:property-placeholder persistent-id="org.apache.unomi.services"
-                             update-strategy="reload" placeholder-prefix="${services.">
+    <cm:property-placeholder persistent-id="org.jahia.loganalyzer.writers"
+                             update-strategy="reload" placeholder-prefix="${writers.">
         <cm:default-properties>
-            <cm:property name="profile.purge.interval" value="1"/>
+            <cm:property name="remoteServers" value=""/>
+            <cm:property name="clusterName" value="elasticsearch"/>
         </cm:default-properties>
     </cm:property-placeholder>
 
@@ -33,6 +34,8 @@
 
     <bean id="elasticSearchServiceImpl" class="org.jahia.loganalyzer.writers.internal.ElasticSearchServiceImpl"
           init-method="start" destroy-method="stop">
+        <property name="remoteServers" value="${writers.remoteServers}"/>
+        <property name="clusterName" value="${writers.clusterName}"/>
     </bean>
     <service id="elasticSearchService" ref="elasticSearchServiceImpl" auto-export="interfaces"/>
 

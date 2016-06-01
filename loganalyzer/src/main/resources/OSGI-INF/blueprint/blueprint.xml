@@ -33,7 +33,7 @@
 
     <reference id="elasticSearchService" interface="org.jahia.loganalyzer.writers.ElasticSearchService"/>
 
-    <bean id="commandExecutorServiceImpl" class="org.jahia.loganalyzer.internal.CommandExecutorServiceImpl"
+    <bean id="commandExecutorServiceImpl" class="org.jahia.loganalyzer.internal.ExecutorTaskServiceImpl"
           init-method="start" destroy-method="stop"/>
     <service id="commandExecutorService" ref="commandExecutorServiceImpl" auto-export="interfaces"/>
 

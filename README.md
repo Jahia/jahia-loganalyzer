@@ -43,7 +43,6 @@ Features
 - Outputs CSV & JSON reports
 - Embeds an ElasticSearch server and stores the parsed data into it, a distant
 ElasticSearch may also be used.
-- Provides an ElasticSearch plugin to visualize the data
 - Compatible with Kibana 4 for advanced data visualization
 
 Compiling
@@ -65,17 +64,13 @@ Requirements :
 
 To run : 
 
-    ./launch.sh [-DremoteServers=REMOTE_SERVER_LIST]
+    ./launch.sh
     
-where : 
-- REMOTE_SERVER_LIST: is an optional list of remote ElasticSearch servers to use to output 
-the result of the parsing. It should be a comma seperated list of host:port values such as:
+or if you prefer doing it manually from the tar.gz in package/target
 
-    localhost:9300
-    10.0.1.0:9300, 10.0.1.1:9300
+    cd bin
+    ./karaf    
     
-if this parameter is not specified it will start an embedded ElasticSearch server.
-
 Once Karaf has decompressed and started you can launch a log file analysis by using the 
 command:
 
@@ -94,6 +89,10 @@ or :
 
     log:tail (ctrl-c to stop watching the logs)
     
+You can also check which log analysis tasks are currently running by using the command :
+
+    loganalyzer:list
+    
 Once you are done with the Log Analyzer, you can simply exit using : 
 
     shutdown
@@ -103,13 +102,23 @@ application is run. The CSV files should open fine with Microsoft Excel.
 
 See the TODO.txt file for information about stuff that isn't done yet :)
 
-Output GUI
+ElasticSearch configuration
 --------------------------------------------------------------------------------
+   
+By default an embedded ElasticSearch server will be used, but it is also possibly
+to use remote ElasticSearch instances. In order to do so you must uncomment the 
+following line in the etc/org.jahia.loganalyzer.writers.cfg file :
 
-You can now access the Angular 2 UI running as an ElasticSearch site plugin 
-at the following URL :
+    remoteServers = REMOTE_SERVER_LIST
 
-    http://localhost:9200/_plugin/loganalyzer
+where : 
+- REMOTE_SERVER_LIST: is an optional list of remote ElasticSearch servers to use to output 
+the result of the parsing. It should be a comma seperated list of host:port values such as:
+
+    localhost:9300
+    10.0.1.0:9300, 10.0.1.1:9300
+    
+if this parameter is not specified it will start an embedded ElasticSearch server.
     
 Kibana Usage
 --------------------------------------------------------------------------------
@@ -171,15 +180,3 @@ Here is a brief descriptions of the output files and their generated content
   Contains a summary view of the number of times a specific message was logged,
   regardless of the logging level specified in the user interface.
   
-Advanced configuration file
---------------------------------------------------------------------------------
-
-By default the configuration is loaded directly from a configuration file 
-included in the JAR. But you may override this configuration with a file that
-you store at the same location as the location from which you execute the 
-JAR. We provide a sample parser-config.xml.sample file that is actually a
-copy of the default configuration file.
-
-You might want to use this file if you have trouble with the default regular
-expressions, maybe because the log files you are using include a different
-logging format.

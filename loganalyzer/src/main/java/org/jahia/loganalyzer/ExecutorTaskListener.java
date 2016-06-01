@@ -22,17 +22,14 @@ package org.jahia.loganalyzer;
  * #L%
  */
 
-import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.Future;
-
 /**
- * An interface to the command executor service
+ * This listener interface gets called whenever a task changes state
  */
-public interface CommandExecutorService {
-    Future<? extends Object> submit(Callable<? extends Object> task);
+public interface ExecutorTaskListener {
 
-    List<Future<? extends Object>> getFutures();
+    Object beforeStart(ExecutorTask<?> executorTask);
 
-    Object getNextFuture();
+    Object afterEnd(ExecutorTask<?> executorTask);
+
+    Object pourcentageChanged(ExecutorTask<?> executorTask);
 }

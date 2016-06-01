@@ -27,12 +27,13 @@ import org.apache.karaf.shell.api.action.Argument;
 import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
-import org.jahia.loganalyzer.CommandExecutorService;
+import org.apache.karaf.shell.api.console.Session;
+import org.jahia.loganalyzer.ExecutorTask;
+import org.jahia.loganalyzer.ExecutorTaskService;
 import org.jahia.loganalyzer.api.JahiaLogAnalyzer;
 import org.osgi.framework.BundleContext;
 
 import java.io.File;
-import java.util.concurrent.Callable;
 
 /**
  * A shell command to start a log analysis
@@ -48,19 +49,33 @@ public class AnalyzeShellCommand implements Action {
     @Reference
     private BundleContext bundleContext;
     @Reference
-    private CommandExecutorService commandExecutorService;
+    private ExecutorTaskService executorTaskService;
+    @Reference
+    private Session session;
 
     @Override
     public Object execute() throws Exception {
         final File inputFile = new File(input);
-        commandExecutorService.submit(new Callable<Boolean>() {
+        if (!inputFile.exists()) {
+            return inputFile.getAbsolutePath() + " does not exist !";
+        }
+        executorTaskService.submit(new ExecutorTask<Boolean>() {
             @Override
-            public Boolean call() throws Exception {
+            public Boolean execute() throws Exception {
+                Long startTime = System.currentTimeMillis();
+                setName("Log Analysis");
+                if (inputFile.isFile()) {
+                    setDescription("Analysis of the log file " + inputFile.getAbsolutePath());
+                } else {
+                    setDescription("Analysis of the logs in directory " + inputFile.getAbsolutePath());
+                }
                 jahiaLogAnalyzer.start(inputFile);
-                commandExecutorService.getFutures().remove(this);
+                executorTaskService.getExecutorTasks().remove(this);
+                long totalTime = System.currentTimeMillis() - startTime;
+                session.getConsole().println("Analysis of " + inputFile.getAbsolutePath() + " completed in " + totalTime + "ms.");
                 return true;
             }
         });
-        return null;
+        return "Analysis of " + inputFile.getAbsolutePath() + " has now started.";
     }
 }

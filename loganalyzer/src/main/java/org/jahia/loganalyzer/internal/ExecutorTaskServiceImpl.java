@@ -22,30 +22,37 @@ package org.jahia.loganalyzer.internal;
  * #L%
  */
 
-import org.jahia.loganalyzer.CommandExecutorService;
+import org.jahia.loganalyzer.ExecutorTask;
+import org.jahia.loganalyzer.ExecutorTaskListener;
+import org.jahia.loganalyzer.ExecutorTaskService;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.*;
 
 /**
  * Created by loom on 31.05.16.
  */
-public class CommandExecutorServiceImpl implements CommandExecutorService {
+public class ExecutorTaskServiceImpl implements ExecutorTaskService {
 
     private ExecutorService executorService;
-    private List<Future<? extends Object>> futures = new ArrayList<>();
+    private List<ExecutorTask<?>> executorTasks = new ArrayList<>();
+    private Set<ExecutorTaskListener> executorTaskListeners = new LinkedHashSet<>();
 
-    public CommandExecutorServiceImpl() {
+    public ExecutorTaskServiceImpl() {
     }
 
     @Override
-    public Future<? extends Object> submit(Callable<? extends Object> task) {
+    public <T> Future<T> submit(ExecutorTask<T> executorTask) {
         if (executorService == null) {
             return null;
         }
-        Future<? extends Object> future = executorService.submit(task);
-        futures.add(future);
+        executorTask.setExecutorTaskService(this);
+        Future<T> future = executorService.submit(executorTask);
+        executorTask.setFuture(future);
+        executorTasks.add(executorTask);
         return future;
     }
 
@@ -61,26 +68,62 @@ public class CommandExecutorServiceImpl implements CommandExecutorService {
         }
     }
 
-    @Override
-    public List<Future<? extends Object>> getFutures() {
-        return futures;
+    public List<ExecutorTask<?>> getExecutorTasks() {
+        return executorTasks;
     }
 
     @Override
     public Object getNextFuture() {
-        if (futures.size() > 0) {
+        if (executorTasks.size() > 0) {
             Object result = null;
             try {
-                result = futures.get(0).get();
+                ExecutorTask<?> task = executorTasks.get(0);
+                if (task.getFuture() != null) {
+                    result = task.getFuture().get();
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (ExecutionException e) {
                 e.printStackTrace();
             }
-            futures.remove(0);
+            executorTasks.remove(0);
             return result;
         }
         return null;
+    }
+
+    @Override
+    public boolean addListener(ExecutorTaskListener executorTaskListener) {
+        return executorTaskListeners.add(executorTaskListener);
+    }
+
+    @Override
+    public boolean removeListener(ExecutorTaskListener executorTaskListener) {
+        return executorTaskListeners.remove(executorTaskListener);
+    }
+
+
+    @Override
+    public <T> void fireBeforeStarted(ExecutorTask<T> executorTask) {
+        for (ExecutorTaskListener executorTaskListener : executorTaskListeners) {
+            executorTaskListener.beforeStart(executorTask);
+        }
+    }
+
+    @Override
+    public <T> void fireAfterEnd(ExecutorTask<T> executorTask) {
+        for (ExecutorTaskListener executorTaskListener : executorTaskListeners) {
+            executorTaskListener.afterEnd(executorTask);
+        }
+        executorTasks.remove(executorTask);
+        executorTask.setExecutorTaskService(null);
+    }
+
+    @Override
+    public <T> void firePourcentageChanged(ExecutorTask<T> executorTask) {
+        for (ExecutorTaskListener executorTaskListener : executorTaskListeners) {
+            executorTaskListener.pourcentageChanged(executorTask);
+        }
     }
 
     void shutdownAndAwaitTermination(ExecutorService pool) {

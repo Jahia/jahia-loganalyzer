@@ -55,6 +55,8 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     BulkProcessor bulkProcessor = null;
     String homePath = new File(".").getPath();
 
+    private String remoteServers = null;
+    private String clusterName = "elasticsearch";
     private SortedSet<String> remoteESServers = new TreeSet<String>();
 
     public ElasticSearchServiceImpl() {
@@ -70,13 +72,13 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         return remoteESServers.size() != 0;
     }
 
-    public synchronized void start() {
-
-        if (client != null) {
-            return;
+    public void setRemoteServers(String remoteServers) {
+        this.remoteServers = remoteServers;
+        if (remoteServers != null && remoteServers.trim().length() == 0) {
+            remoteServers = null;
         }
-        if (System.getProperty("remoteServers") != null) {
-            String[] remoteServerArray = System.getProperty("remoteServers").split(",");
+        if (remoteServers != null) {
+            String[] remoteServerArray = remoteServers.split(",");
             for (String remoteServer : remoteServerArray) {
                 if (remoteServer.contains(":")) {
                     remoteESServers.add(remoteServer);
@@ -85,8 +87,19 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
                 }
             }
         }
+    }
+
+    public void setClusterName(String clusterName) {
+        this.clusterName = clusterName;
+    }
+
+    public synchronized void start() {
+
+        if (client != null) {
+            return;
+        }
         Settings settings = Settings.settingsBuilder()
-                .put("cluster.name", "elasticsearch").build();
+                .put("cluster.name", clusterName).build();
         if (remoteESServers.size() != 0) {
             log.info("Connecting to remote ElasticSearch at addresses: " + remoteESServers + "...");
             TransportClient transportClient = TransportClient.builder().settings(settings).build();
