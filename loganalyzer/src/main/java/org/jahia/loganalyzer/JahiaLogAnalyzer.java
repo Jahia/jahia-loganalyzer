@@ -1,4 +1,4 @@
-package org.jahia.loganalyzer.api;
+package org.jahia.loganalyzer;
 
 /*
  * #%L
@@ -22,6 +22,8 @@ package org.jahia.loganalyzer.api;
  * #L%
  */
 
+import org.jahia.loganalyzer.services.taskexecutor.Task;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
@@ -32,9 +34,9 @@ import java.util.Date;
  */
 public interface JahiaLogAnalyzer {
 
-    void start(File inputFile);
+    void start(File inputFile, Task task);
 
-    boolean analyze(java.awt.Component uiComponent) throws IOException;
+    boolean analyze(java.awt.Component uiComponent, Task task) throws IOException;
 
     void retrieveBuildInformation();
 

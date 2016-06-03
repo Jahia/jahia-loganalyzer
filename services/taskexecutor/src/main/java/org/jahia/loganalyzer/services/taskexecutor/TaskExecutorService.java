@@ -1,4 +1,4 @@
-package org.jahia.loganalyzer;
+package org.jahia.loganalyzer.services.taskexecutor;
 
 /*
  * #%L
@@ -26,24 +26,24 @@ import java.util.List;
 import java.util.concurrent.Future;
 
 /**
- * An interface to the command executor service
+ * An interface to the task executor service
  */
-public interface ExecutorTaskService {
+public interface TaskExecutorService {
 
-    <T> Future<T> submit(ExecutorTask<T> executorTask);
+    <T> Future<T> submit(Task<T> task);
 
-    List<ExecutorTask<?>> getExecutorTasks();
+    List<Task<?>> getTasks();
 
     Object getNextFuture();
 
-    boolean addListener(ExecutorTaskListener executorTaskListener);
+    boolean addListener(TaskListener taskListener);
 
-    boolean removeListener(ExecutorTaskListener executorTaskListener);
+    boolean removeListener(TaskListener taskListener);
 
-    <T> void fireBeforeStarted(ExecutorTask<T> executorTask);
+    <T> void fireBeforeStarted(Task<T> task);
 
-    <T> void fireAfterEnd(ExecutorTask<T> executorTask);
+    <T> void fireAfterEnd(Task<T> task);
 
-    <T> void firePourcentageChanged(ExecutorTask<T> executorTask);
+    <T> void firePourcentageChanged(Task<T> task);
 
 }

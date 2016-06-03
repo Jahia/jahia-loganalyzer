@@ -1,4 +1,4 @@
-package org.jahia.loganalyzer;
+package org.jahia.loganalyzer.services.taskexecutor;
 
 /*
  * #%L
@@ -25,11 +25,11 @@ package org.jahia.loganalyzer;
 /**
  * This listener interface gets called whenever a task changes state
  */
-public interface ExecutorTaskListener {
+public interface TaskListener {
 
-    Object beforeStart(ExecutorTask<?> executorTask);
+    Object beforeStart(Task<?> task);
 
-    Object afterEnd(ExecutorTask<?> executorTask);
+    Object afterEnd(Task<?> task);
 
-    Object pourcentageChanged(ExecutorTask<?> executorTask);
+    Object pourcentageChanged(Task<?> task);
 }

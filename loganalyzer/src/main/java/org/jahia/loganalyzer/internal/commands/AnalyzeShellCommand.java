@@ -28,9 +28,9 @@ import org.apache.karaf.shell.api.action.Command;
 import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.apache.karaf.shell.api.console.Session;
-import org.jahia.loganalyzer.ExecutorTask;
-import org.jahia.loganalyzer.ExecutorTaskService;
-import org.jahia.loganalyzer.api.JahiaLogAnalyzer;
+import org.jahia.loganalyzer.JahiaLogAnalyzer;
+import org.jahia.loganalyzer.services.taskexecutor.Task;
+import org.jahia.loganalyzer.services.taskexecutor.TaskExecutorService;
 import org.osgi.framework.BundleContext;
 
 import java.io.File;
@@ -49,7 +49,7 @@ public class AnalyzeShellCommand implements Action {
     @Reference
     private BundleContext bundleContext;
     @Reference
-    private ExecutorTaskService executorTaskService;
+    private TaskExecutorService taskExecutorService;
     @Reference
     private Session session;
 
@@ -59,7 +59,7 @@ public class AnalyzeShellCommand implements Action {
         if (!inputFile.exists()) {
             return inputFile.getAbsolutePath() + " does not exist !";
         }
-        executorTaskService.submit(new ExecutorTask<Boolean>() {
+        taskExecutorService.submit(new Task<Boolean>() {
             @Override
             public Boolean execute() throws Exception {
                 Long startTime = System.currentTimeMillis();
@@ -69,8 +69,8 @@ public class AnalyzeShellCommand implements Action {
                 } else {
                     setDescription("Directory " + inputFile.toString());
                 }
-                jahiaLogAnalyzer.start(inputFile);
-                executorTaskService.getExecutorTasks().remove(this);
+                jahiaLogAnalyzer.start(inputFile, this);
+                taskExecutorService.getTasks().remove(this);
                 long totalTime = System.currentTimeMillis() - startTime;
                 session.getConsole().println("Analysis of " + inputFile.getAbsolutePath() + " completed in " + totalTime + "ms.");
                 return true;

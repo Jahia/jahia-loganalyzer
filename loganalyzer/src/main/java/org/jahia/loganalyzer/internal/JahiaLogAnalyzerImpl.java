@@ -28,10 +28,12 @@ import com.jgoodies.looks.plastic.PlasticXPLookAndFeel;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.jahia.loganalyzer.api.JahiaLogAnalyzer;
+import org.jahia.loganalyzer.JahiaLogAnalyzer;
 import org.jahia.loganalyzer.api.LogEntryWriterFactory;
 import org.jahia.loganalyzer.api.ProcessedLogFile;
 import org.jahia.loganalyzer.configuration.LogParserConfiguration;
+import org.jahia.loganalyzer.services.taskexecutor.MonitorInputStream;
+import org.jahia.loganalyzer.services.taskexecutor.Task;
 import org.jahia.loganalyzer.writers.ElasticSearchService;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
@@ -78,7 +80,7 @@ public class JahiaLogAnalyzerImpl implements JahiaLogAnalyzer {
         } else {
             initUI();
         }
-        jahiaLogAnalyzer.start(inputFile);
+        jahiaLogAnalyzer.start(inputFile, null);
     }
 
     public static void initUI() {
@@ -118,7 +120,7 @@ public class JahiaLogAnalyzerImpl implements JahiaLogAnalyzer {
     }
 
     @Override
-    public void start(File inputFile) {
+    public void start(File inputFile, Task task) {
         retrieveBuildInformation();
         if (inputFile == null) {
             log.error("Missing input file !");
@@ -135,7 +137,7 @@ public class JahiaLogAnalyzerImpl implements JahiaLogAnalyzer {
                 }
                 logParserConfiguration.setLogEntryWriterFactories(logEntryWriterFactories);
                 logParserConfiguration.setInputFile(inputFile);
-                if (analyze(null)) {
+                if (analyze(null, task)) {
                     log.info("Analysis completed. ");
                 } else {
                     log.info("Previous analysis found, using previous data.");
@@ -163,15 +165,21 @@ public class JahiaLogAnalyzerImpl implements JahiaLogAnalyzer {
     }
 
     @Override
-    public boolean analyze(java.awt.Component uiComponent) throws IOException {
+    public boolean analyze(java.awt.Component uiComponent, Task task) throws IOException {
         File inputFile = logParserConfiguration.getInputFile();
         if (!inputFile.exists()) {
             log.warn("Couldn't find file " + inputFile);
             return true;
         }
         String jvmIdentifier = "jvm";
+        long totalBytesToProcess = 0;
         if (inputFile.isDirectory()) {
             SortedSet<File> sortedFiles = new TreeSet<File>(FileUtils.listFiles(inputFile, null, true));
+            for (File file : sortedFiles) {
+                if (file.isFile()) {
+                    totalBytesToProcess += file.length();
+                }
+            }
             if (!logParserConfiguration.getOutputDirectory().exists()) {
                 createOutputDirectory(logParserConfiguration);
             }
@@ -179,6 +187,7 @@ public class JahiaLogAnalyzerImpl implements JahiaLogAnalyzer {
             LogParserImpl logParser = new LogParserImpl();
             logParser.setElasticSearchService(elasticSearchService);
             logParser.setLogParserConfiguration(logParserConfiguration);
+            long totalBytesRead = 0;
             for (File file : sortedFiles) {
                 if (file.getCanonicalPath().startsWith(logParserConfiguration.getOutputDirectory().getCanonicalPath())) {
                     continue;
@@ -199,16 +208,18 @@ public class JahiaLogAnalyzerImpl implements JahiaLogAnalyzer {
                         jvmIdentifier = filePath.substring(jvmIdentifierPos + "jvm-".length());
                     }
                 }
-                Reader reader = getFileReader(uiComponent, file);
+                Reader reader = getFileReader(uiComponent, file, new TotalBytesMonitor(task, totalBytesToProcess, totalBytesRead));
                 log.info("Parsing file " + file + "...");
                 processedLogFile = logParser.parse(reader, file, jvmIdentifier, processedLogFile.getLastParsedTimestamp());
                 log.info("Parsing of file " + file + " completed.");
                 reader.close();
+                totalBytesRead += file.length();
                 processedLogFiles.add(processedLogFile);
             }
             logParser.stop();
             saveProcessedLogFiles(processedLogFiles);
         } else {
+            long totalBytesRead = 0;
             File file = logParserConfiguration.getInputFile();
             if (!logParserConfiguration.getOutputDirectory().exists()) {
                 createOutputDirectory(logParserConfiguration);
@@ -225,11 +236,12 @@ public class JahiaLogAnalyzerImpl implements JahiaLogAnalyzer {
                 LogParserImpl logParser = new LogParserImpl();
                 logParser.setElasticSearchService(elasticSearchService);
                 logParser.setLogParserConfiguration(logParserConfiguration);
-                Reader reader = getFileReader(uiComponent, file);
+                Reader reader = getFileReader(uiComponent, file, new TotalBytesMonitor(task, totalBytesToProcess, totalBytesRead));
                 log.info("Parsing file " + file + "...");
                 processedLogFile = logParser.parse(reader, file, jvmIdentifier, processedLogFile.getLastParsedTimestamp());
                 log.info("Parsing of file " + file + " completed.");
                 reader.close();
+                totalBytesRead += file.length();
                 logParser.stop();
                 processedLogFiles.add(processedLogFile);
                 saveProcessedLogFiles(processedLogFiles);
@@ -282,7 +294,7 @@ public class JahiaLogAnalyzerImpl implements JahiaLogAnalyzer {
         }
     }
 
-    private Reader getFileReader(java.awt.Component uiComponent, File file) throws FileNotFoundException {
+    private Reader getFileReader(java.awt.Component uiComponent, File file, MonitorInputStream.Monitor monitor) throws FileNotFoundException {
         if (uiComponent != null) {
             InputStream in = new BufferedInputStream(
                     new ProgressMonitorInputStream(
@@ -291,7 +303,7 @@ public class JahiaLogAnalyzerImpl implements JahiaLogAnalyzer {
                             new FileInputStream(file)));
             return new InputStreamReader(in);
         } else {
-            return new BufferedReader(new FileReader(file));
+            return new InputStreamReader(new MonitorInputStream(monitor, new FileInputStream(file)));
         }
     }
 
@@ -343,5 +355,31 @@ public class JahiaLogAnalyzerImpl implements JahiaLogAnalyzer {
 
     public LogParserConfiguration getLogParserConfiguration() {
         return logParserConfiguration;
+    }
+
+    public class TotalBytesMonitor implements MonitorInputStream.Monitor {
+
+        private Task task;
+        private long totalBytesToProcess;
+        private long totalBytesReadUntilNow;
+        private long streamTotalAvailableBytes;
+
+        public TotalBytesMonitor(Task task, long totalBytesToProcess, long totalBytesReadUntilNow) {
+            this.task = task;
+            this.totalBytesToProcess = totalBytesToProcess;
+            this.totalBytesReadUntilNow = totalBytesReadUntilNow;
+        }
+
+        @Override
+        public void setTotalBytes(long totalBytes) {
+            this.streamTotalAvailableBytes = totalBytes;
+        }
+
+        @Override
+        public void setProgress(long bytesRead) {
+            if (task != null) {
+                task.setCompletionPourcentage((totalBytesReadUntilNow + bytesRead * 1.0) / (totalBytesToProcess * 1.0));
+            }
+        }
     }
 }

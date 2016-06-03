@@ -29,8 +29,8 @@ import org.apache.karaf.shell.api.action.lifecycle.Reference;
 import org.apache.karaf.shell.api.action.lifecycle.Service;
 import org.apache.karaf.shell.api.console.Session;
 import org.apache.karaf.shell.support.table.ShellTable;
-import org.jahia.loganalyzer.ExecutorTask;
-import org.jahia.loganalyzer.ExecutorTaskService;
+import org.jahia.loganalyzer.services.taskexecutor.Task;
+import org.jahia.loganalyzer.services.taskexecutor.TaskExecutorService;
 
 import java.util.Date;
 import java.util.List;
@@ -43,25 +43,25 @@ import java.util.List;
 public class ListShellCommand implements Action {
 
     @Reference
-    private ExecutorTaskService executorTaskService;
+    private TaskExecutorService taskExecutorService;
     @Reference
     private Session session;
 
     @Override
     public Object execute() throws Exception {
-        List<ExecutorTask<?>> tasks = executorTaskService.getExecutorTasks();
+        List<Task<?>> tasks = taskExecutorService.getTasks();
         ShellTable table = new ShellTable();
         table.column("ID");
         table.column("Name");
         table.column("Description");
         table.column("StartTime");
         table.column("Pourcentage");
-        for (ExecutorTask<?> executorTask : tasks) {
-            Date startDate = new Date(executorTask.getStartTime());
-            String pourcentage = Integer.toString((int) (executorTask.getCompletionPourcentage() * 100.0)) + "%";
-            table.addRow().addContent(executorTask.getIdentifier(),
-                    executorTask.getName(),
-                    executorTask.getDescription(),
+        for (Task<?> task : tasks) {
+            Date startDate = new Date(task.getStartTime());
+            String pourcentage = Integer.toString((int) (task.getCompletionPourcentage() * 100.0)) + "%";
+            table.addRow().addContent(task.getIdentifier(),
+                    task.getName(),
+                    task.getDescription(),
                     startDate.toString(),
                     pourcentage);
         }

@@ -48,6 +48,12 @@
         </dependency>
         <dependency>
             <groupId>org.jahia.loganalyzer</groupId>
+            <artifactId>loganalyzer-services-taskexecutor</artifactId>
+            <version>0.5-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jahia.loganalyzer</groupId>
             <artifactId>loganalyzer-lineanalyzers-core</artifactId>
             <version>0.5-SNAPSHOT</version>
             <scope>provided</scope>

@@ -22,7 +22,7 @@ package org.jahia.loganalyzer.itests;
  * #L%
  */
 
-import org.jahia.loganalyzer.api.JahiaLogAnalyzer;
+import org.jahia.loganalyzer.JahiaLogAnalyzer;
 import org.jahia.loganalyzer.common.ResourceUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -64,7 +64,7 @@ public class BasicTest extends BaseTest {
         Path tempDirectory = Files.createTempDirectory("loganalyzer-itest-temp");
         ResourceUtils.copyResourceToFile(this.getClass().getClassLoader(), "/jahia-tomcat/catalina.out", tempDirectory.toFile());
         File inputFile = new File(tempDirectory.toFile(), "catalina.out");
-        jahiaLogAnalyzer.start(inputFile);
+        jahiaLogAnalyzer.start(inputFile, null);
 
         File resultDirectory = new File(tempDirectory.toFile(), "catalina-loganalyzer-results");
         assertTrue("Results directory not found, expected at " + resultDirectory.getPath(), resultDirectory.exists());

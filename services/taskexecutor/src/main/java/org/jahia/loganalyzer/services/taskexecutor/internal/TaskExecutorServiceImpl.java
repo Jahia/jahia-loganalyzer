@@ -1,4 +1,4 @@
-package org.jahia.loganalyzer.internal;
+package org.jahia.loganalyzer.services.taskexecutor.internal;
 
 /*
  * #%L
@@ -22,9 +22,9 @@ package org.jahia.loganalyzer.internal;
  * #L%
  */
 
-import org.jahia.loganalyzer.ExecutorTask;
-import org.jahia.loganalyzer.ExecutorTaskListener;
-import org.jahia.loganalyzer.ExecutorTaskService;
+import org.jahia.loganalyzer.services.taskexecutor.Task;
+import org.jahia.loganalyzer.services.taskexecutor.TaskExecutorService;
+import org.jahia.loganalyzer.services.taskexecutor.TaskListener;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -33,26 +33,26 @@ import java.util.Set;
 import java.util.concurrent.*;
 
 /**
- * Created by loom on 31.05.16.
+ * An implementation of the TaskExecutorService interface that uses single threaded JDK ExecutorService
  */
-public class ExecutorTaskServiceImpl implements ExecutorTaskService {
+public class TaskExecutorServiceImpl implements TaskExecutorService {
 
     private ExecutorService executorService;
-    private List<ExecutorTask<?>> executorTasks = new ArrayList<>();
-    private Set<ExecutorTaskListener> executorTaskListeners = new LinkedHashSet<>();
+    private List<Task<?>> tasks = new ArrayList<>();
+    private Set<TaskListener> taskListeners = new LinkedHashSet<>();
 
-    public ExecutorTaskServiceImpl() {
+    public TaskExecutorServiceImpl() {
     }
 
     @Override
-    public <T> Future<T> submit(ExecutorTask<T> executorTask) {
+    public <T> Future<T> submit(Task<T> task) {
         if (executorService == null) {
             return null;
         }
-        executorTask.setExecutorTaskService(this);
-        Future<T> future = executorService.submit(executorTask);
-        executorTask.setFuture(future);
-        executorTasks.add(executorTask);
+        task.setTaskExecutorService(this);
+        Future<T> future = executorService.submit(task);
+        task.setFuture(future);
+        tasks.add(task);
         return future;
     }
 
@@ -68,16 +68,16 @@ public class ExecutorTaskServiceImpl implements ExecutorTaskService {
         }
     }
 
-    public List<ExecutorTask<?>> getExecutorTasks() {
-        return executorTasks;
+    public List<Task<?>> getTasks() {
+        return tasks;
     }
 
     @Override
     public Object getNextFuture() {
-        if (executorTasks.size() > 0) {
+        if (tasks.size() > 0) {
             Object result = null;
             try {
-                ExecutorTask<?> task = executorTasks.get(0);
+                Task<?> task = tasks.get(0);
                 if (task.getFuture() != null) {
                     result = task.getFuture().get();
                 }
@@ -86,43 +86,43 @@ public class ExecutorTaskServiceImpl implements ExecutorTaskService {
             } catch (ExecutionException e) {
                 e.printStackTrace();
             }
-            executorTasks.remove(0);
+            tasks.remove(0);
             return result;
         }
         return null;
     }
 
     @Override
-    public boolean addListener(ExecutorTaskListener executorTaskListener) {
-        return executorTaskListeners.add(executorTaskListener);
+    public boolean addListener(TaskListener taskListener) {
+        return taskListeners.add(taskListener);
     }
 
     @Override
-    public boolean removeListener(ExecutorTaskListener executorTaskListener) {
-        return executorTaskListeners.remove(executorTaskListener);
+    public boolean removeListener(TaskListener taskListener) {
+        return taskListeners.remove(taskListener);
     }
 
 
     @Override
-    public <T> void fireBeforeStarted(ExecutorTask<T> executorTask) {
-        for (ExecutorTaskListener executorTaskListener : executorTaskListeners) {
-            executorTaskListener.beforeStart(executorTask);
+    public <T> void fireBeforeStarted(Task<T> task) {
+        for (TaskListener taskListener : taskListeners) {
+            taskListener.beforeStart(task);
         }
     }
 
     @Override
-    public <T> void fireAfterEnd(ExecutorTask<T> executorTask) {
-        for (ExecutorTaskListener executorTaskListener : executorTaskListeners) {
-            executorTaskListener.afterEnd(executorTask);
+    public <T> void fireAfterEnd(Task<T> task) {
+        for (TaskListener taskListener : taskListeners) {
+            taskListener.afterEnd(task);
         }
-        executorTasks.remove(executorTask);
-        executorTask.setExecutorTaskService(null);
+        tasks.remove(task);
+        task.setTaskExecutorService(null);
     }
 
     @Override
-    public <T> void firePourcentageChanged(ExecutorTask<T> executorTask) {
-        for (ExecutorTaskListener executorTaskListener : executorTaskListeners) {
-            executorTaskListener.pourcentageChanged(executorTask);
+    public <T> void firePourcentageChanged(Task<T> task) {
+        for (TaskListener taskListener : taskListeners) {
+            taskListener.pourcentageChanged(task);
         }
     }
 

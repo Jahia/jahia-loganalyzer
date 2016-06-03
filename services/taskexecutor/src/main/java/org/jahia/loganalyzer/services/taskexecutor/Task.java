@@ -1,4 +1,4 @@
-package org.jahia.loganalyzer;
+package org.jahia.loganalyzer.services.taskexecutor;
 
 /*
  * #%L
@@ -32,7 +32,7 @@ import java.util.concurrent.Future;
  * An abstract task that contains runtime information about the task such as start and completion time, completion
  * pourcentage and a data map.
  */
-public abstract class ExecutorTask<V> implements Callable<V> {
+public abstract class Task<V> implements Callable<V> {
 
     private final String identifier = UUID.randomUUID().toString();
     private String name;
@@ -43,31 +43,31 @@ public abstract class ExecutorTask<V> implements Callable<V> {
     private Map<String, Object> dataMap = new ConcurrentHashMap<>();
     private Future<V> future;
 
-    private ExecutorTaskService executorTaskService;
+    private TaskExecutorService taskExecutorService;
 
     public V call() throws Exception {
         startTime = System.currentTimeMillis();
         completionPourcentage = 0.0;
-        if (executorTaskService != null) {
-            executorTaskService.fireBeforeStarted(this);
+        if (taskExecutorService != null) {
+            taskExecutorService.fireBeforeStarted(this);
         }
         V result = execute();
         completionTime = System.currentTimeMillis();
         completionPourcentage = 1.0;
-        if (executorTaskService != null) {
-            executorTaskService.fireAfterEnd(this);
+        if (taskExecutorService != null) {
+            taskExecutorService.fireAfterEnd(this);
         }
         return result;
     }
 
     public abstract V execute() throws Exception;
 
-    public ExecutorTaskService getExecutorTaskService() {
-        return executorTaskService;
+    public TaskExecutorService getTaskExecutorService() {
+        return taskExecutorService;
     }
 
-    public void setExecutorTaskService(ExecutorTaskService executorTaskService) {
-        this.executorTaskService = executorTaskService;
+    public void setTaskExecutorService(TaskExecutorService taskExecutorService) {
+        this.taskExecutorService = taskExecutorService;
     }
 
     public String getIdentifier() {
@@ -112,8 +112,8 @@ public abstract class ExecutorTask<V> implements Callable<V> {
 
     public void setCompletionPourcentage(double completionPourcentage) {
         this.completionPourcentage = completionPourcentage;
-        if (executorTaskService != null) {
-            executorTaskService.firePourcentageChanged(this);
+        if (taskExecutorService != null) {
+            taskExecutorService.firePourcentageChanged(this);
         }
     }
 
@@ -138,7 +138,7 @@ public abstract class ExecutorTask<V> implements Callable<V> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ExecutorTask<?> that = (ExecutorTask<?>) o;
+        Task<?> that = (Task<?>) o;
 
         return identifier.equals(that.identifier);
 
