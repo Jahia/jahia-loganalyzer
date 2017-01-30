@@ -1,11 +1,11 @@
 {
   "properties": {
     "jvmIdentifier": {
-      "type": "string",
+      "type": "keyword",
       "index": "not_analyzed"
     },
     "source": {
-      "type": "string",
+      "type": "keyword",
       "index": "not_analyzed"
     },
     "startLineNumber": {
@@ -18,19 +18,19 @@
       "type": "long"
     },
     "holdingLocks": {
-      "type": "string",
+      "type": "keyword",
       "index": "not_analyzed"
     },
     "logType": {
-      "type": "string",
+      "type": "keyword",
       "index": "not_analyzed"
     },
     "stackTrace": {
-      "type": "string",
+      "type": "keyword",
       "index": "not_analyzed"
     },
     "stackTraceDefinitionIds": {
-      "type": "string",
+      "type": "keyword",
       "index": "not_analyzed"
     },
     "stackTraceHashCode": {
@@ -43,15 +43,15 @@
       "type": "long"
     },
     "threadId": {
-      "type": "string",
+      "type": "keyword",
       "index": "not_analyzed"
     },
     "threadName": {
-      "type": "string",
+      "type": "keyword",
       "index": "not_analyzed"
     },
     "threadNativeId": {
-      "type": "string",
+      "type": "keyword",
       "index": "not_analyzed"
     },
     "threadNumber": {
@@ -61,15 +61,15 @@
       "type": "long"
     },
     "threadState": {
-      "type": "string",
+      "type": "keyword",
       "index": "not_analyzed"
     },
     "threadStateInfo": {
-      "type": "string",
+      "type": "keyword",
       "index": "not_analyzed"
     },
     "threadType": {
-      "type": "string",
+      "type": "keyword",
       "index": "not_analyzed"
     },
     "timestamp": {
@@ -80,7 +80,7 @@
       "type": "long"
     },
     "waitingOnLocks": {
-      "type": "string",
+      "type": "keyword",
       "index": "not_analyzed"
     }
   }

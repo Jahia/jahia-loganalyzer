@@ -10,11 +10,11 @@
       "type": "long"
     },
     "jvmIdentifier": {
-      "type": "string",
+      "type": "keyword",
       "index": "not_analyzed"
     },
     "logType": {
-      "type": "string",
+      "type": "keyword",
       "index": "not_analyzed"
     },
     "maxPageTime": {
@@ -27,7 +27,7 @@
       "type": "long"
     },
     "source": {
-      "type": "string",
+      "type": "keyword",
       "index": "not_analyzed"
     },
     "startLineNumber": {
@@ -38,11 +38,11 @@
       "format": "strict_date_optional_time||epoch_millis"
     },
     "url": {
-      "type": "string",
+      "type": "keyword",
       "index": "not_analyzed"
     },
     "urlKey": {
-      "type": "string",
+      "type": "keyword",
       "index": "not_analyzed"
     }
   }

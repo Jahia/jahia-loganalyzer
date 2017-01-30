@@ -1,11 +1,11 @@
 {
   "properties": {
     "jvmIdentifier": {
-      "type": "string",
+      "type": "keyword",
       "index": "not_analyzed"
     },
     "source": {
-      "type": "string",
+      "type": "keyword",
       "index": "not_analyzed"
     },
     "startLineNumber": {
@@ -15,25 +15,25 @@
       "type": "long"
     },
     "className": {
-      "type": "string",
+      "type": "keyword",
       "index": "not_analyzed"
     },
     "lineNumber": {
       "type": "long"
     },
     "logLevel": {
-      "type": "string",
+      "type": "keyword",
       "index": "not_analyzed"
     },
     "logLevelNumber": {
       "type": "long"
     },
     "logType": {
-      "type": "string",
+      "type": "keyword",
       "index": "not_analyzed"
     },
     "message": {
-      "type": "string",
+      "type": "keyword",
       "index": "not_analyzed"
     },
     "timestamp": {
