@@ -42,3 +42,5 @@ buildNumber.properties
 .mvn/timing.properties
 
 # Created by .ignore support plugin (hsz.mobi)
+/.settings/
+/.project
