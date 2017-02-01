@@ -44,8 +44,8 @@ public class LogParserConfiguration {
     public static final String DEFAULT_INPUTFILENAME_STRING = "catalina.out";
     public static final String DEFAULT_PERF_DETAILS_OUTPUTFILENAME = "performance-details";
     public static final String DEFAULT_PERF_SUMMARY_OUTPUTFILENAME = "performance-summary";
-    public static final String DEFAULT_EXCEPTION_DETAILS_OUTPUTFILENAME = "exceptions-details";
-    public static final String DEFAULT_EXCEPTION_SUMMARY_OUTPUTFILENAME = "exceptions-summary";
+    public static final String DEFAULT_EXCEPTION_DETAILS_OUTPUTFILENAME = "exception-details";
+    public static final String DEFAULT_EXCEPTION_SUMMARY_OUTPUTFILENAME = "exception-summary";
     public static final String DEFAULT_LOG_DETAILS_OUTPUTFILENAME = "log-details";
     public static final String DEFAULT_LOG_SUMMARY_OUTPUTFILENAME = "log-summary";
     public static final String DEFAULT_GC_DETAILS_OUTPUTFILENAME = "gc-details";
@@ -57,9 +57,9 @@ public class LogParserConfiguration {
     private static final org.slf4j.Logger logger =
             org.slf4j.LoggerFactory.getLogger(LogParserConfiguration.class);
     private static final String DEFAULT_DATE_FORMAT_STRING = "yyyy-MM-dd HH:mm:ss,SSS";
-    private static final String EXCEPTION_SECONDLINE_PATTERN_STRING = "\\s*at (.*)\\(.*\\)";
+    private static final String EXCEPTION_SECONDLINE_PATTERN_STRING = "\\s*(?:(?:at (.*)\\(.*\\))|(?:\\.{3}\\s\\d*\\smore))";
     private static final String EXCEPTION_CAUSEDBY_PATTERN_STRING = "^Caused by: (.*)?$";
-    private static final String EXCEPTION_FIRSTLINE_PATTERN_STRING = "^(.*?Exception.*?)(:.*)?$";
+    private static final String EXCEPTION_FIRSTLINE_PATTERN_STRING = "^(\\S*?Exception.*?)(:.*)?$";
     private static final String OLDER_PERF_MATCHING_PATTERN_STRING = ".*?\\[(.*?)\\].*org\\.jahia\\.bin\\.Jahia.*Processed \\[(.*?)\\](?: esi=\\[(.*?)\\])? user=\\[(.*)\\] ip=\\[(.*)\\] in \\[(.*)ms\\].*";
     private static final String OLD_PERF_MATCHING_PATTERN_STRING = "(.*?): .*\\[org\\.jahia\\.bin\\.Jahia\\].*Processed \\[(.*?)\\](?: esi=\\[(.*?)\\])? user=\\[(.*)\\] ip=\\[(.*)\\] in \\[(.*)ms\\].*";
     private static final String PERF_MATCHING_PATTERN_STRING = "(.*?): .*\\[Render].*Rendered \\[(.*?)\\](?: esi=\\[(.*?)\\])? user=\\[(.*)\\] ip=\\[(.*)\\] sessionID=\\[(.*)\\] in \\[(.*)ms\\].*";

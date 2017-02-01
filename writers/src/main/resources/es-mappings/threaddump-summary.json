@@ -1,15 +1,15 @@
 {
   "properties": {
     "deadThreadsInDump": {
-      "type": "string",
+      "type": "keyword",
       "index": "not_analyzed"
     },
     "logType": {
-      "type": "string",
+      "type": "keyword",
       "index": "not_analyzed"
     },
     "newThreadsInDump": {
-      "type": "string",
+      "type": "keyword",
       "index": "not_analyzed"
     },
     "threadCount": {
@@ -19,7 +19,7 @@
       "type": "long"
     },
     "threadDumps": {
-      "type": "string",
+      "type": "keyword",
       "index": "not_analyzed"
     },
     "timestamp": {

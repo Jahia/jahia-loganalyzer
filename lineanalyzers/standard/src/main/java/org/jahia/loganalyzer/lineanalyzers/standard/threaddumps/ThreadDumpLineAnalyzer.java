@@ -101,18 +101,19 @@ public class ThreadDumpLineAnalyzer extends WritingLineAnalyzer {
     }
 
     private boolean lineMatches(String line) {
-        return line.startsWith("Full thread dump") ||
-                line.contains("Full Java thread dump") ||
-                line.startsWith("\"") ||
-                line.startsWith("\tat") ||
-                line.trim().startsWith("at") ||
-                line.startsWith("\t- locked") ||
-                line.trim().startsWith("- locked") ||
-                line.startsWith("\t- waiting") ||
-                line.trim().startsWith("- waiting") ||
-                line.trim().startsWith("owned by") ||
+        String trimmedLine = line.trim();
+        return trimmedLine.startsWith("Full thread dump") ||
+                trimmedLine.contains("Full Java thread dump") ||
+                trimmedLine.startsWith("\"") ||
+                trimmedLine.startsWith("at") ||
+                trimmedLine.startsWith("- locked") ||
+                trimmedLine.startsWith("- waiting") ||
+                trimmedLine.startsWith("owned by") ||
+                trimmedLine.startsWith("Locked ownable synchronizers") ||                
+                trimmedLine.startsWith("- None") ||                
+                trimmedLine.startsWith("- <0x") ||                
                 line.contains("STDOUT") ||
-                "".equals(line.trim());
+                "".equals(trimmedLine);
     }
 
     public Date parseLine(LineAnalyzerContext context) throws IOException {

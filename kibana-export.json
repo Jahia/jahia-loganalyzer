@@ -183,7 +183,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"loganalyzer-*\",\"query\":{\"query_string\":{\"query\":\"logType:exceptions-details\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"loganalyzer-*\",\"query\":{\"query_string\":{\"query\":\"logType:exception-details\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -211,7 +211,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"loganalyzer-*\",\"query\":{\"query_string\":{\"query\":\"logType:exceptions-details\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"loganalyzer-*\",\"query\":{\"query_string\":{\"query\":\"logType:exception-details\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -295,7 +295,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"loganalyzer-*\",\"query\":{\"query_string\":{\"query\":\"logType:exceptions-details\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"loganalyzer-*\",\"query\":{\"query_string\":{\"query\":\"logType:exception-details\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   },
@@ -309,7 +309,7 @@
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
-        "searchSourceJSON": "{\"index\":\"loganalyzer-*\",\"query\":{\"query_string\":{\"query\":\"logType:threaddumps-details\",\"analyze_wildcard\":true}},\"filter\":[]}"
+        "searchSourceJSON": "{\"index\":\"loganalyzer-*\",\"query\":{\"query_string\":{\"query\":\"logType:threaddump-details\",\"analyze_wildcard\":true}},\"filter\":[]}"
       }
     }
   }

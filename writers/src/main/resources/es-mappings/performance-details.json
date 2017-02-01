@@ -1,15 +1,15 @@
 {
   "properties": {
     "cacheMode": {
-      "type": "string",
+      "type": "keyword",
       "index": "not_analyzed"
     },
     "jvmIdentifier": {
-      "type": "string",
+      "type": "keyword",
       "index": "not_analyzed"
     },
     "source": {
-      "type": "string",
+      "type": "keyword",
       "index": "not_analyzed"
     },
     "startLineNumber": {
@@ -19,11 +19,11 @@
       "type": "long"
     },
     "ipAddress": {
-      "type": "string",
+      "type": "ip",
       "index": "not_analyzed"
     },
     "logType": {
-      "type": "string",
+      "type": "keyword",
       "index": "not_analyzed"
     },
     "pageId": {
@@ -33,7 +33,7 @@
       "type": "long"
     },
     "sessionID": {
-      "type": "string",
+      "type": "keyword",
       "index": "not_analyzed"
     },
     "timestamp": {
@@ -41,15 +41,15 @@
       "format": "strict_date_optional_time||epoch_millis"
     },
     "url": {
-      "type": "string",
+      "type": "keyword",
       "index": "not_analyzed"
     },
     "urlKey": {
-      "type": "string",
+      "type": "keyword",
       "index": "not_analyzed"
     },
     "user": {
-      "type": "string",
+      "type": "keyword",
       "index": "not_analyzed"
     },
     "location": {

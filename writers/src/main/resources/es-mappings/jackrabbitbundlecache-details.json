@@ -4,7 +4,7 @@
       "type": "long"
     },
     "cacheName": {
-      "type": "string",
+      "type": "keyword",
       "index": "not_analyzed"
     },
     "elementCount": {
@@ -14,11 +14,11 @@
       "type": "long"
     },
     "jvmIdentifier": {
-      "type": "string",
+      "type": "keyword",
       "index": "not_analyzed"
     },
     "logType": {
-      "type": "string",
+      "type": "keyword",
       "index": "not_analyzed"
     },
     "maxMemoryKb": {
@@ -28,7 +28,7 @@
       "type": "long"
     },
     "source": {
-      "type": "string",
+      "type": "keyword",
       "index": "not_analyzed"
     },
     "startLineNumber": {

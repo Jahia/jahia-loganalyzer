@@ -140,6 +140,7 @@ public class ExceptionLineAnalyzer extends WritingLineAnalyzer {
         exceptionSummaryLogEntry.setCount(exceptionSummaryLogEntry.getCount()+1);
         exceptionSummaryMap.put(currentExceptionDetailsLogEntry.toString(), exceptionSummaryLogEntry);
         inException = false;
+        currentExceptionDetailsLogEntry = null;
     }
 
     public void stop() throws IOException {

@@ -36,6 +36,7 @@
         <version.karaf>4.0.4</version.karaf>
         <version.cxf>3.1.6</version.cxf>
         <version.pax.exam>4.9.1</version.pax.exam>
+        <version.elasticsearch>5.1.2</version.elasticsearch>
     </properties>
 
     <licenses>

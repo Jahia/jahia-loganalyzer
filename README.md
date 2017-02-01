@@ -41,9 +41,8 @@ Features
 - Parsing of Jahia DX request load activity
 - Parsing of Jackrabbit bundle cache logs
 - Outputs CSV & JSON reports
-- Embeds an ElasticSearch server and stores the parsed data into it, a distant
-ElasticSearch may also be used.
-- Compatible with Kibana 4 for advanced data visualization
+- Uses a distant ElasticSearch 5 server to stores the parsed data into it
+- Compatible with Kibana 5 for advanced data visualization
 
 Compiling
 --------------------------------------------------------------------------------
@@ -105,20 +104,17 @@ See the TODO.txt file for information about stuff that isn't done yet :)
 ElasticSearch configuration
 --------------------------------------------------------------------------------
    
-By default an embedded ElasticSearch server will be used, but it is also possibly
-to use remote ElasticSearch instances. In order to do so you must uncomment the 
-following line in the etc/org.jahia.loganalyzer.writers.cfg file :
+As ElasticSearch no longer supports an embedded server, we require to use a remote ElasticSearch instance.
+In the etc/org.jahia.loganalyzer.writers.cfg file we have the following default configuration:
 
-    remoteServers = REMOTE_SERVER_LIST
+    remoteServers = localhost:9300
 
 where : 
 - REMOTE_SERVER_LIST: is an optional list of remote ElasticSearch servers to use to output 
 the result of the parsing. It should be a comma seperated list of host:port values such as:
 
-    localhost:9300
-    10.0.1.0:9300, 10.0.1.1:9300
-    
-if this parameter is not specified it will start an embedded ElasticSearch server.
+    10.0.1.0:9300, 10.0.1.1:9300   
+
     
 Kibana Usage
 --------------------------------------------------------------------------------
@@ -141,7 +137,7 @@ You can find it in the file :
 
     kibana-export.json 
     
-at the root of this project. To import it, launch Kibana 4, go into Settings->
+at the root of this project. To import it, launch Kibana 5, go into Settings->
 Objects and click on Import and use the import file. You should then be able
 to open the saved visualizations and dashboards.
 
@@ -149,34 +145,43 @@ Output files
 --------------------------------------------------------------------------------
 Here is a brief descriptions of the output files and their generated content 
 
-- jahia-perf-details.csv/.json
+- performance-details.csv/.json
   Contains the full list of extracted Jahia request performance data. 
   
-- jahia-perf-summary.csv/.json
+- performance-summary.csv/.json
   Contains a view of cumulated request times for a specific Jahia pages
   
-- jahia-exception-details.csv/.json
+- exception-details.csv/.json
   Contains details of all the exceptions found in the log
   
-- jahia-exception-summary.csv/.json
+- exception-summary.csv/.json
   Contains a summary of the number of times the same exception was encountered
   in the log files
 
-- jahia-thread-details.csv/.json
+- threaddump-details.csv/.json
   Contains all the threads that were found in the thread dumps generated in the
   log file. 
   
-- jahia-thread-summary.csv/.json
+- threaddump-summary.csv/.json
   Contains a summary view of the number of threads in the different thread 
   dumps, as well as the differences between the thread dumps (new threads,
   old threads). Note : it is a good idea to generate lots of thread dumps to
   improve the quality of this data.
 
-- jahia-standard-details.csv/.json
+- garbagecollection-details.csv/.json
+  Contains details of the garbage collections found in the log
+ 
+- jackrabbitbundlecache-details.csv/.json
+  Contains details of the jackrabbit bundlecache status output found in the log
+  
+- requestload-details.csv/.json
+  Contains details of the request load output found in the log. 
+  
+- loglevel-details.csv/.json
   Contains all the log files NOT parsed by the performance analyzer, and that
   are above the logging level specified in the user interface.
 
-- jahia-standard-summary.csv/.json
+- loglevel-summary.csv/.json
   Contains a summary view of the number of times a specific message was logged,
   regardless of the logging level specified in the user interface.
   

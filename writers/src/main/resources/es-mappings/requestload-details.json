@@ -10,18 +10,18 @@
       "type": "double"
     },
     "jvmIdentifier": {
-      "type": "string",
+      "type": "keyword",
       "index": "not_analyzed"
     },
     "logType": {
-      "type": "string",
+      "type": "keyword",
       "index": "not_analyzed"
     },
     "oneMinuteLoad": {
       "type": "double"
     },
     "source": {
-      "type": "string",
+      "type": "keyword",
       "index": "not_analyzed"
     },
     "startLineNumber": {

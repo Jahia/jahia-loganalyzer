@@ -31,8 +31,8 @@
             <matching-pattern>(.*?): .*\[Render].*Rendered \[(.*?)\](?: esi=\[(.*?)\])? user=\[(.*)\] ip=\[(.*)\] sessionID=\[(.*)\] in \[(.*)ms\].*</matching-pattern>
         </perf-analyzer>
         <exception-analyzer>
-            <firstline-pattern>^(.*?Exception.*?)(:.*)?$</firstline-pattern>
-            <secondline-pattern>\s*at (.*)\(.*\)</secondline-pattern>
+            <firstline-pattern>^(\S*?Exception.*?)(:.*)?$</firstline-pattern>
+            <secondline-pattern>\s*(?:(?:at (.*)\(.*\))|(?:\.{3}\s\d*\smore))</secondline-pattern>
             <causedby-pattern>^Caused by: (.*)?$</causedby-pattern>
         </exception-analyzer>
         <threaddump-analyzer>

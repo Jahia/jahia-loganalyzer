@@ -29,9 +29,8 @@ import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
-import org.elasticsearch.node.Node;
-import org.elasticsearch.node.NodeBuilder;
-import org.jahia.loganalyzer.common.ResourceUtils;
+import org.elasticsearch.plugins.Plugin;
+import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.jahia.loganalyzer.writers.ElasticSearchService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +38,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Collections;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -50,12 +50,10 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     private static final Logger log =
             LoggerFactory.getLogger(ElasticSearchServiceImpl.class);
 
-    Node node = null;
     Client client = null;
     BulkProcessor bulkProcessor = null;
     String homePath = new File(".").getPath();
 
-    private String remoteServers = null;
     private String clusterName = "elasticsearch";
     private SortedSet<String> remoteESServers = new TreeSet<String>();
 
@@ -73,7 +71,6 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
     }
 
     public void setRemoteServers(String remoteServers) {
-        this.remoteServers = remoteServers;
         if (remoteServers != null && remoteServers.trim().length() == 0) {
             remoteServers = null;
         }
@@ -98,11 +95,11 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         if (client != null) {
             return;
         }
-        Settings settings = Settings.settingsBuilder()
+        Settings settings = Settings.builder()
                 .put("cluster.name", clusterName).build();
         if (remoteESServers.size() != 0) {
             log.info("Connecting to remote ElasticSearch at addresses: " + remoteESServers + "...");
-            TransportClient transportClient = TransportClient.builder().settings(settings).build();
+            TransportClient transportClient = new PreBuiltTransportClient(settings, Collections.<Class<? extends Plugin>>emptySet());
             for (String remoteESServer : remoteESServers) {
                 String[] remoteESServerParts = remoteESServer.split(":");
                 try {
@@ -113,12 +110,7 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
             }
             client = transportClient;
         } else {
-            log.info("Starting embedded ElasticSearch server in " + homePath + "...");
-            System.setProperty("es.path.home", homePath);
-            File esSitePluginDirectory = new File(homePath, "plugins/loganalyzer");
-            ResourceUtils.extractZipResource(this.getClass().getClassLoader(), "loganalyzer-es-site-plugin.jar", esSitePluginDirectory);
-            node = NodeBuilder.nodeBuilder().settings(settings).node();
-            client = node.client();
+            log.error("You have to setup and configure a remote ES 5 server as an embedded ES servers is no longer available");
         }
 
         if (client != null && bulkProcessor == null) {
@@ -173,12 +165,6 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         if (client != null) {
             client.close();
             client = null;
-        }
-        if (remoteESServers.size() == 0) {
-            if (node != null) {
-                node.close();
-                node = null;
-            }
         }
     }
 
