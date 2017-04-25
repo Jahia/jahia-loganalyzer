@@ -74,7 +74,7 @@ public class ExceptionSummaryLogEntry extends BaseLogEntry {
         LinkedHashMap<String, Object> result = super.getValues();
         result.put("count", count);
         result.put("className", (exceptionDetailsLogEntry != null ? exceptionDetailsLogEntry.getClassName() : null));
-        result.put("message", (exceptionDetailsLogEntry != null ? exceptionDetailsLogEntry.getClassName() : null));
+        result.put("message", (exceptionDetailsLogEntry != null ? exceptionDetailsLogEntry.getMessage() : null));
         result.put("stackTrace", (exceptionDetailsLogEntry != null ? exceptionDetailsLogEntry.getStackTrace() : null));
         result.put("contextLines", (exceptionDetailsLogEntry != null ? exceptionDetailsLogEntry.getContextLines() : null));
         return result;

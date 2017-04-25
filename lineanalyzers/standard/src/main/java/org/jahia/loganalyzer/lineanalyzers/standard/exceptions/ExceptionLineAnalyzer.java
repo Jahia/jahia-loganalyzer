@@ -51,7 +51,10 @@ public class ExceptionLineAnalyzer extends WritingLineAnalyzer {
     private Pattern secondLinePattern;
     private Pattern firstLinePattern;
     private Pattern causedByPattern;
+    private Pattern standardLogPattern;
     private boolean inException = false;
+    private boolean inCausedByMessage = false;
+    private int processedMessageLines = 0;    
     private ExceptionDetailsLogEntry currentExceptionDetailsLogEntry = null;
     private Map<String, ExceptionSummaryLogEntry> exceptionSummaryMap = new HashMap<String, ExceptionSummaryLogEntry>();
     private StackTraceService stackTraceService;
@@ -63,6 +66,7 @@ public class ExceptionLineAnalyzer extends WritingLineAnalyzer {
         secondLinePattern = Pattern.compile(logParserConfiguration.getExceptionSecondLinePattern());
         firstLinePattern = Pattern.compile(logParserConfiguration.getExceptionFirstLinePattern());
         causedByPattern = Pattern.compile(logParserConfiguration.getExceptionCausedByPattern());
+        standardLogPattern = Pattern.compile(logParserConfiguration.getStandardLogAnalyzerPattern());
     }
 
     public void setStackTraceService(StackTraceService stackTraceService) {
@@ -75,51 +79,79 @@ public class ExceptionLineAnalyzer extends WritingLineAnalyzer {
 
     public boolean isForThisAnalyzer(LineAnalyzerContext context) {
         if (inException) {
-            Matcher matcher = secondLinePattern.matcher(context.getLine());
-            if (matcher.matches()) {
+            if (secondLinePattern.matcher(context.getLine()).matches() || causedByPattern.matcher(context.getLine()).matches()) {
                 return true;
-            }
-            if (context.getLine().startsWith("Caused by:")) {
-                return true;
-            }
-        }
-        if (context.getNextLine() != null) {
-            Matcher matcher = secondLinePattern.matcher(context.getNextLine());
-            if (matcher.matches()) {
-                if (inException) {
-                    finishPreviousState(context);
+            } else if (currentExceptionDetailsLogEntry.getStackTrace().isEmpty() || inCausedByMessage) {
+                Matcher firstLineMatcher = firstLinePattern.matcher(context.getLine());
+                if (firstLineMatcher.matches()) {
+                    if (!currentExceptionDetailsLogEntry.getClassName().equals(firstLineMatcher.group(1))
+                            || currentExceptionDetailsLogEntry.getMessage() == null && firstLineMatcher.group(2) != null
+                            || currentExceptionDetailsLogEntry.getMessage() != null && !currentExceptionDetailsLogEntry.getMessage().startsWith(firstLineMatcher.group(2))) {
+                        // a new exception is found, while for the previous exception there is just one line
+                        finishPreviousState(context);
+                    }
+                    return true;
+                } else if (standardLogPattern.matcher(context.getLine()).matches()) {
+                    // looks like there was an exception without further stacktrace, stop processing that exception
+                    return false;
+                } else if (processedMessageLines == 100) {
+                    logger.warn("Detected exception, but the message goes over more than 100 lines,ignoring the rest! Line: {} = {}", context.getLineNumber(), context.getLine());
+                    return false;
                 }
                 return true;
+            } else if (context.getNextLine() != null && (secondLinePattern.matcher(context.getNextLine()).matches()
+                    || causedByPattern.matcher(context.getNextLine()).matches())) {
+                // if we are already processing the exception stacktrace, then a corrupted log with an unrelated line should be ignored if next line again relates to the processed exception
+                return true;
+            } else if (firstLinePattern.matcher(context.getLine()).matches()) {
+                finishPreviousState(context);
+                return true;
             }
+        } else if (firstLinePattern.matcher(context.getLine()).matches()) {
+            return true;
         }
         return false;  
     }
 
     public Date parseLine(LineAnalyzerContext context) {
         if (!inException) {
-            logger.trace("Found exception " + context.getLine());
-            inException = true;
+            logger.trace("Found exception. Line: {} = {}", context.getLineNumber(), context.getLine());
             Matcher firstLineMatcher = firstLinePattern.matcher(context.getLine());
             if (!firstLineMatcher.matches()) {
-                logger.warn("Couldn't parse first line of exception, ignoring. Line " + Long.toString(context.getLineNumber()) + "=" + context.getLine());
+                logger.warn("Couldn't parse first line of exception, ignoring. Line: {} = {}", context.getLineNumber(), context.getLine());
                 return null;
             }
+            inException = true;
+            inCausedByMessage = false;
+            processedMessageLines = 1;
             currentExceptionDetailsLogEntry = new ExceptionDetailsLogEntry(context.getLineNumber(), context.getLineNumber(), context.getLastValidDateParsed(), context.getJvmIdentifier(), context.getFile().getName());
             currentExceptionDetailsLogEntry.setStackTraceService(stackTraceService);
             currentExceptionDetailsLogEntry.setClassName(firstLineMatcher.group(1));
             currentExceptionDetailsLogEntry.setMessage(firstLineMatcher.group(2));
             currentExceptionDetailsLogEntry.getContextLines().addAll(context.getContextLines());
         } else {
-            Matcher secondLineMatcher = secondLinePattern.matcher(context.getLine());
-            if (secondLineMatcher.matches()) {
+            if (secondLinePattern.matcher(context.getLine()).matches()) {
+                currentExceptionDetailsLogEntry.getStackTrace().add(context.getLine());
+                inCausedByMessage = false;
+            } else if (causedByPattern.matcher(context.getLine()).matches()) {
+                currentExceptionDetailsLogEntry.getStackTrace().add(context.getLine());
+                inCausedByMessage = true;
+                processedMessageLines = 1;
+            } else if (currentExceptionDetailsLogEntry.getStackTrace().isEmpty()) {
+                Matcher firstLineMatcher = firstLinePattern.matcher(context.getLine());
+                // skip multiline message concatenation if exception message is just duplicated
+                if (!firstLineMatcher.matches() || !currentExceptionDetailsLogEntry.getClassName().equals(firstLineMatcher.group(1))
+                        || currentExceptionDetailsLogEntry.getMessage() == null && firstLineMatcher.group(2) != null
+                        || currentExceptionDetailsLogEntry.getMessage() != null
+                                && !currentExceptionDetailsLogEntry.getMessage().startsWith(firstLineMatcher.group(2))) {
+                    processedMessageLines++;
+                    currentExceptionDetailsLogEntry.setMessage(currentExceptionDetailsLogEntry.getMessage() + System.lineSeparator() + context.getLine());
+                }
+            } else if (inCausedByMessage) {
+                processedMessageLines++;
                 currentExceptionDetailsLogEntry.getStackTrace().add(context.getLine());
             } else {
-                Matcher causedByMatcher = causedByPattern.matcher(context.getLine());
-                if (causedByMatcher.matches()) {
-                    currentExceptionDetailsLogEntry.getStackTrace().add(context.getLine());
-                } else {
-                    logger.warn("Unexcepted line in exception,ignoring :" + context.getLine());
-                }
+                logger.warn("Unexpected line in exception, ignoring! Line: {} = {}", context.getLineNumber(), context.getLine());
             }
         }
         return null;
@@ -128,6 +160,8 @@ public class ExceptionLineAnalyzer extends WritingLineAnalyzer {
     public void finishPreviousState(LineAnalyzerContext context) {
         if (currentExceptionDetailsLogEntry == null) {
             inException = false;
+            processedMessageLines = 0;
+            inCausedByMessage = false;
             return;
         }
         currentExceptionDetailsLogEntry.setEndLineNumber(context.getLineNumber());
@@ -140,14 +174,19 @@ public class ExceptionLineAnalyzer extends WritingLineAnalyzer {
         exceptionSummaryLogEntry.setCount(exceptionSummaryLogEntry.getCount()+1);
         exceptionSummaryMap.put(currentExceptionDetailsLogEntry.toString(), exceptionSummaryLogEntry);
         inException = false;
+        processedMessageLines = 0;
+        inCausedByMessage = false;
         currentExceptionDetailsLogEntry = null;
     }
 
     public void stop() throws IOException {
+        long exceptionCount = 0;
         for (ExceptionSummaryLogEntry exceptionSummaryLogEntry : exceptionSummaryMap.values()) {
             writeSummary(exceptionSummaryLogEntry, -1);
+            exceptionCount += exceptionSummaryLogEntry.getCount();
         }
         super.stop();
+        logger.info("Found " + exceptionCount + " exceptions.");
     }
 
 }
