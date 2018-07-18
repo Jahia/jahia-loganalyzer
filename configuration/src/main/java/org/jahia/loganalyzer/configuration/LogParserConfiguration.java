@@ -59,7 +59,7 @@ public class LogParserConfiguration {
     private static final String DEFAULT_DATE_FORMAT_STRING = "yyyy-MM-dd HH:mm:ss,SSS";
     private static final String EXCEPTION_SECONDLINE_PATTERN_STRING = "\\s*(?:(?:at (.*)\\(.*\\))|(?:\\.{3}\\s\\d*\\smore))";
     private static final String EXCEPTION_CAUSEDBY_PATTERN_STRING = "^Caused by: (.*)?$";
-    private static final String EXCEPTION_FIRSTLINE_PATTERN_STRING = "^(\\S*?Exception.*?)(:.*)?$";
+    private static final String EXCEPTION_FIRSTLINE_PATTERN_STRING = ".*?(\\w+(?:\\.\\w+)*\\.\\w*Exception\\S*)(?:: (.*))?$";
     private static final String OLDER_PERF_MATCHING_PATTERN_STRING = ".*?\\[(.*?)\\].*org\\.jahia\\.bin\\.Jahia.*Processed \\[(.*?)\\](?: esi=\\[(.*?)\\])? user=\\[(.*)\\] ip=\\[(.*)\\] in \\[(.*)ms\\].*";
     private static final String OLD_PERF_MATCHING_PATTERN_STRING = "(.*?): .*\\[org\\.jahia\\.bin\\.Jahia\\].*Processed \\[(.*?)\\](?: esi=\\[(.*?)\\])? user=\\[(.*)\\] ip=\\[(.*)\\] in \\[(.*)ms\\].*";
     private static final String PERF_MATCHING_PATTERN_STRING = "(.*?): .*\\[Render].*Rendered \\[(.*?)\\](?: esi=\\[(.*?)\\])? user=\\[(.*)\\] ip=\\[(.*)\\] sessionID=\\[(.*)\\] in \\[(.*)ms\\].*";
