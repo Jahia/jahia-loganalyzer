@@ -52,12 +52,13 @@ import java.util.concurrent.*;
 
 import static org.junit.Assert.assertTrue;
 import static org.ops4j.pax.exam.CoreOptions.maven;
+import static org.ops4j.pax.exam.CoreOptions.systemProperty;
 import static org.ops4j.pax.exam.karaf.options.KarafDistributionOption.*;
 
 /**
  * Created by loom on 27.07.15.
  */
-public abstract class BaseTest {
+public abstract class BaseIT {
 
     public static final String RMI_SERVER_PORT = "44445";
     public static final String HTTP_PORT = "9081";
@@ -155,6 +156,9 @@ public abstract class BaseTest {
         options.add(configureSecurity().disableKarafMBeanServerBuilder());
         options.add(keepRuntimeFolder());
         options.add(logLevel(LogLevel.INFO));
+        options.add(systemProperty("org.jahia.loganalyzer.itests.elasticsearch.transport.port").value("9500"));
+        options.add(systemProperty("org.jahia.loganalyzer.itests.elasticsearch.cluster.name").value("logAnalyzerITests"));
+
         options.add(replaceConfigurationFile("etc/org.ops4j.pax.logging.cfg", getConfigFile("/etc/org.ops4j.pax.logging.cfg")));
         options.add(editConfigurationFilePut("etc/org.ops4j.pax.web.cfg", "org.osgi.service.http.port", HTTP_PORT));
         options.add(editConfigurationFilePut("etc/org.apache.karaf.management.cfg", "rmiRegistryPort", RMI_REG_PORT));

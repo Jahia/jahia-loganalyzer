@@ -31,7 +31,7 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 @RunWith(Suite.class)
 @SuiteClasses({
-        BasicTest.class,
+        BasicIT.class,
 })
-public class AllTests {
+public class AllITs {
 }

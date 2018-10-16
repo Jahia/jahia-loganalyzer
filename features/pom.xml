@@ -24,7 +24,7 @@
     </parent>
 
     <artifactId>loganalyzer-karaf</artifactId>
-    <packaging>feature</packaging>
+    <packaging>kar</packaging>
     <name>Jahia Log Analyzer :: Karaf Feature</name>
 
     <dependencies>

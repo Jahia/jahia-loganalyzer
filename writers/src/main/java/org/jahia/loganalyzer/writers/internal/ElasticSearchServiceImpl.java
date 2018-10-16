@@ -95,6 +95,19 @@ public class ElasticSearchServiceImpl implements ElasticSearchService {
         if (client != null) {
             return;
         }
+
+        // this property is used for integration tests, to make sure we don't conflict with an already running ElasticSearch instance.
+        if (System.getProperty("org.jahia.loganalyzer.itests.elasticsearch.transport.port") != null) {
+            remoteESServers.clear();
+            remoteESServers.add("localhost:" + System.getProperty("org.jahia.loganalyzer.itests.elasticsearch.transport.port"));
+            log.info("Overriding ElasticSearch address list from system property=" + remoteESServers);
+        }
+        // this property is used for integration tests, to make sure we don't conflict with an already running ElasticSearch instance.
+        if (System.getProperty("org.jahia.loganalyzer.itests.elasticsearch.cluster.name") != null) {
+            clusterName = System.getProperty("org.jahia.loganalyzer.itests.elasticsearch.cluster.name");
+            log.info("Overriding cluster name from system property=" + clusterName);
+        }
+
         Settings settings = Settings.builder()
                 .put("cluster.name", clusterName).build();
         if (remoteESServers.size() != 0) {

@@ -141,6 +141,15 @@
         </dependency>
 
         <dependency>
+            <groupId>org.apache.karaf.features</groupId>
+            <artifactId>standard</artifactId>
+            <classifier>features</classifier>
+            <version>${version.karaf}</version>
+            <type>xml</type>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
@@ -169,6 +178,7 @@
             <plugin>
                 <groupId>org.apache.servicemix.tooling</groupId>
                 <artifactId>depends-maven-plugin</artifactId>
+                <version>1.4.0</version>
                 <executions>
                     <execution>
                         <id>generate-depends-file</id>
@@ -191,9 +201,42 @@
                 </executions>
             </plugin>
             <plugin>
+                <groupId>com.github.alexcojocaru</groupId>
+                <artifactId>elasticsearch-maven-plugin</artifactId>
+                <!-- REPLACE THE FOLLOWING WITH THE PLUGIN VERSION YOU NEED -->
+                <version>5.1</version>
+                <configuration>
+                    <clusterName>logAnalyzerITests</clusterName>
+                    <transportPort>9500</transportPort>
+                    <httpPort>9400</httpPort>
+                    <version>${version.elasticsearch}</version>
+                    <autoCreateIndex>true</autoCreateIndex>
+                </configuration>
+                <executions>
+                    <!--
+                        The elasticsearch maven plugin goals are by default bound to the
+                        pre-integration-test and post-integration-test phases
+                    -->
+                    <execution>
+                        <id>start-elasticsearch</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>runforked</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>stop-elasticsearch</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>stop</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.18.1</version>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.20.1</version>
                 <configuration>
                     <!-- when the local repo location has been specified, we need to pass on this information to PAX mvn url -->
                     <systemPropertyVariables>
@@ -201,9 +244,23 @@
                         </org.ops4j.pax.logging.DefaultServiceLog.level>
                     </systemPropertyVariables>
                     <includes>
-                        <include>**/*AllTests.java</include>
+                        <include>**/*AllITs.java</include>
                     </includes>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>integration-test</id>
+                        <goals>
+                            <goal>integration-test</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>verify</id>
+                        <goals>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

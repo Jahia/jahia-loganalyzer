@@ -42,7 +42,7 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(PaxExam.class)
 @ExamReactorStrategy(PerSuite.class)
-public class BasicTest extends BaseTest {
+public class BasicIT extends BaseIT {
 
     @Test
     public void testBaseSystem() throws IOException {
