@@ -34,6 +34,6 @@
     <bean id="stackTraceServiceImpl" class="org.jahia.loganalyzer.services.stacktrace.internal.StackTraceServiceImpl"
           init-method="start" destroy-method="stop">
     </bean>
-    <service id="stackTraceService" ref="stackTraceServiceImpl" auto-export="interfaces"/>
+    <service id="stackTraceService" ref="stackTraceServiceImpl" interface="org.jahia.loganalyzer.services.stacktrace.StackTraceService"/>
 
 </blueprint>

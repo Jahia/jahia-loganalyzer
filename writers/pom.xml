@@ -199,6 +199,9 @@
                              com.fasterxml.jackson.dataformat.xml;resolution:=optional,
                              com.fasterxml.jackson.dataformat.xml.annotation;resolution:=optional,
                              com.fasterxml.jackson.dataformat.xml.util;resolution:=optional,
+                             io.netty.*;resolution:=optional,
+                             org.conscrypt.*;resolution:=optional,
+                             org.noggit.*;resolution:=optional,
                              *
                         </Import-Package>
                     </instructions>

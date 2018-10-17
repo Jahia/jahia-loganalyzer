@@ -34,6 +34,6 @@
     <bean id="taskExecutorServiceImpl"
           class="org.jahia.loganalyzer.services.taskexecutor.internal.TaskExecutorServiceImpl"
           init-method="start" destroy-method="stop"/>
-    <service id="taskExecutorService" ref="taskExecutorServiceImpl" auto-export="interfaces"/>
+    <service id="taskExecutorService" ref="taskExecutorServiceImpl" interface="org.jahia.loganalyzer.services.taskexecutor.TaskExecutorService"/>
 
 </blueprint>

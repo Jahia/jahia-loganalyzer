@@ -37,19 +37,19 @@
         <property name="remoteServers" value="${writers.remoteServers}"/>
         <property name="clusterName" value="${writers.clusterName}"/>
     </bean>
-    <service id="elasticSearchService" ref="elasticSearchServiceImpl" auto-export="interfaces"/>
+    <service id="elasticSearchService" ref="elasticSearchServiceImpl" interface="org.jahia.loganalyzer.writers.ElasticSearchService"/>
 
     <bean id="csvLogEntryWriterFactory" class="org.jahia.loganalyzer.writers.internal.CSVLogEntryWriterFactory"/>
-    <service id="csvLogEntryWriterFactoryService" ref="csvLogEntryWriterFactory" auto-export="interfaces"/>
+    <service id="csvLogEntryWriterFactoryService" ref="csvLogEntryWriterFactory" interface="org.jahia.loganalyzer.api.LogEntryWriterFactory"/>
 
     <bean id="elasticSearchLogEntryWriterFactory"
           class="org.jahia.loganalyzer.writers.internal.ElasticSearchLogEntryWriterFactory">
         <property name="elasticSearchService" ref="elasticSearchServiceImpl"/>
     </bean>
     <service id="elasticSearchLogEntryWriterFactoryService" ref="elasticSearchLogEntryWriterFactory"
-             auto-export="interfaces"/>
+             interface="org.jahia.loganalyzer.api.LogEntryWriterFactory"/>
 
     <bean id="jsonLogEntryWriterFactory" class="org.jahia.loganalyzer.writers.internal.JSONLogEntryWriterFactory"/>
-    <service id="jsonLogEntryWriterFactoryService" ref="jsonLogEntryWriterFactory" auto-export="interfaces"/>
+    <service id="jsonLogEntryWriterFactoryService" ref="jsonLogEntryWriterFactory" interface="org.jahia.loganalyzer.api.LogEntryWriterFactory"/>
 
 </blueprint>

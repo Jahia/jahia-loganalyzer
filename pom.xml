@@ -33,10 +33,10 @@
     <properties>
         <jackson-core-version>2.7.0</jackson-core-version>
         <jahia.site.path></jahia.site.path>
-        <version.karaf>4.0.4</version.karaf>
-        <version.cxf>3.1.6</version.cxf>
+        <version.karaf>4.2.1</version.karaf>
+        <version.cxf>3.2.6</version.cxf>
         <version.pax.exam>4.9.1</version.pax.exam>
-        <version.elasticsearch>5.1.2</version.elasticsearch>
+        <version.elasticsearch>5.6.12</version.elasticsearch>
     </properties>
 
     <licenses>

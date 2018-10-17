@@ -38,7 +38,7 @@
         <property name="elasticSearchService" ref="elasticSearchService"/>
         <property name="bundleContext" ref="blueprintBundleContext"/>
     </bean>
-    <service id="jahiaLogAnalyzer" ref="jahiaLogAnalyzerImpl" auto-export="interfaces"/>
+    <service id="jahiaLogAnalyzer" ref="jahiaLogAnalyzerImpl" interface="org.jahia.loganalyzer.JahiaLogAnalyzer"/>
 
 
 </blueprint>

@@ -141,6 +141,7 @@
                         <feature>kar</feature>
                         <feature>war</feature>
                         <feature>cxf</feature>
+                        <feature>aries-blueprint</feature>
                         <feature>loganalyzer-karaf</feature>
                     </bootFeatures>
                 </configuration>

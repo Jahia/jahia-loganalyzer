@@ -151,6 +151,7 @@ public abstract class BaseIT {
         options.add(karafDistributionConfiguration().frameworkUrl(karafDistributionUrl).name("Apache Karaf").unpackDirectory(new File("target/exam")));
         options.add(features(karafCxfRepo, "cxf"));
         options.add(features(karafStandardFeaturesUrl, "scheduler"));
+        options.add(features(karafStandardFeaturesUrl, "aries-blueprint"));
         options.add(features(checkerRepo, "loganalyzer-karaf"));
         // enable JMX RBAC security, thanks to the KarafMBeanServerBuilder
         options.add(configureSecurity().disableKarafMBeanServerBuilder());
